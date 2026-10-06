@@ -1,70 +1,42 @@
-\chapter{Bit manipulation}
+\chapter{عملیات بیتی}
 
-All data in computer programs is internally stored as bits,
-i.e., as numbers 0 and 1.
-This chapter discusses the bit representation
-of integers, and shows examples
-of how to use bit operations.
-It turns out that there are many uses for
-bit manipulation in algorithm programming.
+داده‌ها در برنامه‌های کامپیوتری به صورت بیت، یعنی اعداد ۰ و ۱ ذخیره می‌شوند.
+این فصل به بررسی نمایش بیتی اعداد صحیح پرداخته و مثال‌هایی از نحوه کاربرد عملیات بیتی نشان می‌دهد.
+عملیات بیتی در طراحی الگوریتم‌ها کاربردهای فراوانی دارد.
 
-\section{Bit representation}
+\section{نمایش بیتی}
 
-\index{bit representation}
+\index{نمایش بیتی}
 
-In programming, an $n$ bit integer is internally
-stored as a binary number that consists of $n$ bits.
-For example, the C++ type \texttt{int} is
-a 32-bit type, which means that every \texttt{int}
-number consists of 32 bits.
+در برنامه‌نویسی، یک عدد صحیح $n$ بیتی در حافظه به صورت عدد دودویی شامل $n$ بیت ذخیره می‌شود.
+به عنوان مثال، نوع \texttt{int} در C++ یک نوع ۳۲ بیتی است؛ یعنی هر عدد \texttt{int} از ۳۲ بیت تشکیل می‌شود.
 
-Here is the bit representation of
-the \texttt{int} number 43: 
+نمایش بیتی عدد \texttt{int} با مقدار ۴۳:
 \[00000000000000000000000000101011\]
-The bits in the representation are indexed from right to left.
-To convert a bit representation $b_k \cdots b_2 b_1 b_0$ into a number,
-we can use the formula
+اندیس‌گذاری بیت‌ها در این نمایش از راست به چپ انجام می‌شود.
+جهت تبدیل نمایش بیتی $b_k \cdots b_2 b_1 b_0$ به یک عدد، از فرمول زیر استفاده می‌شود:
 \[b_k 2^k + \ldots + b_2 2^2 + b_1 2^1 + b_0 2^0.\]
-For example,
+به عنوان مثال:
 \[1 \cdot 2^5 + 1 \cdot 2^3 + 1 \cdot 2^1 + 1 \cdot 2^0 = 43.\]
 
-The bit representation of a number is either
-\key{signed} or \key{unsigned}.
-Usually a signed representation is used,
-which means that both negative and positive
-numbers can be represented.
-A signed variable of $n$ bits can contain any
-integer between $-2^{n-1}$ and $2^{n-1}-1$.
-For example, the \texttt{int} type in C++ is
-a signed type, so an \texttt{int} variable can contain any
-integer between $-2^{31}$ and $2^{31}-1$.
+نمایش بیتی اعداد می‌تواند \key{علامت‌دار} یا \key{بدون علامت} باشد.
+معمولاً نمایش علامت‌دار استفاده می‌شود که در آن امکان نمایش هر دو نوع اعداد مثبت و منفی وجود دارد.
+متغیر علامت‌دار $n$ بیتی می‌تواند مقادیر صحیح بین $-2^{n-1}$ تا $2^{n-1}-1$ را ذخیره کند.
+به عنوان مثال، نوع \texttt{int} در C++ یک نوع علامت‌دار است، بنابراین متغیر \texttt{int} مقادیر صحیح بین $-2^{31}$ تا $2^{31}-1$ را در بر می‌گیرد.
 
-The first bit in a signed representation
-is the sign of the number (0 for nonnegative numbers
-and 1 for negative numbers), and
-the remaining $n-1$ bits contain the magnitude of the number.
-\key{Two's complement} is used, which means that the
-opposite number of a number is calculated by first
-inverting all the bits in the number,
-and then increasing the number by one.
+اولین بیت در نمایش علامت‌دار، بیت علامت عدد است ($0$ برای اعداد نامنفی و $1$ برای اعداد منفی) و $n-1$ بیت باقی‌مانده بزرگی عدد را مشخص می‌کنند.
+از روش \key{مکمل دو} استفاده می‌شود؛ در این روش عدد قرینه با معکوس کردن تمام بیت‌ها و سپس اضافه کردن یک واحد به عدد به دست می‌آید.
 
-For example, the bit representation of
-the \texttt{int} number $-43$ is
+نمایش بیتی عدد \texttt{int} با مقدار $-43$:
 \[11111111111111111111111111010101.\]
 
-In an unsigned representation, only nonnegative
-numbers can be used, but the upper bound for the values is larger.
-An unsigned variable of $n$ bits can contain any
-integer between $0$ and $2^n-1$.
-For example, in C++, an \texttt{unsigned int} variable
-can contain any integer between $0$ and $2^{32}-1$.
+در نمایش بدون علامت، فقط اعداد نامنفی ذخیره می‌شوند، اما کران بالای مقادیر بزرگ‌تر است.
+متغیر بدون علامت $n$ بیتی می‌تواند مقادیر صحیح بین $0$ تا $2^n-1$ را نگه دارد.
+به عنوان مثال در C++، متغیر نوع \texttt{unsigned int} مقادیر بین $0$ تا $2^{32}-1$ را پوشش می‌دهد.
 
-There is a connection between the
-representations:
-a signed number $-x$ equals an unsigned number $2^n-x$.
-For example, the following code shows that
-the signed number $x=-43$ equals the unsigned
-number $y=2^{32}-43$:
+بین این دو نمایش رابطه ریاضی برقرار است:
+عدد علامت‌دار $-x$ برابر با عدد بدون علامت $2^n-x$ است.
+کد زیر نشان می‌دهد عدد علامت‌دار $x=-43$ برابر عدد بدون علامت $y=2^{32}-43$ است:
 \begin{lstlisting}
 int x = -43;
 unsigned int y = x;
@@ -72,38 +44,33 @@ cout << x << "\n"; // -43
 cout << y << "\n"; // 4294967253
 \end{lstlisting}
 
-If a number is larger than the upper bound
-of the bit representation, the number will overflow.
-In a signed representation,
-the next number after $2^{n-1}-1$ is $-2^{n-1}$,
-and in an unsigned representation,
-the next number after $2^n-1$ is $0$.
-For example, consider the following code:
+اگر عددی از کران بالای نمایش بیتی فراتر رود، سرریز رخ می‌دهد.
+در نمایش علامت‌دار، عدد بعد از $2^{n-1}-1$ برابر با $-2^{n-1}$ است و در نمایش بدون علامت، عدد بعد از $2^n-1$ برابر با $0$ خواهد بود.
+کد زیر این رفتار را نشان می‌دهد:
 \begin{lstlisting}
-int x = 2147483647
+int x = 2147483647;
 cout << x << "\n"; // 2147483647
 x++;
 cout << x << "\n"; // -2147483648
 \end{lstlisting}
 
-Initially, the value of $x$ is $2^{31}-1$.
-This is the largest value that can be stored
-in an \texttt{int} variable,
-so the next number after $2^{31}-1$ is $-2^{31}$.
+در ابتدا، مقدار $x$ برابر $2^{31}-1$ است.
+این بزرگ‌ترین مقداری است که می‌توان در یک متغیر \texttt{int} ذخیره کرد،
+بنابراین عدد بعدی پس از $2^{31}-1$ برابر $-2^{31}$ است.
 
 
-\section{Bit operations}
+\section{عملیات بیتی}
 
 \newcommand\XOR{\mathbin{\char`\^}}
 
-\subsubsection{And operation}
+\subsubsection{عملگر And}
 
 \index{and operation}
 
-The \key{and} operation $x$ \& $y$ produces a number
-that has one bits in positions where both
-$x$ and $y$ have one bits.
-For example, $22$ \& $26$ = 18, because
+عملگر \key{and} یعنی $x$ \& $y$ عددی تولید می‌کند
+که در جایگاه‌هایی دارای بیت یک است که هر دو عدد
+$x$ و $y$ در آن جایگاه‌ها بیت یک داشته باشند.
+به عنوان مثال، $22$ \& $26$ = 18، زیرا
 
 \begin{center}
 \begin{tabular}{rrr}
@@ -114,21 +81,21 @@ For example, $22$ \& $26$ = 18, because
 \end{tabular}
 \end{center}
 
-Using the and operation, we can check if a number
-$x$ is even because
-$x$ \& $1$ = 0 if $x$ is even, and
-$x$ \& $1$ = 1 if $x$ is odd.
-More generally, $x$ is divisible by $2^k$
-exactly when $x$ \& $(2^k-1)$ = 0.
+با استفاده از عملگر and می‌توان بررسی کرد که آیا عدد
+$x$ زوج است یا خیر؛ چرا که اگر $x$ زوج باشد
+$x$ \& $1$ = 0 و اگر $x$ فرد باشد
+$x$ \& $1$ = 1 می‌شود.
+به طور کلی‌تر، $x$ بر $2^k$ بخش‌پذیر است
+دقیقاً زمانی که $x$ \& $(2^k-1)$ = 0 باشد.
 
-\subsubsection{Or operation}
+\subsubsection{عملگر Or}
 
 \index{or operation}
 
-The \key{or} operation $x$ | $y$ produces a number
-that has one bits in positions where at least one
-of $x$ and $y$ have one bits.
-For example, $22$ | $26$ = 30, because
+عملگر \key{or} یعنی $x$ | $y$ عددی تولید می‌کند
+که در جایگاه‌هایی دارای بیت یک است که حداقل یکی
+از مقادیر $x$ یا $y$ در آن جایگاه‌ها بیت یک داشته باشد.
+به عنوان مثال، $22$ | $26$ = 30، زیرا
 
 \begin{center}
 \begin{tabular}{rrr}
@@ -139,14 +106,14 @@ For example, $22$ | $26$ = 30, because
 \end{tabular}
 \end{center}
 
-\subsubsection{Xor operation}
+\subsubsection{عملگر Xor}
 
 \index{xor operation}
 
-The \key{xor} operation $x$ $\XOR$ $y$ produces a number
-that has one bits in positions where exactly one
-of $x$ and $y$ have one bits.
-For example, $22$ $\XOR$ $26$ = 12, because
+عملگر \key{xor} یعنی $x$ $\XOR$ $y$ عددی تولید می‌کند
+که در جایگاه‌هایی دارای بیت یک است که دقیقاً یکی
+از مقادیر $x$ یا $y$ در آن جایگاه‌ها بیت یک داشته باشد.
+به عنوان مثال، $22$ $\XOR$ $26$ = 12، زیرا
 
 \begin{center}
 \begin{tabular}{rrr}
@@ -157,21 +124,20 @@ $\XOR$ & 11010 & (26) \\
 \end{tabular}
 \end{center}
 
-\subsubsection{Not operation}
+\subsubsection{عملگر Not}
 
 \index{not operation}
 
-The \key{not} operation \textasciitilde$x$
-produces a number where all the bits of $x$
-have been inverted.
-The formula \textasciitilde$x = -x-1$ holds,
-for example, \textasciitilde$29 = -30$.
+عملگر \key{not} یعنی \textasciitilde$x$
+عددی تولید می‌کند که تمام بیت‌های $x$
+در آن معکوس شده‌اند.
+رابطهٔ \textasciitilde$x = -x-1$ برقرار است،
+به عنوان مثال، \textasciitilde$29 = -30$.
 
-The result of the not operation at the bit level
-depends on the length of the bit representation,
-because the operation inverts all bits.
-For example, if the numbers are 32-bit
-\texttt{int} numbers, the result is as follows:
+نتیجهٔ عملگر not در سطح بیت به طول نمایش بیتی بستگی دارد،
+زیرا این عملیات تمام بیت‌ها را معکوس می‌کند.
+به عنوان مثال، اگر اعداد ۳۲ بیتی از نوع
+\texttt{int} باشند، نتیجه به شکل زیر است:
 
 \begin{center}
 \begin{tabular}{rrrr}
@@ -180,34 +146,30 @@ $x$ & = & 29 &   00000000000000000000000000011101 \\
 \end{tabular}
 \end{center}
 
-\subsubsection{Bit shifts}
+\subsubsection{شیفت‌های بیتی}
 
 \index{bit shift}
 
-The left bit shift $x < < k$ appends $k$
-zero bits to the number,
-and the right bit shift $x > > k$
-removes the $k$ last bits from the number.
-For example, $14 < < 2 = 56$,
-because $14$ and $56$ correspond to 1110 and 111000.
-Similarly, $49 > > 3 = 6$,
-because $49$ and $6$ correspond to 110001 and 110.
+شیفت بیتی به چپ $x < < k$ تعداد $k$ بیت صفر
+به انتهای عدد اضافه می‌کند،
+و شیفت بیتی به راست $x > > k$
+تعداد $k$ بیت انتهایی را از عدد حذف می‌کند.
+به عنوان مثال، $14 < < 2 = 56$،
+زیرا $14$ و $56$ متناظر با 1110 و 111000 هستند.
+به همین ترتیب، $49 > > 3 = 6$،
+زیرا $49$ و $6$ متناظر با 110001 و 110 هستند.
 
-Note that $x < < k$
-corresponds to multiplying $x$ by $2^k$,
-and $x > > k$
-corresponds to dividing $x$ by $2^k$
-rounded down to an integer.
+دقت کنید که $x < < k$
+معادل ضرب $x$ در $2^k$ است،
+و $x > > k$
+معادل تقسیم $x$ بر $2^k$ و
+گرد کردن آن رو به پایین به یک عدد صحیح است.
 
-\subsubsection{Applications}
+\subsubsection{کاربردها}
 
-A number of the form $1 < < k$ has a one bit
-in position $k$ and all other bits are zero,
-so we can use such numbers to access single bits of numbers.
-In particular, the $k$th bit of a number is one
-exactly when $x$ \& $(1 < < k)$ is not zero.
-The following code prints the bit representation
-of an \texttt{int} number $x$:
+عددی به شکل $1 < < k$ دارای بیت یک در موقعیت $k$ است و تمام بیت‌های دیگر آن صفر هستند؛ بنابراین می‌توان از چنین اعدادی برای دسترسی به تک‌بیت‌های اعداد استفاده کرد.
+به‌طور خاص، بیت $k$ام یک عدد یک است دقیقا زمانی که $x$ \& $(1 < < k)$ مخالف صفر باشد.
+کد زیر نمایش بیتی یک عدد \texttt{int} به نام $x$ را چاپ می‌کند:
 
 \begin{lstlisting}
 for (int i = 31; i >= 0; i--) {
@@ -216,48 +178,37 @@ for (int i = 31; i >= 0; i--) {
 }
 \end{lstlisting}
 
-It is also possible to modify single bits
-of numbers using similar ideas.
-For example, the formula $x$ | $(1 < < k)$
-sets the $k$th bit of $x$ to one,
-the formula
-$x$ \& \textasciitilde $(1 < < k)$
-sets the $k$th bit of $x$ to zero,
-and the formula
-$x$ $\XOR$ $(1 < < k)$
-inverts the $k$th bit of $x$.
+همچنین می‌توان با ایده‌های مشابه، تک‌بیت‌های اعداد را تغییر داد.
+برای مثال، فرمول $x$ | $(1 < < k)$ بیت $k$ام $x$ را یک می‌کند،
+فرمول $x$ \& \textasciitilde $(1 < < k)$ بیت $k$ام $x$ را صفر می‌کند،
+و فرمول $x$ $\XOR$ $(1 < < k)$ بیت $k$ام $x$ را معکوس می‌کند.
 
-The formula $x$ \& $(x-1)$ sets the last
-one bit of $x$ to zero,
-and the formula $x$ \& $-x$ sets all the
-one bits to zero, except for the last one bit.
-The formula $x$ | $(x-1)$
-inverts all the bits after the last one bit.
-Also note that a positive number $x$ is
-a power of two exactly when $x$ \& $(x-1) = 0$.
+فرمول $x$ \& $(x-1)$ آخرین بیت یک عدد $x$ را صفر می‌کند،
+و فرمول $x$ \& $-x$ تمام بیت‌های یک را به جز آخرین بیت یک، صفر می‌کند.
+فرمول $x$ | $(x-1)$ تمام بیت‌های پس از آخرین بیت یک را معکوس می‌کند.
+همچنین دقت کنید که یک عدد مثبت $x$ توانی از دو است دقیقا زمانی که $x$ \& $(x-1) = 0$ باشد.
 
-\subsubsection*{Additional functions}
+\subsubsection*{توابع اضافی}
 
-The g++ compiler provides the following
-functions for counting bits:
+کامپایلر g++ توابع زیر را برای شمارش بیت‌ها ارائه می‌دهد:
 
 \begin{itemize}
 \item
 $\texttt{\_\_builtin\_clz}(x)$:
-the number of zeros at the beginning of the number
+تعداد صفرها در ابتدای عدد
 \item
 $\texttt{\_\_builtin\_ctz}(x)$:
-the number of zeros at the end of the number
+تعداد صفرها در انتهای عدد
 \item
 $\texttt{\_\_builtin\_popcount}(x)$:
-the number of ones in the number
+تعداد یک‌ها در عدد
 \item
 $\texttt{\_\_builtin\_parity}(x)$:
-the parity (even or odd) of the number of ones
+زوج یا فرد بودن تعداد یک‌ها
 \end{itemize}
 \begin{samepage}
 
-The functions can be used as follows:
+این توابع به صورت زیر قابل استفاده هستند:
 \begin{lstlisting}
 int x = 5328; // 00000000000000000001010011010000
 cout << __builtin_clz(x) << "\n"; // 19
@@ -267,35 +218,23 @@ cout << __builtin_parity(x) << "\n"; // 1
 \end{lstlisting}
 \end{samepage}
 
-While the above functions only support \texttt{int} numbers,
-there are also \texttt{long long} versions of
-the functions available with the suffix \texttt{ll}.
+اگرچه توابع بالا فقط از اعداد \texttt{int} پشتیبانی می‌کنند،
+نسخه‌های \texttt{long long} این توابع نیز با پسوند \texttt{ll} در دسترس هستند.
 
-\section{Representing sets}
+\section{نمایش مجموعه‌ها}
 
-Every subset of a set
-$\{0,1,2,\ldots,n-1\}$
-can be represented as an $n$ bit integer
-whose one bits indicate which
-elements belong to the subset.
-This is an efficient way to represent sets,
-because every element requires only one bit of memory,
-and set operations can be implemented as bit operations.
+هر زیرمجموعه از مجموعه $\{0,1,2,\ldots,n-1\}$ را می‌توان به عنوان یک عدد صحیح $n$ بیتی نمایش داد که بیت‌های یک آن مشخص می‌کنند کدام عناصر متعلق به زیرمجموعه هستند.
+این یک روش کارآمد برای نمایش مجموعه‌ها است، زیرا هر عنصر تنها به یک بیت حافظه نیاز دارد و عملیات مجموعه را می‌توان به صورت عملیات بیتی پیاده‌سازی کرد.
 
-For example, since \texttt{int} is a 32-bit type,
-an \texttt{int} number can represent any subset
-of the set $\{0,1,2,\ldots,31\}$.
-The bit representation of the set $\{1,3,4,8\}$ is
+برای مثال، از آنجا که \texttt{int} یک نوع داده ۳۲ بیتی است، یک عدد \texttt{int} می‌تواند هر زیرمجموعه‌ای از مجموعه $\{0,1,2,\ldots,31\}$ را نمایش دهد.
+نمایش بیتی مجموعه $\{1,3,4,8\}$ برابر است با:
 \[00000000000000000000000100011010,\]
-which corresponds to the number $2^8+2^4+2^3+2^1=282$.
+که متناظر با عدد $2^8+2^4+2^3+2^1=282$ است.
 
-\subsubsection{Set implementation}
+\subsubsection{پیاده‌سازی مجموعه}
 
-The following code declares an \texttt{int}
-variable $x$ that can contain
-a subset of $\{0,1,2,\ldots,31\}$.
-After this, the code adds the elements 1, 3, 4 and 8
-to the set and prints the size of the set.
+کد زیر متغیر \texttt{int} به نام $x$ تعریف می‌کند که می‌تواند زیرمجموعه‌ای از $\{0,1,2,\ldots,31\}$ نگه دارد.
+سپس اعضای ۱، ۳، ۴ و ۸ را به مجموعه اضافه کرده و اندازه مجموعه را چاپ می‌کند.
 \begin{lstlisting}
 int x = 0;
 x |= (1<<1);
@@ -304,8 +243,7 @@ x |= (1<<4);
 x |= (1<<8);
 cout << __builtin_popcount(x) << "\n"; // 4
 \end{lstlisting}
-Then, the following code prints all
-elements that belong to the set:
+سپس، کد زیر تمام اعضای متعلق به مجموعه را چاپ می‌کند:
 \begin{lstlisting}
 for (int i = 0; i < 32; i++) {
     if (x&(1<<i)) cout << i << " ";
@@ -313,24 +251,22 @@ for (int i = 0; i < 32; i++) {
 // output: 1 3 4 8
 \end{lstlisting}
 
-\subsubsection{Set operations}
+\subsubsection{عمليات روی مجموعه‌ها}
 
-Set operations can be implemented as follows as bit operations:
+عملیات روی مجموعه‌ها با عملگرهای بیتی پیاده‌سازی می‌شوند:
 
 \begin{center}
 \begin{tabular}{lll}
-& set syntax & bit syntax \\
+& نحو مجموعه‌ای & نحو بیتی \\
 \hline
-intersection & $a \cap b$ & $a$ \& $b$ \\
-union & $a \cup b$ & $a$ | $b$ \\
-complement & $\bar a$ & \textasciitilde$a$ \\
-difference & $a \setminus b$ & $a$ \& (\textasciitilde$b$) \\
+اشتراک & $a \cap b$ & $a$ \& $b$ \\
+اجتماع & $a \cup b$ & $a$ | $b$ \\
+متمم & $\bar a$ & \textasciitilde$a$ \\
+تفاضل & $a \setminus b$ & $a$ \& (\textasciitilde$b$) \\
 \end{tabular}
 \end{center}
 
-For example, the following code first constructs
-the sets $x=\{1,3,4,8\}$ and $y=\{3,6,8,9\}$,
-and then constructs the set $z = x \cup y = \{1,3,4,6,8,9\}$:
+برای نمونه، کد زیر ابتدا مجموعه‌های $x=\{1,3,4,8\}$ و $y=\{3,6,8,9\}$ و سپس مجموعه $z = x \cup y = \{1,3,4,6,8,9\}$ را می‌سازد:
 
 \begin{lstlisting}
 int x = (1<<1)|(1<<3)|(1<<4)|(1<<8);
@@ -339,18 +275,16 @@ int z = x|y;
 cout << __builtin_popcount(z) << "\n"; // 6
 \end{lstlisting}
 
-\subsubsection{Iterating through subsets}
+\subsubsection{پیمایش زیرمجموعه‌ها}
 
-The following code goes through
-the subsets of $\{0,1,\ldots,n-1\}$:
+کد زیر زیرمجموعه‌های $\{0,1,\ldots,n-1\}$ را پیمایش می‌کند:
 
 \begin{lstlisting}
 for (int b = 0; b < (1<<n); b++) {
     // process subset b
 }
 \end{lstlisting}
-The following code goes through
-the subsets with exactly $k$ elements:
+کد زیر زیرمجموعه‌های دقیقاً دارای $k$ عضو را پیمایش می‌کند:
 \begin{lstlisting}
 for (int b = 0; b < (1<<n); b++) {
     if (__builtin_popcount(b) == k) {
@@ -358,8 +292,7 @@ for (int b = 0; b < (1<<n); b++) {
     }
 }
 \end{lstlisting}
-The following code goes through the subsets
-of a set $x$:
+کد زیر زیرمجموعه‌های مجموعه $x$ را پیمایش می‌کند:
 \begin{lstlisting}
 int b = 0;
 do {
@@ -367,45 +300,33 @@ do {
 } while (b=(b-x)&x);
 \end{lstlisting}
 
-\section{Bit optimizations}
+\section{بهینه‌سازی‌های بیتی}
 
-Many algorithms can be optimized using
-bit operations.
-Such optimizations do not change the
-time complexity of the algorithm,
-but they may have a large impact
-on the actual running time of the code.
-In this section we discuss examples
-of such situations.
+بسیاری الگوریتم‌ها با عملیات بیتی بهینه می‌شوند.
+این بهینه‌سازی‌ها پیچیدگی زمانی الگوریتم را تغییر نمی‌دهند، ولی بر زمان اجرای واقعی کد اثر زیاد دارند.
+در این بخش مثال‌های این موضوع بررسی می‌شوند.
 
-\subsubsection{Hamming distances}
+\subsubsection{فاصله همینگ}
 
-\index{Hamming distance}
-The \key{Hamming distance}
-$\texttt{hamming}(a,b)$ between two
-strings $a$ and $b$ of equal length is
-the number of positions where the strings differ.
-For example,
+\index{فاصله همینگ}
+\key{فاصله همینگ} $\texttt{hamming}(a,b)$ بین دو رشته هم‌طول $a$ و $b$، تعداد جایگاه‌هایی است که دو رشته در آن اختلاف دارند.
+برای نمونه:
 \[\texttt{hamming}(01101,11001)=2.\]
 
-Consider the following problem: Given
-a list of $n$ bit strings, each of length $k$,
-calculate the minimum Hamming distance
-between two strings in the list.
-For example, the answer for $[00111,01101,11110]$
-is 2, because
+مسئله: با داشتن فهرستی شامل $n$ رشته بیتی با طول $k$، کمینه فاصله همینگ بین دو رشته از فهرست محاسبه شود.
+برای نمونه، پاسخ برای $[00111,01101,11110]$ برابر ۲ است، زیرا:
 \begin{itemize}[noitemsep]
-\item $\texttt{hamming}(00111,01101)=2$,
-\item $\texttt{hamming}(00111,11110)=3$, and
+\item $\texttt{hamming}(00111,01101)=2$،
+\item $\texttt{hamming}(00111,11110)=3$، و
 \item $\texttt{hamming}(01101,11110)=3$.
 \end{itemize}
 
-A straightforward way to solve the problem is
-to go through all pairs of strings and calculate
-their Hamming distances,
-which yields an $O(n^2 k)$ time algorithm.
-The following function can be used to
-calculate distances:
+یک روش سرراست برای حل مسئله،
+بررسی تمام جفت‌های رشته‌ها و محاسبه
+فاصله همینگ آن‌ها است
+که الگوریتمی با زمان $O(n^2 k)$ به دست می‌دهد.
+تابع زیر می‌تواند برای
+محاسبه فاصله‌ها استفاده شود:
 \begin{lstlisting}
 int hamming(string a, string b) {
     int d = 0;
@@ -416,40 +337,38 @@ int hamming(string a, string b) {
 }
 \end{lstlisting}
 
-However, if $k$ is small, we can optimize the code
-by storing the bit strings as integers and
-calculating the Hamming distances using bit operations.
-In particular, if $k \le 32$, we can just store
-the strings as \texttt{int} values and use the
-following function to calculate distances:
+با این حال، اگر $k$ کوچک باشد، می‌توان با ذخیره
+رشته‌های بیتی به صورت اعداد صحیح و
+محاسبه فواصل همینگ با استفاده از عملیات بیتی، کد را بهینه‌سازی کرد.
+به‌ویژه اگر $k \le 32$ باشد، می‌توان رشته‌ها را صرفاً
+به صورت مقادیر \texttt{int} ذخیره کرد و از
+تابع زیر برای محاسبه فاصله‌ها بهره برد:
 \begin{lstlisting}
 int hamming(int a, int b) {
     return __builtin_popcount(a^b);
 }
 \end{lstlisting}
-In the above function, the xor operation constructs
-a bit string that has one bits in positions
-where $a$ and $b$ differ.
-Then, the number of bits is calculated using
-the \texttt{\_\_builtin\_popcount} function.
+در تابع بالا، عملگر xor یک رشته بیتی می‌سازد
+که در موقعیت‌هایی که $a$ و $b$ تفاوت دارند، بیت یک دارد.
+سپس، تعداد بیت‌ها با استفاده از
+تابع \texttt{\_\_builtin\_popcount} محاسبه می‌شود.
 
-To compare the implementations, we generated
-a list of 10000 random bit strings of length 30.
-Using the first approach, the search took
-13.5 seconds, and after the bit optimization,
-it only took 0.5 seconds.
-Thus, the bit optimized code was almost
-30 times faster than the original code.
+برای مقایسه پیاده‌سازی‌ها، فهرستی شامل ۱۰۰۰۰
+رشته بیتی تصادفی به طول ۳۰ تولید شد.
+با روش اول، جستجو ۱۳.۵ ثانیه طول کشید،
+و پس از بهینه‌سازی بیتی،
+فقط ۰.۵ ثانیه زمان برد.
+بنابراین، کد بهینه‌شده با بیت تقریباً
+۳۰ برابر سریع‌تر از کد اولیه بود.
 
-\subsubsection{Counting subgrids}
+\subsubsection{شمارش زیرشبکه‌ها}
 
-As another example, consider the
-following problem:
-Given an $n \times n$ grid whose
-each square is either black (1) or white (0),
-calculate the number of subgrids
-whose all corners are black.
-For example, the grid
+به عنوان مثالی دیگر، مسئله زیر را در نظر بگیرید:
+یک شبکه $n \times n$ داده شده است که
+هر خانه آن سیاه (1) یا سفید (0) است.
+تعداد زیرشبکه‌هایی را محاسبه کنید
+که تمام گوشه‌های آن‌ها سیاه هستند.
+برای نمونه، شبکه
 \begin{center}
 \begin{tikzpicture}[scale=0.5]
 \fill[black] (1,1) rectangle (2,2);
@@ -463,7 +382,7 @@ For example, the grid
 \draw (0,0) grid (5,5);
 \end{tikzpicture}
 \end{center}
-contains two such subgrids:
+شامل دو زیرشبکه از این نوع است:
 \begin{center}
 \begin{tikzpicture}[scale=0.5]
 \fill[black] (1,1) rectangle (2,2);
@@ -491,70 +410,68 @@ contains two such subgrids:
 \end{tikzpicture}
 \end{center}
 
-There is an $O(n^3)$ time algorithm for solving the problem:
-go through all $O(n^2)$ pairs of rows and for each pair
-$(a,b)$ calculate the number of columns that contain a black
-square in both rows in $O(n)$ time.
-The following code assumes that $\texttt{color}[y][x]$
-denotes the color in row $y$ and column $x$:
+الگوریتمی با زمان $O(n^3)$ برای حل مسئله وجود دارد:
+تمام $O(n^2)$ جفت سطر را پیمایش کنید و برای هر جفت
+$(a,b)$، تعداد ستون‌هایی را که در هر دو سطر دارای خانه سیاه
+هستند در زمان $O(n)$ محاسبه کنید.
+کد زیر فرض می‌کند که $\texttt{color}[y][x]$
+نشان‌دهنده رنگ در سطر $y$ و ستون $x$ است:
 \begin{lstlisting}
 int count = 0;
 for (int i = 0; i < n; i++) {
     if (color[a][i] == 1 && color[b][i] == 1) count++;
 }
 \end{lstlisting}
-Then, those columns
-account for $\texttt{count}(\texttt{count}-1)/2$ subgrids with black corners,
-because we can choose any two of them to form a subgrid.
+سپس، این ستون‌ها
+شامل $\texttt{count}(\texttt{count}-1)/2$ زیرشبکه با گوشه‌های سیاه هستند،
+زیرا می‌توان هر دو ستون از آن‌ها را برای تشکیل یک زیرشبکه انتخاب کرد.
 
-To optimize this algorithm, we divide the grid into blocks
-of columns such that each block consists of $N$
-consecutive columns. Then, each row is stored as
-a list of $N$-bit numbers that describe the colors
-of the squares. Now we can process $N$ columns at the same time
-using bit operations. In the following code,
-$\texttt{color}[y][k]$ represents
-a block of $N$ colors as bits.
+برای بهینه‌سازی این الگوریتم، شبکه را به بلوک‌هایی
+از ستون‌ها تقسیم می‌کنیم به طوری که هر بلوک شامل $N$
+ستون متوالی باشد. سپس، هر سطر به صورت
+فهرستی از اعداد $N$ بیتی ذخیره می‌شود که رنگ‌های
+خانه‌ها را توصیف می‌کنند. اکنون می‌توانیم $N$ ستون را به طور همزمان
+با استفاده از عملیات بیتی پردازش کنیم. در کد زیر،
+$\texttt{color}[y][k]$ نشان‌دهنده
+یک بلوک از $N$ رنگ به صورت بیت است.
 \begin{lstlisting}
 int count = 0;
 for (int i = 0; i <= n/N; i++) {
     count += __builtin_popcount(color[a][i]&color[b][i]);
 }
 \end{lstlisting}
-The resulting algorithm works in $O(n^3/N)$ time.
+الگوریتم حاصل در زمان $O(n^3/N)$ کار می‌کند.
 
-We generated a random grid of size $2500 \times 2500$
-and compared the original and bit optimized implementation.
-While the original code took $29.6$ seconds,
-the bit optimized version only took $3.1$ seconds
-with $N=32$ (\texttt{int} numbers) and $1.7$ seconds
-with $N=64$ (\texttt{long long} numbers).
+ما یک شبکه تصادفی به ابعاد $2500 \times 2500$ تولید کردیم
+و پیاده‌سازی اولیه را با نسخه بهینه‌شده بیتی مقایسه نمودیم.
+در حالی که کد اولیه $29.6$ ثانیه زمان برد،
+نسخه بهینه‌شده با بیت با $N=32$ (اعداد \texttt{int}) تنها $3.1$ ثانیه
+و با $N=64$ (اعداد \texttt{long long}) حدود $1.7$ ثانیه
+زمان برد.
 
-\section{Dynamic programming}
+\section{برنامه‌نویسی پویا}
 
-Bit operations provide an efficient and convenient
-way to implement dynamic programming algorithms
-whose states contain subsets of elements,
-because such states can be stored as integers.
-Next we discuss examples of combining
-bit operations and dynamic programming.
+عملیات بیتی روشی کارآمد و مناسب برای
+پیاده‌سازی الگوریتم‌های برنامه‌نویسی پویا ارائه می‌دهند
+که وضعیت‌های آن‌ها شامل زیرمجموعه‌هایی از عناصر است،
+زیرا چنین وضعیت‌هایی را می‌توان به صورت اعداد صحیح ذخیره کرد.
+در ادامه به بررسی مثال‌هایی از ترکیب
+عملیات بیتی و برنامه‌نویسی پویا می‌پردازیم.
 
-\subsubsection{Optimal selection}
+\subsubsection{انتخاب بهینه}
 
-As a first example, consider the following problem:
-We are given the prices of $k$ products
-over $n$ days, and we want to buy each product
-exactly once.
-However, we are allowed to buy at most one product
-in a day.
-What is the minimum total price?
-For example, consider the following scenario ($k=3$ and $n=8$):
+به عنوان مثال اول، مسئله زیر را در نظر بگیرید:
+قیمت‌های $k$ محصول در طول $n$ روز داده شده است
+و می‌خواهیم هر محصول را دقیقاً یک بار بخریم.
+با این حال، در هر روز مجاز به خرید حداکثر یک محصول هستیم.
+حداقل قیمت کل چقدر است؟
+به عنوان مثال، سناریوی زیر را در نظر بگیرید ($k=3$ و $n=8$):
 \begin{center}
 \begin{tikzpicture}[scale=.65]
     \draw (0, 0) grid (8,3);
-    \node at (-2.5,2.5) {product 0};
-    \node at (-2.5,1.5) {product 1};
-    \node at (-2.5,0.5) {product 2};
+    \node at (-2.5,2.5) {محصول 0};
+    \node at (-2.5,1.5) {محصول 1};
+    \node at (-2.5,0.5) {محصول 2};
 
     \foreach \x in {0,...,7}
         {\node at (\x+0.5,3.5) {\x};}
@@ -566,16 +483,16 @@ For example, consider the following scenario ($k=3$ and $n=8$):
         {\node at (\x+0.5,0.5) {\v};}
 \end{tikzpicture}
 \end{center}
-In this scenario, the minimum total price is $5$:
+در این سناریو، کمینه قیمت کل برابر $5$ است:
 \begin{center}
 \begin{tikzpicture}[scale=.65]
     \fill [color=lightgray] (1, 1) rectangle (2, 2);
     \fill [color=lightgray] (3, 2) rectangle (4, 3);
     \fill [color=lightgray] (6, 0) rectangle (7, 1);
     \draw (0, 0) grid (8,3);
-    \node at (-2.5,2.5) {product 0};
-    \node at (-2.5,1.5) {product 1};
-    \node at (-2.5,0.5) {product 2};
+    \node at (-2.5,2.5) {محصول 0};
+    \node at (-2.5,1.5) {محصول 1};
+    \node at (-2.5,0.5) {محصول 2};
 
     \foreach \x in {0,...,7}
         {\node at (\x+0.5,3.5) {\x};}
@@ -588,47 +505,45 @@ In this scenario, the minimum total price is $5$:
 \end{tikzpicture}
 \end{center}
 
-Let $\texttt{price}[x][d]$ denote the price of product $x$
-on day $d$.
-For example, in the above scenario $\texttt{price}[2][3] = 7$.
-Then, let $\texttt{total}(S,d)$ denote the minimum total
-price for buying a subset $S$ of products by day $d$.
-Using this function, the solution to the problem is
-$\texttt{total}(\{0 \ldots k-1\},n-1)$.
+فرض کنید $\texttt{price}[x][d]$ بیانگر قیمت محصول $x$
+در روز $d$ باشد.
+برای مثال، در سناریوی بالا $\texttt{price}[2][3] = 7$ است.
+سپس، فرض کنید $\texttt{total}(S,d)$ کمینه قیمت کل
+برای خرید زیرمجموعه $S$ از محصولات تا روز $d$ باشد.
+با استفاده از این تابع، پاسخ مسئله
+$\texttt{total}(\{0 \ldots k-1\},n-1)$ خواهد بود.
 
-First, $\texttt{total}(\emptyset,d) = 0$,
-because it does not cost anything to buy an empty set,
-and $\texttt{total}(\{x\},0) = \texttt{price}[x][0]$,
-because there is one way to buy one product on the first day.
-Then, the following recurrence can be used:
+ابتدا، $\texttt{total}(\emptyset,d) = 0$،
+زیرا خرید یک مجموعه تهی هزینه‌ای ندارد،
+و $\texttt{total}(\{x\},0) = \texttt{price}[x][0]$،
+زیرا برای خرید یک محصول در روز اول تنها یک راه وجود دارد.
+سپس، رابطه بازگشتی زیر قابل استفاده است:
 \begin{equation*}
 \begin{split}
 \texttt{total}(S,d) = \min( & \texttt{total}(S,d-1), \\
 & \min_{x \in S} (\texttt{total}(S \setminus x,d-1)+\texttt{price}[x][d]))
 \end{split}
 \end{equation*}
-This means that we either do not buy any product on day $d$
-or buy a product $x$ that belongs to $S$.
-In the latter case, we remove $x$ from $S$ and add the
-price of $x$ to the total price.
+این بدان معناست که یا در روز $d$ هیچ محصولی نمی‌خریم
+یا محصول $x$ متعلق به $S$ را خریداری می‌کنیم.
+در حالت دوم، $x$ را از $S$ حذف کرده و قیمت
+$x$ را به قیمت کل اضافه می‌کنیم.
 
-The next step is to calculate the values of the function
-using dynamic programming.
-To store the function values, we declare an array
+گام بعدی محاسبه مقادیر تابع با استفاده از برنامه‌نویسی پویا است.
+برای ذخیره مقادیر تابع، آرایه‌ای تعریف می‌کنیم:
 \begin{lstlisting}
 int total[1<<K][N];
 \end{lstlisting}
-where $K$ and $N$ are suitably large constants.
-The first dimension of the array corresponds to a bit
-representation of a subset.
+که در آن $K$ و $N$ ثابت‌های به اندازه کافی بزرگ هستند.
+بعد اول آرایه متناظر با نمایش بیتی یک زیرمجموعه است.
 
-First, the cases where $d=0$ can be processed as follows:
+ابتدا، حالت‌های $d=0$ این‌گونه پردازش می‌شوند:
 \begin{lstlisting}
 for (int x = 0; x < k; x++) {
     total[1<<x][0] = price[x][0];
 }
 \end{lstlisting}
-Then, the recurrence translates into the following code:
+سپس، رابطه بازگشتی به کد زیر تبدیل می‌شود:
 \begin{lstlisting}
 for (int d = 1; d < n; d++) {
     for (int s = 0; s < (1<<k); s++) {
@@ -642,35 +557,25 @@ for (int d = 1; d < n; d++) {
     }
 }
 \end{lstlisting}
-The time complexity of the algorithm is $O(n 2^k k)$.
+پیچیدگی زمانی الگوریتم $O(n 2^k k)$ است.
 
-\subsubsection{From permutations to subsets}
+\subsubsection{از جایگشت‌ها به زیرمجموعه‌ها}
 
-Using dynamic programming, it is often possible
-to change an iteration over permutations into
-an iteration over subsets\footnote{This technique was introduced in 1962
-by M. Held and R. M. Karp \cite{hel62}.}.
-The benefit of this is that
-$n!$, the number of permutations,
-is much larger than $2^n$, the number of subsets.
-For example, if $n=20$, then
-$n! \approx 2.4 \cdot 10^{18}$ and $2^n \approx 10^6$.
-Thus, for certain values of $n$,
-we can efficiently go through the subsets but not through the permutations.
+با برنامه‌نویسی پویا، پیمایش روی جایگشت‌ها را اغلب می‌توان به پیمایش روی زیرمجموعه‌ها تبدیل کرد\footnote{این روش سال ۱۹۶۲ توسط ام. هلد (M. Held) و آر. ام. کارپ (R. M. Karp) معرفی شد \cite{hel62}.}.
+علت:
+تعداد جایگشت‌ها ($n!$) بسیار بزرگ‌تر از تعداد زیرمجموعه‌ها ($2^n$) است.
+مثال: برای $n=20$ مقدار $n! \approx 2.4 \cdot 10^{18}$، اما $2^n \approx 10^6$.
+بنابراین برای برخی مقادیر $n$، پیمایش زیرمجموعه‌ها کارا است اما پیمایش جایگشت‌ها غیرممکن است.
 
-As an example, consider the following problem:
-There is an elevator with maximum weight $x$,
-and $n$ people with known weights
-who want to get from the ground floor
-to the top floor.
-What is the minimum number of rides needed
-if the people enter the elevator in an optimal order?
+مثال:
+آسانسوری با ظرفیت وزن $x$ وجود دارد.
+$n$ نفر با وزن‌های مشخص می‌خواهند از همکف به بالاترین طبقه بروند.
+حداقل تعداد دفعات حرکت آسانسور چقدر است اگر افراد با ترتیب بهینه سوار شوند؟
 
-For example, suppose that $x=10$, $n=5$
-and the weights are as follows:
+فرض کنید $x=10$ و $n=5$ و وزن‌ها چنین باشند:
 \begin{center}
 \begin{tabular}{ll}
-person & weight \\
+شخص & وزن \\
 \hline
 0 & 2 \\
 1 & 3 \\
@@ -679,60 +584,47 @@ person & weight \\
 4 & 6 \\
 \end{tabular}
 \end{center}
-In this case, the minimum number of rides is 2.
-One optimal order is $\{0,2,3,1,4\}$,
-which partitions the people into two rides:
-first $\{0,2,3\}$ (total weight 10),
-and then $\{1,4\}$ (total weight 9).
+اینجا حداقل دفعات حرکت ۲ است.
+یک ترتیب بهینه $\{0,2,3,1,4\}$ است
+که افراد را به دو حرکت تفکیک می‌کند:
+ابتدا $\{0,2,3\}$ (مجموع وزن ۱۰)،
+سپس $\{1,4\}$ (مجموع وزن ۹).
 
-The problem can be easily solved in $O(n! n)$ time
-by testing all possible permutations of $n$ people.
-However, we can use dynamic programming to get
-a more efficient $O(2^n n)$ time algorithm.
-The idea is to calculate for each subset of people
-two values: the minimum number of rides needed and
-the minimum weight of people who ride in the last group.
+مسئله با بررسی همه جایگشت‌های $n$ نفر در زمان $O(n! n)$ قابل حل است.
+اما با برنامه‌نویسی پویا الگوریتمی در زمان $O(2^n n)$ به دست می‌آید.
+ایده: برای هر زیرمجموعه از افراد دو مقدار محاسبه شود: حداقل دفعات حرکت لازم و حداقل وزن افراد در آخرین گروه.
 
-Let $\texttt{weight}[p]$ denote the weight of
-person $p$.
-We define two functions:
-$\texttt{rides}(S)$ is the minimum number of
-rides for a subset $S$,
-and $\texttt{last}(S)$ is the minimum weight
-of the last ride.
-For example, in the above scenario
-\[ \texttt{rides}(\{1,3,4\})=2 \hspace{10px} \textrm{and}
+فرض کنید $\texttt{weight}[p]$ وزن شخص $p$ باشد.
+دو تابع تعریف می‌کنیم:
+$\texttt{rides}(S)$ حداقل دفعات حرکت برای زیرمجموعه $S$،
+و $\texttt{last}(S)$ حداقل وزن افراد در حرکت آخر.
+برای نمونه در سناریوی بالا:
+\[ \texttt{rides}(\{1,3,4\})=2 \hspace{10px} \textrm{و}
 \hspace{10px} \texttt{last}(\{1,3,4\})=5,\]
-because the optimal rides are $\{1,4\}$ and $\{3\}$,
-and the second ride has weight 5.
-Of course, our final goal is to calculate the value
-of $\texttt{rides}(\{0 \ldots n-1\})$.
+زیرا حرکت‌های بهینه $\{1,4\}$ و $\{3\}$ هستند،
+و حرکت دوم ۵ واحد وزن دارد.
+هدف نهایی محاسبه $\texttt{rides}(\{0 \ldots n-1\})$ است.
 
-We can calculate the values
-of the functions recursively and then apply
-dynamic programming.
-The idea is to go through all people
-who belong to $S$ and optimally
-choose the last person $p$ who enters the elevator.
-Each such choice yields a subproblem
-for a smaller subset of people.
-If $\texttt{last}(S \setminus p)+\texttt{weight}[p] \le x$,
-we can add $p$ to the last ride.
-Otherwise, we have to reserve a new ride
-that initially only contains $p$.
+می‌توانیم مقادیر تابع‌ها را به صورت بازگشتی محاسبه و سپس از برنامه‌نویسی پویا استفاده کنیم.
+ایده کار، بررسی تمام افراد متعلق به $S$ و انتخاب بهینه آخرین فرد $p$ است که وارد آسانسور می‌شود.
+هر انتخاب منجر به یک زیرمسئله برای زیرمجموعه کوچکتری از افراد می‌شود.
+اگر $\texttt{last}(S \setminus p)+\texttt{weight}[p] \le x$ باشد،
+می‌توانیم $p$ را به آخرین سفر اضافه کنیم.
+در غیر این صورت، باید سفر جدیدی رزرو کنیم
+که در ابتدا فقط شامل $p$ است.
 
-To implement dynamic programming,
-we declare an array
+برای پیاده‌سازی برنامه‌نویسی پویا،
+آرایه‌ای تعریف می‌کنیم:
 \begin{lstlisting}
 pair<int,int> best[1<<N];
 \end{lstlisting}
-that contains for each subset $S$
-a pair $(\texttt{rides}(S),\texttt{last}(S))$.
-We set the value for an empty group as follows:
+که برای هر زیرمجموعه $S$،
+یک جفت $(\texttt{rides}(S),\texttt{last}(S))$ نگهداری می‌کند.
+مقدار مربوط به گروه خالی را این‌گونه مقداردهی اولیه می‌کنیم:
 \begin{lstlisting}
 best[0] = {1,0};
 \end{lstlisting}
-Then, we can fill the array as follows:
+سپس، آرایه را به این شکل پر می‌کنیم:
 
 \begin{lstlisting}
 for (int s = 1; s < (1<<n); s++) {
@@ -754,22 +646,20 @@ for (int s = 1; s < (1<<n); s++) {
     }
 }
 \end{lstlisting}
-Note that the above loop guarantees that
-for any two subsets $S_1$ and $S_2$
-such that $S_1 \subset S_2$, we process $S_1$ before $S_2$.
-Thus, the dynamic programming values are calculated in the
-correct order.
+حلقه بالا تضمین می‌کند برای هر دو زیرمجموعه $S_1$ و $S_2$
+که $S_1 \subset S_2$ باشد، زیرمجموعه $S_1$ قبل از $S_2$ پردازش می‌شود.
+بنابراین، مقادیر برنامه‌نویسی پویا با ترتیب صحیح محاسبه می‌شوند.
 
-\subsubsection{Counting subsets}
+\subsubsection{شمارش زیرمجموعه‌ها}
 
-Our last problem in this chapter is as follows:
-Let $X=\{0 \ldots n-1\}$, and each subset $S \subset X$
-is assigned an integer $\texttt{value}[S]$.
-Our task is to calculate for each $S$
+آخرین مسئله این فصل به شرح زیر است:
+فرض کنید $X=\{0 \ldots n-1\}$ باشد و به هر زیرمجموعه $S \subset X$
+یک عدد صحیح $\texttt{value}[S]$ نسبت داده شده باشد.
+هدف ما محاسبه مقدار زیر برای هر $S$ است:
 \[\texttt{sum}(S) = \sum_{A \subset S} \texttt{value}[A],\]
-i.e., the sum of values of subsets of $S$.
+یعنی مجموع مقادیر زیرمجموعه‌های $S$.
 
-For example, suppose that $n=3$ and the values are as follows:
+به عنوان مثال، فرض کنید $n=3$ باشد و مقادیر به صورت زیر داده شده باشند:
 \begin{multicols}{2}
 \begin{itemize}
 \item $\texttt{value}[\emptyset] = 3$
@@ -782,7 +672,7 @@ For example, suppose that $n=3$ and the values are as follows:
 \item $\texttt{value}[\{0,1,2\}] = 3$
 \end{itemize}
 \end{multicols}
-In this case, for example,
+در این حالت، برای نمونه:
 \begin{equation*}
 \begin{split}
 \texttt{sum}(\{0,2\}) &= \texttt{value}[\emptyset]+\texttt{value}[\{0\}]+\texttt{value}[\{2\}]+\texttt{value}[\{0,2\}] \\ 
@@ -790,51 +680,43 @@ In this case, for example,
 \end{split}
 \end{equation*}
 
-Because there are a total of $2^n$ subsets,
-one possible solution is to go through all
-pairs of subsets in $O(2^{2n})$ time.
-However, using dynamic programming, we
-can solve the problem in $O(2^n n)$ time.
-The idea is to focus on sums where the
-elements that may be removed from $S$ are restricted.
+به دلیل وجود $2^n$ زیرمجموعه،
+یک راه‌حل ممکن بررسی تمام جفت‌های زیرمجموعه در زمان $O(2^{2n})$ است.
+اما با برنامه‌نویسی پویا،
+می‌توان مسئله را در زمان $O(2^n n)$ حل کرد.
+ایده این است که روی مجموع‌هایی تمرکز کنیم که اعضای قابل حذف از $S$ در آن‌ها محدود شده‌اند.
 
-Let $\texttt{partial}(S,k)$ denote the sum of
-values of subsets of $S$ with the restriction
-that only elements $0 \ldots k$
-may be removed from $S$.
-For example,
+فرض کنید $\texttt{partial}(S,k)$ برابر با مجموع مقادیر زیرمجموعه‌هایی از $S$ باشد، با این شرط که تنها عناصر $0 \ldots k$ اجازه دارند از $S$ حذف شوند.
+برای مثال،
 \[\texttt{partial}(\{0,2\},1)=\texttt{value}[\{2\}]+\texttt{value}[\{0,2\}],\]
-because we may only remove elements $0 \ldots 1$.
-We can calculate values of \texttt{sum} using
-values of \texttt{partial}, because
+زیرا تنها اجازه حذف عناصر $0 \ldots 1$ وجود دارد.
+می‌توان مقادیر \texttt{sum} را با استفاده از مقادیر \texttt{partial} محاسبه کرد، زیرا
 \[\texttt{sum}(S) = \texttt{partial}(S,n-1).\]
-The base cases for the function are
+حالت‌های پایه برای این تابع عبارتند از
 \[\texttt{partial}(S,-1)=\texttt{value}[S],\]
-because in this case no elements can be removed from $S$.
-Then, in the general case we can use the following recurrence:
+زیرا در این حالت هیچ عنصری نمی‌تواند از $S$ حذف شود.
+سپس، در حالت کلی می‌توان از رابطه بازگشتی زیر استفاده کرد:
 \begin{equation*}
     \texttt{partial}(S,k) = \begin{cases}
                \texttt{partial}(S,k-1) & k \notin S \\
                \texttt{partial}(S,k-1) + \texttt{partial}(S \setminus \{k\},k-1) & k \in S
            \end{cases}
 \end{equation*}
-Here we focus on the element $k$.
-If $k \in S$, we have two options: we may either keep $k$ in $S$
-or remove it from $S$.
+در اینجا تمرکز روی عنصر $k$ است.
+اگر $k \in S$ باشد، دو انتخاب وجود دارد: می‌توان $k$ را در $S$ نگه داشت یا آن را از $S$ حذف کرد.
 
-There is a particularly clever way to implement the
-calculation of sums. We can declare an array
+روش بسیار هوشمندانه‌ای برای پیاده‌سازی محاسبه مجموع‌ها وجود دارد. می‌توان آرایه‌ای تعریف کرد:
 \begin{lstlisting}
 int sum[1<<N];
 \end{lstlisting}
-that will contain the sum of each subset.
-The array is initialized as follows:
+که مجموع هر زیرمجموعه را نگه‌داری خواهد کرد.
+مقداردهی اولیه آرایه به شکل زیر انجام می‌شود:
 \begin{lstlisting}
 for (int s = 0; s < (1<<n); s++) {
     sum[s] = value[s];
 }
 \end{lstlisting}
-Then, we can fill the array as follows:
+سپس، می‌توان آرایه را به این صورت پر کرد:
 \begin{lstlisting}
 for (int k = 0; k < n; k++) {
     for (int s = 0; s < (1<<n); s++) {
@@ -842,8 +724,5 @@ for (int k = 0; k < n; k++) {
     }
 }
 \end{lstlisting}
-This code calculates the values of $\texttt{partial}(S,k)$
-for $k=0 \ldots n-1$ to the array \texttt{sum}.
-Since $\texttt{partial}(S,k)$ is always based on
-$\texttt{partial}(S,k-1)$, we can reuse the array
-\texttt{sum}, which yields a very efficient implementation.
+این کد مقادیر $\texttt{partial}(S,k)$ را به ازای $k=0 \ldots n-1$ درون آرایه \texttt{sum} محاسبه می‌کند.
+از آنجا که $\texttt{partial}(S,k)$ همواره بر پایه $\texttt{partial}(S,k-1)$ است، می‌توان از همان آرایه \texttt{sum} مجدداً استفاده کرد؛ امری که پیاده‌سازی بسیار کارآمدی را به دست می‌دهد.
