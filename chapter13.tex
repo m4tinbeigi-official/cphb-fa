@@ -1,52 +1,28 @@
-\chapter{Shortest paths}
+\chapter{کوتاه‌ترین مسیرها}
 
-\index{shortest path}
+\index{کوتاه‌ترین مسیر}
 
-Finding a shortest path between two nodes
-of a graph
-is an important problem that has many
-practical applications.
-For example, a natural problem related to a road network
-is to calculate the shortest possible length of a route
-between two cities, given the lengths of the roads.
+یافتن کوتاه‌ترین مسیر بین دو گره در گراف، مسئله‌ای مهم با کاربردهای عملی فراوان است.
+به عنوان مثال، مسئله‌ای طبیعی در شبکه جاده‌ای، محاسبه کوتاه‌ترین طول ممکن برای یک مسیر بین دو شهر بر اساس طول جاده‌ها است.
 
-In an unweighted graph, the length of a path equals
-the number of its edges, and we can
-simply use breadth-first search to find
-a shortest path.
-However, in this chapter we focus on
-weighted graphs
-where more sophisticated algorithms
-are needed
-for finding shortest paths.
+در گراف بدون وزن، طول مسیر برابر با تعداد یال‌های آن است و برای یافتن کوتاه‌ترین مسیر، استفاده از جستجوی اول سطح کافی است.
+با این حال، تمرکز این فصل بر گراف‌های وزن‌دار است که یافتن کوتاه‌ترین مسیر در آن‌ها نیازمند الگوریتم‌های پیشرفته‌تر است.
 
-\section{Bellman–Ford algorithm}
+\section{الگوریتم بلمن–فورد}
 
-\index{Bellman–Ford algorithm}
+\index{الگوریتم بلمن–فورد}
 
-The \key{Bellman–Ford algorithm}\footnote{The algorithm is named after
-R. E. Bellman and L. R. Ford who published it independently
-in 1958 and 1956, respectively \cite{bel58,for56a}.} finds
-shortest paths from a starting node to all
-nodes of the graph.
-The algorithm can process all kinds of graphs,
-provided that the graph does not contain a
-cycle with negative length.
-If the graph contains a negative cycle,
-the algorithm can detect this.
+\key{الگوریتم بلمن–فورد}\footnote{نام این الگوریتم برگرفته از ریچارد بلمن و لستر فورد است که آن را به صورت مستقل در سال‌های ۱۹۵۸ و ۱۹۵۶ منتشر کردند \cite{bel58,for56a}.} کوتاه‌ترین مسیرها را از یک گره مبدا به تمام گره‌های گراف پیدا می‌کند.
+این الگوریتم انواع گراف‌ها را پردازش می‌کند، مشروط بر این‌که گراف دوری با طول منفی نداشته باشد.
+اگر گراف دور منفی داشته باشد، الگوریتم قادر به تشخیص آن است.
 
-The algorithm keeps track of distances
-from the starting node to all nodes of the graph.
-Initially, the distance to the starting node is 0
-and the distance to all other nodes in infinite.
-The algorithm reduces the distances by finding
-edges that shorten the paths until it is not
-possible to reduce any distance.
+الگوریتم، فاصله‌ها از گره مبدا به تمام گره‌های گراف را نگهداری می‌کند.
+در ابتدا، فاصله تا گره مبدا برابر ۰ و فاصله تا سایر گره‌ها بی‌نهایت است.
+الگوریتم با پیدا کردن یال‌هایی که مسیرها را کوتاه‌تر می‌کنند فاصله‌ها را کاهش می‌دهد تا زمانی که امکان کاهش بیشتر هیچ فاصله‌ای وجود نداشته باشد.
 
-\subsubsection{Example}
+\subsubsection{مثال}
 
-Let us consider how the Bellman–Ford algorithm
-works in the following graph:
+عملکرد الگوریتم بلمن–فورد را در گراف زیر بررسی می‌کنیم:
 \begin{center}
 \begin{tikzpicture}
 \node[draw, circle] (1) at (1,3) {1};
@@ -68,12 +44,11 @@ works in the following graph:
 \path[draw,thick,-] (1) -- node[font=\small,label=above:7] {} (4);
 \end{tikzpicture}
 \end{center}
-Each node of the graph is assigned a distance.
-Initially, the distance to the starting node is 0,
-and the distance to all other nodes is infinite.
+به هر گره گراف یک فاصله نسبت داده می‌شود.
+در ابتدا، فاصله تا گره مبدا برابر ۰ و فاصله تا سایر گره‌ها بی‌نهایت است.
 
-The algorithm searches for edges that reduce distances.
-First, all edges from node 1 reduce distances:
+الگوریتم یال‌هایی را جستجو می‌کند که فاصله‌ها را کاهش دهند.
+ابتدا، تمام یال‌های خروجی از گره ۱ فاصله‌ها را کاهش می‌دهند:
 \begin{center}
 \begin{tikzpicture}
 \node[draw, circle] (1) at (1,3) {1};
@@ -99,9 +74,9 @@ First, all edges from node 1 reduce distances:
 \path[draw=red,thick,->,line width=2pt] (1) -- (4);
 \end{tikzpicture}
 \end{center}
-After this, edges
-$2 \rightarrow 5$ and $3 \rightarrow 4$
-reduce distances:
+پس از این، یال‌های
+$2 \rightarrow 5$ و $3 \rightarrow 4$
+فاصله‌ها را کاهش می‌دهند:
 \begin{center}
 \begin{tikzpicture}
 \node[draw, circle] (1) at (1,3) {1};
@@ -126,7 +101,7 @@ reduce distances:
 \path[draw=red,thick,->,line width=2pt] (3) -- (4);
 \end{tikzpicture}
 \end{center}
-Finally, there is one more change:
+در نهایت یک تغییر دیگر وجود دارد:
 \begin{center}
 \begin{tikzpicture}
 \node[draw, circle] (1) at (1,3) {1};
@@ -151,15 +126,14 @@ Finally, there is one more change:
 \end{tikzpicture}
 \end{center}
 
-After this, no edge can reduce any distance.
-This means that the distances are final,
-and we have successfully
-calculated the shortest distances
-from the starting node to all nodes of the graph.
+پس از این، هیچ یالی نمی‌تواند هیچ فاصله‌ای را کاهش دهد.
+این یعنی فاصله‌ها نهایی هستند
+و ما با موفقیت کوتاه‌ترین فاصله‌ها را
+از گره آغازین به تمام گره‌های گراف محاسبه کرده‌ایم.
 
-For example, the shortest distance 3
-from node 1 to node 5 corresponds to
-the following path:
+برای نمونه، کوتاه‌ترین فاصله 3
+از گره 1 به گره 5 متناظر با
+مسیر زیر است:
 
 \begin{center}
 \begin{tikzpicture}
@@ -187,25 +161,20 @@ the following path:
 \end{tikzpicture}
 \end{center}
 
-\subsubsection{Implementation}
+\subsubsection{پیاده‌سازی}
 
-The following implementation of the
-Bellman–Ford algorithm determines the shortest distances
-from a node $x$ to all nodes of the graph.
-The code assumes that the graph is stored
-as an edge list \texttt{edges}
-that consists of tuples of the form $(a,b,w)$,
-meaning that there is an edge from node $a$ to node $b$
-with weight $w$.
+پیاده‌سازی زیر از الگوریتم بلمن–فورد
+کوتاه‌ترین فاصله‌ها را از یک گره $x$ به تمام گره‌های گراف تعیین می‌کند.
+کد فرض می‌کند گراف به‌صورت فهرست یال‌ها \texttt{edges}
+شامل چندتایی‌هایی به شکل $(a,b,w)$ ذخیره شده است،
+به این معنی که یالی از گره $a$ به گره $b$ با وزن $w$ وجود دارد.
 
-The algorithm consists of $n-1$ rounds,
-and on each round the algorithm goes through
-all edges of the graph and tries to
-reduce the distances.
-The algorithm constructs an array \texttt{distance}
-that will contain the distances from $x$
-to all nodes of the graph.
-The constant \texttt{INF} denotes an infinite distance.
+این الگوریتم از $n-1$ دور تشکیل شده است
+و در هر دور، تمام یال‌های گراف را بررسی کرده
+و تلاش می‌کند فاصله‌ها را کاهش دهد.
+الگوریتم یک آرایه \texttt{distance} می‌سازد
+که شامل فاصله‌ها از $x$ به تمام رأس‌های گراف خواهد بود.
+ثابت \texttt{INF} نشان‌دهنده فاصله بی‌نهایت است.
 
 \begin{lstlisting}
 for (int i = 1; i <= n; i++) distance[i] = INF;
@@ -219,26 +188,26 @@ for (int i = 1; i <= n-1; i++) {
 }
 \end{lstlisting}
 
-The time complexity of the algorithm is $O(nm)$,
-because the algorithm consists of $n-1$ rounds and
-iterates through all $m$ edges during a round.
-If there are no negative cycles in the graph,
-all distances are final after $n-1$ rounds,
-because each shortest path can contain at most $n-1$ edges.
+پیچیدگی زمانی الگوریتم $O(nm)$ است،
+زیرا الگوریتم شامل $n-1$ دور است و
+در طول یک دور روی تمام $m$ یال پیمایش می‌کند.
+اگر هیچ دور منفی در گراف وجود نداشته باشد،
+تمام فاصله‌ها پس از $n-1$ دور نهایی می‌شوند،
+زیرا هر کوتاه‌ترین مسیر می‌تواند حداکثر شامل $n-1$ یال باشد.
 
-In practice, the final distances can usually
-be found faster than in $n-1$ rounds.
-Thus, a possible way to make the algorithm more efficient
-is to stop the algorithm if no distance
-can be reduced during a round.
+در عمل، فاصله‌های نهایی معمولاً
+سریع‌تر از $n-1$ دور پیدا می‌شوند.
+بنابراین، یک روش ممکن برای افزایش کارایی الگوریتم
+این است که اگر در طول یک دور هیچ فاصله‌ای کاهش نیافت،
+اجرای الگوریتم متوقف شود.
 
-\subsubsection{Negative cycles}
+\subsubsection{دورهای منفی}
 
-\index{negative cycle}
+\index{دور منفی}
 
-The Bellman–Ford algorithm can also be used to
-check if the graph contains a cycle with negative length.
-For example, the graph
+الگوریتم بلمن-فورد همچنین می‌تواند برای
+بررسی وجود دور با طول منفی در گراف به کار رود.
+برای نمونه، گراف
 
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
@@ -255,46 +224,36 @@ For example, the graph
 \end{tikzpicture}
 \end{center}
 \noindent
-contains a negative cycle
+شامل یک دور منفی
 $2 \rightarrow 3 \rightarrow 4 \rightarrow 2$
-with length $-4$.
+با طول $-4$ است.
 
-If the graph contains a negative cycle,
-we can shorten infinitely many times
-any path that contains the cycle by repeating the cycle
-again and again.
-Thus, the concept of a shortest path
-is not meaningful in this situation.
+اگر گراف شامل دور منفی باشد،
+می‌توان هر مسیری را که شامل این دور است،
+با تکرار چندباره دور به تعداد نامتناهی کوتاه‌تر کرد.
+بنابراین، مفهوم کوتاه‌ترین مسیر در این وضعیت معنایی ندارد.
 
-A negative cycle can be detected
-using the Bellman–Ford algorithm by
-running the algorithm for $n$ rounds.
-If the last round reduces any distance,
-the graph contains a negative cycle.
-Note that this algorithm can be used to
-search for
-a negative cycle in the whole graph
-regardless of the starting node.
+یک دور منفی را می‌توان با اجرای الگوریتم بلمن-فورد
+به مدت $n$ دور شناسایی کرد.
+اگر دور آخر فاصله‌ای را کاهش دهد،
+گراف شامل دور منفی است.
+توجه کنید که این الگوریتم می‌تواند برای
+یافتن دور منفی در کل گراف بدون توجه به رأس شروع استفاده شود.
 
-\subsubsection{SPFA algorithm}
+\subsubsection{الگوریتم SPFA}
 
-\index{SPFA algorithm}
+\index{الگوریتم SPFA}
 
-The \key{SPFA algorithm} (''Shortest Path Faster Algorithm'') \cite{fan94}
-is a variant of the Bellman–Ford algorithm,
-that is often more efficient than the original algorithm.
-The SPFA algorithm does not go through all the edges on each round,
-but instead, it chooses the edges to be examined
-in a more intelligent way.
+\key{الگوریتم SPFA} (کوتاه‌ترین مسیر سریع‌تر) \cite{fan94}
+گونه‌ای از الگوریتم بلمن-فورد است
+که اغلب کارایی بیشتری نسبت به الگوریتم اصلی دارد.
+الگوریتم SPFA در هر دور از تمام یال‌ها عبور نمی‌کند،
+بلکه یال‌ها را برای بررسی به روش هوشمندانه‌تری انتخاب می‌کند.
 
-The algorithm maintains a queue of nodes that might
-be used for reducing the distances.
-First, the algorithm adds the starting node $x$
-to the queue.
-Then, the algorithm always processes the
-first node in the queue, and when an edge
-$a \rightarrow b$ reduces a distance,
-node $b$ is added to the queue.
+این الگوریتم صف گره‌هایی که ممکن است برای کاهش فاصله‌ها استفاده شوند نگه می‌دارد.
+ابتدا الگوریتم گره شروع $x$ را به صف اضافه می‌کند.
+سپس همیشه اولین گره صف را پردازش می‌کند، و وقتی یال $a \rightarrow b$ فاصله‌ای را کاهش می‌دهد،
+گره $b$ به صف اضافه می‌شود.
 % 
 % The following implementation uses a 
 % \texttt{queue} \texttt{q}.
@@ -319,42 +278,26 @@ node $b$ is added to the queue.
 % }
 % \end{lstlisting}
 
-The efficiency of the SPFA algorithm depends
-on the structure of the graph:
-the algorithm is often efficient,
-but its worst case time complexity is still
-$O(nm)$ and it is possible to create inputs
-that make the algorithm as slow as the
-original Bellman–Ford algorithm.
+کارایی الگوریتم SPFA وابسته به ساختار گراف است:
+الگوریتم اغلب کارا است،
+اما بدترین پیچیدگی زمانی آن همچنان $O(nm)$ است و ساخت ورودی‌هایی که الگوریتم را به کندی الگوریتم اصلی بلمن-فورد کنند ممکن است.
 
-\section{Dijkstra's algorithm}
+\section{الگوریتم دایکسترا}
 
-\index{Dijkstra's algorithm}
+\index{الگوریتم دایکسترا}
 
-\key{Dijkstra's algorithm}\footnote{E. W. Dijkstra published the algorithm in 1959 \cite{dij59};
+\key{الگوریتم دایکسترا}\footnote{E. W. Dijkstra published the algorithm in 1959 \cite{dij59};
 however, his original paper does not mention how to implement the algorithm efficiently.}
-finds shortest
-paths from the starting node to all nodes of the graph,
-like the Bellman–Ford algorithm.
-The benefit of Dijsktra's algorithm is that
-it is more efficient and can be used for
-processing large graphs.
-However, the algorithm requires that there
-are no negative weight edges in the graph.
+کوتاه‌ترین مسیرها از گره شروع به تمام گره‌های گراف را مثل الگوریتم بلمن-فورد پیدا می‌کند.
+مزیت الگوریتم دایکسترا کارایی بالاتر و قابلیت پردازش گراف‌های بزرگ است.
+با این حال، الگوریتم نبود یال با وزن منفی در گراف را شرط می‌داند.
 
-Like the Bellman–Ford algorithm,
-Dijkstra's algorithm maintains distances
-to the nodes and reduces them during the search.
-Dijkstra's algorithm is efficient, because
-it only processes
-each edge in the graph once, using the fact
-that there are no negative edges.
+مانند الگوریتم بلمن-فورد، الگوریتم دایکسترا فاصله‌ها تا گره‌ها را نگه می‌دارد و حین جستجو کاهش می‌دهد.
+الگوریتم دایکسترا کارا است، چون با تکیه بر نبود یال‌های منفی، هر یال گراف را فقط یک بار پردازش می‌کند.
 
-\subsubsection{Example}
+\subsubsection{مثال}
 
-Let us consider how Dijkstra's algorithm
-works in the following graph when the
-starting node is node 1:
+عملکرد الگوریتم دایکسترا در گراف زیر با شروع از گره ۱ را بررسی می‌کنیم:
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
 \node[draw, circle] (1) at (1,3) {3};
@@ -377,18 +320,18 @@ starting node is node 1:
 \path[draw,thick,-] (4) -- node[font=\small,label=below:1] {} (5);
 \end{tikzpicture}
 \end{center}
-Like in the Bellman–Ford algorithm,
-initially the distance to the starting node is 0
-and the distance to all other nodes is infinite.
+مشابه الگوریتم بلمن-فورد،
+در ابتدا فاصله تا رأس آغازین ۰
+و فاصله تا تمام رأس‌های دیگر بی‌نهایت است.
 
-At each step, Dijkstra's algorithm selects a node
-that has not been processed yet and whose distance
-is as small as possible.
-The first such node is node 1 with distance 0.
+در هر گام، الگوریتم دایکسترا رأسی را انتخاب می‌کند
+که هنوز پردازش نشده و فاصله‌اش
+تا حد امکان کمینه است.
+نخستین رأس با این مشخصه، رأس ۱ با فاصله ۰ است.
 
-When a node is selected, the algorithm
-goes through all edges that start at the node
-and reduces the distances using them:
+وقتی رأسی انتخاب شد، الگوریتم
+تمام یال‌های خروجی از آن را بررسی می‌کند
+و فاصله‌ها را به کمک آن‌ها کاهش می‌دهد:
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
 \node[draw, circle] (1) at (1,3) {3};
@@ -415,12 +358,12 @@ and reduces the distances using them:
 \path[draw=red,thick,->,line width=2pt] (4) -- (5);
 \end{tikzpicture}
 \end{center}
-In this case,
-the edges from node 1 reduced the distances of
-nodes 2, 4 and 5, whose distances are now 5, 9 and 1.
+در این حالت،
+یال‌های رأس ۱ فاصله رأس‌های
+۲، ۴ و ۵ را کاهش دادند؛ این فاصله‌ها اکنون ۵، ۹ و ۱ هستند.
 
-The next node to be processed is node 5 with distance 1.
-This reduces the distance to node 4 from 9 to 3:
+رأس بعدی برای پردازش، رأس ۵ با فاصله ۱ است.
+این انتخاب فاصله تا رأس ۴ را از ۹ به ۳ کاهش می‌دهد:
 \begin{center}
 \begin{tikzpicture}
 \node[draw, circle] (1) at (1,3) {3};
@@ -445,8 +388,8 @@ This reduces the distance to node 4 from 9 to 3:
 \path[draw=red,thick,->,line width=2pt] (5) -- (2);
 \end{tikzpicture}
 \end{center}
-After this, the next node is node 4, which reduces
-the distance to node 3 to 9:
+پس از این، گره بعدی گره ۴ است که
+فاصله تا گره ۳ را به ۹ کاهش می‌دهد:
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
 \node[draw, circle] (1) at (1,3) {3};
@@ -472,14 +415,14 @@ the distance to node 3 to 9:
 \end{tikzpicture}
 \end{center}
 
-A remarkable property in Dijkstra's algorithm is that
-whenever a node is selected, its distance is final.
-For example, at this point of the algorithm,
-the distances 0, 1 and 3 are the final distances
-to nodes 1, 5 and 4.
+ویژگی قابل توجه در الگوریتم دایکسترا این است که
+هر زمان گره‌ای انتخاب شود، فاصله آن نهایی است.
+برای نمونه، در این مرحله از الگوریتم،
+فواصل ۰، ۱ و ۳ فواصل نهایی
+تا گره‌های ۱، ۵ و ۴ هستند.
 
-After this, the algorithm processes the two
-remaining nodes, and the final distances are as follows:
+پس از این، الگوریتم دو گره باقی‌مانده
+را پردازش می‌کند و فواصل نهایی به این صورت خواهند بود:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
@@ -504,14 +447,13 @@ remaining nodes, and the final distances are as follows:
 \end{tikzpicture}
 \end{center}
 
-\subsubsection{Negative edges}
+\subsubsection{یال‌های منفی}
 
-The efficiency of Dijkstra's algorithm is
-based on the fact that the graph does not
-contain negative edges.
-If there is a negative edge,
-the algorithm may give incorrect results.
-As an example, consider the following graph:
+کارایی الگوریتم دایکسترا مبتنی بر این است
+که گراف یال منفی نداشته باشد.
+اگر یال منفی وجود داشته باشد،
+الگوریتم ممکن است نتایج نادرست بدهد.
+به عنوان مثال، گراف زیر را در نظر بگیرید:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
@@ -527,41 +469,31 @@ As an example, consider the following graph:
 \end{tikzpicture}
 \end{center}
 \noindent
-The shortest path from node 1 to node 4 is
+کوتاه‌ترین مسیر از رأس ۱ به رأس ۴ مسیر
 $1 \rightarrow 3 \rightarrow 4$
-and its length is 1.
-However, Dijkstra's algorithm
-finds the path $1 \rightarrow 2 \rightarrow 4$
-by following the minimum weight edges.
-The algorithm does not take into account that
-on the other path, the weight $-5$
-compensates the previous large weight $6$.
+با طول ۱ است.
+با این حال، الگوریتم دایکسترا با دنبال کردن یال‌های با کمترین وزن،
+مسیر $1 \rightarrow 2 \rightarrow 4$ را پیدا می‌کند.
+این الگوریتم در نظر نمی‌گیرد که در مسیر دیگر،
+وزن $-5$ وزن بزرگ قبلی یعنی ۶ را جبران می‌کند.
 
-\subsubsection{Implementation}
+\subsubsection{پیاده‌سازی}
 
-The following implementation of Dijkstra's algorithm
-calculates the minimum distances from a node $x$
-to other nodes of the graph.
-The graph is stored as adjacency lists
-so that \texttt{adj[$a$]} contains a pair $(b,w)$
-always when there is an edge from node $a$ to node $b$
-with weight $w$.
+پیاده‌سازی زیر از الگوریتم دایکسترا،
+کمترین فاصله از رأس $x$ به سایر رئوس گراف را محاسبه می‌کند.
+گراف به صورت لیست‌های مجاورت ذخیره می‌شود به طوری که هرگاه یالی از رأس $a$ به رأس $b$ با وزن $w$ وجود داشته باشد،
+\texttt{adj[$a$]} شامل جفت $(b,w)$ است.
 
-An efficient implementation of Dijkstra's algorithm
-requires that it is possible to efficiently find the
-minimum distance node that has not been processed.
-An appropriate data structure for this is a priority queue
-that contains the nodes ordered by their distances.
-Using a priority queue, the next node to be processed
-can be retrieved in logarithmic time.
+پیاده‌سازی کارآمد الگوریتم دایکسترا نیازمند آن است که بتوان
+رأس با کمترین فاصله را که هنوز پردازش نشده است، به صورت بهینه پیدا کرد.
+داده‌ساختار مناسب برای این کار یک صف اولویت‌دار است
+که رئوس را بر اساس فاصله‌شان مرتب نگه می‌دارد.
+با استفاده از صف اولویت‌دار، رأس بعدی برای پردازش در زمان لگاریتمی قابل بازیابی است.
 
-In the following code, the priority queue
-\texttt{q} contains pairs of the form $(-d,x)$,
-meaning that the current distance to node $x$ is $d$.
-The array $\texttt{distance}$ contains the distance to
-each node, and the array $\texttt{processed}$ indicates
-whether a node has been processed.
-Initially the distance is $0$ to $x$ and $\infty$ to all other nodes.
+در کد زیر، صف اولویت‌دار \texttt{q} شامل جفت‌هایی به فرم $(-d,x)$ است؛
+به این معنی که فاصله فعلی تا رأس $x$ برابر $d$ است.
+آرایه $\texttt{distance}$ شامل فاصله تا هر رأس است و آرایه $\texttt{processed}$ نشان می‌دهد که آیا یک رأس پردازش شده است یا خیر.
+در ابتدا فاصله تا $x$ برابر $0$ و برای سایر رئوس $\infty$ است.
 
 \begin{lstlisting}
 for (int i = 1; i <= n; i++) distance[i] = INF;
@@ -581,48 +513,29 @@ while (!q.empty()) {
 }
 \end{lstlisting}
 
-Note that the priority queue contains \emph{negative}
-distances to nodes.
-The reason for this is that the
-default version of the C++ priority queue finds maximum
-elements, while we want to find minimum elements.
-By using negative distances,
-we can directly use the default priority queue\footnote{Of
-course, we could also declare the priority queue as in Chapter 4.5
-and use positive distances, but the implementation would be a bit longer.}.
-Also note that there may be several instances of the same
-node in the priority queue; however, only the instance with the
-minimum distance will be processed.
+توجه کنید که صف اولویت‌دار شامل فاصله‌های \emph{منفی} تا رئوس است.
+دلیل این موضوع این است که نسخه پیش‌فرض صف اولویت‌دار در C++،
+بیشترین عنصر را پیدا می‌کند، در حالی که ما به دنبال کمترین عنصر هستیم.
+با استفاده از فاصله‌های منفی، می‌توان مستقیماً از صف اولویت‌دار پیش‌فرض استفاده کرد\footnote{البته
+می‌توانستیم صف اولویت‌دار را مشابه بخش ۴.۵ تعریف کرده و از فاصله‌های مثبت استفاده کنیم، اما پیاده‌سازی کمی طولانی‌تر می‌شد.}.
+همچنین توجه داشته باشید که ممکن است چندین نمونه از یک رأس درون صف اولویت‌دار قرار گیرد؛
+با این حال، فقط نمونه با کمترین فاصله پردازش خواهد شد.
 
-The time complexity of the above implementation is
-$O(n+m \log m)$, because the algorithm goes through
-all nodes of the graph and adds for each edge
-at most one distance to the priority queue.
+پیچیدگی زمانی پیاده‌سازی فوق $O(n+m \log m)$ است،
+زیرا الگوریتم تمام رئوس گراف را پیمایش کرده و به ازای هر یال،
+حداکثر یک فاصله به صف اولویت‌دار اضافه می‌کند.
 
-\section{Floyd–Warshall algorithm}
+\section{الگوریتم فلوید-وارشال}
 
-\index{Floyd–Warshall algorithm}
+\index{الگوریتم فلوید-وارشال}
 
-The \key{Floyd–Warshall algorithm}\footnote{The algorithm
-is named after R. W. Floyd and S. Warshall
-who published it independently in 1962 \cite{flo62,war62}.}
-provides an alternative way to approach the problem
-of finding shortest paths.
-Unlike the other algorithms of this chapter,
-it finds all shortest paths between the nodes
-in a single run.
+\key{الگوریتم فلوید–وارشال}\footnote{این الگوریتم به نام‌های آر. دبلیو. فلوید و اس. وارشال نام‌گذاری شده است که آن را به طور مستقل در سال ۱۹۶۲ منتشر کردند \cite{flo62,war62}.} رویکرد دیگری برای حل مسئله یافتن کوتاه‌ترین مسیرها ارائه می‌دهد. بر خلاف سایر الگوریتم‌های این فصل، این الگوریتم تمام کوتاه‌ترین مسیرهای بین گره‌ها را در یک بار اجرا پیدا می‌کند.
 
-The algorithm maintains a two-dimensional array
-that contains distances between the nodes.
-First, distances are calculated only using
-direct edges between the nodes,
-and after this, the algorithm reduces distances
-by using intermediate nodes in paths.
+این الگوریتم یک آرایه دو‌بعدی شامل فاصله‌های بین گره‌ها را نگهداری می‌کند. ابتدا، فاصله‌ها فقط با استفاده از یال‌های مستقیم بین گره‌ها محاسبه می‌شوند، و پس از آن، الگوریتم با استفاده از گره‌های میانی در مسیرها، فاصله‌ها را کاهش می‌دهد.
 
-\subsubsection{Example}
+\subsubsection{مثال}
 
-Let us consider how the Floyd–Warshall algorithm
-works in the following graph:
+نحوه کارکرد الگوریتم فلوید–وارشال را در گراف زیر بررسی می‌کنیم:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
@@ -641,12 +554,9 @@ works in the following graph:
 \end{tikzpicture}
 \end{center}
 
-Initially, the distance from each node to itself is $0$,
-and the distance between nodes $a$ and $b$ is $x$
-if there is an edge between nodes $a$ and $b$ with weight $x$.
-All other distances are infinite.
+در ابتدا، فاصله هر گره تا خودش برابر $0$ است، و اگر یالی با وزن $x$ بین گره‌های $a$ و $b$ وجود داشته باشد، فاصله بین این دو گره $x$ خواهد بود. سایر فاصله‌ها بی‌نهایت هستند.
 
-In this graph, the initial array is as follows:
+در این گراف، آرایه اولیه به صورت زیر است:
 \begin{center}
 \begin{tabular}{r|rrrrr}
  & 1 & 2 & 3 & 4 & 5 \\
@@ -659,16 +569,9 @@ In this graph, the initial array is as follows:
 \end{tabular}
 \end{center}
 \vspace{10pt}
-The algorithm consists of consecutive rounds.
-On each round, the algorithm selects a new node
-that can act as an intermediate node in paths from now on,
-and distances are reduced using this node.
+الگوریتم شامل دورهای متوالی است. در هر دور، الگوریتم گره جدیدی را انتخاب می‌کند که از این پس می‌تواند به عنوان گره میانی در مسیرها عمل کند، و فاصله‌ها با استفاده از این گره کاهش می‌یابند.
 
-On the first round, node 1 is the new intermediate node.
-There is a new path between nodes 2 and 4
-with length 14, because node 1 connects them.
-There is also a new path 
-between nodes 2 and 5 with length 6.
+در دور اول، گره ۱ گره میانی جدید است. یک مسیر جدید بین گره‌های ۲ و ۴ با طول ۱۴ پدید می‌آید، زیرا گره ۱ آن‌ها را به هم وصل می‌کند. همچنین یک مسیر جدید بین گره‌های ۲ و ۵ با طول ۶ ایجاد می‌شود.
 
 \begin{center}
 \begin{tabular}{r|rrrrr}
@@ -683,9 +586,7 @@ between nodes 2 and 5 with length 6.
 \end{center}
 \vspace{10pt}
 
-On the second round, node 2 is the new intermediate node.
-This creates new paths between nodes 1 and 3
-and between nodes 3 and 5:
+در دور دوم، گره ۲ گره میانی جدید است. این کار مسیرهای جدیدی بین گره‌های ۱ و ۳ و بین گره‌های ۳ و ۵ ایجاد می‌کند:
 
 \begin{center}
 \begin{tabular}{r|rrrrr}
@@ -700,8 +601,8 @@ and between nodes 3 and 5:
 \end{center}
 \vspace{10pt}
 
-On the third round, node 3 is the new intermediate round.
-There is a new path between nodes 2 and 4:
+در دور سوم، گره ۳ گره میانی جدید است.
+مسیر جدیدی بین گره‌های ۲ و ۴ ایجاد می‌شود:
 
 \begin{center}
 \begin{tabular}{r|rrrrr}
@@ -716,10 +617,10 @@ There is a new path between nodes 2 and 4:
 \end{center}
 \vspace{10pt}
 
-The algorithm continues like this,
-until all nodes have been appointed intermediate nodes.
-After the algorithm has finished, the array contains
-the minimum distances between any two nodes:
+الگوریتم به همین ترتیب ادامه می‌یابد
+تا زمانی که تمام گره‌ها به عنوان گره میانی تعیین شوند.
+پس از پایان الگوریتم، آرایه شامل
+کوتاه‌ترین فاصله‌ها بین هر دو گره است:
 
 \begin{center}
 \begin{tabular}{r|rrrrr}
@@ -733,9 +634,9 @@ the minimum distances between any two nodes:
 \end{tabular}
 \end{center}
 
-For example, the array tells us that the
-shortest distance between nodes 2 and 4 is 8.
-This corresponds to the following path:
+برای مثال، آرایه نشان می‌دهد که
+کوتاه‌ترین فاصله بین گره‌های ۲ و ۴ برابر ۸ است.
+این متناظر با مسیر زیر است:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
@@ -758,16 +659,14 @@ This corresponds to the following path:
 \end{tikzpicture}
 \end{center}
 
-\subsubsection{Implementation}
+\subsubsection{پیاده‌سازی}
 
-The advantage of the
-Floyd–Warshall algorithm that it is
-easy to implement.
-The following code constructs a
-distance matrix where $\texttt{distance}[a][b]$
-is the shortest distance between nodes $a$ and $b$.
-First, the algorithm initializes \texttt{distance}
-using the adjacency matrix \texttt{adj} of the graph:
+مزیت الگوریتم فلوید-وارشال
+سادگی پیاده‌سازی آن است.
+کد زیر ماتریس فاصله‌ای می‌سازد که در آن $\texttt{distance}[a][b]$
+کوتاه‌ترین فاصله بین گره‌های $a$ و $b$ است.
+ابتدا، الگوریتم \texttt{distance} را
+با استفاده از ماتریس مجاورت \texttt{adj} گراف مقداردهی اولیه می‌کند:
 
 \begin{lstlisting}
 for (int i = 1; i <= n; i++) {
@@ -778,7 +677,7 @@ for (int i = 1; i <= n; i++) {
     }
 }
 \end{lstlisting}
-After this, the shortest distances can be found as follows:
+سپس، کوتاه‌ترین فاصله‌ها به صورت زیر محاسبه می‌شوند:
 \begin{lstlisting}
 for (int k = 1; k <= n; k++) {
     for (int i = 1; i <= n; i++) {
@@ -790,13 +689,6 @@ for (int k = 1; k <= n; k++) {
 }
 \end{lstlisting}
 
-The time complexity of the algorithm is $O(n^3)$,
-because it contains three nested loops
-that go through the nodes of the graph.
+پیچیدگی زمانی الگوریتم $O(n^3)$ است، زیرا شامل سه حلقه تو‌در‌تو است که روی رأس‌های گراف پیمایش می‌کنند.
 
-Since the implementation of the Floyd–Warshall
-algorithm is simple, the algorithm can be
-a good choice even if it is only needed to find a
-single shortest path in the graph.
-However, the algorithm can only be used when the graph
-is so small that a cubic time complexity is fast enough.
+از آنجا که پیاده‌سازی الگوریتم فلوید-وارشال ساده است، حتی اگر فقط پیدا کردن یک کوتاه‌ترین مسیر در گراف نیاز باشد، این الگوریتم می‌تواند انتخاب خوبی باشد. با این حال، الگوریتم تنها زمانی قابل استفاده است که گراف به اندازه‌ای کوچک باشد که پیچیدگی زمانی مکعبی برای آن به اندازه کافی سریع باشد.
