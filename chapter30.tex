@@ -1,39 +1,30 @@
-\chapter{Sweep line algorithms}
+\chapter{الگوریتم‌های خط جاروب}
 
 \index{sweep line}
 
-Many geometric problems can be solved using
-\key{sweep line} algorithms.
-The idea in such algorithms is to represent
-an instance of the problem as a set of events that correspond
-to points in the plane.
-The events are processed in increasing order
-according to their x or y coordinates.
+بسیاری از مسئله‌های هندسی با الگوریتم‌های \key{خط جاروب} (sweep line) حل می‌شوند.
+ایده کار نمایش مسئله به شکل مجموعه‌ای از رویدادها است که متناظر با نقاطی در صفحه هستند.
+رویدادها به ترتیب صعودی بر اساس مختصات x یا y پردازش می‌شوند.
 
-As an example, consider the following problem:
-There is a company that has $n$ employees,
-and we know for each employee their arrival and
-leaving times on a certain day.
-Our task is to calculate the maximum number of
-employees that were in the office at the same time.
+به عنوان مثال، مسئله زیر را در نظر بگیرید:
+شرکتی دارای $n$ کارمند است.
+زمان ورود و خروج هر کارمند در روزی مشخص معلوم است.
+هدف، محاسبه بیشینه تعداد کارمندانی است که هم‌زمان در محل کار حضور داشته‌اند.
 
-The problem can be solved by modeling the situation
-so that each employee is assigned two events that
-correspond to their arrival and leaving times.
-After sorting the events, we go through them
-and keep track of the number of people in the office.
-For example, the table
+مسئله با مدل‌سازی شرایط حل می‌شود؛ به طوری که به هر کارمند دو رویداد متناظر با زمان ورود و خروج نسبت داده می‌شود.
+پس از مرتب‌سازی رویدادها، آن‌ها را پیمایش کرده و تعداد افراد حاضر در دفتر شمرده می‌شود.
+به عنوان مثال، جدول
 \begin{center}
 \begin{tabular}{ccc}
-person & arrival time & leaving time \\
+شخص & زمان ورود & زمان خروج \\
 \hline
-John & 10 & 15 \\
-Maria & 6 & 12 \\
-Peter & 14 & 16 \\
-Lisa & 5 & 13 \\
+جان & 10 & 15 \\
+ماریا & 6 & 12 \\
+پیتر & 14 & 16 \\
+لیزا & 5 & 13 \\
 \end{tabular}
 \end{center}
-corresponds to the following events:
+متناظر با رویدادهای زیر است:
 \begin{center}
 \begin{tikzpicture}[scale=0.6]
 \draw (0,0) rectangle (17,-6.5);
@@ -57,16 +48,11 @@ corresponds to the following events:
 \node at (2,-5.5) {Lisa};
 \end{tikzpicture}
 \end{center}
-We go through the events from left to right
-and maintain a counter.
-Always when a person arrives, we increase
-the value of the counter by one,
-and when a person leaves,
-we decrease the value of the counter by one.
-The answer to the problem is the maximum
-value of the counter during the algorithm.
+رویدادها از چپ به راست پیمایش شده و شمارنده‌ای نگهداری می‌شود.
+با ورود هر شخص یک واحد به شمارنده اضافه شده و با خروج شخص یک واحد کم می‌شود.
+پاسخ مسئله، بیشینه مقدار شمارنده در طول اجرای الگوریتم است.
 
-In the example, the events are processed as follows:
+در مثال فوق، پردازش رویدادها به این ترتیب است:
 \begin{center}
 \begin{tikzpicture}[scale=0.6]
 \path[draw,thick,->] (0.5,0.5) -- (16.5,0.5);
@@ -118,24 +104,16 @@ In the example, the events are processed as follows:
 \node at (13,-8) {$1$};
 \end{tikzpicture}
 \end{center}
-The symbols $+$ and $-$ indicate whether the
-value of the counter increases or decreases,
-and the value of the counter is shown below.
-The maximum value of the counter is 3
-between John's arrival and Maria's leaving.
+نمادهای $+$ و $-$ نشان می‌دهند که مقدار شمارنده افزایش یافته یا کاهش، و مقدار شمارنده در پایین نمایش داده شده است. بیشترین مقدار شمارنده برابر ۳ و در بازه زمانی بین ورود جان و خروج ماریا است.
 
-The running time of the algorithm is $O(n \log n)$,
-because sorting the events takes $O(n \log n)$ time
-and the rest of the algorithm takes $O(n)$ time.
+زمان اجرای الگوریتم $O(n \log n)$ است؛ مرتب‌سازی رویدادها $O(n \log n)$ زمان می‌برد و باقی الگوریتم نیازمند $O(n)$ زمان است.
 
-\section{Intersection points}
+\section{نقاط تقاطع}
 
-\index{intersection point}
+\index{نقطه تقاطع}
 
-Given a set of $n$ line segments, each of them being either
-horizontal or vertical, consider the problem of
-counting the total number of intersection points.
-For example, when the line segments are
+مجموعه‌ای از $n$ پاره‌خط افقی یا عمودی داده شده است؛ مسئله، شمارش کل نقاط تقاطع است.
+برای نمونه، پاره‌خط‌های زیر را در نظر بگیرید:
 \begin{center}
 \begin{tikzpicture}[scale=0.5]
 \path[draw,thick,-] (0,2) -- (5,2);
@@ -145,7 +123,7 @@ For example, when the line segments are
 \path[draw,thick,-] (8,2) -- (8,5);
 \end{tikzpicture}
 \end{center}
-there are three intersection points:
+در اینجا سه نقطه تقاطع وجود دارد:
 \begin{center}
 \begin{tikzpicture}[scale=0.5]
 \path[draw,thick,-] (0,2) -- (5,2);
@@ -161,23 +139,17 @@ there are three intersection points:
 \end{tikzpicture}
 \end{center}
 
-It is easy to solve the problem in $O(n^2)$ time,
-because we can go through all possible pairs of line segments
-and check if they intersect.
-However, we can solve the problem more efficiently
-in $O(n \log n)$ time using a sweep line algorithm
-and a range query data structure.
+حل مسئله در زمان $O(n^2)$ ساده است؛ تمام جفت پاره‌خط‌های ممکن بررسی و تقاطع آن‌ها ارزیابی می‌شود.
+با این حال، می‌توان مسئله را کارآمدتر در زمان $O(n \log n)$ با الگوریتم خط جاروب و یک ساختار داده پرس‌وجوی بازه‌ای حل کرد.
 
-The idea is to process the endpoints of the line
-segments from left to right and 
-focus on three types of events:
+ایده کار، پردازش نقاط انتهایی پاره‌خط‌ها از چپ به راست و تمرکز روی سه نوع رویداد است:
 \begin{enumerate}[noitemsep]
-\item[(1)] horizontal segment begins
-\item[(2)] horizontal segment ends
-\item[(3)] vertical segment
+\item[(1)] شروع پاره‌خط افقی
+\item[(2)] پایان پاره‌خط افقی
+\item[(3)] پاره‌خط عمودی
 \end{enumerate}
 
-The following events correspond to the example:
+رویدادهای متناظر با مثال:
 \begin{center}
 \begin{tikzpicture}[scale=0.6]
 \path[draw,dashed] (0,2) -- (5,2);
@@ -198,34 +170,32 @@ The following events correspond to the example:
 \end{tikzpicture}
 \end{center}
 
-We go through the events from left to right
-and use a data structure that maintains a set of
-y coordinates where there is an active horizontal segment.
-At event 1, we add the y coordinate of the segment
-to the set, and at event 2, we remove the
-y coordinate from the set.
+رویدادها را از چپ به راست بررسی می‌کنیم
+و از ساختمان داده‌ای استفاده می‌کنیم که مجموعه‌ای از
+مختصات‌های y مربوط به پاره‌خط‌های افقی فعال را نگه می‌دارد.
+در رویداد ۱، مختصات y پاره‌خط را به مجموعه اضافه می‌کنیم
+و در رویداد ۲، مختصات y را از مجموعه حذف می‌کنیم.
 
-Intersection points are calculated at event 3.
-When there is a vertical segment between points
-$y_1$ and $y_2$, we count the number of active
-horizontal segments whose y coordinate is between
-$y_1$ and $y_2$, and add this number to the total
-number of intersection points.
+نقاط تقاطع در رویداد ۳ محاسبه می‌شوند.
+هنگامی که یک پاره‌خط عمودی بین نقاط
+$y_1$ و $y_2$ وجود دارد، تعداد پاره‌خط‌های افقی
+فعال با مختصات y بین $y_1$ و $y_2$ را می‌شماریم
+و این مقدار را به تعداد کل نقاط تقاطع اضافه می‌کنیم.
 
-To store y coordinates of horizontal segments,
-we can use a binary indexed or segment tree,
-possibly with index compression.
-When such structures are used, processing each event
-takes $O(\log n)$ time, so the total running
-time of the algorithm is $O(n \log n)$.
+برای ذخیره مختصات‌های y پاره‌خط‌های افقی،
+می‌توان از درخت پدیده‌ای دودویی یا درخت بازه‌ای،
+احتمالاً همراه با فشرده‌سازی مختصات استفاده کرد.
+با استفاده از چنین ساختارهایی، پردازش هر رویداد
+$O(\log n)$ زمان می‌برد، بنابراین پیچیدگی زمانی
+کل الگوریتم $O(n \log n)$ است.
 
-\section{Closest pair problem}
+\section{مسئله نزدیک‌ترین جفت نقطه}
 
-\index{closest pair}
+\index{نزدیک‌ترین جفت نقطه}
 
-Given a set of $n$ points, our next problem is
-to find two points whose Euclidean distance is minimum.
-For example, if the points are
+با داشتن مجموعه‌ای از $n$ نقطه، مسئله بعدی
+یافتن دو نقطه با کمترین فاصله اقلیدسی است.
+برای مثال، اگر نقاط به صورت زیر باشند:
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \draw (0,0)--(12,0)--(12,4)--(0,4)--(0,0);
@@ -247,7 +217,7 @@ For example, if the points are
 \end{tikzpicture}
 \end{center}
 \begin{samepage}
-we should find the following points:
+باید نقاط زیر را بیابیم:
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \draw (0,0)--(12,0)--(12,4)--(0,4)--(0,0);
@@ -270,35 +240,30 @@ we should find the following points:
 \end{center}
 \end{samepage}
 
-This is another example of a problem
-that can be solved in $O(n \log n)$ time
-using a sweep line algorithm\footnote{Besides this approach,
-there is also an
-$O(n \log n)$ time divide-and-conquer algorithm \cite{sha75}
-that divides the points into two sets and recursively
-solves the problem for both sets.}.
-We go through the points from left to right
-and maintain a value $d$: the minimum distance
-between two points seen so far.
-At each point, we find the nearest point to the left.
-If the distance is less than $d$, it is the
-new minimum distance and we update
-the value of $d$.
+این نیز نمونه دیگری از مسئله‌ای است
+که می‌تواند با زمان $O(n \log n)$ با
+استفاده از الگوریتم خط جاروب حل شود\footnote{علاوه بر این روش،
+یک الگوریتم تقسیم و حل با زمان $O(n \log n)$ نیز وجود دارد \cite{sha75}
+که نقاط را به دو مجموعه تقسیم می‌کند و مسئله را
+به صورت بازگشتی برای هر دو مجموعه حل می‌کند.}.
+نقاط را از چپ به راست پیمایش می‌کنیم
+و مقداری به نام $d$ را نگه می‌داریم: کمترین فاصله
+بین دو نقطه دیده شده تا این لحظه.
+در هر نقطه، نزدیک‌ترین نقطه در سمت چپ آن را می‌یابیم.
+اگر این فاصله کمتر از $d$ باشد، این فاصله کمترین فاصله
+جدید است و مقدار $d$ را به‌روزرسانی می‌کنیم.
 
-If the current point is $(x,y)$
-and there is a point to the left
-within a distance of less than $d$,
-the x coordinate of such a point must
-be between $[x-d,x]$ and the y coordinate
-must be between $[y-d,y+d]$.
-Thus, it suffices to only consider points
-that are located in those ranges,
-which makes the algorithm efficient.
+اگر نقطه فعلی $(x,y)$ باشد
+و نقطه‌ای در سمت چپ با فاصله‌ای کمتر از $d$
+وجود داشته باشد،
+مختصات x چنین نقطه‌ای باید در بازه $[x-d,x]$
+و مختصات y آن در بازه $[y-d,y+d]$ قرار گیرد.
+بنابراین، تنها بررسی نقاط واقع در این بازه‌ها کافی است،
+که الگوریتم را کارآمد می‌سازد.
 
-For example, in the following picture, the
-region marked with dashed lines contains
-the points that can be within a distance of $d$
-from the active point:
+به عنوان مثال، در تصویر زیر،
+ناحیه مشخص شده با خط‌چین شامل نقاطی است
+که می‌توانند در فاصله کمتر از $d$ نسبت به نقطه فعال باشند:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
@@ -331,29 +296,26 @@ from the active point:
 \end{tikzpicture}
 \end{center}
 
-The efficiency of the algorithm is based on the fact
-that the region always contains
-only $O(1)$ points.
-We can go through those points in $O(\log n)$ time
-by maintaining a set of points whose x coordinate
-is between $[x-d,x]$, in increasing order according
-to their y coordinates.
+کارایی این الگوریتم مبتنی بر این واقعیت است
+که این ناحیه همواره تنها شامل $O(1)$ نقطه است.
+می‌توان این نقاط را در زمان $O(\log n)$ پیمایش کرد،
+با نگهداری مجموعه‌ای از نقاط که مختصات x آن‌ها در بازه $[x-d,x]$ است،
+مرتب شده به صورت صعودی بر اساس مختصات y آن‌ها.
 
-The time complexity of the algorithm is $O(n \log n)$,
-because we go through $n$ points and
-find for each point the nearest point to the left
-in $O(\log n)$ time.
+پیچیدگی زمانی الگوریتم $O(n \log n)$ است،
+چرا که $n$ نقطه را پیمایش می‌کنیم و
+برای هر نقطه، نزدیک‌ترین نقطه در سمت چپ را
+در زمان $O(\log n)$ می‌یابیم.
 
-\section{Convex hull problem}
+\section{مسئله پوش محدب}
 
-A \key{convex hull} is the smallest convex polygon
-that contains all points of a given set.
-Convexity means that a line segment between
-any two vertices of the polygon is completely
-inside the polygon.
+یک \key{پوش محدب} کوچک‌ترین چندضلعی محدبی است
+که تمام نقاط یک مجموعه مفروض را در بر می‌گیرد.
+محدب بودن به این معناست که پاره‌خط بین هر دو رأس چندضلعی،
+به طور کامل درون چندضلعی قرار دارد.
 
 \begin{samepage}
-For example, for the points
+به عنوان مثال، برای نقاط
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \draw (0,0) circle [radius=0.1];
@@ -373,7 +335,7 @@ For example, for the points
 \end{tikzpicture}
 \end{center}
 \end{samepage}
-the convex hull is as follows:
+پوش محدب به صورت زیر است:
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \draw (0,0)--(4,-1)--(7,1)--(6,3)--(2,4)--(0,2)--(0,0);
@@ -395,31 +357,13 @@ the convex hull is as follows:
 \end{tikzpicture}
 \end{center}
 
-\index{Andrew's algorithm}
+\index{الگوریتم اندرو}
 
-\key{Andrew's algorithm} \cite{and79} provides
-an easy way to
-construct the convex hull for a set of points
-in $O(n \log n)$ time.
-The algorithm first locates the leftmost
-and rightmost points, and then
-constructs the convex hull in two parts:
-first the upper hull and then the lower hull.
-Both parts are similar, so we can focus on
-constructing the upper hull.
+\key{الگوریتم اندرو} \cite{and79} روشی ساده برای ساخت پوش محدب مجموعه‌ای از نقاط در زمان $O(n \log n)$ ارائه می‌دهد. الگوریتم ابتدا چپ‌ترین و راست‌ترین نقاط را پیدا می‌کند، سپس پوش محدب را در دو بخش می‌سازد: اول پوش بالایی و بعد پوش پایینی. هر دو بخش مشابه‌اند، پس تمرکز روی ساخت پوش بالایی است.
 
-First, we sort the points primarily according to
-x coordinates and secondarily according to y coordinates.
-After this, we go through the points and
-add each point to the hull.
-Always after adding a point to the hull,
-we make sure that the last line segment
-in the hull does not turn left.
-As long as it turns left, we repeatedly remove the
-second last point from the hull.
+نخست، نقاط را در درجه اول بر اساس مختصات x و سپس بر اساس مختصات y مرتب می‌کنیم. پس از این، نقاط را پیمایش کرده و هر نقطه را به پوش اضافه می‌کنیم. همواره پس از افزودن یک نقطه به پوش، مطمئن می‌شویم آخرین پاره‌خط در پوش به چپ گردش نکند. تا زمانی که به چپ گردش کند، نقطه ماقبل آخر را مکرراً از پوش حذف می‌کنیم.
 
-The following pictures show how
-Andrew's algorithm works:
+تصاویر زیر نحوه کار الگوریتم اندرو را نشان می‌دهند:
 \\
 \begin{tabular}{ccccccc}
 \\
@@ -841,7 +785,3 @@ Andrew's algorithm works:
 \\
 17 & & 18 & & 19 & & 20
 \end{tabular}
-
-
-
-
