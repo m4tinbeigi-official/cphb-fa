@@ -1,39 +1,19 @@
-\chapter{Data structures}
+\chapter{ساختمان داده‌ها}
 
-\index{data structure}
+\index{data structure@ساختمان داده}
 
-A \key{data structure} is a way to store
-data in the memory of a computer.
-It is important to choose an appropriate
-data structure for a problem,
-because each data structure has its own
-advantages and disadvantages.
-The crucial question is: which operations
-are efficient in the chosen data structure?
+یک \key{ساختمان داده} روشی برای ذخیره داده‌ها در حافظه کامپیوتر است. انتخاب ساختمان داده مناسب برای هر مسئله اهمیت بالایی دارد، زیرا هر ساختمان داده مزایا و معایب خاص خود را دارد. پرسش اساسی این است: کدام عملیات‌ها در ساختمان داده انتخاب‌شده کارآمد هستند؟
 
-This chapter introduces the most important
-data structures in the C++ standard library.
-It is a good idea to use the standard library
-whenever possible,
-because it will save a lot of time.
-Later in the book we will learn about more sophisticated
-data structures that are not available
-in the standard library.
+این فصل مهم‌ترین ساختمان داده‌های موجود در کتابخانه استاندارد C++ را معرفی می‌کند. استفاده از کتابخانه استاندارد تا جای ممکن توصیه می‌شود، زیرا زمان زیادی را صرفه‌جویی می‌کند. در ادامه کتاب، ساختمان داده‌های پیشرفته‌تری را بررسی خواهیم کرد که در کتابخانه استاندارد در دسترس نیستند.
 
-\section{Dynamic arrays}
+\section{آرایه‌های پویا}
 
-\index{dynamic array}
-\index{vector}
+\index{dynamic array@آرایه پویا}
+\index{vector@بردار (vector)}
 
-A \key{dynamic array} is an array whose
-size can be changed during the execution
-of the program.
-The most popular dynamic array in C++ is
-the \texttt{vector} structure,
-which can be used almost like an ordinary array.
+یک \key{آرایه پویا} آرایه‌ای است که اندازه آن در طول اجرای برنامه قابل تغییر است. محبوب‌ترین آرایه پویا در C++ ساختار \texttt{vector} است که می‌توان از آن تقریباً مانند یک آرایه معمولی استفاده کرد.
 
-The following code creates an empty vector and
-adds three elements to it:
+کد زیر یک وکتور خالی ایجاد کرده و سه عنصر به آن اضافه می‌کند:
 
 \begin{lstlisting}
 vector<int> v;
@@ -42,7 +22,7 @@ v.push_back(2); // [3,2]
 v.push_back(5); // [3,2,5]
 \end{lstlisting}
 
-After this, the elements can be accessed like in an ordinary array:
+پس از این، دسترسی به عناصر مانند یک آرایه معمولی امکان‌پذیر است:
 
 \begin{lstlisting}
 cout << v[0] << "\n"; // 3
@@ -50,9 +30,7 @@ cout << v[1] << "\n"; // 2
 cout << v[2] << "\n"; // 5
 \end{lstlisting}
 
-The function \texttt{size} returns the number of elements in the vector.
-The following code iterates through
-the vector and prints all elements in it:
+تابع \texttt{size} تعداد عناصر موجود در وکتور را برمی‌گرداند. کد زیر روی وکتور پیمایش کرده و تمام عناصر آن را چاپ می‌کند:
 
 \begin{lstlisting}
 for (int i = 0; i < v.size(); i++) {
@@ -61,7 +39,7 @@ for (int i = 0; i < v.size(); i++) {
 \end{lstlisting}
 
 \begin{samepage}
-A shorter way to iterate through a vector is as follows:
+روش کوتاه‌تر برای پیمایش وکتور به صورت زیر است:
 
 \begin{lstlisting}
 for (auto x : v) {
@@ -70,9 +48,7 @@ for (auto x : v) {
 \end{lstlisting}
 \end{samepage}
 
-The function \texttt{back} returns the last element
-in the vector, and
-the function \texttt{pop\_back} removes the last element:
+تابع \texttt{back} آخرین عنصر وکتور را برمی‌گرداند و تابع \texttt{pop\_back} آخرین عنصر را حذف می‌کند:
 
 \begin{lstlisting}
 vector<int> v;
@@ -83,14 +59,13 @@ v.pop_back();
 cout << v.back() << "\n"; // 5
 \end{lstlisting}
 
-The following code creates a vector with five elements:
+کد زیر یک وکتور با پنج عنصر ایجاد می‌کند:
 
 \begin{lstlisting}
 vector<int> v = {2,4,2,5,1};
 \end{lstlisting}
 
-Another way to create a vector is to give the number
-of elements and the initial value for each element:
+روش دیگر ساخت وکتور، تعیین تعداد عناصر و مقدار اولیه هر عنصر است:
 
 \begin{lstlisting}
 // size 10, initial value 0
@@ -101,29 +76,21 @@ vector<int> v(10);
 vector<int> v(10, 5);
 \end{lstlisting}
 
-The internal implementation of a vector
-uses an ordinary array.
-If the size of the vector increases and
-the array becomes too small,
-a new array is allocated and all the
-elements are moved to the new array.
-However, this does not happen often and the
-average time complexity of
-\texttt{push\_back} is $O(1)$.
+پیاده‌سازی داخلی وکتور از یک آرایه معمولی استفاده می‌کند. اگر اندازه وکتور افزایش یابد و آرایه بیش از حد کوچک شود، آرایه جدیدی تخصیص داده شده و تمام عناصر به آرایه جدید منتقل می‌شوند. با این حال، این اتفاق مکرراً رخ نمی‌دهد و پیچیدگی زمانی میانگین \texttt{push\_back} برابر با $O(1)$ است.
 
-\index{string}
+\index{string@رشته (string)}
 
-The \texttt{string} structure
-is also a dynamic array that can be used almost like a vector.
-In addition, there is special syntax for strings
-that is not available in other data structures.
-Strings can be combined using the \texttt{+} symbol.
-The function $\texttt{substr}(k,x)$ returns the substring
-that begins at position $k$ and has length $x$,
-and the function $\texttt{find}(\texttt{t})$ finds the position
-of the first occurrence of a substring \texttt{t}.
+ساختار \texttt{string}
+هم آرایه پویا است، تقریباً مثل بردار کار می‌کند.
+رشته‌ها نحو اختصاصی دارند
+که در سایر ساختارهای داده نیست.
+الحاق رشته‌ها با نماد \texttt{+} انجام می‌شود.
+تابع $\texttt{substr}(k,x)$ زیررشته
+از موقعیت $k$ با طول $x$ برمی‌گرداند،
+تابع $\texttt{find}(\texttt{t})$ موقعیت
+اولین وقوع زیررشته \texttt{t} پیدا می‌کند.
 
-The following code presents some string operations:
+کد زیر عملیات رشته را نشان می‌دهد:
 
 \begin{lstlisting}
 string a = "hatti";
@@ -135,38 +102,36 @@ string c = b.substr(3,4);
 cout << c << "\n"; // tiva
 \end{lstlisting}
 
-\section{Set structures}
+\section{ساختارهای مجموعه}
 
-\index{set}
+\index{مجموعه}
 
-A \key{set} is a data structure that
-maintains a collection of elements.
-The basic operations of sets are element
-insertion, search and removal.
+یک \key{مجموعه} داده‌ساختاری است که
+دسته‌ای از عناصر را نگه می‌دارد.
+عملیات اصلی:
+درج، جستجو، حذف عنصر.
 
-The C++ standard library contains two set
-implementations:
-The structure \texttt{set} is based on a balanced
-binary tree and its operations work in $O(\log n)$ time.
-The structure \texttt{unordered\_set} uses hashing,
-and its operations work in $O(1)$ time on average.
+کتابخانه استاندارد C++ دو پیاده‌سازی دارد:
+ساختار \texttt{set} بر پایه درخت دودویی
+متوازن است، عملیات آن در زمان $O(\log n)$ اجرا می‌شود.
+ساختار \texttt{unordered\_set} از درهم‌سازی استفاده می‌کند،
+عملیات آن در حالت میانگین در زمان $O(1)$ اجرا می‌شود.
 
-The choice of which set implementation to use
-is often a matter of taste.
-The benefit of the \texttt{set} structure
-is that it maintains the order of the elements
-and provides functions that are not available
-in \texttt{unordered\_set}.
-On the other hand, \texttt{unordered\_set}
-can be more efficient.
+انتخاب نوع پیاده‌سازی سلیقه‌ای است.
+مزیت ساختار \texttt{set}:
+حفظ ترتیب عناصر،
+ارائه توابعی که
+در \texttt{unordered\_set} نیست.
+در مقابل، \texttt{unordered\_set}
+می‌تواند کارآمدتر باشد.
 
-The following code creates a set
-that contains integers,
-and shows some of the operations.
-The function \texttt{insert} adds an element to the set,
-the function \texttt{count} returns the number of occurrences
-of an element in the set,
-and the function \texttt{erase} removes an element from the set.
+کد زیر مجموعه اعداد صحیح
+می‌سازد،
+برخی عملیات را نشان می‌دهد.
+تابع \texttt{insert} عنصر به مجموعه اضافه می‌کند،
+تابع \texttt{count} تعداد تکرار
+عنصر در مجموعه را برمی‌گرداند،
+تابع \texttt{erase} عنصر از مجموعه حذف می‌کند.
 
 \begin{lstlisting}
 set<int> s;
@@ -181,12 +146,12 @@ cout << s.count(3) << "\n"; // 0
 cout << s.count(4) << "\n"; // 1
 \end{lstlisting}
 
-A set can be used mostly like a vector,
-but it is not possible to access
-the elements using the \texttt{[]} notation.
-The following code creates a set,
-prints the number of elements in it, and then
-iterates through all the elements:
+مجموعه مثل بردار استفاده می‌شود،
+اما دسترسی به عناصر
+با نماد \texttt{[]} ممکن نیست.
+کد زیر مجموعه می‌سازد،
+تعداد عناصر را چاپ می‌کند، سپس
+روی همه عناصر پیمایش می‌کند:
 \begin{lstlisting}
 set<int> s = {2,5,6,8};
 cout << s.size() << "\n"; // 4
@@ -195,15 +160,14 @@ for (auto x : s) {
 }
 \end{lstlisting}
 
-An important property of sets is
-that all their elements are \emph{distinct}.
-Thus, the function \texttt{count} always returns
-either 0 (the element is not in the set)
-or 1 (the element is in the set),
-and the function \texttt{insert} never adds
-an element to the set if it is
-already there.
-The following code illustrates this:
+ویژگی مهم مجموعه:
+تمام عناصر \emph{متمایز} هستند.
+بنابراین تابع \texttt{count} همیشه
+یا 0 (عنصر نیست)
+یا 1 (عنصر هست) برمی‌گرداند،
+تابع \texttt{insert} عنصری که قبلاً باشد را
+دوباره اضافه نمی‌کند.
+کد زیر این رفتار را نشان می‌دهد:
 
 \begin{lstlisting}
 set<int> s;
@@ -213,13 +177,13 @@ s.insert(5);
 cout << s.count(5) << "\n"; // 1
 \end{lstlisting}
 
-C++ also contains the structures
-\texttt{multiset} and \texttt{unordered\_multiset}
-that otherwise work like \texttt{set}
-and \texttt{unordered\_set}
-but they can contain multiple instances of an element.
-For example, in the following code all three instances
-of the number 5 are added to a multiset:
+سی‌پلاس‌پلاس همچنین شامل ساختارهای
+\texttt{multiset} و \texttt{unordered\_multiset}
+است که عملکردی مشابه \texttt{set}
+و \texttt{unordered\_set} دارند،
+اما می‌توانند شامل چندین نسخه از یک عنصر باشند.
+به عنوان مثال، در کد زیر هر سه نسخه از
+عدد ۵ به یک چندمجموعه اضافه می‌شوند:
 
 \begin{lstlisting}
 multiset<int> s;
@@ -228,44 +192,42 @@ s.insert(5);
 s.insert(5);
 cout << s.count(5) << "\n"; // 3
 \end{lstlisting}
-The function \texttt{erase} removes
-all instances of an element
-from a multiset:
+تابع \texttt{erase} تمام نسخه‌های یک عنصر را
+از چندمجموعه حذف می‌کند:
 \begin{lstlisting}
 s.erase(5);
 cout << s.count(5) << "\n"; // 0
 \end{lstlisting}
-Often, only one instance should be removed,
-which can be done as follows:
+اغلب، تنها حذف یک نسخه از عنصر مورد نظر است
+که می‌تواند به صورت زیر انجام شود:
 \begin{lstlisting}
 s.erase(s.find(5));
 cout << s.count(5) << "\n"; // 2
 \end{lstlisting}
 
-\section{Map structures}
+\section{ساختارهای نگاشت (Map)}
 
-\index{map}
+\index{نگاشت}
 
-A \key{map} is a generalized array
-that consists of key-value-pairs.
-While the keys in an ordinary array are always
-the consecutive integers $0,1,\ldots,n-1$,
-where $n$ is the size of the array,
-the keys in a map can be of any data type and
-they do not have to be consecutive values.
+یک \key{نگاشت} یک آرایه تعمیم‌یافته است
+که از جفت‌های کلید-مقدار تشکیل می‌شود.
+در حالی که کلیدها در یک آرایه معمولی همیشه
+اعداد صحیح متوالی $0,1,\ldots,n-1$ هستند
+(که $n$ اندازه آرایه است)،
+کلیدها در یک نگاشت می‌توانند از هر نوع داده‌ای باشند و
+نیازی نیست که مقادیری متوالی باشند.
 
-The C++ standard library contains two map
-implementations that correspond to the set
-implementations: the structure
-\texttt{map} is based on a balanced
-binary tree and accessing elements
-takes $O(\log n)$ time,
-while the structure
-\texttt{unordered\_map} uses hashing
-and accessing elements takes $O(1)$ time on average.
+کتابخانه استاندارد C++ شامل دو پیاده‌سازی نگاشت است
+که متناظر با پیاده‌سازی‌های مجموعه‌اند: ساختار
+\texttt{map} بر پایه یک درخت دودویی متوازن
+است و دسترسی به عناصر
+زمان $O(\log n)$ می‌برد،
+در حالی که ساختار
+\texttt{unordered\_map} از درهم‌سازی استفاده می‌کند
+و دسترسی به عناصر در حالت میانگین زمان $O(1)$ می‌برد.
 
-The following code creates a map
-where the keys are strings and the values are integers:
+کد زیر یک نگاشت ایجاد می‌کند
+که در آن کلیدها رشته و مقادیر اعداد صحیح هستند:
 
 \begin{lstlisting}
 map<string,int> m;
@@ -275,50 +237,50 @@ m["harpsichord"] = 9;
 cout << m["banana"] << "\n"; // 3
 \end{lstlisting}
 
-If the value of a key is requested
-but the map does not contain it,
-the key is automatically added to the map with
-a default value.
-For example, in the following code,
-the key ''aybabtu'' with value 0
-is added to the map.
+اگر مقدار یک کلید درخواست شود
+اما نگاشت شامل آن نباشد،
+کلید به طور خودکار با یک مقدار پیش‌فرض
+به نگاشت اضافه می‌شود.
+برای مثال در کد زیر،
+کلید ''aybabtu'' با مقدار 0
+به نگاشت اضافه می‌شود.
 
 \begin{lstlisting}
 map<string,int> m;
 cout << m["aybabtu"] << "\n"; // 0
 \end{lstlisting}
-The function \texttt{count} checks
-if a key exists in a map:
+تابع \texttt{count} بررسی می‌کند
+که آیا یک کلید در نگاشت وجود دارد یا خیر:
 \begin{lstlisting}
 if (m.count("aybabtu")) {
     // key exists
 }
 \end{lstlisting}
-The following code prints all the keys and values
-in a map:
+کد زیر تمام کلیدها و مقادیر
+موجود در یک نگاشت را چاپ می‌کند:
 \begin{lstlisting}
 for (auto x : m) {
     cout << x.first << " " << x.second << "\n";
 }
 \end{lstlisting}
 
-\section{Iterators and ranges}
+\section{تکرارکننده‌ها و بازه‌ها}
 
-\index{iterator}
+\index{تکرارکننده}
 
-Many functions in the C++ standard library
-operate with iterators.
-An \key{iterator} is a variable that points
-to an element in a data structure.
+بسیاری از توابع در کتابخانه استاندارد C++
+با تکرارکننده‌ها کار می‌کنند.
+یک \key{تکرارکننده} متغیری است که به یک عنصر
+در یک ساختار داده اشاره می‌کند.
 
-The often used iterators \texttt{begin}
-and \texttt{end} define a range that contains
-all elements in a data structure.
-The iterator \texttt{begin} points to
-the first element in the data structure,
-and the iterator \texttt{end} points to
-the position \emph{after} the last element.
-The situation looks as follows:
+تکرارکننده‌های پرکاربرد \texttt{begin}
+و \texttt{end} بازه‌ای را تعریف می‌کنند که شامل
+تمام عناصر موجود در یک ساختار داده است.
+تکرارکننده \texttt{begin} به
+اولین عنصر در ساختار داده اشاره می‌کند،
+و تکرارکننده \texttt{end} به
+موقعیت \emph{بعد} از آخرین عنصر اشاره دارد.
+وضعیت به شکل زیر است:
 
 \begin{center}
 \begin{tabular}{llllllllll}
@@ -328,24 +290,21 @@ The situation looks as follows:
 \end{tabular}
 \end{center}
 
-Note the asymmetry in the iterators:
-\texttt{s.begin()} points to an element in the data structure,
-while \texttt{s.end()} points outside the data structure.
-Thus, the range defined by the iterators is \emph{half-open}.
+به عدم تقارن در تکرارکننده‌ها دقت کنید:
+\texttt{s.begin()} به عنصری درون ساختمان داده اشاره دارد،
+در حالی که \texttt{s.end()} به خارج از ساختمان داده اشاره می‌کند.
+بنابراین، بازه تعریف‌شده توسط تکرارکننده‌ها \emph{نیمه‌باز} است.
 
-\subsubsection{Working with ranges}
+\subsubsection{کار با بازه‌ها}
 
-Iterators are used in C++ standard library functions
-that are given a range of elements in a data structure.
-Usually, we want to process all elements in a
-data structure, so the iterators
-\texttt{begin} and \texttt{end} are given for the function.
+تکرارکننده‌ها در توابع کتابخانه استاندارد ++C کاربرد دارند،
+توابعی که بازه‌ای از عناصر یک ساختمان داده به آن‌ها داده می‌شود.
+معمولاً پردازش همه عناصر یک ساختمان داده مد نظر است،
+بنابراین تکرارکننده‌های \texttt{begin} و \texttt{end} به تابع ورودی داده می‌شوند.
 
-For example, the following code sorts a vector
-using the function \texttt{sort},
-then reverses the order of the elements using the function
-\texttt{reverse}, and finally shuffles the order of
-the elements using the function \texttt{random\_shuffle}.
+برای نمونه، کد زیر یک بردار را با استفاده از تابع \texttt{sort} مرتب می‌کند،
+سپس ترتیب عناصر را با تابع \texttt{reverse} معکوس می‌سازد،
+و در نهایت ترتیب عناصر را به کمک تابع \texttt{random\_shuffle} برمی‌زند.
 
 \index{sort@\texttt{sort}}
 \index{reverse@\texttt{reverse}}
@@ -357,9 +316,8 @@ reverse(v.begin(), v.end());
 random_shuffle(v.begin(), v.end());
 \end{lstlisting}
 
-These functions can also be used with an ordinary array.
-In this case, the functions are given pointers to the array
-instead of iterators:
+این توابع برای آرایه‌های معمولی نیز کاربرد دارند.
+در این حالت، به جای تکرارکننده، اشاره‌گرهایی به آرایه ورودی داده می‌شوند:
 
 \newpage
 \begin{lstlisting}
@@ -368,74 +326,54 @@ reverse(a, a+n);
 random_shuffle(a, a+n);
 \end{lstlisting}
 
-\subsubsection{Set iterators}
+\subsubsection{تکرارکننده‌های مجموعه}
 
-Iterators are often used to access
-elements of a set.
-The following code creates an iterator
-\texttt{it} that points to the smallest element in a set:
+تکرارکننده‌ها اغلب برای دسترسی به عناصر یک مجموعه استفاده می‌شوند.
+کد زیر تکرارکننده \texttt{it} را ایجاد می‌کند که به کوچک‌ترین عنصر مجموعه اشاره دارد:
 \begin{lstlisting}
 set<int>::iterator it = s.begin();
 \end{lstlisting}
-A shorter way to write the code is as follows:
+روش کوتاه‌تر برای نوشتن این کد:
 \begin{lstlisting}
 auto it = s.begin();
 \end{lstlisting}
-The element to which an iterator points
-can be accessed using the \texttt{*} symbol.
-For example, the following code prints
-the first element in the set:
+عنصری که تکرارکننده به آن اشاره می‌کند با نماد \texttt{*} قابل دسترسی است.
+برای نمونه، کد زیر نخستین عنصر مجموعه را چاپ می‌کند:
 
 \begin{lstlisting}
 auto it = s.begin();
 cout << *it << "\n";
 \end{lstlisting}
 
-Iterators can be moved using the operators
-\texttt{++} (forward) and \texttt{--} (backward),
-meaning that the iterator moves to the next
-or previous element in the set.
+تکرارکننده‌ها را می‌توان با عملگرهای \texttt{++} (به جلو) و \texttt{--} (به عقب) حرکت داد،
+بدین معنی که تکرارکننده به عنصر بعدی یا قبلی درون مجموعه جابه‌جا می‌شود.
 
-The following code prints all the elements
-in increasing order:
+کد زیر تمام عناصر را به ترتیب صعودی چاپ می‌کند:
 \begin{lstlisting}
 for (auto it = s.begin(); it != s.end(); it++) {
     cout << *it << "\n";
 }
 \end{lstlisting}
-The following code prints the largest element in the set:
+کد زیر بزرگ‌ترین عنصر مجموعه را چاپ می‌کند:
 \begin{lstlisting}
 auto it = s.end(); it--;
 cout << *it << "\n";
 \end{lstlisting}
 
-The function $\texttt{find}(x)$ returns an iterator
-that points to an element whose value is $x$.
-However, if the set does not contain $x$,
-the iterator will be \texttt{end}.
+تابع $\texttt{find}(x)$ تکرارکننده‌ای برمی‌گرداند که به عنصری با مقدار $x$ اشاره دارد.
+با این حال، اگر مجموعه شامل $x$ نباشد، خروجی تکرارکننده \texttt{end} خواهد بود.
 
 \begin{lstlisting}
 auto it = s.find(x);
 if (it == s.end()) {
-    // x is not found
+    // x پیدا نشد
 }
 \end{lstlisting}
 
-The function $\texttt{lower\_bound}(x)$ returns
-an iterator to the smallest element in the set
-whose value is \emph{at least} $x$, and
-the function $\texttt{upper\_bound}(x)$
-returns an iterator to the smallest element in the set
-whose value is \emph{larger than} $x$.
-In both functions, if such an element does not exist,
-the return value is \texttt{end}.
-These functions are not supported by the
-\texttt{unordered\_set} structure which
-does not maintain the order of the elements.
+تابع $\texttt{lower\_bound}(x)$ یک تکرارکننده به کوچک‌ترین عنصر مجموعه برمی‌گرداند که مقدار آن \emph{حداقل} $x$ باشد، و تابع $\texttt{upper\_bound}(x)$ یک تکرارکننده به کوچک‌ترین عنصر مجموعه برمی‌گرداند که مقدار آن \emph{بزرگ‌تر از} $x$ باشد. در هر دو تابع، اگر چنین عنصری وجود نداشته باشد، مقدار بازگشتی \texttt{end} است. این توابع در ساختار داده \texttt{unordered\_set} که ترتیب عناصر را حفظ نمی‌کند، پشتیبانی نمی‌شوند.
 
 \begin{samepage}
-For example, the following code finds the element
-nearest to $x$:
+برای نمونه، کد زیر نزدیک‌ترین عنصر به $x$ را می‌یابد:
 
 \begin{lstlisting}
 auto it = s.lower_bound(x);
@@ -452,30 +390,16 @@ if (it == s.begin()) {
 }
 \end{lstlisting}
 
-The code assumes that the set is not empty,
-and goes through all possible cases
-using an iterator \texttt{it}.
-First, the iterator points to the smallest
-element whose value is at least $x$.
-If \texttt{it} equals \texttt{begin},
-the corresponding element is nearest to $x$.
-If \texttt{it} equals \texttt{end},
-the largest element in the set is nearest to $x$.
-If none of the previous cases hold,
-the element nearest to $x$ is either the
-element that corresponds to \texttt{it} or the previous element.
+این کد فرض می‌کند که مجموعه خالی نیست، و با استفاده از تکرارکننده \texttt{it} تمام حالت‌های ممکن را بررسی می‌کند. ابتدا، تکرارکننده به کوچک‌ترین عنصری اشاره می‌کند که مقدار آن حداقل $x$ است. اگر \texttt{it} برابر با \texttt{begin} باشد، عنصر متناظر نزدیک‌ترین مقدار به $x$ است. اگر \texttt{it} برابر با \texttt{end} باشد، بزرگ‌ترین عنصر مجموعه نزدیک‌ترین مقدار به $x$ است. اگر هیچ‌یک از حالت‌های قبلی رخ ندهد، عنصر نزدیک‌تر به $x$ یا عنصر متناظر با \texttt{it} است یا عنصر پیش از آن.
 \end{samepage}
 
-\section{Other structures}
+\section{سایر ساختارها}
 
-\subsubsection{Bitset}
+\subsubsection{بیت‌ست (Bitset)}
 
 \index{bitset}
 
-A \key{bitset} is an array
-whose each value is either 0 or 1.
-For example, the following code creates
-a bitset that contains 10 elements:
+یک \key{بیت‌ست} آرایه‌ای است که هر مقدار آن ۰ یا ۱ است. برای نمونه، کد زیر یک بیت‌ست با ۱۰ عنصر می‌سازد:
 \begin{lstlisting}
 bitset<10> s;
 s[1] = 1;
@@ -486,35 +410,23 @@ cout << s[4] << "\n"; // 1
 cout << s[5] << "\n"; // 0
 \end{lstlisting}
 
-The benefit of using bitsets is that
-they require less memory than ordinary arrays,
-because each element in a bitset only
-uses one bit of memory.
-For example, 
-if $n$ bits are stored in an \texttt{int} array,
-$32n$ bits of memory will be used,
-but a corresponding bitset only requires $n$ bits of memory.
-In addition, the values of a bitset
-can be efficiently manipulated using
-bit operators, which makes it possible to
-optimize algorithms using bit sets.
+مزیت استفاده از بیت‌ست‌ها مصرف حافظه کمتر آن‌ها نسبت به آرایه‌های معمولی است، زیرا هر عنصر در بیت‌ست تنها یک بیت حافظه می‌گیرد. برای نمونه، اگر $n$ بیت درون یک آرایه \texttt{int} ذخیره شود، $32n$ بیت حافظه مصرف خواهد شد، اما بیت‌ست متناظر تنها نیازمند $n$ بیت حافظه است. افزون بر این، مقادیر بیت‌ست را می‌توان به‌شکل کارآمد با عملگرهای بیتی دستکاری کرد، که این کار بهینه‌سازی الگوریتم‌ها به کمک بیت‌ست را ممکن می‌سازد.
 
-The following code shows another way to create the above bitset:
+کد زیر روش دیگری برای ساخت بیت‌ست بالا نشان می‌دهد:
 \begin{lstlisting}
 bitset<10> s(string("0010011010")); // from right to left
 cout << s[4] << "\n"; // 1
 cout << s[5] << "\n"; // 0
 \end{lstlisting}
 
-The function \texttt{count} returns the number
-of ones in the bitset:
+تابع \texttt{count} تعداد یک‌ها را در بیت‌ست برمی‌گرداند:
 
 \begin{lstlisting}
 bitset<10> s(string("0010011010"));
 cout << s.count() << "\n"; // 4
 \end{lstlisting}
 
-The following code shows examples of using bit operations:
+کد زیر نمونه‌هایی از به‌کارگیری عملگرهای بیتی را نشان می‌دهد:
 \begin{lstlisting}
 bitset<10> a(string("0010110110"));
 bitset<10> b(string("1011011000"));
@@ -523,20 +435,20 @@ cout << (a|b) << "\n"; // 1011111110
 cout << (a^b) << "\n"; // 1001101110
 \end{lstlisting}
 
-\subsubsection{Deque}
+\subsubsection{دک (Deque)}
 
 \index{deque}
 
-A \key{deque} is a dynamic array
-whose size can be efficiently
-changed at both ends of the array.
-Like a vector, a deque provides the functions
-\texttt{push\_back} and \texttt{pop\_back}, but
-it also includes the functions
-\texttt{push\_front} and \texttt{pop\_front}
-which are not available in a vector.
+یک \key{deque} (دک یا صف دوطرفه) آرایه‌ای پویا است
+که اندازه آن می‌تواند به شکلی کارآمد
+از هر دو سر آرایه تغییر کند.
+همانند بردار، یک deque توابع
+\texttt{push\_back} و \texttt{pop\_back} را ارائه می‌دهد، اما
+همچنین شامل توابع
+\texttt{push\_front} و \texttt{pop\_front} است
+که در بردار وجود ندارند.
 
-A deque can be used as follows:
+یک deque می‌تواند به صورت زیر استفاده شود:
 \begin{lstlisting}
 deque<int> d;
 d.push_back(5); // [5]
@@ -546,25 +458,25 @@ d.pop_back(); // [3,5]
 d.pop_front(); // [5]
 \end{lstlisting}
 
-The internal implementation of a deque
-is more complex than that of a vector,
-and for this reason, a deque is slower than a vector.
-Still, both adding and removing
-elements take $O(1)$ time on average at both ends.
+پیاده‌سازی داخلی یک deque
+پیچیده‌تر از یک بردار است،
+و به همین دلیل، deque کندتر از بردار است.
+با این حال، هر دو عملیات افزودن و حذف
+عناصر در هر دو سر به طور میانگین به زمان $O(1)$ نیاز دارند.
 
-\subsubsection{Stack}
+\subsubsection{پشته}
 
 \index{stack}
 
-A \key{stack}
-is a data structure that provides two
-$O(1)$ time operations:
-adding an element to the top,
-and removing an element from the top.
-It is only possible to access the top
-element of a stack.
+یک \key{پشته} (stack)
+ساختمان داده‌ای است که دو عملیات
+با زمان $O(1)$ ارائه می‌دهد:
+افزودن یک عنصر به بالا،
+و حذف یک عنصر از بالا.
+تنها دسترسی به عنصر
+بالای پشته امکان‌پذیر است.
 
-The following code shows how a stack can be used:
+کد زیر نحوه استفاده از پشته را نشان می‌دهد:
 \begin{lstlisting}
 stack<int> s;
 s.push(3);
@@ -574,18 +486,18 @@ cout << s.top(); // 5
 s.pop();
 cout << s.top(); // 2
 \end{lstlisting}
-\subsubsection{Queue}
+\subsubsection{صف}
 
 \index{queue}
 
-A \key{queue} also
-provides two $O(1)$ time operations:
-adding an element to the end of the queue,
-and removing the first element in the queue.
-It is only possible to access the first
-and last element of a queue.
+یک \key{صف} (queue) نیز
+دو عملیات با زمان $O(1)$ ارائه می‌دهد:
+افزودن یک عنصر به انتهای صف،
+و حذف عنصر اول از صف.
+تنها دسترسی به عناصر اول
+و آخر صف امکان‌پذیر است.
 
-The following code shows how a queue can be used:
+کد زیر نحوه استفاده از صف را نشان می‌دهد:
 \begin{lstlisting}
 queue<int> q;
 q.push(3);
@@ -596,34 +508,34 @@ q.pop();
 cout << q.front(); // 2
 \end{lstlisting}
 
-\subsubsection{Priority queue}
+\subsubsection{صف اولویت‌دار}
 
 \index{priority queue}
 \index{heap}
 
-A \key{priority queue}
-maintains a set of elements.
-The supported operations are insertion and,
-depending on the type of the queue,
-retrieval and removal of
-either the minimum or maximum element.
-Insertion and removal take $O(\log n)$ time,
-and retrieval takes $O(1)$ time.
+یک \key{صف اولویت‌دار} (priority queue)
+مجموعه‌ای از عناصر را نگهداری می‌کند.
+عملیات پشتیبانی‌شده شامل درج و،
+بسته به نوع صف،
+بازیابی و حذف
+کوچک‌ترین یا بزرگ‌ترین عنصر است.
+درج و حذف به زمان $O(\log n)$ نیاز دارند،
+و بازیابی در زمان $O(1)$ انجام می‌شود.
 
-While an ordered set efficiently supports
-all the operations of a priority queue,
-the benefit of using a priority queue is
-that it has smaller constant factors.
-A priority queue is usually implemented using
-a heap structure that is much simpler than a
-balanced binary tree used in an ordered set.
+در حالی که یک مجموعه مرتب تمام عملیات
+یک صف اولویت‌دار را به صورت کارآمد پشتیبانی می‌کند،
+مزیت استفاده از صف اولویت‌دار در این است
+که ضرایب ثابت کوچک‌تری دارد.
+یک صف اولویت‌دار معمولاً با استفاده از
+ساختار هرم پیاده‌سازی می‌شود که بسیار ساده‌تر از
+درخت دودویی متعادل مورد استفاده در مجموعه مرتب است.
 
 \begin{samepage}
-By default, the elements in a C++
-priority queue are sorted in decreasing order,
-and it is possible to find and remove the
-largest element in the queue.
-The following code illustrates this:
+به طور پیش‌فرض، عناصر در یک صف اولویت‌دار
+در ++C به صورت نزولی مرتب شده‌اند،
+و یافتن و حذف
+بزرگ‌ترین عنصر در صف ممکن است.
+کد زیر این موضوع را نشان می‌دهد:
 
 \begin{lstlisting}
 priority_queue<int> q;
@@ -641,36 +553,31 @@ q.pop();
 \end{lstlisting}
 \end{samepage}
 
-If we want to create a priority queue
-that supports finding and removing
-the smallest element,
-we can do it as follows:
+اگر بخواهیم یک صف اولویت‌دار ایجاد کنیم
+که از یافتن و حذف
+کوچک‌ترین عنصر پشتیبانی کند،
+می‌توانیم به صورت زیر عمل کنیم:
 
 \begin{lstlisting}
 priority_queue<int,vector<int>,greater<int>> q;
 \end{lstlisting}
 
-\subsubsection{Policy-based data structures}
+\subsubsection{ساختمان داده‌های مبتنی بر سیاست}
 
-The \texttt{g++} compiler also supports
-some data structures that are not part
-of the C++ standard library.
-Such structures are called \emph{policy-based}
-data structures.
-To use these structures, the following lines
-must be added to the code:
+کامپایلر \texttt{g++} از برخی ساختارهای داده که بخشی از کتابخانه استاندارد ++C نیستند نیز پشتیبانی می‌کند.
+این ساختارها \emph{مبتنی بر خط‌مشی} (policy-based) نامیده می‌شوند.
+برای استفاده از این ساختارها، خطوط زیر باید به کد اضافه شوند:
 \begin{lstlisting}
 #include <ext/pb_ds/assoc_container.hpp>
 using namespace __gnu_pbds; 
 \end{lstlisting}
-After this, we can define a data structure \texttt{indexed\_set} that
-is like \texttt{set} but can be indexed like an array.
-The definition for \texttt{int} values is as follows:
+سپس می‌توان ساختار داده \texttt{indexed\_set} را تعریف کرد که مانند \texttt{set} است ولی مثل آرایه اندیس‌پذیر است.
+تعریف برای مقادیر \texttt{int}:
 \begin{lstlisting}
 typedef tree<int,null_type,less<int>,rb_tree_tag,
              tree_order_statistics_node_update> indexed_set; 
 \end{lstlisting}
-Now we can create a set as follows:
+ساخت مجموعه:
 \begin{lstlisting}
 indexed_set s;
 s.insert(2);
@@ -678,117 +585,93 @@ s.insert(3);
 s.insert(7);
 s.insert(9);
 \end{lstlisting}
-The speciality of this set is that we have access to
-the indices that the elements would have in a sorted array.
-The function $\texttt{find\_by\_order}$ returns
-an iterator to the element at a given position:
+ویژگی این مجموعه: دسترسی به اندیس‌هایی که عناصر در آرایه مرتب‌شده می‌داشتند.
+تابع $\texttt{find\_by\_order}$ تکرارکننده (iterator) به عنصر در موقعیت داده‌شده برمی‌گرداند:
 \begin{lstlisting}
 auto x = s.find_by_order(2);
 cout << *x << "\n"; // 7
 \end{lstlisting}
-And the function $\texttt{order\_of\_key}$
-returns the position of a given element:
+تابع $\texttt{order\_of\_key}$ موقعیت عنصر داده‌شده را برمی‌گرداند:
 \begin{lstlisting}
 cout << s.order_of_key(7) << "\n"; // 2
 \end{lstlisting}
-If the element does not appear in the set,
-we get the position that the element would have
-in the set:
+اگر عنصر در مجموعه نباشد، موقعیتی که عنصر در صورت حضور می‌داشت برمی‌گردد:
 \begin{lstlisting}
 cout << s.order_of_key(6) << "\n"; // 2
 cout << s.order_of_key(8) << "\n"; // 3
 \end{lstlisting}
-Both the functions work in logarithmic time.
+هر دو تابع در زمان لگاریتمی اجرا می‌شوند.
 
-\section{Comparison to sorting}
+\section{مقایسه با مرتب‌سازی}
 
-It is often possible to solve a problem
-using either data structures or sorting.
-Sometimes there are remarkable differences
-in the actual efficiency of these approaches,
-which may be hidden in their time complexities.
+حل مسئله با استفاده از ساختار داده‌ها یا مرتب‌سازی معمولاً ممکن است.
+گاهی تفاوت‌های چشمگیری در کارایی واقعی این روش‌ها وجود دارد که در پیچیدگی زمانی آن‌ها پنهان است.
 
-Let us consider a problem where
-we are given two lists $A$ and $B$
-that both contain $n$ elements.
-Our task is to calculate the number of elements
-that belong to both of the lists.
-For example, for the lists
-\[A = [5,2,8,9] \hspace{10px} \textrm{and} \hspace{10px} B = [3,2,9,5],\]
-the answer is 3 because the numbers 2, 5
-and 9 belong to both of the lists.
+مسئله: دو لیست $A$ و $B$ با $n$ عنصر داده شده است.
+هدف: شمارش تعداد عناصری که در هر دو لیست حضور دارند.
+مثال برای لیست‌های
+\[A = [5,2,8,9] \hspace{10px} \textrm{و} \hspace{10px} B = [3,2,9,5],\]
+پاسخ ۳ است زیرا اعداد ۲، ۵ و ۹ در هر دو لیست هستند.
 
-A straightforward solution to the problem is
-to go through all pairs of elements in $O(n^2)$ time,
-but next we will focus on
-more efficient algorithms.
+راه‌حل مستقیم: بررسی تمام جفت‌های عناصر در زمان $O(n^2)$.
+الگوریتم‌های کارآمدتر:
 
-\subsubsection{Algorithm 1}
+\subsubsection{الگوریتم ۱}
 
-We construct a set of the elements that appear in $A$,
-and after this, we iterate through the elements
-of $B$ and check for each elements if it
-also belongs to $A$.
-This is efficient because the elements of $A$
-are in a set.
-Using the \texttt{set} structure,
-the time complexity of the algorithm is $O(n \log n)$.
+ساخت مجموعه از عناصر $A$، سپس پیمایش عناصر $B$ و بررسی حضور هر عنصر در $A$.
+کارآمد است چون عناصر $A$ داخل یک مجموعه‌اند.
+با ساختار \texttt{set}، پیچیدگی زمانی الگوریتم $O(n \log n)$ است.
 
-\subsubsection{Algorithm 2}
+\subsubsection{الگوریتم ۲}
 
-It is not necessary to maintain an ordered set,
-so instead of the \texttt{set} structure
-we can also use the \texttt{unordered\_set} structure.
-This is an easy way to make the algorithm
-more efficient, because we only have to change
-the underlying data structure.
-The time complexity of the new algorithm is $O(n)$.
+حفظ ترتیب عناصر لازم نیست، پس به جای \texttt{set} می‌توان از \texttt{unordered\_set} استفاده کرد.
+روش ساده برای افزایش کارایی چون فقط ساختار داده تغییر می‌کند.
+پیچیدگی زمانی الگوریتم جدید $O(n)$ است.
 
-\subsubsection{Algorithm 3}
+\subsubsection{الگوریتم ۳}
 
-Instead of data structures, we can use sorting.
-First, we sort both lists $A$ and $B$.
-After this, we iterate through both the lists
-at the same time and find the common elements.
-The time complexity of sorting is $O(n \log n)$,
-and the rest of the algorithm works in $O(n)$ time,
-so the total time complexity is $O(n \log n)$.
+به جای ساختمان داده‌ها، می‌توان از مرتب‌سازی استفاده کرد.
+ابتدا، هر دو لیست $A$ و $B$ را مرتب می‌کنیم.
+سپس، هم‌زمان روی هر دو لیست پیمایش کرده
+و عناصر مشترک را پیدا می‌کنیم.
+پیچیدگی زمانی مرتب‌سازی $O(n \log n)$ است
+و باقی الگوریتم در زمان $O(n)$ اجرا می‌شود،
+بنابراین پیچیدگی زمانی کل $O(n \log n)$ است.
 
-\subsubsection{Efficiency comparison}
+\subsubsection{مقایسه کارایی}
 
-The following table shows how efficient
-the above algorithms are when $n$ varies and
-the elements of the lists are random
-integers between $1 \ldots 10^9$:
+جدول زیر میزان کارایی الگوریتم‌های فوق را
+به ازای مقادیر مختلف $n$ نشان می‌دهد،
+در حالی که عناصر لیست‌ها اعداد صحیح تصادفی
+بین $1 \ldots 10^9$ هستند:
 
 \begin{center}
 \begin{tabular}{rrrr}
-$n$ & Algorithm 1 & Algorithm 2 & Algorithm 3 \\
+$n$ & الگوریتم ۱ & الگوریتم ۲ & الگوریتم ۳ \\
 \hline
-$10^6$ & $1.5$ s & $0.3$ s & $0.2$ s \\
-$2 \cdot 10^6$ & $3.7$ s & $0.8$ s & $0.3$ s \\
-$3 \cdot 10^6$ & $5.7$ s & $1.3$ s & $0.5$ s \\
-$4 \cdot 10^6$ & $7.7$ s & $1.7$ s & $0.7$ s \\
-$5 \cdot 10^6$ & $10.0$ s & $2.3$ s & $0.9$ s \\
+$10^6$ & $1.5$ ثانیه & $0.3$ ثانیه & $0.2$ ثانیه \\
+$2 \cdot 10^6$ & $3.7$ ثانیه & $0.8$ ثانیه & $0.3$ ثانیه \\
+$3 \cdot 10^6$ & $5.7$ ثانیه & $1.3$ ثانیه & $0.5$ ثانیه \\
+$4 \cdot 10^6$ & $7.7$ ثانیه & $1.7$ ثانیه & $0.7$ ثانیه \\
+$5 \cdot 10^6$ & $10.0$ ثانیه & $2.3$ ثانیه & $0.9$ ثانیه \\
 \end{tabular}
 \end{center}
 
-Algorithms 1 and 2 are equal except that
-they use different set structures.
-In this problem, this choice has an important effect on
-the running time, because Algorithm 2
-is 4–5 times faster than Algorithm 1.
+الگوریتم‌های ۱ و ۲ یکسان هستند به جز اینکه
+از ساختارهای مجموعه متفاوتی استفاده می‌کنند.
+در این مسئله، این انتخاب تاثیر مهمی روی
+زمان اجرا دارد، زیرا الگوریتم ۲
+بین ۴ تا ۵ برابر سریع‌تر از الگوریتم ۱ است.
 
-However, the most efficient algorithm is Algorithm 3
-which uses sorting.
-It only uses half the time compared to Algorithm 2.
-Interestingly, the time complexity of both
-Algorithm 1 and Algorithm 3 is $O(n \log n)$,
-but despite this, Algorithm 3 is ten times faster.
-This can be explained by the fact that
-sorting is a simple procedure and it is done
-only once at the beginning of Algorithm 3,
-and the rest of the algorithm works in linear time.
-On the other hand,
-Algorithm 1 maintains a complex balanced binary tree
-during the whole algorithm.
+با این حال، کارآمدترین الگوریتم، الگوریتم ۳ است
+که از مرتب‌سازی استفاده می‌کند.
+این الگوریتم تنها نیمی از زمان الگوریتم ۲ را مصرف می‌کند.
+نکته جالب این است که پیچیدگی زمانی هر دو
+الگوریتم ۱ و الگوریتم ۳ برابر با $O(n \log n)$ است،
+اما با این وجود، الگوریتم ۳ ده برابر سریع‌تر است.
+دلیل این موضوع ساده بودن فرآیند مرتب‌سازی است
+که تنها یک بار در ابتدای الگوریتم ۳ انجام می‌شود
+و باقی الگوریتم در زمان خطی کار می‌کند.
+در مقابل،
+الگوریتم ۱ یک درخت دودویی متوازن پیچیده را
+در تمام طول اجرای الگوریتم نگهداری می‌کند.
