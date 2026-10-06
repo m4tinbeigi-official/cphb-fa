@@ -1,33 +1,27 @@
-\chapter{Paths and circuits}
+\chapter{مسیرها و مدارها}
 
-This chapter focuses on two types of paths in graphs:
+این فصل روی دو نوع مسیر در گراف تمرکز دارد:
 \begin{itemize}
-\item An \key{Eulerian path} is a path that
-goes through each edge exactly once.
-\item A \key{Hamiltonian path} is a path
-that visits each node exactly once.
+\item یک \key{مسیر اویلری} مسیری است که
+از هر یال دقیقاً یک بار عبور می‌کند.
+\item یک \key{مسیر هامیلتونی} مسیری است
+که از هر رأس دقیقاً یک بار بازدید می‌کند.
 \end{itemize}
 
-While Eulerian and Hamiltonian paths look like
-similar concepts at first glance,
-the computational problems related to them
-are very different.
-It turns out that there is a simple rule that
-determines whether a graph contains an Eulerian path,
-and there is also an efficient algorithm to
-find such a path if it exists.
-On the contrary, checking the existence of a Hamiltonian path is a NP-hard
-problem, and no efficient algorithm is known for solving the problem.
+اگرچه مسیرهای اویلری و هامیلتونی در نگاه اول مفاهیم مشابهی به نظر می‌رسند،
+مسائل محاسباتی مربوط به آن‌ها بسیار متفاوت است.
+مشخص شده قاعده ساده‌ای وجود دارد که تعیین می‌کند آیا یک گراف شامل مسیر اویلری است یا خیر،
+و همچنین الگوریتم کارآمدی برای یافتن چنین مسیری در صورت وجود در دست است.
+در مقابل، بررسی وجود مسیر هامیلتونی یک مسئله NP-hard است
+و هیچ الگوریتم کارآمدی برای حل آن شناخته نشده است.
 
-\section{Eulerian paths}
+\section{مسیرهای اویلری}
 
 \index{Eulerian path}
 
-An \key{Eulerian path}\footnote{L. Euler studied such paths in 1736
-when he solved the famous Königsberg bridge problem.
-This was the birth of graph theory.} is a path
-that goes exactly once through each edge of the graph.
-For example, the graph
+یک \key{مسیر اویلری}\footnote{ل. اویلر چنین مسیرهایی را در سال ۱۷۳۶ هنگامی که مسئله مشهور پل‌های کونیگسبرگ را حل کرد، بررسی نمود. این رویداد نقطه پیدایش نظریه گراف بود.} مسیری است
+که دقیقاً یک بار از هر یال گراف عبور می‌کند.
+برای مثال، گراف
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
 \node[draw, circle] (1) at (1,5) {$1$};
@@ -44,7 +38,7 @@ For example, the graph
 \path[draw,thick,-] (4) -- (5);
 \end{tikzpicture}
 \end{center}
-has an Eulerian path from node 2 to node 5:
+دارای یک مسیر اویلری از رأس ۲ به رأس ۵ است:
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
 \node[draw, circle] (1) at (1,5) {$1$};
@@ -69,10 +63,9 @@ has an Eulerian path from node 2 to node 5:
 \end{tikzpicture}
 \end{center}
 \index{Eulerian circuit}
-An \key{Eulerian circuit}
-is an Eulerian path that starts and ends
-at the same node.
-For example, the graph
+یک \key{مدار اویلری}
+مسیر اویلری است که در همان رأس شروع، پایان می‌یابد.
+برای مثال، گراف
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
 \node[draw, circle] (1) at (1,5) {$1$};
@@ -89,7 +82,7 @@ For example, the graph
 \path[draw,thick,-] (2) -- (4);
 \end{tikzpicture}
 \end{center}
-has an Eulerian circuit that starts and ends at node 1:
+دارای یک مدار اویلری است که از راس ۱ شروع شده و در راس ۱ پایان می‌یابد:
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
 \node[draw, circle] (1) at (1,5) {$1$};
@@ -114,25 +107,25 @@ has an Eulerian circuit that starts and ends at node 1:
 \end{tikzpicture}
 \end{center}
 
-\subsubsection{Existence}
+\subsubsection{شرایط وجود}
 
-The existence of Eulerian paths and circuits
-depends on the degrees of the nodes.
-First, an undirected graph has an Eulerian path 
-exactly when all the edges
-belong to the same connected component and
+وجود مسیرها و مدارهای اویلری
+به درجه راس‌ها بستگی دارد.
+نخست، یک گراف بدون جهت دارای مسیر اویلری است
+دقیقاً زمانی که تمام یال‌ها
+به یک مؤلفه همبندی یکسان تعلق داشته باشند و
 \begin{itemize}
-\item the degree of each node is even \emph{or}
-\item the degree of exactly two nodes is odd,
-and the degree of all other nodes is even.
+\item درجه هر راس زوج باشد \emph{یا}
+\item درجه دقیقاً دو راس فرد باشد،
+و درجه تمام راس‌های دیگر زوج باشد.
 \end{itemize}
 
-In the first case, each Eulerian path is also an Eulerian circuit.
-In the second case, the odd-degree nodes are the starting
-and ending nodes of an Eulerian path which is not an Eulerian circuit.
+در حالت اول، هر مسیر اویلری یک مدار اویلری نیز هست.
+در حالت دوم، راس‌های با درجه فرد، راس‌های شروع
+و پایان یک مسیر اویلری هستند که مدار اویلری نیست.
 
 \begin{samepage}
-For example, in the graph
+به عنوان مثال، در گراف
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
 \node[draw, circle] (1) at (1,5) {$1$};
@@ -150,32 +143,32 @@ For example, in the graph
 \end{tikzpicture}
 \end{center}
 \end{samepage}
-nodes 1, 3 and 4 have a degree of 2,
-and nodes 2 and 5 have a degree of 3.
-Exactly two nodes have an odd degree,
-so there is an Eulerian path between nodes 2 and 5,
-but the graph does not contain an Eulerian circuit.
+راس‌های ۱، ۳ و ۴ دارای درجه ۲ هستند،
+و راس‌های ۲ و ۵ دارای درجه ۳ هستند.
+دقیقاً دو راس درجه فرد دارند،
+بنابراین یک مسیر اویلری بین راس‌های ۲ و ۵ وجود دارد،
+اما گراف شامل هیچ مدار اویلری نیست.
 
-In a directed graph,
-we focus on indegrees and outdegrees
-of the nodes.
-A directed graph contains an Eulerian path
-exactly when all the edges belong to the same
-connected component and
+در گراف جهت‌دار،
+تمرکز روی درجه‌های ورودی و خروجی
+راس‌ها است.
+گراف جهت‌دار دقیقا زمانی شامل مسیر اویلری است
+که همه یال‌ها متعلق به یک مولفه همبند
+باشند و
 \begin{itemize}
-\item in each node, the indegree equals the outdegree, \emph{or}
-\item in one node, the indegree is one larger than the outdegree,
-in another node, the outdegree is one larger than the indegree,
-and in all other nodes, the indegree equals the outdegree.
+\item در هر راس، درجه ورودی برابر با درجه خروجی باشد، \emph{یا}
+\item در یک راس، درجه ورودی یکی بیشتر از درجه خروجی باشد،
+در راسی دیگر، درجه خروجی یکی بیشتر از درجه ورودی باشد،
+و در تمام راس‌های دیگر، درجه ورودی برابر با درجه خروجی باشد.
 \end{itemize}
 
-In the first case, each Eulerian path
-is also an Eulerian circuit,
-and in the second case, the graph contains an Eulerian path
-that begins at the node whose outdegree is larger
-and ends at the node whose indegree is larger.
+در حالت اول، هر مسیر اویلری
+یک دور اویلری نیز هست،
+و در حالت دوم، گراف شامل مسیر اویلری است
+که از راسی با درجه خروجی بزرگ‌تر شروع می‌شود
+و در راسی با درجه ورودی بزرگ‌تر پایان می‌یابد.
 
-For example, in the graph
+برای مثال، در گراف
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
 \node[draw, circle] (1) at (1,5) {$1$};
@@ -192,11 +185,11 @@ For example, in the graph
 \path[draw,thick,->,>=latex] (5) -- (4);
 \end{tikzpicture}
 \end{center}
-nodes 1, 3 and 4 have both indegree 1 and outdegree 1,
-node 2 has indegree 1 and outdegree 2,
-and node 5 has indegree 2 and outdegree 1.
-Hence, the graph contains an Eulerian path
-from node 2 to node 5:
+راس‌های ۱، ۳ و ۴ همگی دارای درجه ورودی ۱ و درجه خروجی ۱ هستند،
+راس ۲ دارای درجه ورودی ۱ و درجه خروجی ۲ است،
+و راس ۵ دارای درجه ورودی ۲ و درجه خروجی ۱ است.
+بنابراین، گراف شامل یک مسیر اویلری
+از راس ۲ به راس ۵ است:
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
 \node[draw, circle] (1) at (1,5) {$1$};
@@ -221,52 +214,47 @@ from node 2 to node 5:
 \end{tikzpicture}
 \end{center}
 
-\subsubsection{Hierholzer's algorithm}
+\subsubsection{الگوریتم هیرهولتزر}
 
 \index{Hierholzer's algorithm}
 
-\key{Hierholzer's algorithm}\footnote{The algorithm was published
-in 1873 after Hierholzer's death \cite{hie73}.} is an efficient
-method for constructing
-an Eulerian circuit.
-The algorithm consists of several rounds,
-each of which adds new edges to the circuit.
-Of course, we assume that the graph contains
-an Eulerian circuit; otherwise Hierholzer's
-algorithm cannot find it.
+\key{الگوریتم هیرهولتزر}\footnote{این الگوریتم در سال ۱۸۷۳ پس از مرگ هیرهولتزر منتشر شد \cite{hie73}.} روشی کارآمد
+برای ساخت
+دور اویلری است.
+الگوریتم از چند مرحله تشکیل شده است
+که هر مرحله یال‌های جدیدی به دور اضافه می‌کند.
+البته فرض بر این است که گراف شامل
+دور اویلری باشد؛ در غیر این صورت الگوریتم هیرهولتزر
+نمی‌تواند آن را پیدا کند.
 
-First, the algorithm constructs a circuit that contains
-some (not necessarily all) of the edges of the graph.
-After this, the algorithm extends the circuit
-step by step by adding subcircuits to it.
-The process continues until all edges have been added
-to the circuit.
+ابتدا، الگوریتم مداری می‌سازد که شامل
+برخی از یال‌های گراف است (نه لزوماً همه آن‌ها).
+سپس الگوریتم مدار را گام‌به‌گام با افزودن زیرمدارها
+گسترش می‌دهد.
+این فرایند تا افزوده‌شدن تمام یال‌ها
+به مدار ادامه می‌یابد.
 
-The algorithm extends the circuit by always finding
-a node $x$ that belongs to the circuit but has
-an outgoing edge that is not included in the circuit.
-The algorithm constructs a new path from node $x$
-that only contains edges that are not yet in the circuit.
-Sooner or later,
-the path will return to node $x$,
-which creates a subcircuit.
+الگوریتم با یافتن گره $x$ که متعلق به مدار است
+ولی یال خروجی خارج از مدار دارد، مدار را گسترش می‌دهد.
+الگوریتم مسیر جدیدی از گره $x$ می‌سازد
+که فقط شامل یال‌های خارج از مدار است.
+در نهایت، مسیر به گره $x$ بازمی‌گردد
+و یک زیرمدار ایجاد می‌کند.
 
-If the graph only contains an Eulerian path,
-we can still use Hierholzer's algorithm
-to find it by adding an extra edge to the graph
-and removing the edge after the circuit
-has been constructed.
-For example, in an undirected graph,
-we add the extra edge between the two
-odd-degree nodes.
+اگر گراف فقط شامل مسیر اویلری باشد،
+همچنان می‌توان از الگوریتم هیرهولتزر استفاده کرد؛
+کافی است یال اضافی به گراف اضافه شود
+و پس از ساخت مدار، آن یال حذف گردد.
+مثلاً در گراف غیرجهت‌دار،
+یال اضافی بین دو گره با درجه فرد اضافه می‌شود.
 
-Next we will see how Hierholzer's algorithm
-constructs an Eulerian circuit for an undirected graph.
+در ادامه، نحوه ساخت مدار اویلری در گراف غیرجهت‌دار
+با الگوریتم هیرهولتزر نشان داده می‌شود.
 
-\subsubsection{Example}
+\subsubsection{مثال}
 
 \begin{samepage}
-Let us consider the following graph:
+گراف زیر را در نظر بگیرید:
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
 \node[draw, circle] (1) at (3,5) {$1$};
@@ -292,10 +280,9 @@ Let us consider the following graph:
 \end{samepage}
 
 \begin{samepage}
-Suppose that the algorithm first creates a circuit
-that begins at node 1.
-A possible circuit is
-$1 \rightarrow 2 \rightarrow 3 \rightarrow 1$:
+فرض کنید الگوریتم ابتدا مداری از گره ۱ بسازد.
+یک مدار ممکن
+$1 \rightarrow 2 \rightarrow 3 \rightarrow 1$ است:
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
 \node[draw, circle] (1) at (3,5) {$1$};
@@ -323,10 +310,9 @@ $1 \rightarrow 2 \rightarrow 3 \rightarrow 1$:
 \end{tikzpicture}
 \end{center}
 \end{samepage}
-After this, the algorithm adds
-the subcircuit
+پس از این، الگوریتم زیرمدار
 $2 \rightarrow 5 \rightarrow 6 \rightarrow 2$
-to the circuit:
+را به مدار اضافه می‌کند:
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
 \node[draw, circle] (1) at (3,5) {$1$};
@@ -356,9 +342,9 @@ to the circuit:
 \path[draw=red,thick,->,line width=2pt] (3) -- node[font=\small,label={[red]east:6.}] {} (1);
 \end{tikzpicture}
 \end{center}
-Finally, the algorithm adds the subcircuit
+در نهایت، الگوریتم زیرمدار
 $6 \rightarrow 3 \rightarrow 4 \rightarrow 7 \rightarrow 6$
-to the circuit:
+را به مدار اضافه می‌کند:
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
 \node[draw, circle] (1) at (3,5) {$1$};
@@ -392,18 +378,18 @@ to the circuit:
 \path[draw=red,thick,->,line width=2pt] (3) -- node[font=\small,label={[red]east:10.}] {} (1);
 \end{tikzpicture}
 \end{center}
-Now all edges are included in the circuit,
-so we have successfully constructed an Eulerian circuit.
+اکنون تمام یال‌ها در مدار گنجانده شده‌اند،
+بنابراین یک مدار اویلری با موفقیت ساخته شد.
 
-\section{Hamiltonian paths}
+\section{مسیرهای همیلتونی}
 
-\index{Hamiltonian path}
+\index{Hamiltonian path@مسیر همیلتونی}
 
-A \key{Hamiltonian path}
+یک \key{مسیر همیلتونی}
 %\footnote{W. R. Hamilton (1805--1865) was an Irish mathematician.}
-is a path
-that visits each node of the graph exactly once.
-For example, the graph
+مسیری است
+که دقیقاً یک بار از هر رأس گراف عبور می‌کند.
+به عنوان مثال، گراف
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
 \node[draw, circle] (1) at (1,5) {$1$};
@@ -420,7 +406,7 @@ For example, the graph
 \path[draw,thick,-] (4) -- (5);
 \end{tikzpicture}
 \end{center}
-contains a Hamiltonian path from node 1 to node 3:
+شامل یک مسیر همیلتونی از رأس 1 به رأس 3 است:
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
 \node[draw, circle] (1) at (1,5) {$1$};
@@ -443,12 +429,12 @@ contains a Hamiltonian path from node 1 to node 3:
 \end{tikzpicture}
 \end{center}
 
-\index{Hamiltonian circuit}
+\index{Hamiltonian circuit@مدار همیلتونی}
 
-If a Hamiltonian path begins and ends at the same node,
-it is called a \key{Hamiltonian circuit}.
-The graph above also has an Hamiltonian circuit
-that begins and ends at node 1:
+اگر یک مسیر هامیلتونی در همان رأس شروع، پایان یابد،
+\key{دور هامیلتونی} نامیده می‌شود.
+گراف بالا دارای یک دور هامیلتونی نیز هست
+که از رأس ۱ شروع و به آن ختم می‌شود:
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
 \node[draw, circle] (1) at (1,5) {$1$};
@@ -472,86 +458,86 @@ that begins and ends at node 1:
 \end{tikzpicture}
 \end{center}
 
-\subsubsection{Existence}
+\subsubsection{وجود}
 
-No efficient method is known for testing if a graph
-contains a Hamiltonian path, and the problem is NP-hard.
-Still, in some special cases, we can be certain
-that a graph contains a Hamiltonian path.
+هیچ روش کارآمدی برای بررسی وجود مسیر هامیلتونی در یک گراف
+شناخته نشده است و این مسئله NP-hard است.
+با این حال، در برخی حالت‌های خاص می‌توان مطمئن بود
+که گراف حاوی مسیر هامیلتونی است.
 
-A simple observation is that if the graph is complete,
-i.e., there is an edge between all pairs of nodes,
-it also contains a Hamiltonian path.
-Also stronger results have been achieved:
+یک مشاهده ساده این است که اگر گراف کامل باشد،
+یعنی بین هر جفت رأس یک یال وجود داشته باشد،
+حاوی مسیر هامیلتونی نیز هست.
+همچنین نتایج قوی‌تری به دست آمده است:
 
 \begin{itemize}
 \item
 \index{Dirac's theorem}
-\key{Dirac's theorem}: %\cite{dir52}
-If the degree of each node is at least $n/2$,
-the graph contains a Hamiltonian path.
+\key{قضیه دیراک}: %\cite{dir52}
+اگر درجه هر رأس حداقل $n/2$ باشد،
+گراف شامل مسیر هامیلتونی است.
 \item
 \index{Ore's theorem}
-\key{Ore's theorem}: %\cite{ore60}
-If the sum of degrees of each non-adjacent pair of nodes
-is at least $n$,
-the graph contains a Hamiltonian path.
+\key{قضیه اور}: %\cite{ore60}
+اگر مجموع درجات هر جفت رأس غیرمجاور
+حداقل $n$ باشد،
+گراف شامل مسیر هامیلتونی است.
 \end{itemize}
 
-A common property in these theorems and other results is
-that they guarantee the existence of a Hamiltonian path
-if the graph has \emph{a large number} of edges.
-This makes sense, because the more edges the graph contains,
-the more possibilities there is to construct a Hamiltonian path.
+ویژگی مشترک این قضایا و نتایج دیگر این است
+که اگر گراف دارای \emph{تعداد زیادی} یال باشد،
+وجود مسیر هامیلتونی را تضمین می‌کنند.
+این امر منطقی است، زیرا هرچه گراف یال‌های بیشتری داشته باشد،
+امکان‌های بیشتری برای ساخت یک مسیر هامیلتونی وجود دارد.
 
-\subsubsection{Construction}
+\subsubsection{ساخت}
 
-Since there is no efficient way to check if a Hamiltonian
-path exists, it is clear that there is also no method
-to efficiently construct the path, because otherwise
-we could just try to construct the path and see
-whether it exists.
+از آنجا که روش کارآمدی برای بررسی وجود مسیر هامیلتونی
+وجود ندارد، مشخص است که روشی نیز برای ساخت کارآمد
+این مسیر وجود ندارد، زیرا در غیر این صورت
+می‌توانستیم تلاش کنیم مسیر را بسازیم و ببینیم
+آیا وجود دارد یا خیر.
 
-A simple way to search for a Hamiltonian path is
-to use a backtracking algorithm that goes through all
-possible ways to construct the path.
-The time complexity of such an algorithm is at least $O(n!)$,
-because there are $n!$ different ways to choose the order of $n$ nodes.
+یک روش ساده برای جستجوی مسیر هامیلتونی
+استفاده از الگوریتم عقب‌گرد است که تمام
+حالت‌های ممکن برای ساخت مسیر را بررسی می‌کند.
+پیچیدگی زمانی چنین الگوریتمی حداقل $O(n!)$ است،
+زیرا $n!$ روش مختلف برای انتخاب ترتیب $n$ رأس وجود دارد.
 
-A more efficient solution is based on dynamic programming
-(see Chapter 10.5).
-The idea is to calculate values
-of a function $\texttt{possible}(S,x)$,
-where $S$ is a subset of nodes and $x$
-is one of the nodes.
-The function indicates whether there is a Hamiltonian path
-that visits the nodes of $S$ and ends at node $x$.
-It is possible to implement this solution in $O(2^n n^2)$ time.
+یک راهکار کارآمدتر مبتنی بر برنامه‌نویسی پویا است
+(فصل ۱۰.۵ را ببینید).
+ایده محاسبه مقادیر
+تابع $\texttt{possible}(S,x)$ است،
+که در آن $S$ زیرمجموعه‌ای از رأس‌ها و $x$
+یکی از رأس‌ها است.
+تابع مشخص می‌کند آیا مسیر همیلتونی وجود دارد
+که رأس‌های $S$ را پیمایش کند و در رأس $x$ پایان یابد.
+پیاده‌سازی این راهکار در زمان $O(2^n n^2)$ ممکن است.
 
-\section{De Bruijn sequences}
+\section{دنباله‌های دی بروین}
 
-\index{De Bruijn sequence}
+\index{دنباله دی بروین}
 
-A \key{De Bruijn sequence}
-is a string that contains
-every string of length $n$
-exactly once as a substring, for a fixed
-alphabet of $k$ characters.
-The length of such a string is 
-$k^n+n-1$ characters.
-For example, when $n=3$ and $k=2$,
-an example of a De Bruijn sequence is
+یک \key{دنباله دی بروین}
+رشته‌ای است که شامل
+هر رشته به طول $n$
+دقیقاً یک بار به عنوان زیررشته است، برای یک
+الفبای ثابت با $k$ نویسه.
+طول چنین رشته‌ای
+$k^n+n-1$ نویسه است.
+به عنوان مثال، وقتی $n=3$ و $k=2$ باشد،
+یک نمونه از دنباله دی بروین برابر است با
 \[0001011100.\]
-The substrings of this string are all
-combinations of three bits:
-000, 001, 010, 011, 100, 101, 110 and 111.
+زیررشته‌های این رشته تمام
+ترکیبات سه بیتی هستند:
+000، 001، 010، 011، 100، 101، 110 و 111.
 
-It turns out that each De Bruijn sequence
-corresponds to an Eulerian path in a graph.
-The idea is to construct a graph where
-each node contains a string of $n-1$ characters
-and each edge adds one character to the string.
-The following graph corresponds to the above scenario:
+مشخص می‌شود هر دنباله دی بروین
+متناظر با یک مسیر اویلری در یک گراف است.
+ایده ساخت گرافی است که در آن
+هر رأس شامل یک رشته از $n-1$ نویسه باشد
+و هر یال یک نویسه به رشته اضافه کند.
+گراف زیر متناظر با سناریوی بالاست:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.8]
@@ -573,27 +559,27 @@ The following graph corresponds to the above scenario:
 \end{tikzpicture}
 \end{center}
 
-An Eulerian path in this graph corresponds to a string
-that contains all strings of length $n$.
-The string contains the characters of the starting node
-and all characters of the edges.
-The starting node has $n-1$ characters
-and there are $k^n$ characters in the edges,
-so the length of the string is $k^n+n-1$.
+یک مسیر اویلری در این گراف متناظر با رشته‌ای است
+که شامل تمام رشته‌های به طول $n$ باشد.
+رشته شامل نویسه‌های رأس شروع
+و تمام نویسه‌های یال‌ها است.
+رأس شروع دارای $n-1$ نویسه است
+و $k^n$ نویسه در یال‌ها وجود دارد،
+بنابراین طول رشته $k^n+n-1$ است.
 
-\section{Knight's tours}
+\section{گشت‌های اسب}
 
-\index{knight's tour}
+\index{گشت اسب}
 
-A \key{knight's tour} is a sequence of moves
-of a knight on an $n \times n$ chessboard
-following the rules of chess such that the knight
-visits each square exactly once.
-A knight's tour is called a \emph{closed} tour
-if the knight finally returns to the starting square and
-otherwise it is called an \emph{open} tour.
+یک \key{گشت اسب} دنباله‌ای از حرکات
+یک اسب روی صفحه شطرنج $n \times n$
+طبق قوانین شطرنج است به طوری که اسب
+هر خانه را دقیقاً یک بار ملاقات کند.
+یک گشت اسب \emph{بسته} نامیده می‌شود
+اگر اسب در نهایت به خانه شروع برگردد و
+در غیر این صورت یک گشت \emph{باز} نامیده می‌شود.
 
-For example, here is an open knight's tour on a $5 \times 5$ board:
+به عنوان مثال، در اینجا یک گشت اسب باز روی صفحه $5 \times 5$ آمده است:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
@@ -626,34 +612,32 @@ For example, here is an open knight's tour on a $5 \times 5$ board:
 \end{tikzpicture}
 \end{center}
 
-A knight's tour corresponds to a Hamiltonian path in a graph
-whose nodes represent the squares of the board,
-and two nodes are connected with an edge if a knight
-can move between the squares according to the rules of chess.
+گشت اسب معادل مسیر همیلتونی در گرافی است
+که رأس‌های آن خانه‌های صفحه شطرنج هستند،
+و دو رأس با یال به هم متصل‌اند اگر اسب
+طبق قوانین شطرنج بتواند بین آن خانه‌ها حرکت کند.
 
-A natural way to construct a knight's tour is to use backtracking.
-The search can be made more efficient by using
-\emph{heuristics} that attempt to guide the knight so that
-a complete tour will be found quickly.
+یک روش طبیعی برای ساخت گشت اسب، روش عقب‌گرد است.
+می‌توان با استفاده از \emph{روش‌های ابتکاری} (heuristics) که اسب را
+برای یافتن سریع گشت کامل هدایت می‌کنند،
+کارایی جستجو را افزایش داد.
 
-\subsubsection{Warnsdorf's rule}
+\subsubsection{قاعده وارنسدورف}
 
-\index{heuristic}
-\index{Warnsdorf's rule}
+\index{روش ابتکاری}
+\index{قاعده وارنسدورف}
 
-\key{Warnsdorf's rule} is a simple and effective heuristic
-for finding a knight's tour\footnote{This heuristic was proposed
-in Warnsdorf's book \cite{war23} in 1823. There are
-also polynomial algorithms for finding knight's tours
-\cite{par97}, but they are more complicated.}.
-Using the rule, it is possible to efficiently construct a tour
-even on a large board.
-The idea is to always move the knight so that it ends up
-in a square where the number of possible moves is as
-\emph{small} as possible.
+\key{قاعده وارنسدورف} روشی ابتکاری، ساده و کارآمد
+برای یافتن گشت اسب است\footnote{این روش ابتکاری در
+کتاب وارنسدورف \cite{war23} در سال ۱۸۲۳ پیشنهاد شد. همچنین الگوریتم‌های چندجمله‌ای
+برای یافتن گشت اسب وجود دارند \cite{par97}، اما پیچیده‌ترند.}.
+با استفاده از این قاعده، ساخت کارآمد گشت حتی
+در صفحه‌های بزرگ نیز ممکن است.
+ایده این است: اسب همواره به خانه‌ای برود
+که تعداد حرکات ممکن بعدی از آن خانه تا حد امکان \emph{کمترین} باشد.
 
-For example, in the following situation, there are five
-possible squares to which the knight can move (squares $a \ldots e$):
+برای مثال، در وضعیت زیر، پنج خانه ممکن وجود دارد
+که اسب می‌تواند به آن‌ها برود (خانه‌های $a \ldots e$):
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \draw (0,0) grid (5,5);
@@ -666,9 +650,7 @@ possible squares to which the knight can move (squares $a \ldots e$):
 \node at (3.5,1.5) {$d$};
 \end{tikzpicture}
 \end{center}
-In this situation, Warnsdorf's rule moves the knight to square $a$,
-because after this choice, there is only a single possible move.
-The other choices would move the knight to squares where
-there would be three moves available.
-
-
+در این وضعیت، قاعده وارنسدورف اسب را به خانه $a$ می‌برد،
+زیرا پس از این انتخاب، تنها یک حرکت ممکن باقی می‌ماند.
+انتخاب‌های دیگر اسب را به خانه‌هایی می‌برند
+که از آن‌ها سه حرکت ممکن وجود دارد.
