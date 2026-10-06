@@ -1,17 +1,10 @@
-\chapter{Geometry}
+\chapter{هندسه}
 
-\index{geometry}
+\index{geometry@هندسه}
 
-In geometric problems, it is often challenging
-to find a way to approach the problem so that
-the solution to the problem can be conveniently implemented
-and the number of special cases is small.
+در مسائل هندسی، یافتن روشی برای حل که پیاده‌سازی راحتی داشته باشد و حالت‌های خاص آن کم باشد، اغلب چالش‌برانگیز است.
 
-As an example, consider a problem where
-we are given the vertices of a quadrilateral
-(a polygon that has four vertices),
-and our task is to calculate its area.
-For example, a possible input for the problem is as follows:
+به عنوان مثال، مسئله‌ای را در نظر بگیرید که در آن رأس‌های یک چهارضلعی (چندضلعی با چهار رأس) داده شده است و وظیفه ما محاسبه مساحت آن است. به عنوان نمونه، یک ورودی ممکن برای مسئله به صورت زیر است:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.45]
@@ -23,9 +16,7 @@ For example, a possible input for the problem is as follows:
 \draw[thick] (6,2) -- (5,6) -- (2,5) -- (1,1) -- (6,2);
 \end{tikzpicture}
 \end{center}
-One way to approach the problem is to divide
-the quadrilateral into two triangles by a straight
-line between two opposite vertices:
+یک روش برای حل مسئله، تقسیم چهارضلعی به دو مثلث به وسیله یک خط مستقیم بین دو رأس روبه‌رو است:
 \begin{center}
 \begin{tikzpicture}[scale=0.45]
 
@@ -38,24 +29,13 @@ line between two opposite vertices:
 \draw[dashed,thick] (2,5) -- (6,2);
 \end{tikzpicture}
 \end{center}
-After this, it suffices to sum the areas
-of the triangles.
-The area of a triangle can be calculated,
-for example, using \key{Heron's formula}
+پس از این، جمع زدن مساحت مثلث‌ها کافی است. مساحت یک مثلث را می‌توان مثلاً با استفاده از \key{فرمول هرون} محاسبه کرد:
 %\footnote{Heron of Alexandria (c. 10--70) was a Greek mathematician.}
 \[ \sqrt{s (s-a) (s-b) (s-c)},\]
-where $a$, $b$ and $c$ are the lengths
-of the triangle's sides and
-$s=(a+b+c)/2$.
-\index{Heron's formula}
+که در آن $a$، $b$ و $c$ طول اضلاع مثلث هستند و $s=(a+b+c)/2$.
+\index{Heron's formula@فرمول هرون}
 
-This is a possible way to solve the problem,
-but there is one pitfall:
-how to divide the quadrilateral into triangles?
-It turns out that sometimes we cannot just pick
-two arbitrary opposite vertices.
-For example, in the following situation,
-the division line is \emph{outside} the quadrilateral:
+این یک روش ممکن برای حل مسئله است، اما یک دام وجود دارد: چگونه چهارضلعی را به مثلث‌ها تقسیم کنیم؟ مشخص می‌شود گاهی نمی‌توانیم صرفاً دو رأس روبه‌روی دلخواه را انتخاب کنیم. به عنوان مثال، در وضعیت زیر، خط تقسیم \emph{خارج} چهارضلعی قرار می‌گیرد:
 \begin{center}
 \begin{tikzpicture}[scale=0.45]
 
@@ -68,7 +48,7 @@ the division line is \emph{outside} the quadrilateral:
 \draw[dashed,thick] (2,5) -- (6,2);
 \end{tikzpicture}
 \end{center}
-However, another way to draw the line works:
+با این حال، روش دیگر برای رسم خط کار می‌کند:
 \begin{center}
 \begin{tikzpicture}[scale=0.45]
 
@@ -81,37 +61,32 @@ However, another way to draw the line works:
 \draw[dashed,thick] (3,2) -- (1,1);
 \end{tikzpicture}
 \end{center}
-It is clear for a human which of the lines is the correct
-choice, but the situation is difficult for a computer.
-                           
-However, it turns out that we can solve the problem using
-another method that is more convenient to a programmer.
-Namely, there is a general formula
-\[x_1y_2-x_2y_1+x_2y_3-x_3y_2+x_3y_4-x_4y_3+x_4y_1-x_1y_4,\]
-that calculates the area of a quadrilateral
-whose vertices are
-$(x_1,y_1)$,
-$(x_2,y_2)$,
-$(x_3,y_3)$ and
-$(x_4,y_4)$.
-This formula is easy to implement, there are no special
-cases, and we can even generalize the formula
-to \emph{all} polygons.
+برای انسان انتخاب خط درست بدیهی است، اما کامپیوتر با موقعیت سختی روبه‌رو می‌شود.
 
-\section{Complex numbers}
+با این حال، می‌توان مسأله را با روشی دیگر حل کرد که کار برنامه‌نویس را راحت‌تر می‌کند.
+به‌طور مشخص، رابطه کلی
+\[x_1y_2-x_2y_1+x_2y_3-x_3y_2+x_3y_4-x_4y_3+x_4y_1-x_1y_4\]
+مساحت چهارضلعی با رأس‌های
+$(x_1,y_1)$،
+$(x_2,y_2)$،
+$(x_3,y_3)$ و
+$(x_4,y_4)$
+را محاسبه می‌کند.
+پیاده‌سازی این فرمول آسان است، حالت خاص ندارد و حتی قابل تعمیم به \emph{تمام} چندضلعی‌ها است.
+
+\section{اعداد مختلط}
 
 \index{complex number}
 \index{point}
 \index{vector}
 
-A \key{complex number} is a number of the form $x+y i$,
-where $i = \sqrt{-1}$ is the \key{imaginary unit}.
-A geometric interpretation of a complex number is
-that it represents a two-dimensional point $(x,y)$
-or a vector from the origin to a point $(x,y)$.
+یک \key{عدد مختلط} عددی به فرم $x+y i$ است
+که در آن $i = \sqrt{-1}$ \key{واحد موهومی} است.
+تعبیر هندسی عدد مختلط،
+نمایش نقطه دوبعدی $(x,y)$
+یا برداری از مبدأ به نقطه $(x,y)$ است.
 
-For example, $4+2i$ corresponds to the
-following point and vector:
+برای نمونه، $4+2i$ با نقطه و بردار زیر تطابق دارد:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.45]
@@ -128,16 +103,12 @@ following point and vector:
 
 \index{complex@\texttt{complex}}
 
-The C++ complex number class \texttt{complex} is
-useful when solving geometric problems.
-Using the class we can represent points and vectors
-as complex numbers, and the class contains tools
-that are useful in geometry.
+کلاس اعداد مختلط در سی‌پلاس‌پلاس (\texttt{complex}) در حل مسائل هندسی کاربرد دارد.
+با این کلاس می‌توان نقطه‌ها و بردارها را به شکل اعداد مختلط ذخیره کرد؛
+همچنین ابزارهای هندسی مفیدی دارد.
 
-In the following code, \texttt{C} is the type of
-a coordinate and \texttt{P} is the type of a point or a vector.
-In addition, the code defines macros \texttt{X} and \texttt{Y}
-that can be used to refer to x and y coordinates.
+در کد زیر، \texttt{C} نوع داده مختصات و \texttt{P} نوع داده نقطه یا بردار است.
+به علاوه، ماکروهای \texttt{X} و \texttt{Y} برای ارجاع به مختصات x و y تعریف شده‌اند.
 
 \begin{lstlisting}
 typedef long long C;
@@ -146,16 +117,14 @@ typedef complex<C> P;
 #define Y imag()
 \end{lstlisting}
 
-For example, the following code defines a point $p=(4,2)$
-and prints its x and y coordinates:
+برای مثال، کد زیر نقطه $p=(4,2)$ را تعریف می‌کند و مختصات x و y آن را چاپ می‌کند:
 
 \begin{lstlisting}
 P p = {4,2};
 cout << p.X << " " << p.Y << "\n"; // 4 2
 \end{lstlisting}
 
-The following code defines vectors $v=(3,1)$ and $u=(2,2)$,
-and after that calculates the sum $s=v+u$.
+کد زیر بردارهای $v=(3,1)$ و $u=(2,2)$ را تعریف می‌کند و سپس مجموع $s=v+u$ را به دست می‌آورد:
 
 \begin{lstlisting}
 P v = {3,1};
@@ -164,57 +133,44 @@ P s = v+u;
 cout << s.X << " " << s.Y << "\n"; // 5 3
 \end{lstlisting}
 
-In practice,
-an appropriate coordinate type is usually
-\texttt{long long} (integer) or \texttt{long double}
-(real number).
-It is a good idea to use integer whenever possible,
-because calculations with integers are exact.
-If real numbers are needed,
-precision errors should be taken into account
-when comparing numbers.
-A safe way to check if real numbers $a$ and $b$ are equal
-is to compare them using $|a-b|<\epsilon$,
-where $\epsilon$ is a small number (for example, $\epsilon=10^{-9}$).
+در عمل،
+نوع مناسب برای مختصات معمولاً
+\texttt{long long} (عدد صحیح) یا \texttt{long double}
+(عدد حقیقی) است.
+بهتر است تا حد امکان از اعداد صحیح استفاده شود
+زیرا محاسبات آن‌ها دقیق است.
+در صورت نیاز به اعداد حقیقی،
+خطای دقت را هنگام مقایسه‌ها باید در نظر گرفت.
+روش امن برای بررسی برابری دو عدد حقیقی $a$ و $b$،
+مقایسه به صورت $|a-b|<\epsilon$ است
+که در آن $\epsilon$ مقداری بسیار کوچک است (مثلاً $\epsilon=10^{-9}$).
 
-\subsubsection*{Functions}
+\subsubsection*{توابع}
 
-In the following examples, the coordinate type is
-\texttt{long double}.
+در مثال‌های زیر، نوع داده مختصات
+\texttt{long double} است.
 
-The function $\texttt{abs}(v)$ calculates the length
-$|v|$ of a vector $v=(x,y)$
-using the formula $\sqrt{x^2+y^2}$.
-The function can also be used for
-calculating the distance between points
-$(x_1,y_1)$ and $(x_2,y_2)$,
-because that distance equals the length
-of the vector $(x_2-x_1,y_2-y_1)$.
+تابع $\texttt{abs}(v)$ طول $|v|$ بردار $v=(x,y)$ را با فرمول $\sqrt{x^2+y^2}$ محاسبه می‌کند.
+همچنین برای محاسبه فاصله بین نقاط $(x_1,y_1)$ و $(x_2,y_2)$ کاربرد دارد؛
+فاصله برابر طول بردار $(x_2-x_1,y_2-y_1)$ است.
 
-The following code calculates the distance
-between points $(4,2)$ and $(3,-1)$:
+کد زیر فاصله بین نقاط $(4,2)$ و $(3,-1)$ را محاسبه می‌کند:
 \begin{lstlisting}
 P a = {4,2};
 P b = {3,-1};
 cout << abs(b-a) << "\n"; // 3.16228
 \end{lstlisting}
 
-The function $\texttt{arg}(v)$ calculates the
-angle of a vector $v=(x,y)$ with respect to the x axis.
-The function gives the angle in radians,
-where $r$ radians equals $180 r/\pi$ degrees.
-The angle of a vector that points to the right is 0,
-and angles decrease clockwise and increase
-counterclockwise.
+تابع $\texttt{arg}(v)$ زاویه بردار $v=(x,y)$ نسبت به محور x را می‌دهد.
+زاویه بر حسب رادیان است؛
+هر $r$ رادیان برابر $180 r/\pi$ درجه است.
+زاویه بردار رو به راست 0 است؛
+جهت عقربه‌های ساعت کاهش و پادساعت‌گرد افزایش می‌یابد.
 
-The function $\texttt{polar}(s,a)$ constructs a vector
-whose length is $s$ and that points to an angle $a$.
-A vector can be rotated by an angle $a$
-by multiplying it by a vector with length 1 and angle $a$.
+تابع $\texttt{polar}(s,a)$ برداری با طول $s$ و زاویه $a$ می‌سازد.
+دوران بردار به اندازه زاویه $a$ با ضرب آن در برداری با طول 1 و زاویه $a$ انجام می‌شود.
 
-The following code calculates the angle of
-the vector $(4,2)$, rotates it $1/2$ radians
-counterclockwise, and then calculates the angle again:
+کد زیر زاویه بردار $(4,2)$ را می‌گیرد، آن را $1/2$ رادیان پادساعت‌گرد می‌چرخاند و زاویه جدید را چاپ می‌کند:
 
 \begin{lstlisting}
 P v = {4,2};
@@ -223,19 +179,16 @@ v *= polar(1.0,0.5);
 cout << arg(v) << "\n"; // 0.963648
 \end{lstlisting}
 
-\section{Points and lines}
+\section{نقاط و خطوط}
 
 \index{cross product}
 
-The \key{cross product} $a \times b$ of vectors
-$a=(x_1,y_1)$ and $b=(x_2,y_2)$ is calculated
-using the formula $x_1 y_2 - x_2 y_1$.
-The cross product tells us whether $b$
-turns left (positive value), does not turn (zero)
-or turns right (negative value)
-when it is placed directly after $a$.
+\key{ضرب خارجی} (cross product) $a \times b$ دو بردار $a=(x_1,y_1)$ و $b=(x_2,y_2)$ با فرمول $x_1 y_2 - x_2 y_1$ محاسبه می‌شود.
+ضرب خارجی مشخص می‌کند بردار $b$ پس از بردار $a$،
+به چپ می‌پیچد (مقدار مثبت)، مستقیم می‌رود (صفر)،
+یا به راست می‌پیچد (مقدار منفی).
 
-The following picture illustrates the above cases:
+تصویر زیر این حالت‌ها را نشان می‌دهد:
 \begin{center}
 \begin{tikzpicture}[scale=0.45]
 
@@ -266,10 +219,8 @@ The following picture illustrates the above cases:
 \end{center}
 
 \noindent
-For example, in the first case
-$a=(4,2)$ and $b=(1,2)$.
-The following code calculates the cross product
-using the class \texttt{complex}:
+مثال: در حالت اول $a=(4,2)$ و $b=(1,2)$ است.
+کد زیر ضرب خارجی را با کلاس \texttt{complex} حساب می‌کند:
 
 \begin{lstlisting}
 P a = {4,2};
@@ -277,24 +228,16 @@ P b = {1,2};
 C p = (conj(a)*b).Y; // 6
 \end{lstlisting}
 
-The above code works, because
-the function \texttt{conj} negates the y coordinate
-of a vector,
-and when the vectors $(x_1,-y_1)$ and $(x_2,y_2)$
-are multiplied together, the y coordinate
-of the result is $x_1 y_2 - x_2 y_1$.
+کد کار می‌کند چون تابع \texttt{conj} مولفه y بردار را قرینه می‌کند؛
+از ضرب دو بردار $(x_1,-y_1)$ و $(x_2,y_2)$، مولفه y حاصل برابر $x_1 y_2 - x_2 y_1$ می‌شود.
 
-\subsubsection{Point location}
+\subsubsection{موقعیت نقطه}
 
-Cross products can be used to test
-whether a point is located on the left or right
-side of a line.
-Assume that the line goes through points
-$s_1$ and $s_2$, we are looking from $s_1$
-to $s_2$ and the point is $p$.
+ضرب خارجی برای تعیین قرارگیری نقطه در سمت چپ یا راست خط کاربرد دارد.
+خط از نقاط $s_1$ و $s_2$ می‌گذرد؛ دید از $s_1$ به سمت $s_2$ است و نقطه $p$ بررسی می‌شود.
 
-For example, in the following picture,
-$p$ is on the left side of the line:
+برای مثال، در تصویر زیر،
+$p$ در سمت چپ خط قرار دارد:
 \begin{center}
 \begin{tikzpicture}[scale=0.45]
 \draw[dashed,thick,->] (0,-3)--(12,6);
@@ -307,31 +250,28 @@ $p$ is on the left side of the line:
 \end{tikzpicture}
 \end{center}
 
-The cross product $(p-s_1) \times (p-s_2)$
-tells us the location of the point $p$.
-If the cross product is positive,
-$p$ is located on the left side,
-and if the cross product is negative,
-$p$ is located on the right side.
-Finally, if the cross product is zero,
-points $s_1$, $s_2$ and $p$ are on the same line.
+ضرب خارجی $(p-s_1) \times (p-s_2)$
+موقعیت نقطه $p$ را مشخص می‌کند.
+اگر ضرب خارجی مثبت باشد،
+$p$ در سمت چپ قرار دارد،
+و اگر ضرب خارجی منفی باشد،
+$p$ در سمت راست قرار دارد.
+در نهایت، اگر ضرب خارجی صفر باشد،
+نقاط $s_1$، $s_2$ و $p$ روی یک خط قرار دارند.
 
-\subsubsection{Line segment intersection}
+\subsubsection{تقاطع پاره‌خط‌ها}
 
-\index{line segment intersection}
+\index{تقاطع پاره‌خط‌ها}
 
-Next we consider the problem of testing
-whether two line segments
-$ab$ and $cd$ intersect. The possible cases are:
+در ادامه مسئله بررسی اینکه آیا دو پاره‌خط
+$ab$ و $cd$ متقاطع هستند یا خیر را بررسی می‌کنیم. حالت‌های ممکن عبارتند از:
 
-\textit{Case 1:}
-The line segments are on the same line
-and they overlap each other.
-In this case, there is an infinite number of
-intersection points.
-For example, in the following picture,
-all points between $c$ and $b$ are
-intersection points:
+\textit{حالت ۱:}
+پاره‌خط‌ها روی یک خط قرار دارند
+و با یکدیگر همپوشانی دارند.
+در این حالت، بی‌نهایت نقطه تقاطع وجود دارد.
+برای مثال، در تصویر زیر،
+تمام نقاط بین $c$ و $b$ نقاط تقاطع هستند:
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
 \draw (1.5,1.5)--(6,3);
@@ -347,16 +287,13 @@ intersection points:
 \end{tikzpicture}
 \end{center}
 
-In this case, we can use cross products to
-check if all points are on the same line.
-After this, we can sort the points and check
-whether the line segments overlap each other.
+در این حالت، می‌توان از ضرب خارجی برای بررسی اینکه آیا همه نقاط روی یک خط هستند استفاده کرد.
+سپس، می‌توان نقاط را مرتب کرد و بررسی نمود که آیا پاره‌خط‌ها همپوشانی دارند یا خیر.
 
-\textit{Case 2:}
-The line segments have a common vertex
-that is the only intersection point.
-For example, in the following picture the
-intersection point is $b=c$:
+\textit{حالت ۲:}
+پاره‌خط‌ها رأس مشترکی دارند
+که تنها نقطه تقاطع است.
+برای مثال، در تصویر زیر نقطه تقاطع $b=c$ است:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
@@ -372,16 +309,14 @@ intersection point is $b=c$:
 \end{tikzpicture}
 \end{center}
 
-This case is easy to check, because
-there are only four possibilities
-for the intersection point:
-$a=c$, $a=d$, $b=c$ and $b=d$.
+بررسی این حالت ساده است، زیرا
+تنها چهار احتمال برای نقطه تقاطع وجود دارد:
+$a=c$، $a=d$، $b=c$ و $b=d$.
 
-\textit{Case 3:}
-There is exactly one intersection point
-that is not a vertex of any line segment.
-In the following picture, the point $p$
-is the intersection point:
+\textit{حالت ۳:}
+دقیقاً یک نقطه تقاطع وجود دارد
+که رأس هیچ‌یک از پاره‌خط‌ها نیست.
+در تصویر زیر، نقطه $p$ نقطه تقاطع است:
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
 \draw (0,1)--(6,3);
@@ -399,25 +334,19 @@ is the intersection point:
 \end{tikzpicture}
 \end{center}
 
-In this case, the line segments intersect
-exactly when both points $c$ and $d$ are
-on different sides of a line through $a$ and $b$,
-and points $a$ and $b$ are on different
-sides of a line through $c$ and $d$.
-We can use cross products to check this.
+در این حالت، پاره‌خط‌ها دقیقاً زمانی یکدیگر را قطع می‌کنند
+که هر دو نقطه $c$ و $d$ در دو سمت مختلف خط گذرنده از $a$ و $b$ باشند،
+و نقاط $a$ و $b$ در دو سمت مختلف خط گذرنده از $c$ و $d$ قرار گیرند.
+می‌توان از ضرب خارجی برای بررسی این موضوع استفاده کرد.
 
-\subsubsection{Point distance from a line}
+\subsubsection{فاصله نقطه از خط}
 
-Another feature of cross products is that
-the area of a triangle can be calculated
-using the formula
+یکی دیگر از کاربردهای ضرب خارجی این است که
+مساحت مثلث را می‌توان با استفاده از فرمول
 \[\frac{| (a-c) \times (b-c) |}{2},\]
-where $a$, $b$ and $c$ are the vertices of the triangle.
-Using this fact, we can derive a formula
-for calculating the shortest distance between a point and a line.
-For example, in the following picture $d$ is the
-shortest distance between the point $p$ and the line
-that is defined by the points $s_1$ and $s_2$:
+محاسبه کرد، که در آن $a$، $b$ و $c$ رأس‌های مثلث هستند.
+با استفاده از این نکته، می‌توان فرمولی برای محاسبه کوتاه‌ترین فاصله بین یک نقطه و یک خط به دست آورد.
+برای نمونه، در تصویر زیر $d$ کوتاه‌ترین فاصله بین نقطه $p$ و خط تعریف‌شده توسط نقاط $s_1$ و $s_2$ است:
 \begin{center}
 \begin{tikzpicture}[scale=0.75]
 \draw (-2,-1)--(6,3);
@@ -432,22 +361,17 @@ that is defined by the points $s_1$ and $s_2$:
 \end{tikzpicture}
 \end{center}
 
-The area of the triangle whose vertices are
-$s_1$, $s_2$ and $p$ can be calculated in two ways:
-it is both
-$\frac{1}{2} |s_2-s_1| d$ and
-$\frac{1}{2} ((s_1-p) \times (s_2-p))$.
-Thus, the shortest distance is
+مساحت مثلثی که رأس‌های آن
+$s_1$، $s_2$ و $p$ هستند را می‌توان به دو روش محاسبه کرد:
+این مساحت هم برابر $\frac{1}{2} |s_2-s_1| d$ است
+و هم برابر $\frac{1}{2} ((s_1-p) \times (s_2-p))$.
+بنابراین، کوتاه‌ترین فاصله عبارت است از:
 \[ d = \frac{(s_1-p) \times (s_2-p)}{|s_2-s_1|} .\]
 
-\subsubsection{Point inside a polygon}
+\subsubsection{نقطه درون چندضلعی}
 
-Let us now consider the problem of
-testing whether a point is located inside or outside
-a polygon.
-For example, in the following picture point $a$
-is inside the polygon and point $b$ is outside
-the polygon.
+اکنون مسئله بررسی قرار داشتن یک نقطه درون یا بیرون چندضلعی را در نظر بگیرید.
+برای نمونه، در تصویر زیر نقطه $a$ درون چندضلعی و نقطه $b$ بیرون چندضلعی قرار دارد.
 
 \begin{center}
 \begin{tikzpicture}[scale=0.75]
@@ -461,17 +385,16 @@ the polygon.
 \end{tikzpicture}
 \end{center}
 
-A convenient way to solve the problem is to
-send a \emph{ray} from the point to an arbitrary direction
-and calculate the number of times it touches
-the boundary of the polygon.
-If the number is odd,
-the point is inside the polygon,
-and if the number is even,
-the point is outside the polygon.
+یک روش مناسب برای حل مسئله،
+تاباندن یک \emph{پرتو} از نقطه در جهتی دلخواه
+و شمارش تعداد دفعات برخورد آن با مرز چندضلعی است.
+اگر این تعداد فرد باشد،
+نقطه درون چندضلعی قرار دارد،
+و اگر زوج باشد،
+نقطه بیرون چندضلعی است.
 
 \begin{samepage}
-For example, we could send the following rays:
+برای نمونه، می‌توان پرتوهای زیر را تاباند:
 \begin{center}
 \begin{tikzpicture}[scale=0.75]
 \draw (0,0)--(2,2)--(5,1)--(2,3)--(1,2)--(-1,2)--(1,4)--(-2,4)--(-2,1)--(-3,3)--(-4,0)--(0,0);
@@ -490,28 +413,24 @@ For example, we could send the following rays:
 \end{center}
 \end{samepage}
 
-The rays from $a$ touch 1 and 3 times
-the boundary of the polygon,
-so $a$ is inside the polygon.
-Correspondingly, the rays from $b$
-touch 0 and 2 times the boundary of the polygon,
-so $b$ is outside the polygon.
+پرتوهای خارج‌شده از $a$ مرز چندضلعی را ۱ و ۳ بار قطع می‌کنند،
+بنابراین $a$ درون چندضلعی قرار دارد.
+به‌همین ترتیب، پرتوهای خارج‌شده از $b$ مرز چندضلعی را ۰ و ۲ بار قطع می‌کنند،
+بنابراین $b$ بیرون چندضلعی است.
 
-\section{Polygon area}
+\section{مساحت چندضلعی}
 
-A general formula for calculating the area
-of a polygon, sometimes called the \key{shoelace formula},
-is as follows: \index{shoelace formula}
+فرمول کلی برای محاسبه مساحت یک چندضلعی،
+که گاهی \key{فرمول بند کفش} نامیده می‌شود،
+به این صورت است: \index{فرمول بند کفش}
 \[\frac{1}{2} |\sum_{i=1}^{n-1} (p_i \times p_{i+1})| =
 \frac{1}{2} |\sum_{i=1}^{n-1} (x_i y_{i+1} - x_{i+1} y_i)|, \]
-Here the vertices are
-$p_1=(x_1,y_1)$, $p_2=(x_2,y_2)$, $\ldots$, $p_n=(x_n,y_n)$
-in such an order that
-$p_i$ and $p_{i+1}$ are adjacent vertices on the boundary
-of the polygon,
-and the first and last vertex is the same, i.e., $p_1=p_n$.
+در اینجا رأس‌ها به ترتیب
+$p_1=(x_1,y_1)$، $p_2=(x_2,y_2)$، $\ldots$، $p_n=(x_n,y_n)$ هستند
+به‌گونه‌ای که $p_i$ و $p_{i+1}$ رأس‌های مجاور روی مرز چندضلعی باشند،
+و رأس اول و آخر یکسان است، یعنی $p_1=p_n$.
 
-For example, the area of the polygon
+برای مثال، مساحت چندضلعی
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \filldraw (4,1.4) circle (2pt);
@@ -527,13 +446,13 @@ For example, the area of the polygon
 \path[draw] (4,1.4) -- (7,3.4) -- (5,5.4) -- (2,4.4) -- (4,3.4) -- (4,1.4);
 \end{tikzpicture}
 \end{center}
-is
+برابر است با:
 \[\frac{|(2\cdot5-5\cdot4)+(5\cdot3-7\cdot5)+(7\cdot1-4\cdot3)+(4\cdot3-4\cdot1)+(4\cdot4-2\cdot3)|}{2} = 17/2.\]
 
-The idea of the formula is to go through trapezoids
-whose one side is a side of the polygon,
-and another side lies on the horizontal line $y=0$.
-For example:
+ایده این فرمول بررسی ذوزنقه‌هایی است
+که یک ضلع آن‌ها ضلعی از چندضلعی است،
+و ضلع دیگر روی خط افقی $y=0$ قرار دارد.
+برای مثال:
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \path[draw,fill=lightgray] (5,5.4) -- (7,3.4) -- (7,0) -- (5,0) -- (5,5.4);
@@ -551,35 +470,31 @@ For example:
 \draw (0,0) -- (10,0);
 \end{tikzpicture}
 \end{center}
-The area of such a trapezoid is
+مساحت چنین ذوزنقه‌ای برابر است با
 \[(x_{i+1}-x_{i}) \frac{y_i+y_{i+1}}{2},\]
-where the vertices of the polygon are $p_i$ and $p_{i+1}$.
-If $x_{i+1}>x_{i}$, the area is positive,
-and if $x_{i+1}<x_{i}$, the area is negative.
+که در آن رأس‌های چندضلعی $p_i$ و $p_{i+1}$ هستند.
+اگر $x_{i+1}>x_{i}$ باشد، مساحت مثبت است،
+و اگر $x_{i+1}<x_{i}$ باشد، مساحت منفی است.
 
-The area of the polygon is the sum of areas of
-all such trapezoids, which yields the formula
+مساحت چندضلعی برابر با مجموع مساحت‌های
+همه این ذوزنقه‌ها است که فرمول زیر را به‌دست می‌دهد:
 \[|\sum_{i=1}^{n-1} (x_{i+1}-x_{i}) \frac{y_i+y_{i+1}}{2}| =
 \frac{1}{2} |\sum_{i=1}^{n-1} (x_i y_{i+1} - x_{i+1} y_i)|.\]
 
-Note that the absolute value of the sum is taken,
-because the value of the sum may be positive or negative,
-depending on whether we walk clockwise or counterclockwise
-along the boundary of the polygon.
+توجه کنید که قدر مطلق مجموع گرفته می‌شود،
+زیرا بسته به اینکه در جهت عقربه‌های ساعت یا پادساعت‌گرد
+روی مرز چندضلعی حرکت کنیم، مقدار مجموع ممکن است مثبت یا منفی باشد.
 
-\subsubsection{Pick's theorem}
+\subsubsection{قضیه پیک}
 
-\index{Pick's theorem}
+\index{قضیه پیک}
 
-\key{Pick's theorem} provides another way to calculate
-the area of a polygon provided that all vertices 
-of the polygon have integer coordinates.
-According to Pick's theorem, the area of the polygon is
+\key{قضیه پیک} روش دیگر محاسبه مساحت چندضلعی ارائه دهد، به شرطی که همه رأس‌های چندضلعی مختصات صحیح داشته باشند.
+طبق قضیه پیک، مساحت چندضلعی برابر است با:
 \[ a + b/2 -1,\]
-where $a$ is the number of integer points inside the polygon
-and $b$ is the number of integer points on the boundary of the polygon.
+که در آن $a$ تعداد نقاط صحیح درون چندضلعی و $b$ تعداد نقاط صحیح روی مرز چندضلعی است.
 
-For example, the area of the polygon
+برای مثال، مساحت چندضلعی
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \filldraw (4,1.4) circle (2pt);
@@ -609,27 +524,22 @@ For example, the area of the polygon
 \filldraw (5,2.4) circle (2pt);
 \end{tikzpicture}
 \end{center}
-is $6+7/2-1=17/2$.
+برابر است با $6+7/2-1=17/2$.
 
-\section{Distance functions}
+\section{تابع‌های فاصله}
 
-\index{distance function}
-\index{Euclidean distance}
-\index{Manhattan distance}
+\index{تابع فاصله}
+\index{فاصله اقلیدسی}
+\index{فاصله منهتن}
 
-A \key{distance function} defines the distance between
-two points.
-The usual distance function is the
-\key{Euclidean distance} where the distance between
-points $(x_1,y_1)$ and $(x_2,y_2)$ is
+یک \key{تابع فاصله} فاصله بین دو نقطه را مشخص کند.
+تابع فاصله معمول \key{فاصله اقلیدسی} است که فاصله بین نقاط $(x_1,y_1)$ و $(x_2,y_2)$ در آن برابر است با:
 \[\sqrt{(x_2-x_1)^2+(y_2-y_1)^2}.\]
-An alternative distance function is the
-\key{Manhattan distance}
-where the distance between points
-$(x_1,y_1)$ and $(x_2,y_2)$ is
+تابع فاصله جایگزین دیگر \key{فاصله منهتن} است
+که فاصله بین نقاط $(x_1,y_1)$ و $(x_2,y_2)$ در آن برابر است با:
 \[|x_1-x_2|+|y_1-y_2|.\]
 \begin{samepage}
-For example, consider the following picture:
+برای مثال، تصویر زیر را ببینید:
 \begin{center}
 \begin{tikzpicture}
 
@@ -650,41 +560,37 @@ For example, consider the following picture:
 \draw[dashed] (5+2,1) -- (5+2,2);
 \draw[dashed] (5+2,2) -- (5+5,2);
 
-\node at (3.5,-0.5) {Euclidean distance};
-\node at (5+3.5,-0.5) {Manhattan distance};
+\node at (3.5,-0.5) {فاصله اقلیدسی};
+\node at (5+3.5,-0.5) {فاصله منهتن};
 \end{tikzpicture}
 \end{center}
 \end{samepage}
-The Euclidean distance between the points is
+فاصله اقلیدسی بین نقاط برابر است با:
 \[\sqrt{(5-2)^2+(2-1)^2}=\sqrt{10}\]
-and the Manhattan distance is
+و فاصله منهتن برابر است با:
 \[|5-2|+|2-1|=4.\]
-The following picture shows regions that are within a distance of 1
-from the center point, using the Euclidean and Manhattan distances:
+تصویر زیر ناحیه‌هایی با فاصله حداکثر ۱ از نقطه مرکز را با استفاده از فواصل اقلیدسی و منهتن نشان دهد:
 \begin{center}
 \begin{tikzpicture}
 
 \draw[fill=gray!20] (0,0) circle [radius=1];
 \draw[fill] (0,0) circle [radius=0.05];
 
-\node at (0,-1.5) {Euclidean distance};
+\node at (0,-1.5) {فاصله اقلیدسی};
 
 \draw[fill=gray!20] (5+0,1) -- (5-1,0) -- (5+0,-1) -- (5+1,0) -- (5+0,1);
 \draw[fill] (5,0) circle [radius=0.05];
-\node at (5,-1.5) {Manhattan distance};
+\node at (5,-1.5) {فاصله منهتن};
 \end{tikzpicture}
 \end{center}
 
-\subsubsection{Rotating coordinates}
+\subsubsection{دوران دستگاه مختصات}
 
-Some problems are easier to solve if
-Manhattan distances are used instead of Euclidean distances.
-As an example, consider a problem where we are given
-$n$ points in the two-dimensional plane
-and our task is to calculate the maximum Manhattan
-distance between any two points.
+حل برخی مسئله‌ها با فاصله منهتن ساده‌تر از فاصله اقلیدسی است.
+مثال: $n$ نقطه در صفحه دو‌بعدی داده شده است.
+هدف: محاسبه بیشینه فاصله منهتن بین هر دو نقطه.
 
-For example, consider the following set of points:
+مجموعه نقاط زیر را در نظر بگیرید:
 \begin{center}
 \begin{tikzpicture}[scale=0.65]
 \draw[color=gray] (-1,-1) grid (4,4);
@@ -700,8 +606,7 @@ For example, consider the following set of points:
 \node at (3,0.5) {$D$};
 \end{tikzpicture}
 \end{center}
-The maximum Manhattan distance is 5
-between points $B$ and $C$:
+بیشینه فاصله منهتن برابر ۵ بین نقاط $B$ و $C$ است:
 \begin{center}
 \begin{tikzpicture}[scale=0.65]
 \draw[color=gray] (-1,-1) grid (4,4);
@@ -720,11 +625,9 @@ between points $B$ and $C$:
 \end{tikzpicture}
 \end{center}
 
-A useful technique related to Manhattan distances
-is to rotate all coordinates 45 degrees so that
-a point $(x,y)$ becomes $(x+y,y-x)$.
-For example, after rotating the above points,
-the result is:
+تکنیک کاربردی: چرخش ۴۵ درجه‌ای مختصات.
+نقطه $(x,y)$ تبدیل می‌شود به $(x+y,y-x)$.
+پس از چرخش نقاط بالا:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.6]
@@ -741,7 +644,7 @@ the result is:
 \node at (4,-2.5) {$D$};
 \end{tikzpicture}
 \end{center}
-And the maximum distance is as follows:
+بیشینه فاصله این‌گونه می‌شود:
 \begin{center}
 \begin{tikzpicture}[scale=0.6]
 \draw[color=gray] (0,-3) grid (7,3);
@@ -760,23 +663,16 @@ And the maximum distance is as follows:
 \end{tikzpicture}
 \end{center}
 
-Consider two points $p_1=(x_1,y_1)$ and $p_2=(x_2,y_2)$ whose rotated
-coordinates are $p'_1=(x'_1,y'_1)$ and $p'_2=(x'_2,y'_2)$.
-Now there are two ways to express the Manhattan distance
-between $p_1$ and $p_2$:
+نقاط $p_1=(x_1,y_1)$ و $p_2=(x_2,y_2)$ دارای مختصات چرخانده‌شده $p'_1=(x'_1,y'_1)$ و $p'_2=(x'_2,y'_2)$ هستند.
+دو روش بیان فاصله منهتن بین $p_1$ و $p_2$:
 \[|x_1-x_2|+|y_1-y_2| = \max(|x'_1-x'_2|,|y'_1-y'_2|)\]
 
-For example, if $p_1=(1,0)$ and $p_2=(3,3)$,
-the rotated coordinates are $p'_1=(1,-1)$ and $p'_2=(6,0)$
-and the Manhattan distance is
+مثال: اگر $p_1=(1,0)$ و $p_2=(3,3)$،
+مختصات چرخانده‌شده $p'_1=(1,-1)$ و $p'_2=(6,0)$ است
+و فاصله منهتن برابر است با:
 \[|1-3|+|0-3| = \max(|1-6|,|-1-0|) = 5.\]
 
-The rotated coordinates provide a simple way
-to operate with Manhattan distances, because we can
-consider x and y coordinates separately.
-To maximize the Manhattan distance between two points,
-we should find two points whose
-rotated coordinates maximize the value of
+مختصات چرخانده‌شده کار با فاصله منهتن را ساده می‌کند؛ مولفه‌های x و y جداگانه بررسی می‌شوند.
+برای بیشینه‌سازی فاصله منهتن دو نقطه، دو نقطه‌ای را بیابید که مقدار زیر را بیشینه کنند:
 \[\max(|x'_1-x'_2|,|y'_1-y'_2|).\]
-This is easy, because either the horizontal or vertical
-difference of the rotated coordinates has to be maximum.
+محاسبه ساده است؛ تفاضل افقی یا عمودی در مختصات جدید باید بیشینه باشد.
