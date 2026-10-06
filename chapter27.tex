@@ -1,32 +1,30 @@
-\chapter{Square root algorithms}
+\chapter{الگوریتم‌های ریشه دوم}
 
-\index{square root algorithm}
+\index{الگوریتم ریشه دوم}
 
-A \key{square root algorithm} is an algorithm
-that has a square root in its time complexity.
-A square root can be seen as a ''poor man's logarithm'':
-the complexity $O(\sqrt n)$ is better than $O(n)$
-but worse than $O(\log n)$.
-In any case, many square root algorithms are fast and usable in practice.
+یک \key{الگوریتم ریشه دوم} الگوریتمی است
+که ریشه دوم در پیچیدگی زمانی آن وجود دارد.
+ریشه دوم را می‌توان به عنوان «لگاریتم مرد فقیر» دید:
+پیچیدگی $O(\sqrt n)$ بهتر از $O(n)$
+اما بدتر از $O(\log n)$ است.
+در هر حال، بسیاری از الگوریتم‌های ریشه دوم سریع و در عمل کاربردی هستند.
 
-As an example, consider the problem of
-creating a data structure that supports
-two operations on an array:
-modifying an element at a given position
-and calculating the sum of elements in the given range.
-We have previously solved the problem using
-binary indexed and segment trees,
-that support both operations in $O(\log n)$ time.
-However, now we will solve the problem
-in another way using a square root structure
-that allows us to modify elements in $O(1)$ time
-and calculate sums in $O(\sqrt n)$ time.
+به عنوان مثال، مسئله ساخت یک داده‌ساختار را در نظر بگیرید
+که از دو عملیات روی یک آرایه پشتیبانی می‌کند:
+تغییر مقدار یک عنصر در موقعیت داده‌شده
+و محاسبه مجموع عناصر در بازه داده‌شده.
+پیش از این، مسئله را با استفاده از درخت‌های بازه‌ای و درخت‌های پدیدار دودویی حل کرده‌ایم
+که هر دو عملیات را در زمان $O(\log n)$ پشتیبانی می‌کنند.
+اما اکنون مسئله را به روش دیگری
+با استفاده از یک ساختار ریشه دوم حل خواهیم کرد
+که امکان تغییر عناصر در زمان $O(1)$
+و محاسبه مجموع در زمان $O(\sqrt n)$ را فراهم می‌کند.
 
-The idea is to divide the array into \emph{blocks}
-of size $\sqrt n$ so that each block contains
-the sum of elements inside the block.
-For example, an array of 16 elements will be
-divided into blocks of 4 elements as follows:
+ایده کار، تقسیم آرایه به \emph{بلوک‌هایی}
+به اندازه $\sqrt n$ است، به طوری که هر بلوک
+شامل مجموع عناصر درون خود باشد.
+به عنوان مثال، یک آرایه ۱۶ عنصری
+به بلوک‌های ۴ عنصری به شکل زیر تقسیم می‌شود:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
@@ -62,15 +60,13 @@ divided into blocks of 4 elements as follows:
 \end{tikzpicture}
 \end{center}
 
-In this structure,
-it is easy to modify array elements,
-because it is only needed to update
-the sum of a single block
-after each modification,
-which can be done in $O(1)$ time.
-For example, the following picture shows
-how the value of an element and
-the sum of the corresponding block change:
+در این ساختار،
+تغییر عناصر آرایه ساده است،
+زیرا پس از هر تغییر،
+تنها به‌روزرسانی مجموع یک بلوک منفرد لازم است
+که در زمان $O(1)$ انجام‌پذیر است.
+به عنوان مثال، تصویر زیر نشان می‌دهد
+که چگونه مقدار یک عنصر و مجموع بلوک متناظر آن تغییر می‌کنند:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
@@ -108,10 +104,10 @@ the sum of the corresponding block change:
 \end{tikzpicture}
 \end{center}
 
-Then, to calculate the sum of elements in a range,
-we divide the range into three parts such that 
-the sum consists of values of single elements
-and sums of blocks between them:
+سپس، برای محاسبه مجموع عناصر در یک بازه،
+بازه را به سه بخش تقسیم می‌کنیم، به طوری که
+مجموع شامل مقادیر عناصر تکی
+و مجموع بلوک‌های بین آن‌ها باشد:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
@@ -154,46 +150,45 @@ and sums of blocks between them:
 \end{tikzpicture}
 \end{center}
 
-Since the number of single elements is $O(\sqrt n)$
-and the number of blocks is also $O(\sqrt n)$,
-the sum query takes $O(\sqrt n)$ time.
-The purpose of the block size $\sqrt n$ is
-that it \emph{balances} two things:
-the array is divided into $\sqrt n$ blocks,
-each of which contains $\sqrt n$ elements.
+از آنجا که تعداد عناصر منفرد $O(\sqrt n)$
+و تعداد بلوک‌ها نیز $O(\sqrt n)$ است،
+پرس‌وجوی مجموع به زمان $O(\sqrt n)$ نیاز دارد.
+هدف از انتخاب اندازه بلوک $\sqrt n$ این است
+که بین دو چیز \emph{تعادل} برقرار می‌کند:
+آرایه به $\sqrt n$ بلوک تقسیم می‌شود،
+که هر کدام شامل $\sqrt n$ عنصر است.
 
-In practice, it is not necessary to use the
-exact value of $\sqrt n$ as a parameter,
-and instead we may use parameters $k$ and $n/k$ where $k$ is
-different from $\sqrt n$.
-The optimal parameter depends on the problem and input.
-For example, if an algorithm often goes
-through the blocks but rarely inspects
-single elements inside the blocks,
-it may be a good idea to divide the array into
-$k < \sqrt n$ blocks, each of which contains $n/k > \sqrt n$
-elements.
+در عمل، نیازی نیست که از مقدار دقیق $\sqrt n$
+به‌عنوان پارامتر استفاده شود،
+و در عوض می‌توانیم از پارامترهای $k$ و $n/k$ بهره ببریم، جایی که $k$
+متفاوت از $\sqrt n$ است.
+پارامتر بهینه به مسئله و ورودی بستگی دارد.
+برای مثال، اگر یک الگوریتم اغلب بلوک‌ها را پیمایش می‌کند
+اما به‌ندرت عناصر منفرد درون بلوک‌ها را بررسی می‌کند،
+شاید فکر خوبی باشد که آرایه را به
+$k < \sqrt n$ بلوک تقسیم کنیم، که هر کدام شامل $n/k > \sqrt n$
+عنصر باشد.
 
-\section{Combining algorithms}
+\section{ترکیب الگوریتم‌ها}
 
-In this section we discuss two square root algorithms
-that are based on combining two algorithms into one algorithm.
-In both cases, we could use either of the algorithms
-without the other
-and solve the problem in $O(n^2)$ time.
-However, by combining the algorithms, the running
-time is only $O(n \sqrt n)$.
+در این بخش دو الگوریتم جذر را بررسی می‌کنیم
+که بر اساس ترکیب دو الگوریتم در یک الگوریتم پیاده‌سازی شده‌اند.
+در هر دو حالت، می‌توانستیم از هر یک از الگوریتم‌ها
+بدون دیگری استفاده کنیم
+و مسئله را در زمان $O(n^2)$ حل کنیم.
+اما با ترکیب الگوریتم‌ها، زمان اجرا
+فقط $O(n \sqrt n)$ خواهد بود.
 
-\subsubsection{Case processing}
+\subsubsection{پردازش حالت‌به‌حالت}
 
-Suppose that we are given a two-dimensional
-grid that contains $n$ cells.
-Each cell is assigned a letter,
-and our task is to find two cells
-with the same letter whose distance is minimum,
-where the distance between cells
-$(x_1,y_1)$ and $(x_2,y_2)$ is $|x_1-x_2|+|y_1-y_2|$.
-For example, consider the following grid:
+فرض کنید یک شبکه دوبعدی به ما داده شده است
+که شامل $n$ خانه است.
+به هر خانه یک حرف اختصاص داده شده است،
+و وظیفه ما یافتن دو خانه
+با حرف یکسان است که کمترین فاصله را دارند،
+به‌طوری‌که فاصله میان خانه‌های
+$(x_1,y_1)$ و $(x_2,y_2)$ برابر با $|x_1-x_2|+|y_1-y_2|$ باشد.
+به‌عنوان مثال، شبکه زیر را در نظر بگیرید:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
@@ -216,59 +211,58 @@ For example, consider the following grid:
 \draw (0,0) grid (4,4);
 \end{tikzpicture}
 \end{center}
-In this case, the minimum distance is 2 between the two 'E' letters.
+در این حالت، کمترین فاصله برابر ۲ بین دو حرف «E» است.
 
-We can solve the problem by considering each letter separately.
-Using this approach, the new problem is to calculate
-the minimum distance
-between two cells with a \emph{fixed} letter $c$.
-We focus on two algorithms for this:
+می‌توان مسئله را با بررسی جداگانه هر حرف حل کرد.
+با این روش، مسئله جدید محاسبه کمترین فاصله
+بین دو خانه با یک حرف \emph{ثابت} $c$ است.
+دو الگوریتم برای این کار بررسی می‌شود:
 
-\emph{Algorithm 1:} Go through all pairs of cells with letter $c$,
-and calculate the minimum distance between such cells.
-This will take $O(k^2)$ time where $k$ is the number of cells with letter $c$.
+\emph{الگوریتم ۱:} تمام جفت‌خانه‌های دارای حرف $c$ پیمایش شده
+و کمترین فاصله بین آنها محاسبه می‌شود.
+زمان اجرا $O(k^2)$ است که $k$ تعداد خانه‌های دارای حرف $c$ است.
 
-\emph{Algorithm 2:} Perform a breadth-first search that simultaneously
-starts at each cell with letter $c$. The minimum distance between
-two cells with letter $c$ will be calculated in $O(n)$ time.
+\emph{الگوریتم ۲:} یک جستجوی اول‌سطح اجرا می‌شود که همزمان
+از هر خانه دارای حرف $c$ آغاز می‌گردد. کمترین فاصله بین
+دو خانه با حرف $c$ در زمان $O(n)$ محاسبه خواهد شد.
 
-One way to solve the problem is to choose either of the
-algorithms and use it for all letters.
-If we use Algorithm 1, the running time is $O(n^2)$,
-because all cells may contain the same letter,
-and in this case $k=n$.
-Also if we use Algorithm 2, the running time is $O(n^2)$,
-because all cells may have different letters,
-and in this case $n$ searches are needed.
+یک راه، انتخاب یکی از دو الگوریتم
+و استفاده از آن برای تمام حروف است.
+اگر از الگوریتم ۱ استفاده شود، زمان اجرا $O(n^2)$ است،
+زیرا ممکن است تمام خانه‌ها حاوی یک حرف یکسان باشند
+که در این حالت $k=n$ می‌شود.
+همچنین اگر از الگوریتم ۲ استفاده شود، زمان اجرا $O(n^2)$ است،
+زیرا ممکن است تمام خانه‌ها حروف متفاوتی داشته باشند
+و در این حالت به $n$ جستجو نیاز است.
 
-However, we can \emph{combine} the two algorithms and
-use different algorithms for different letters
-depending on how many times each letter appears in the grid.
-Assume that a letter $c$ appears $k$ times.
-If $k \le \sqrt n$, we use Algorithm 1, and if $k > \sqrt n$,
-we use Algorithm 2.
-It turns out that by doing this, the total running time
-of the algorithm is only $O(n \sqrt n)$.
+با این حال، می‌توان دو الگوریتم را \emph{ترکیب} کرد و
+بسته به تعداد دفعات تکرار هر حرف در جدول،
+الگوریتم‌های متفاوتی را برای حروف مختلف به کار برد.
+فرض کنید حرف $c$ به تعداد $k$ بار ظاهر شده است.
+اگر $k \le \sqrt n$ باشد از الگوریتم ۱ استفاده می‌شود و اگر $k > \sqrt n$ باشد
+از الگوریتم ۲ استفاده می‌گردد.
+با این روش، زمان اجرای کل الگوریتم
+فقط $O(n \sqrt n)$ خواهد بود.
 
-First, suppose that we use Algorithm 1 for a letter $c$.
-Since $c$ appears at most $\sqrt n$ times in the grid,
-we compare each cell with letter $c$ $O(\sqrt n)$ times
-with other cells.
-Thus, the time used for processing all such cells is $O(n \sqrt n)$.
-Then, suppose that we use Algorithm 2 for a letter $c$.
-There are at most $\sqrt n$ such letters,
-so processing those letters also takes $O(n \sqrt n)$ time.
+نخست فرض کنید از الگوریتم ۱ برای حرف $c$ استفاده شود.
+از آنجا که $c$ حداکثر $\sqrt n$ بار در جدول ظاهر شده،
+هر خانه دارای حرف $c$ حداکثر $O(\sqrt n)$ بار
+با سایر خانه‌ها مقایسه می‌شود.
+بنابراین، زمان پردازش تمام این خانه‌ها $O(n \sqrt n)$ است.
+سپس فرض کنید از الگوریتم ۲ برای حرف $c$ استفاده شود.
+حداکثر $\sqrt n$ حرف از این نوع وجود دارد،
+بنابراین پردازش این حروف نیز $O(n \sqrt n)$ زمان می‌برد.
 
-\subsubsection{Batch processing}
+\subsubsection{پردازش دسته‌ای}
 
-Our next problem also deals with
-a two-dimensional grid that contains $n$ cells.
-Initially, each cell except one is white.
-We perform $n-1$ operations, each of which first
-calculates the minimum distance from a given white cell
-to a black cell, and then paints the white cell black.
+مسئله بعدی نیز مربوط به
+یک جدول دو بعدی شامل $n$ خانه است.
+در ابتدا به جز یک خانه، همه خانه‌ها سفید هستند.
+تعداد $n-1$ عملیات انجام می‌دهیم؛ هر عملیات ابتدا
+کمترین فاصله از یک خانه سفید مشخص تا یک خانه سیاه را محاسبه کرده
+و سپس آن خانه سفید را سیاه می‌کند.
 
-For example, consider the following operation:
+به عنوان نمونه، عملیات زیر را در نظر بگیرید:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
@@ -280,11 +274,9 @@ For example, consider the following operation:
 \end{tikzpicture}
 \end{center}
 
-First, we calculate the minimum distance
-from the white cell marked with * to a black cell.
-The minimum distance is 2, because we can move
-two steps left to a black cell.
-Then, we paint the white cell black:
+ابتدا کمترین فاصله را از خانه سفید مشخص‌شده با * تا یک خانه سیاه محاسبه می‌کنیم.
+کمترین فاصله ۲ است، زیرا می‌توانیم با دو گام به سمت چپ به یک خانه سیاه برسیم.
+سپس، خانه سفید را سیاه می‌کنیم:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
@@ -296,72 +288,58 @@ Then, we paint the white cell black:
 \end{tikzpicture}
 \end{center}
 
-Consider the following two algorithms:
+دو الگوریتم زیر را در نظر بگیرید:
 
-\emph{Algorithm 1:} Use breadth-first search
-to calculate
-for each white cell the distance to the nearest black cell.
-This takes $O(n)$ time, and after the search,
-we can find the minimum distance from any white cell
-to a black cell in $O(1)$ time.
+\emph{الگوریتم ۱:} استفاده از جستجوی اول‌سطح
+برای محاسبه فاصله هر خانه سفید تا نزدیک‌ترین خانه سیاه.
+این کار $O(n)$ زمان می‌برد و پس از جستجو،
+می‌توانیم کمترین فاصله از هر خانه سفید به یک خانه سیاه را در زمان $O(1)$ پیدا کنیم.
 
-\emph{Algorithm 2:} Maintain a list of cells that have been
-painted black, go through this list at each operation
-and then add a new cell to the list.
-An operation takes $O(k)$ time where $k$ is the length of the list.
+\emph{الگوریتم ۲:} نگهداری فهرستی از خانه‌هایی که
+سیاه شده‌اند، پیمایش این فهرست در هر عملیات
+و سپس افزودن خانه جدید به فهرست.
+یک عملیات نیازمند $O(k)$ زمان است که در آن $k$ طول فهرست است.
 
-We combine the above algorithms by
-dividing the operations into
-$O(\sqrt n)$ \emph{batches}, each of which consists
-of $O(\sqrt n)$ operations.
-At the beginning of each batch,
-we perform Algorithm 1.
-Then, we use Algorithm 2 to process the operations
-in the batch.
-We clear the list of Algorithm 2 between
-the batches.
-At each operation,
-the minimum distance to a black cell
-is either the distance calculated by Algorithm 1
-or the distance calculated by Algorithm 2.
+این دو الگوریتم را با تقسیم عملیات به
+$O(\sqrt n)$ \emph{دسته} ترکیب می‌کنیم که هر کدام شامل
+$O(\sqrt n)$ عملیات است.
+در آغاز هر دسته،
+الگوریتم ۱ را اجرا می‌کنیم.
+سپس از الگوریتم ۲ برای پردازش عملیات
+درون آن دسته استفاده می‌کنیم.
+فهرست الگوریتم ۲ را بین دسته‌ها پاک می‌کنیم.
+در هر عملیات،
+کمترین فاصله تا یک خانه سیاه برابر است با کمینه فاصله محاسبه‌شده توسط الگوریتم ۱
+یا فاصله محاسبه‌شده توسط الگوریتم ۲.
 
-The resulting algorithm works in
-$O(n \sqrt n)$ time.
-First, Algorithm 1 is performed $O(\sqrt n)$ times,
-and each search works in $O(n)$ time.
-Second, when using Algorithm 2 in a batch,
-the list contains $O(\sqrt n)$ cells
-(because we clear the list between the batches)
-and each operation takes $O(\sqrt n)$ time.
+الگوریتم حاصل در زمان $O(n \sqrt n)$ کار می‌کند.
+نخست، الگوریتم ۱ به تعداد $O(\sqrt n)$ بار اجرا می‌شود
+و هر جستجو نیازمند زمان $O(n)$ است.
+دوم، هنگام استفاده از الگوریتم ۲ درون یک دسته،
+فهرست شامل $O(\sqrt n)$ خانه است
+(زیرا فهرست بین دسته‌ها پاک می‌شود)
+و هر عملیات $O(\sqrt n)$ زمان می‌برد.
 
-\section{Integer partitions}
+\section{افرازهای عدد صحیح}
 
-Some square root algorithms are based on
-the following observation:
-if a positive integer $n$ is represented as
-a sum of positive integers,
-such a sum always contains at most
-$O(\sqrt n)$ \emph{distinct} numbers.
-The reason for this is that to construct
-a sum that contains a maximum number of distinct
-numbers, we should choose \emph{small} numbers.
-If we choose the numbers $1,2,\ldots,k$,
-the resulting sum is
+برخی از الگوریتم‌های ریشه دوم بر این مشاهده استوارند:
+اگر یک عدد صحیح مثبت $n$ به صورت مجموعی از اعداد صحیح مثبت نمایش داده شود،
+چنین مجموعی همواره حداکثر شامل $O(\sqrt n)$ عدد \emph{متمایز} است.
+دلیل این است که برای ساختن مجموعی با بیشترین تعداد اعداد متمایز،
+باید اعداد \emph{کوچک} را برگزینیم.
+اگر اعداد $1,2,\ldots,k$ را انتخاب کنیم،
+مجموع حاصل برابر است با:
 \[\frac{k(k+1)}{2}.\]
-Thus, the maximum amount of distinct numbers is $k = O(\sqrt n)$.
-Next we will discuss two problems that can be solved
-efficiently using this observation.
+بنابراین، حداکثر تعداد اعداد متمایز برابر است با $k = O(\sqrt n)$.
+در ادامه دو مسئله را بررسی می‌کنیم که با استفاده از این مشاهده به صورت کارا حل می‌شوند.
 
-\subsubsection{Knapsack}
+\subsubsection{کوله‌پشتی}
 
-Suppose that we are given a list of integer weights
-whose sum is $n$.
-Our task is to find out all sums that can be formed using
-a subset of the weights. For example, if the weights are
-$\{1,3,3\}$, the possible sums are as follows:
+فرض کنید فهرستی از وزن‌های صحیح با مجموع $n$ داده شده است.
+مسئله پیدا کردن تمام مجموع‌هایی است که می‌توان با زیرمجموعه‌ای از این وزن‌ها ساخت. برای نمونه، اگر وزن‌ها $\{1,3,3\}$ باشند، مجموع‌های ممکن به شرح زیر هستند:
 
 \begin{itemize}[noitemsep]
-\item $0$ (empty set)
+\item $0$ (مجموعه تهی)
 \item $1$
 \item $3$
 \item $1+3=4$
@@ -369,42 +347,42 @@ $\{1,3,3\}$, the possible sums are as follows:
 \item $1+3+3=7$
 \end{itemize}
 
-Using the standard knapsack approach (see Chapter 7.4),
-the problem can be solved as follows:
-we define a function $\texttt{possible}(x,k)$ whose value is 1
-if the sum $x$ can be formed using the first $k$ weights,
-and 0 otherwise.
-Since the sum of the weights is $n$,
-there are at most $n$ weights and
-all values of the function can be calculated
-in $O(n^2)$ time using dynamic programming.
+با استفاده از روش کوله‌پشتی استاندارد (بخش ۷.۴ را ببینید)،
+مسئله را می‌توان به این صورت حل کرد:
+تابع $\texttt{possible}(x,k)$ را تعریف می‌کنیم که مقدار آن برابر ۱ است
+اگر بتوان مجموع $x$ را با استفاده از $k$ وزن اول ساخت،
+و در غیر این صورت ۰ است.
+از آنجا که مجموع وزن‌ها برابر $n$ است،
+حداکثر $n$ وزن وجود دارد و
+تمام مقادیر این تابع را می‌توان
+در زمان $O(n^2)$ با استفاده از برنامه‌نویسی پویا محاسبه کرد.
 
-However, we can make the algorithm more efficient
-by using the fact that there are at most $O(\sqrt n)$
-\emph{distinct} weights.
-Thus, we can process the weights in groups
-that consists of similar weights.
-We can process each group
-in $O(n)$ time, which yields an $O(n \sqrt n)$ time algorithm.
+با این حال، می‌توان الگوریتم را کارآمدتر کرد
+با استفاده از این واقعیت که حداکثر $O(\sqrt n)$
+وزن \emph{متمایز} وجود دارد.
+بنابراین، می‌توانیم وزن‌ها را در گروه‌هایی پردازش کنیم
+که شامل وزن‌های یکسان هستند.
+هر گروه را می‌توان
+در زمان $O(n)$ پردازش کرد، که الگوریتمی با زمان اجرای $O(n \sqrt n)$ به دست می‌دهد.
 
-The idea is to use an array that records the sums of weights
-that can be formed using the groups processed so far.
-The array contains $n$ elements: element $k$ is 1 if the sum
-$k$ can be formed and 0 otherwise.
-To process a group of weights, we scan the array
-from left to right and record the new sums of weights that
-can be formed using this group and the previous groups.
+ایده این است که از آرایه‌ای استفاده کنیم که مجموع وزن‌های قابل ساخت
+با استفاده از گروه‌های پردازش‌شده تاکنون را ثبت کند.
+این آرایه شامل $n$ عنصر است: عنصر $k$ برابر ۱ است اگر مجموع
+$k$ قابل ساخت باشد و در غیر این صورت ۰ است.
+برای پردازش یک گروه از وزن‌ها، آرایه را
+از چپ به راست پیمایش می‌کنیم و مجموع‌های جدیدی را که
+می‌توان با استفاده از این گروه و گروه‌های قبلی ساخت، ثبت می‌نماییم.
 
-\subsubsection{String construction}
+\subsubsection{ساخت رشته}
 
-Given a string \texttt{s} of length $n$
-and a set of strings $D$ whose total length is $m$,
-consider the problem of counting the number of ways
-\texttt{s} can be formed as a concatenation of strings in $D$.
-For example,
-if $\texttt{s}=\texttt{ABAB}$ and
-$D=\{\texttt{A},\texttt{B},\texttt{AB}\}$,
-there are 4 ways:
+به ازای رشته \texttt{s} به طول $n$
+و مجموعه‌ای از رشته‌ها $D$ با مجموع طول $m$،
+مسئله شمارش تعداد روش‌های ساخت
+\texttt{s} به صورت الحاق رشته‌های موجود در $D$ را در نظر بگیرید.
+به عنوان مثال،
+اگر $\texttt{s}=\texttt{ABAB}$ و
+$D=\{\texttt{A},\texttt{B},\texttt{AB}\}$ باشد،
+۴ روش وجود دارد:
 
 \begin{itemize}[noitemsep]
 \item $\texttt{A}+\texttt{B}+\texttt{A}+\texttt{B}$
@@ -413,99 +391,60 @@ there are 4 ways:
 \item $\texttt{AB}+\texttt{AB}$
 \end{itemize}
 
-We can solve the problem using dynamic programming:
-Let $\texttt{count}(k)$ denote the number of ways to construct the prefix
-$\texttt{s}[0 \ldots k]$ using the strings in $D$.
-Now $\texttt{count}(n-1)$ gives the answer to the problem,
-and we can solve the problem in $O(n^2)$ time
-using a trie structure.
+می‌توان مسئله را با استفاده از برنامه‌نویسی پویا حل کرد:
+فرض کنید $\texttt{count}(k)$ نشان‌دهنده تعداد روش‌های ساخت پیشوند
+$\texttt{s}[0 \ldots k]$ با استفاده از رشته‌های موجود در $D$ باشد.
+اکنون $\texttt{count}(n-1)$ پاسخ مسئله را می‌دهد،
+و می‌توان مسئله را در زمان $O(n^2)$
+با استفاده از ساختمان داده ترای (trie) حل کرد.
 
-However, we can solve the problem more efficiently
-by using string hashing and the fact that there
-are at most $O(\sqrt m)$ distinct string lengths in $D$.
-First, we construct a set $H$ that contains all
-hash values of the strings in $D$.
-Then, when calculating a value of $\texttt{count}(k)$,
-we go through all values of $p$
-such that there is a string of length $p$ in $D$,
-calculate the hash value of $\texttt{s}[k-p+1 \ldots k]$
-and check if it belongs to $H$.
-Since there are at most $O(\sqrt m)$ distinct string lengths,
-this results in an algorithm whose running time is $O(n \sqrt m)$.
+با این حال، می‌توان مسئله را به شکل کارآمدتری حل کرد
+با استفاده از هشینگ رشته و این واقعیت که
+حداکثر $O(\sqrt m)$ طول متمایز برای رشته‌ها در $D$ وجود دارد.
+ابتدا، مجموعه $H$ را می‌سازیم که شامل مقادیر هش
+تمام رشته‌های موجود در $D$ است.
+سپس، هنگام محاسبه مقدار $\texttt{count}(k)$،
+تمام مقادیر $p$ را بررسی می‌کنیم
+به طوری که رشته‌ای با طول $p$ در $D$ وجود داشته باشد،
+مقدار هش $\texttt{s}[k-p+1 \ldots k]$ را محاسبه کرده
+و بررسی می‌کنیم که آیا متعلق به $H$ است یا خیر.
+از آنجا که حداکثر $O(\sqrt m)$ طول رشته متمایز وجود دارد،
+این کار منجر به الگوریتمی با زمان اجرای $O(n \sqrt m)$ می‌شود.
 
-\section{Mo's algorithm}
+\section{الگوریتم مو (Mo's algorithm)}
 
 \index{Mo's algorithm}
 
-\key{Mo's algorithm}\footnote{According to \cite{cod15}, this algorithm
-is named after Mo Tao, a Chinese competitive programmer, but
-the technique has appeared earlier in the literature \cite{ken06}.}
-can be used in many problems
-that require processing range queries in 
-a \emph{static} array, i.e., the array values
-do not change between the queries.
-In each query, we are given a range $[a,b]$,
-and we should calculate a value based on the
-array elements between positions $a$ and $b$.
-Since the array is static,
-the queries can be processed in any order,
-and Mo's algorithm
-processes the queries in a special order which guarantees
-that the algorithm works efficiently.
+\key{الگوریتم مو}\footnote{بر اساس \cite{cod15}، این الگوریتم به نام مو تائو (Mo Tao)، یک برنامه‌نویس رقابتی اهل چین، نام‌گذاری شده است، اما این روش پیش‌تر نیز در مقالات علمی مطرح شده بود \cite{ken06}.}
+می‌تواند در مسائل متعددی به کار رود که نیازمند پردازش پرسش‌های بازه‌ای روی یک آرایه \emph{ایستا} هستند؛ یعنی مقادیر آرایه بین پرسش‌ها تغییر نمی‌کنند.
+در هر پرسش، یک بازه $[a,b]$ داده می‌شود و باید مقداری را بر اساس عناصر آرایه بین موقعیت‌های $a$ و $b$ محاسبه کنیم.
+از آنجا که آرایه ایستا است، پرسش‌ها را می‌توان به هر ترتیبی پردازش کرد.
+الگوریتم مو پرسش‌ها را با ترتیب ویژه‌ای پردازش می‌کند که اجرای کارآمد الگوریتم را تضمین می‌نماید.
 
-Mo's algorithm maintains an \emph{active range}
-of the array, and the answer to a query
-concerning the active range is known at each moment.
-The algorithm processes the queries one by one,
-and always moves the endpoints of the
-active range by inserting and removing elements.
-The time complexity of the algorithm is
-$O(n \sqrt n f(n))$ where the array contains
-$n$ elements, there are $n$ queries
-and each insertion and removal of an element
-takes $O(f(n))$ time.
+الگوریتم مو یک \emph{بازه فعال} از آرایه را نگهداری می‌کند و پاسخ پرسش مربوط به بازه فعال در هر لحظه مشخص است.
+الگوریتم پرسش‌ها را یکی پس از دیگری پردازش می‌کند و همیشه با افزودن و حذف عناصر، نقاط انتهایی بازه فعال را جابجا می‌کند.
+پیچیدگی زمانی الگوریتم $O(n \sqrt n f(n))$ است که در آن آرایه شامل $n$ عنصر است، $n$ پرسش وجود دارد و هر درج و حذف یک عنصر نیازمند زمان $O(f(n))$ است.
 
-The trick in Mo's algorithm is the order
-in which the queries are processed:
-The array is divided into blocks of $k=O(\sqrt n)$
-elements, and a query $[a_1,b_1]$
-is processed before a query $[a_2,b_2]$
-if either 
+ترفند الگوریتم مو در ترتیب پردازش پرسش‌ها نهفته است:
+آرایه به بلوک‌هایی شامل $k=O(\sqrt n)$ عنصر تقسیم می‌شود، و پرسش $[a_1,b_1]$ قبل از پرسش $[a_2,b_2]$ پردازش می‌شود اگر:
 \begin{itemize}
-\item $\lfloor a_1/k \rfloor < \lfloor a_2/k \rfloor$ or
-\item $\lfloor a_1/k \rfloor = \lfloor a_2/k \rfloor$ and $b_1 < b_2$.
+\item $\lfloor a_1/k \rfloor < \lfloor a_2/k \rfloor$ یا
+\item $\lfloor a_1/k \rfloor = \lfloor a_2/k \rfloor$ و $b_1 < b_2$.
 \end{itemize}
 
-Thus, all queries whose left endpoints are
-in a certain block are processed one after another
-sorted according to their right endpoints.
-Using this order, the algorithm
-only performs $O(n \sqrt n)$ operations,
-because the left endpoint moves
-$O(n)$ times $O(\sqrt n)$ steps,
-and the right endpoint moves
-$O(\sqrt n)$ times $O(n)$ steps. Thus, both
-endpoints move a total of $O(n \sqrt n)$ steps during the algorithm.
+بدین ترتیب، تمام پرسش‌هایی که نقطه انتهایی چپ آن‌ها در یک بلوک مشخص قرار دارد، پشت سر هم و بر اساس نقطه انتهایی راست مرتب و پردازش می‌شوند.
+با استفاده از این ترتیب، الگوریتم تنها $O(n \sqrt n)$ عملیات انجام می‌دهد، زیرا نقطه انتهایی چپ $O(n)$ بار و هر بار $O(\sqrt n)$ گام جابجا می‌شود، و نقطه انتهایی راست $O(\sqrt n)$ بار و هر بار $O(n)$ گام جابجا می‌شود. بنابراین، هر دو نقطه انتهایی در طول اجرای الگوریتم مجموعاً $O(n \sqrt n)$ گام جابجا می‌شوند.
 
-\subsubsection*{Example}
+\subsubsection*{مثال}
 
-As an example, consider a problem
-where we are given a set of queries,
-each of them corresponding to a range in an array,
-and our task is to calculate for each query
-the number of \emph{distinct} elements in the range.
+به عنوان مثال، مسئله‌ای را در نظر بگیرید که در آن مجموعه‌ای از پرسش‌ها داده شده است، هر پرسش مربوط به بازه‌ای در یک آرایه است، و وظیفه ما محاسبه تعداد عناصر \emph{متمایز} در آن بازه برای هر پرسش است.
 
-In Mo's algorithm, the queries are always sorted
-in the same way, but it depends on the problem
-how the answer to the query is maintained.
-In this problem, we can maintain an array 
-\texttt{count} where $\texttt{count}[x]$
-indicates the number of times an element $x$
-occurs in the active range.
+در الگوریتم مو، پرسش‌ها همواره به یک شکل مرتب می‌شوند، اما نحوه نگهداری پاسخ پرسش به نوع مسئله بستگی دارد.
+در این مسئله، می‌توانیم یک آرایه \texttt{count} نگه داریم که در آن $\texttt{count}[x]$ نشان‌دهنده تعداد دفعات تکرار عنصر $x$ در بازه فعال است.
 
-When we move from one query to another query,
-the active range changes.
-For example, if the current range is
+وقتی از پرس‌وجویی به پرس‌وجوی دیگر می‌رویم،
+بازه فعال تغییر می‌کند.
+برای نمونه، اگر بازه کنونی
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \fill[color=lightgray] (1,0) rectangle (5,1);
@@ -521,7 +460,7 @@ For example, if the current range is
 \node at (8.5, 0.5) {4};
 \end{tikzpicture}
 \end{center}
-and the next range is
+و بازه بعدی
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \fill[color=lightgray] (2,0) rectangle (7,1);
@@ -537,23 +476,21 @@ and the next range is
 \node at (8.5, 0.5) {4};
 \end{tikzpicture}
 \end{center}
-there will be three steps:
-the left endpoint moves one step to the right,
-and the right endpoint moves two steps to the right.
+باشد، سه گام خواهیم داشت:
+نقطه پایانی چپ یک گام به راست می‌رود،
+و نقطه پایانی راست دو گام به راست می‌رود.
 
-After each step, the array \texttt{count}
-needs to be updated.
-After adding an element $x$,
-we increase the value of 
-$\texttt{count}[x]$ by 1,
-and if $\texttt{count}[x]=1$ after this,
-we also increase the answer to the query by 1.
-Similarly, after removing an element $x$,
-we decrease the value of 
-$\texttt{count}[x]$ by 1,
-and if $\texttt{count}[x]=0$ after this,
-we also decrease the answer to the query by 1.
+پس از هر گام، آرایه \texttt{count}
+باید به‌روزرسانی شود.
+پس از افزودن عنصر $x$،
+مقدار $\texttt{count}[x]$ را یک واحد افزایش می‌دهیم،
+و اگر پس از این کار $\texttt{count}[x]=1$ شد،
+پاسخ پرس‌وجو را نیز یک واحد افزایش می‌دهیم.
+به‌طور مشابه، پس از حذف عنصر $x$،
+مقدار $\texttt{count}[x]$ را یک واحد کاهش می‌دهیم،
+و اگر پس از این کار $\texttt{count}[x]=0$ شد،
+پاسخ پرس‌وجو را نیز یک واحد کاهش می‌دهیم.
 
-In this problem, the time needed to perform
-each step is $O(1)$, so the total time complexity
-of the algorithm is $O(n \sqrt n)$.
+در این مسئله، زمان مورد نیاز برای اجرای
+هر گام $O(1)$ است، بنابراین پیچیدگی زمانی کل
+الگوریتم $O(n \sqrt n)$ است.
