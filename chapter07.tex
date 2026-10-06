@@ -1,88 +1,49 @@
-\chapter{Dynamic programming}
+\chapter{برنامه‌نویسی پویا}
 
-\index{dynamic programming}
+\index{برنامه‌نویسی پویا}
 
-\key{Dynamic programming}
-is a technique that combines the correctness
-of complete search and the efficiency
-of greedy algorithms.
-Dynamic programming can be applied if the
-problem can be divided into overlapping subproblems
-that can be solved independently.
+\key{برنامه‌نویسی پویا}
+تکنیکی است که درستی جستجوی کامل را با کارایی الگوریتم‌های حریصانه ترکیب می‌کند.
+برنامه‌نویسی پویا زمانی قابل استفاده است که مسئله را بتوان به زیرمسئله‌های هم‌پوشان تقسیم کرد؛ زیرمسئله‌هایی که مستقل از یکدیگر حل می‌شوند.
 
-There are two uses for dynamic programming:
+کاربرد برنامه‌نویسی پویا دو بخش است:
 
 \begin{itemize}
 \item
-\key{Finding an optimal solution}:
-We want to find a solution that is
-as large as possible or as small as possible.
+\key{یافتن پاسخ بهینه}:
+هدف، یافتن پاسخی با بیشترین یا کمترین مقدار ممکن است.
 \item
-\key{Counting the number of solutions}:
-We want to calculate the total number of
-possible solutions.
+\key{شمارش تعداد پاسخ‌ها}:
+هدف، محاسبه تعداد کل پاسخ‌های ممکن است.
 \end{itemize}
 
-We will first see how dynamic programming can
-be used to find an optimal solution,
-and then we will use the same idea for
-counting the solutions.
+نخست نحوه استفاده از برنامه‌نویسی پویا برای یافتن پاسخ بهینه بررسی می‌شود، سپس همان ایده برای شمارش پاسخ‌ها به کار می‌رود.
 
-Understanding dynamic programming is a milestone
-in every competitive programmer's career.
-While the basic idea is simple,
-the challenge is how to apply
-dynamic programming to different problems.
-This chapter introduces a set of classic problems
-that are a good starting point.
+درک برنامه‌نویسی پویا نقطه عطفی در مسیر هر برنامه‌نویس رقابتی است.
+ایده پایه ساده است، اما چالش اصلی، پیاده‌سازی برنامه‌نویسی پویا روی مسائل گوناگون است.
+این فصل مجموعه‌ای از مسائل کلاسیک را به عنوان نقطه شروع مناسب معرفی می‌کند.
 
-\section{Coin problem}
+\section{مسئله سکه}
 
-We first focus on a problem that we
-have already seen in Chapter 6:
-Given a set of coin values $\texttt{coins} = \{c_1,c_2,\ldots,c_k\}$
-and a target sum of money $n$, our task is to
-form the sum $n$ using as few coins as possible.
+نخست مسئله‌ای بررسی می‌شود که در فصل ۶ مطرح شد:
+مجموعه‌ای از ارزش‌های سکه $\texttt{coins} = \{c_1,c_2,\ldots,c_k\}$ و مبلغ هدف $n$ داده شده است. هدف، ساخت مبلغ $n$ با کمترین تعداد سکه ممکن است.
 
-In Chapter 6, we solved the problem using a
-greedy algorithm that always chooses the largest
-possible coin.
-The greedy algorithm works, for example,
-when the coins are the euro coins,
-but in the general case the greedy algorithm
-does not necessarily produce an optimal solution.
+در فصل ۶ مسئله با الگوریتم حریصانه حل شد؛ الگوریتمی که همیشه بزرگ‌ترین سکه ممکن را برمی‌گزیند.
+الگوریتم حریصانه برای نمونه روی سکه‌های یورو پاسخ می‌دهد، اما در حالت کلی لزوماً پاسخ بهینه تولید نمی‌کند.
 
-Now is time to solve the problem efficiently
-using dynamic programming, so that the algorithm
-works for any coin set.
-The dynamic programming
-algorithm is based on a recursive function
-that goes through all possibilities how to
-form the sum, like a brute force algorithm.
-However, the dynamic programming
-algorithm is efficient because
-it uses \emph{memoization} and
-calculates the answer to each subproblem only once.
+اکنون زمان حل بهینه مسئله با برنامه‌نویسی پویاست، به شکلی که الگوریتم برای هر مجموعه‌ای از سکه‌ها کار کند.
+الگوریتم برنامه‌نویسی پویا بر پایه تابعی بازگشتی عمل می‌کند که تمام حالت‌های ساخت مبلغ را مشابه الگوریتم جستجوی کامل بررسی می‌نماید.
+با این وجود، الگوریتم برنامه‌نویسی پویا به دلیل استفاده از \emph{یادداشت‌برداری} (memoization) و محاسبه پاسخ هر زیرمسئله تنها در یک نوبت، کارآمد است.
 
-\subsubsection{Recursive formulation}
+\subsubsection{فرمول‌بندی بازگشتی}
 
-The idea in dynamic programming is to
-formulate the problem recursively so
-that the solution to the problem can be
-calculated from solutions to smaller
-subproblems.
-In the coin problem, a natural recursive
-problem is as follows:
-what is the smallest number of coins
-required to form a sum $x$?
+ایده برنامه‌نویسی پویا، فرمول‌بندی بازگشتی مسئله است، به طوری که پاسخ مسئله از روی پاسخ زیرمسئله‌های کوچک‌تر محاسبه شود.
+در مسئله سکه، شکل بازگشتی طبیعی مسئله چنین است:
+کمترین تعداد سکه مورد نیاز برای ساخت مبلغ $x$ چقدر است؟
 
-Let $\texttt{solve}(x)$
-denote the minimum
-number of coins required for a sum $x$.
-The values of the function depend on the
-values of the coins.
-For example, if $\texttt{coins} = \{1,3,4\}$,
-the first values of the function are as follows:
+فرض کنید $\texttt{solve}(x)$ نشان‌دهنده کمترین تعداد سکه مورد نیاز برای مبلغ $x$ باشد.
+مقادیر تابع به ارزش سکه‌ها وابسته است.
+برای نمونه، اگر $\texttt{coins} = \{1,3,4\}$ باشد، نخستین مقادیر تابع چنین خواهد بود:
 
 \[
 \begin{array}{lcl}
@@ -100,25 +61,25 @@ the first values of the function are as follows:
 \end{array}
 \]
 
-For example, $\texttt{solve}(10)=3$,
-because at least 3 coins are needed
-to form the sum 10.
-The optimal solution is $3+3+4=10$.
+برای نمونه، $\texttt{solve}(10)=3$،
+زیرا حداقل ۳ سکه نیاز است
+تا مجموع ۱۰ تشکیل شود.
+پاسخ بهینه $3+3+4=10$ است.
 
-The essential property of $\texttt{solve}$ is
-that its values can be
-recursively calculated from its smaller values.
-The idea is to focus on the \emph{first}
-coin that we choose for the sum.
-For example, in the above scenario,
-the first coin can be either 1, 3 or 4.
-If we first choose coin 1,
-the remaining task is to form the sum 9
-using the minimum number of coins,
-which is a subproblem of the original problem.
-Of course, the same applies to coins 3 and 4.
-Thus, we can use the following recursive formula
-to calculate the minimum number of coins:
+ویژگی بنیادین $\texttt{solve}$ این است
+که مقادیر آن را می‌توان
+به‌صورت بازگشتی از مقادیر کوچک‌تر آن محاسبه کرد.
+ایده کار تمرکز بر \emph{اولین}
+سکه‌ای است که برای مجموع انتخاب می‌کنیم.
+برای نمونه، در سناریوی بالا،
+اولین سکه می‌تواند ۱، ۳ یا ۴ باشد.
+اگر ابتدا سکه ۱ را انتخاب کنیم،
+کار باقی‌مانده تشکیل مجموع ۹
+با استفاده از حداقل تعداد سکه است،
+که یک زیرمسئله از مسئله اصلی به شمار می‌رود.
+همین موضوع برای سکه‌های ۳ و ۴ نیز صدق می‌کند.
+بنابراین، می‌توان از فرمول بازگشتی زیر
+برای محاسبه حداقل تعداد سکه‌ها استفاده کرد:
 \begin{equation*}
 \begin{split}
 \texttt{solve}(x) = \min( & \texttt{solve}(x-1)+1, \\
@@ -126,14 +87,14 @@ to calculate the minimum number of coins:
                            & \texttt{solve}(x-4)+1).
 \end{split}
 \end{equation*}
-The base case of the recursion is $\texttt{solve}(0)=0$,
-because no coins are needed to form an empty sum.
-For example,
+حالت پایه بازگشت $\texttt{solve}(0)=0$ است،
+زیرا برای تشکیل مجموع صفر هیچ سکه‌ای لازم نیست.
+برای نمونه،
 \[ \texttt{solve}(10) = \texttt{solve}(7)+1 = \texttt{solve}(4)+2 = \texttt{solve}(0)+3 = 3.\]
 
-Now we are ready to give a general recursive function
-that calculates the minimum number of
-coins needed to form a sum $x$:
+اکنون آماده‌ایم تا یک تابع بازگشتی عمومی ارائه دهیم
+که حداقل تعداد سکه‌های لازم
+برای تشکیل مجموع $x$ را محاسبه کند:
 \begin{equation*}
     \texttt{solve}(x) = \begin{cases}
                \infty               & x < 0\\
@@ -142,19 +103,16 @@ coins needed to form a sum $x$:
            \end{cases}
 \end{equation*}
 
-First, if $x<0$, the value is $\infty$,
-because it is impossible to form a negative
-sum of money.
-Then, if $x=0$, the value is $0$,
-because no coins are needed to form an empty sum.
-Finally, if $x>0$, the variable $c$ goes through
-all possibilities how to choose the first coin
-of the sum.
+نخست، اگر $x<0$ باشد، مقدار برابر با $\infty$ است،
+زیرا تشکیل مجموع منفی ممکن نیست.
+سپس، اگر $x=0$ باشد، مقدار برابر با $0$ است،
+زیرا برای مجموع تهی نیازی به سکه نیست.
+در نهایت، اگر $x>0$ باشد، متغیر $c$ تمام حالت‌های
+ممکن برای انتخاب اولین سکه از مجموع را بررسی می‌کند.
 
-Once a recursive function that solves the problem
-has been found,
-we can directly implement a solution in C++
-(the constant \texttt{INF} denotes infinity):
+پس از یافتن تابع بازگشتی حل مسئله،
+می‌توان راه‌حل را مستقیماً در ++C پیاده‌سازی کرد
+(ثابت \texttt{INF} نشان‌دهنده بی‌نهایت است):
 
 \begin{lstlisting}
 int solve(int x) {
@@ -168,40 +126,40 @@ int solve(int x) {
 }
 \end{lstlisting}
 
-Still, this function is not efficient,
-because there may be an exponential number of ways
-to construct the sum.
-However, next we will see how to make the
-function efficient using a technique called memoization.
+با این حال، این تابع کارا نیست،
+چون ممکن است تعداد روش‌های ساخت مجموع
+به‌صورت نمایی باشد.
+در ادامه خواهیم دید چگونه با استفاده از
+تکنیکی به نام یادداشت‌برداری (memoization) این تابع را کارا کنیم.
 
-\subsubsection{Using memoization}
+\subsubsection{استفاده از یادداشت‌برداری}
 
-\index{memoization}
+\index{یادداشت‌برداری}
 
-The idea of dynamic programming is to use
-\key{memoization} to efficiently calculate
-values of a recursive function.
-This means that the values of the function
-are stored in an array after calculating them.
-For each parameter, the value of the function
-is calculated recursively only once, and after this,
-the value can be directly retrieved from the array.
+ایده برنامه‌نویسی پویا استفاده از
+\key{یادداشت‌برداری} برای محاسبه کارای
+مقادیر یک تابع بازگشتی است.
+این یعنی مقادیر تابع
+پس از محاسبه درون یک آرایه ذخیره می‌شوند.
+برای هر پارامتر، مقدار تابع
+تنها یک بار به‌صورت بازگشتی محاسبه می‌شود و پس از آن،
+مقدار مستقیماً از آرایه بازخوانی خواهد شد.
 
-In this problem, we use arrays
+در این مسئله، از آرایه‌های زیر استفاده می‌کنیم:
 \begin{lstlisting}
 bool ready[N];
 int value[N];
 \end{lstlisting}
 
-where $\texttt{ready}[x]$ indicates
-whether the value of $\texttt{solve}(x)$ has been calculated,
-and if it is, $\texttt{value}[x]$
-contains this value.
-The constant $N$ has been chosen so
-that all required values fit in the arrays.
+که در آن $\texttt{ready}[x]$ مشخص می‌کند
+آیا مقدار $\texttt{solve}(x)$ محاسبه شده است یا خیر،
+و در صورت محاسبه، $\texttt{value}[x]$
+شامل این مقدار است.
+ثابت $N$ طوری انتخاب شده است
+که تمام مقادیر مورد نیاز در آرایه‌ها جا شوند.
 
-Now the function can be efficiently
-implemented as follows:
+اکنون تابع را می‌توان به صورت کارآمد
+به شکل زیر پیاده‌سازی کرد:
 
 \begin{lstlisting}
 int solve(int x) {
@@ -218,30 +176,27 @@ int solve(int x) {
 }
 \end{lstlisting}
 
-The function handles the base cases
-$x<0$ and $x=0$ as previously.
-Then the function checks from
-$\texttt{ready}[x]$ if
-$\texttt{solve}(x)$ has already been stored
-in $\texttt{value}[x]$,
-and if it is, the function directly returns it.
-Otherwise the function calculates the value
-of $\texttt{solve}(x)$
-recursively and stores it in $\texttt{value}[x]$.
+تابع حالت‌های پایه
+$x<0$ و $x=0$ را مانند قبل مدیریت می‌کند.
+سپس با بررسی $\texttt{ready}[x]$ چک می‌کند آیا
+$\texttt{solve}(x)$ قبلاً در
+$\texttt{value}[x]$ ذخیره شده است یا خیر،
+و در صورت وجود، تابع مستقیماً آن را برمی‌گرداند.
+در غیر این صورت، تابع مقدار $\texttt{solve}(x)$ را
+به صورت بازگشتی محاسبه کرده و در $\texttt{value}[x]$ ذخیره می‌کند.
 
-This function works efficiently,
-because the answer for each parameter $x$
-is calculated recursively only once.
-After a value of $\texttt{solve}(x)$ has been stored in $\texttt{value}[x]$,
-it can be efficiently retrieved whenever the
-function will be called again with the parameter $x$.
-The time complexity of the algorithm is $O(nk)$,
-where $n$ is the target sum and $k$ is the number of coins.
+این تابع به صورت کارآمد عمل می‌کند،
+زیرا پاسخ برای هر پارامتر $x$
+فقط یک بار به صورت بازگشتی محاسبه می‌شود.
+پس از ذخیره مقدار $\texttt{solve}(x)$ در $\texttt{value}[x]$،
+هر زمان که تابع دوباره با پارامتر $x$ فراخوانی شود،
+می‌توان آن را سریع بازیابی کرد.
+پیچیدگی زمانی الگوریتم $O(nk)$ است،
+که در آن $n$ مجموع هدف و $k$ تعداد سکه‌ها است.
 
-Note that we can also \emph{iteratively}
-construct the array \texttt{value} using
-a loop that simply calculates all the values
-of $\texttt{solve}$ for parameters $0 \ldots n$:
+توجه کنید که می‌توان آرایه \texttt{value} را به صورت \emph{حلقه‌ای (پایین به بالا)}
+با استفاده از یک حلقه که تمام مقادیر $\texttt{solve}$ را
+برای پارامترهای $0 \ldots n$ محاسبه می‌کند نیز ساخت:
 \begin{lstlisting}
 value[0] = 0;
 for (int x = 1; x <= n; x++) {
@@ -254,30 +209,28 @@ for (int x = 1; x <= n; x++) {
 }
 \end{lstlisting}
 
-In fact, most competitive programmers prefer this
-implementation, because it is shorter and has
-lower constant factors.
-From now on, we also use iterative implementations
-in our examples.
-Still, it is often easier to think about
-dynamic programming solutions
-in terms of recursive functions.
+در واقع، اکثر برنامه‌نویسان رقابتی این
+پیاده‌سازی را ترجیح می‌دهند، زیرا کوتاه‌تر است و
+ضریب ثابت کمتری دارد.
+از این پس، در مثال‌هایمان از پیاده‌سازی‌های حلقه‌ای
+استفاده می‌کنیم.
+با این حال، اغلب فکر کردن به راه حل‌های برنامه‌نویسی پویا
+در قالب توابع بازگشتی ساده‌تر است.
 
 
-\subsubsection{Constructing a solution}
+\subsubsection{ساختن یک جواب}
 
-Sometimes we are asked both to find the value
-of an optimal solution and to give
-an example how such a solution can be constructed.
-In the coin problem, for example,
-we can declare another array
-that indicates for
-each sum of money the first coin 
-in an optimal solution:
+گاهی اوقات از ما خواسته می‌شود هم مقدار
+جواب بهینه را بیابیم و هم
+نمونه‌ای از نحوه ساخت چنین جوابی ارائه دهیم.
+برای مثال در مسئله سکه،
+می‌توانیم آرایه دیگری تعریف کنیم
+که برای هر مقدار پول، اولین سکه
+در یک جواب بهینه را مشخص کند:
 \begin{lstlisting}
 int first[N];
 \end{lstlisting}
-Then, we can modify the algorithm as follows:
+سپس، می‌توان الگوریتم را به شکل زیر تغییر داد:
 \begin{lstlisting}
 value[0] = 0;
 for (int x = 1; x <= n; x++) {
@@ -290,9 +243,9 @@ for (int x = 1; x <= n; x++) {
     }
 }
 \end{lstlisting}
-After this, the following code can be used to
-print the coins that appear in an optimal solution for
-the sum $n$:
+پس از این، کد زیر می‌تواند برای
+چاپ سکه‌های موجود در یک جواب بهینه برای
+مجموع $n$ استفاده شود:
 \begin{lstlisting}
 while (n > 0) {
     cout << first[n] << "\n";
@@ -300,14 +253,10 @@ while (n > 0) {
 }
 \end{lstlisting}
 
-\subsubsection{Counting the number of solutions}
+\subsubsection{شمارش تعداد جواب‌ها}
 
-Let us now consider another version
-of the coin problem where our task is to
-calculate the total number of ways
-to produce a sum $x$ using the coins.
-For example, if $\texttt{coins}=\{1,3,4\}$ and
-$x=5$, there are a total of 6 ways:
+حال نسخه دیگری از مسئله سکه را بررسی می‌کنیم که در آن هدف محاسبه تعداد کل روش‌های ساخت مجموع $x$ با استفاده از سکه‌ها است.
+برای مثال اگر $\texttt{coins}=\{1,3,4\}$ و $x=5$ باشد، در مجموع ۶ روش وجود دارد:
 
 \begin{multicols}{2}
 \begin{itemize}
@@ -320,11 +269,10 @@ $x=5$, there are a total of 6 ways:
 \end{itemize}
 \end{multicols}
 
-Again, we can solve the problem recursively.
-Let $\texttt{solve}(x)$ denote the number of ways
-we can form the sum $x$.
-For example, if $\texttt{coins}=\{1,3,4\}$,
-then $\texttt{solve}(5)=6$ and the recursive formula is
+باز هم می‌توان مسئله را بازگشتی حل کرد.
+فرض کنید $\texttt{solve}(x)$ بیانگر تعداد روش‌های ساخت مجموع $x$ باشد.
+برای مثال اگر $\texttt{coins}=\{1,3,4\}$ باشد،
+آنگاه $\texttt{solve}(5)=6$ و رابطه بازگشتی چنین است:
 \begin{equation*}
 \begin{split}
 \texttt{solve}(x) = & \texttt{solve}(x-1) + \\
@@ -333,7 +281,7 @@ then $\texttt{solve}(5)=6$ and the recursive formula is
 \end{split}
 \end{equation*}
 
-Then, the general recursive function is as follows:
+تابع بازگشتی کلی به صورت زیر است:
 \begin{equation*}
     \texttt{solve}(x) = \begin{cases}
                0               & x < 0\\
@@ -342,17 +290,13 @@ Then, the general recursive function is as follows:
            \end{cases}
 \end{equation*}
 
-If $x<0$, the value is 0, because there are no solutions.
-If $x=0$, the value is 1, because there is only one way
-to form an empty sum.
-Otherwise we calculate the sum of all values
-of the form $\texttt{solve}(x-c)$ where $c$ is in \texttt{coins}.
+اگر $x<0$ باشد، مقدار برابر ۰ است زیرا هیچ پاسخی وجود ندارد.
+اگر $x=0$ باشد، مقدار برابر ۱ است زیرا تنها یک روش برای ساخت مجموع خالی وجود دارد.
+در غیر این صورت، مجموع تمام مقادیر به فرم $\texttt{solve}(x-c)$ را محاسبه می‌کنیم که در آن $c$ عضوی از \texttt{coins} است.
 
-The following code constructs an array
-$\texttt{count}$ such that
-$\texttt{count}[x]$ equals
-the value of $\texttt{solve}(x)$
-for $0 \le x \le n$:
+کد زیر آرایه $\texttt{count}$ را طوری می‌سازد که
+$\texttt{count}[x]$ برابر با مقدار $\texttt{solve}(x)$
+به ازای $0 \le x \le n$ باشد:
 
 \begin{lstlisting}
 count[0] = 1;
@@ -365,42 +309,33 @@ for (int x = 1; x <= n; x++) {
 }
 \end{lstlisting}
 
-Often the number of solutions is so large
-that it is not required to calculate the exact number
-but it is enough to give the answer modulo $m$
-where, for example, $m=10^9+7$.
-This can be done by changing the code so that
-all calculations are done modulo $m$.
-In the above code, it suffices to add the line
+معمولاً تعداد پاسخ‌ها چنان بزرگ است که نیازی به محاسبه مقدار دقیق نیست
+بلکه ارائه پاسخ به پیمانه $m$ کافی است،
+که برای مثال $m=10^9+7$ است.
+این کار با تغییر کد ممکن است تا همه محاسبات به پیمانه $m$ انجام شوند.
+در کد بالا، اضافه کردن سطر
 \begin{lstlisting}
         count[x] %= m;
 \end{lstlisting}
-after the line
+بعد از سطر
 \begin{lstlisting}
         count[x] += count[x-c];
 \end{lstlisting}
+کفایت می‌کند.
 
-Now we have discussed all basic
-ideas of dynamic programming.
-Since dynamic programming can be used
-in many different situations,
-we will now go through a set of problems
-that show further examples about the
-possibilities of dynamic programming.
+اکنون تمام ایده‌های پایه برنامه‌نویسی پویا را بررسی کردیم.
+از آنجا که برنامه‌نویسی پویا در موقعیت‌های گوناگونی کاربرد دارد،
+مجموعه‌ای از مسائل را بررسی خواهیم کرد تا نمونه‌های بیشتری از توانایی‌های برنامه‌نویسی پویا نشان داده شود.
 
-\section{Longest increasing subsequence}
+\section{طولانی‌ترین زیردنباله صعودی}
 
-\index{longest increasing subsequence}
+\index{longest increasing subsequence@طولانی‌ترین زیردنباله صعودی}
 
-Our first problem is to find the
-\key{longest increasing subsequence}
-in an array of $n$ elements.
-This is a maximum-length
-sequence of array elements
-that goes from left to right,
-and each element in the sequence is larger
-than the previous element.
-For example, in the array
+مسئله اول، یافتن \key{طولانی‌ترین زیردنباله صعودی}
+در آرایه‌ای با $n$ عنصر است.
+این زیردنباله، دنباله‌ای با طول بیشینه از عناصر آرایه از چپ به راست است
+که در آن هر عنصر از عنصر قبلی خود بزرگ‌تر است.
+برای مثال در آرایه
 
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
@@ -425,8 +360,7 @@ For example, in the array
 \node at (7.5,1.4) {$7$};
 \end{tikzpicture}
 \end{center}
-the longest increasing subsequence
-contains 4 elements:
+طولانی‌ترین زیردنباله صعودی شامل ۴ عنصر است:
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \fill[color=lightgray] (1,0) rectangle (2,1);
@@ -459,16 +393,9 @@ contains 4 elements:
 \end{tikzpicture}
 \end{center}
 
-Let $\texttt{length}(k)$ denote
-the length of the
-longest increasing subsequence
-that ends at position $k$.
-Thus, if we calculate all values of
-$\texttt{length}(k)$ where $0 \le k \le n-1$,
-we will find out the length of the
-longest increasing subsequence.
-For example, the values of the function
-for the above array are as follows:
+فرض کنید $\texttt{length}(k)$ نشان‌دهنده طول طولانی‌ترین زیردنباله صعودی باشد که در موقعیت $k$ خاتمه می‌یابد.
+بنابراین، اگر تمام مقادیر $\texttt{length}(k)$ را به ازای $0 \le k \le n-1$ محاسبه کنیم، طول طولانی‌ترین زیردنباله صعودی را به دست خواهیم آورد.
+برای مثال، مقادیر تابع برای آرایه فوق به شرح زیر است:
 \[
 \begin{array}{lcl}
 \texttt{length}(0) & = & 1 \\
@@ -482,29 +409,14 @@ for the above array are as follows:
 \end{array}
 \]
 
-For example, $\texttt{length}(6)=4$,
-because the longest increasing subsequence
-that ends at position 6 consists of 4 elements.
+برای نمونه، $\texttt{length}(6)=4$ است، زیرا طولانی‌ترین زیردنباله صعودی منتهی به موقعیت ۶ متشکل از ۴ عنصر است.
 
-To calculate a value of $\texttt{length}(k)$,
-we should find a position $i<k$
-for which $\texttt{array}[i]<\texttt{array}[k]$
-and $\texttt{length}(i)$ is as large as possible.
-Then we know that
-$\texttt{length}(k)=\texttt{length}(i)+1$,
-because this is an optimal way to add
-$\texttt{array}[k]$ to a subsequence.
-However, if there is no such position $i$,
-then $\texttt{length}(k)=1$,
-which means that the subsequence only contains
-$\texttt{array}[k]$.
+جهت محاسبه مقدار $\texttt{length}(k)$، باید موقعیتی مانند $i<k$ بیابیم که در آن $\texttt{array}[i]<\texttt{array}[k]$ باشد و $\texttt{length}(i)$ بیشترین مقدار ممکن را داشته باشد.
+سپس می‌دانیم که $\texttt{length}(k)=\texttt{length}(i)+1$ خواهد بود، زیرا این روش بهینه برای افزودن $\texttt{array}[k]$ به یک زیردنباله است.
+اما اگر چنین موقعیتی مانند $i$ وجود نداشته باشد، آنگاه $\texttt{length}(k)=1$ می‌شود، به این معنی که زیردنباله تنها شامل $\texttt{array}[k]$ است.
 
-Since all values of the function can be calculated
-from its smaller values,
-we can use dynamic programming.
-In the following code, the values
-of the function will be stored in an array
-$\texttt{length}$.
+از آنجا که تمام مقادیر تابع از روی مقادیر کوچک‌تر آن قابل محاسبه است، می‌توان از برنامه‌نویسی پویا بهره برد.
+در کد زیر، مقادیر تابع درون آرایه‌ای به نام $\texttt{length}$ ذخیره خواهد شد.
 
 \begin{lstlisting}
 for (int k = 0; k < n; k++) {
@@ -517,27 +429,22 @@ for (int k = 0; k < n; k++) {
 }
 \end{lstlisting}
 
-This code works in $O(n^2)$ time,
-because it consists of two nested loops.
-However, it is also possible to implement
-the dynamic programming calculation
-more efficiently in $O(n \log n)$ time.
-Can you find a way to do this?
+این کد در زمان $O(n^2)$ اجرا می‌شود،
+زیرا شامل دو حلقه تو‌در‌تو است.
+با این حال، می‌توان محاسبات برنامه‌نویسی پویا را
+به شکل کارآمدتری در زمان $O(n \log n)$ نیز پیاده‌سازی کرد.
+آیا می‌توانید روشی برای این کار بیابید؟
 
-\section{Paths in a grid}
+\section{مسیرها در جدول}
 
-Our next problem is to find a path
-from the upper-left corner to
-the lower-right corner
-of an $n \times n$ grid, such that
-we only move down and right.
-Each square contains a positive integer,
-and the path should be constructed so
-that the sum of the values along
-the path is as large as possible.
+مسئله بعدی یافتن مسیری از گوشه بالا-چپ
+به گوشه پایین-راست در یک جدول $n \times n$ است،
+به‌طوری‌که تنها مجاز به حرکت به سمت پایین و راست باشیم.
+هر خانه شامل یک عدد صحیح مثبت است
+و مسیر باید به گونه‌ای انتخاب شود که
+مجموع مقادیر در طول مسیر بیشترین مقدار ممکن باشد.
 
-The following picture shows an optimal
-path in a grid:
+تصویر زیر یک مسیر بهینه را در جدول نشان می‌دهد:
 \begin{center}
 \begin{tikzpicture}[scale=.65]
   \begin{scope}
@@ -579,34 +486,28 @@ path in a grid:
   \end{scope}
 \end{tikzpicture}
 \end{center}
-The sum of the values on the path is 67,
-and this is the largest possible sum on a path
-from the
-upper-left corner to the lower-right corner.
+مجموع مقادیر در این مسیر برابر ۶۷ است
+و این بیشترین مجموع ممکن برای مسیری از
+گوشه بالا-چپ به گوشه پایین-راست می‌باشد.
 
-Assume that the rows and columns of the
-grid are numbered from 1 to $n$,
-and $\texttt{value}[y][x]$ equals the value
-of square $(y,x)$.
-Let $\texttt{sum}(y,x)$ denote the maximum
-sum on a path from the upper-left corner
-to square $(y,x)$.
-Now $\texttt{sum}(n,n)$ tells us
-the maximum sum
-from the upper-left corner to
-the lower-right corner.
-For example, in the above grid,
+فرض کنید سطرها و ستون‌های جدول
+از ۱ تا $n$ شماره‌گذاری شده‌اند
+و $\texttt{value}[y][x]$ برابر با مقدار خانه $(y,x)$ است.
+فرض کنید $\texttt{sum}(y,x)$ بیشترین مجموع
+در مسیری از گوشه بالا-چپ به خانه $(y,x)$ را نشان دهد.
+در این صورت $\texttt{sum}(n,n)$ بیشترین مجموع
+از گوشه بالا-چپ تا گوشه پایین-راست را مشخص می‌کند.
+برای نمونه، در جدول بالا داریم:
 $\texttt{sum}(5,5)=67$.
 
-We can recursively calculate the sums
-as follows:
+می‌توان مجموع‌ها را به صورت بازگشتی
+به شکل زیر محاسبه کرد:
 \[ \texttt{sum}(y,x) = \max(\texttt{sum}(y,x-1),\texttt{sum}(y-1,x))+\texttt{value}[y][x]\]
 
-
-The recursive formula is based on the observation
-that a path that ends at square $(y,x)$
-can come either from square $(y,x-1)$
-or square $(y-1,x)$:
+فرمول بازگشتی مبتنی بر این مشاهده است
+که مسیر منتهی به خانه $(y,x)$
+فقط می‌تواند از خانه $(y,x-1)$
+یا از خانه $(y-1,x)$ بیاید:
 \begin{center}
 \begin{tikzpicture}[scale=.65]
   \begin{scope}
@@ -620,19 +521,18 @@ or square $(y-1,x)$:
 \end{tikzpicture}
 \end{center}
 
-Thus, we select the direction that maximizes
-the sum.
-We assume that $\texttt{sum}(y,x)=0$
-if $y=0$ or $x=0$ (because no such paths exist),
-so the recursive formula also works when $y=1$ or $x=1$.
+بنابراین، جهتی انتخاب می‌شود که مجموع را بیشینه کند.
+فرض می‌شود $\texttt{sum}(y,x)=0$
+اگر $y=0$ یا $x=0$ باشد (چون چنین مسیری وجود ندارد)،
+بنابراین فرمول بازگشتی برای $y=1$ یا $x=1$ نیز کار می‌کند.
 
-Since the function \texttt{sum} has two parameters,
-the dynamic programming array also has two dimensions.
-For example, we can use an array
+چون تابع \texttt{sum} دو پارامتر دارد،
+آرایه برنامه‌نویسی پویا نیز دو بعدی است.
+برای مثال، می‌توان از آرایه زیر استفاده کرد:
 \begin{lstlisting}
 int sum[N][N];
 \end{lstlisting}
-and calculate the sums as follows:
+و مجموع‌ها را به این صورت محاسبه کرد:
 \begin{lstlisting}
 for (int y = 1; y <= n; y++) {
     for (int x = 1; x <= n; x++) {
@@ -640,26 +540,23 @@ for (int y = 1; y <= n; y++) {
     }
 }
 \end{lstlisting}
-The time complexity of the algorithm is $O(n^2)$.
+پیچیدگی زمانی الگوریتم $O(n^2)$ است.
 
-\section{Knapsack problems}
+\section{مسائل کوله‌پشتی}
 
 \index{knapsack}
 
-The term \key{knapsack} refers to problems where
-a set of objects is given, and 
-subsets with some properties
-have to be found.
-Knapsack problems can often be solved
-using dynamic programming.
+اصطلاح \key{کوله‌پشتی} به مسائلی اشاره دارد که
+مجموعه‌ای از اشیاء داده شده و
+باید زیرمجموعه‌هایی با ویژگی‌های مشخص پیدا شوند.
+مسائل کوله‌پشتی اغلب با برنامه‌نویسی پویا حل می‌شوند.
 
-In this section, we focus on the following
-problem: Given a list of weights
-$[w_1,w_2,\ldots,w_n]$,
-determine all
-sums that can be constructed using the weights.
-For example, if the weights are
-$[1,3,3,5]$, the following sums are possible:
+در این بخش، تمرکز روی این مسئله است:
+به ازای فهرستی از وزن‌ها
+$[w_1,w_2,\ldots,w_n]$،
+تمام مجموع‌هایی که می‌توان با این وزن‌ها ساخت مشخص شوند.
+برای مثال، اگر وزن‌ها
+$[1,3,3,5]$ باشند، این مجموع‌ها ممکن هستند:
 
 \begin{center}
 \begin{tabular}{rrrrrrrrrrrrr}
@@ -669,41 +566,33 @@ $[1,3,3,5]$, the following sums are possible:
 \end{tabular}
 \end{center}
 
-In this case, all sums between $0 \ldots 12$
-are possible, except 2 and 10.
-For example, the sum 7 is possible because we
-can select the weights $[1,3,3]$.
+در این حالت، تمام مجموع‌های بین $0 \ldots 12$
+به جز 2 و 10 ممکن هستند.
+برای مثال، مجموع 7 ممکن است چون می‌توان
+وزن‌های $[1,3,3]$ را انتخاب کرد.
 
-To solve the problem, we focus on subproblems
-where we only use the first $k$ weights
-to construct sums.
-Let $\texttt{possible}(x,k)=\textrm{true}$ if
-we can construct a sum $x$
-using the first $k$ weights,
-and otherwise $\texttt{possible}(x,k)=\textrm{false}$.
-The values of the function can be recursively
-calculated as follows:
+برای حل مسئله، تمرکز روی زیرمسائلی است
+که فقط از $k$ وزن اول برای ساخت مجموع‌ها استفاده می‌کنند.
+فرض کنید $\texttt{possible}(x,k)=\textrm{true}$ باشد اگر
+بتوان مجموع $x$ را با استفاده از $k$ وزن اول ساخت،
+و در غیر این صورت $\texttt{possible}(x,k)=\textrm{false}$.
+مقادیر تابع به صورت بازگشتی این‌گونه محاسبه می‌شوند:
 \[ \texttt{possible}(x,k) = \texttt{possible}(x-w_k,k-1) \lor \texttt{possible}(x,k-1) \]
-The formula is based on the fact that we can
-either use or not use the weight $w_k$ in the sum.
-If we use $w_k$, the remaining task is to
-form the sum $x-w_k$ using the first $k-1$ weights,
-and if we do not use $w_k$,
-the remaining task is to form the sum $x$
-using the first $k-1$ weights.
-As the base cases,
+فرمول بر این اساس است که وزن $w_k$ در مجموع استفاده شود یا نشود.
+اگر $w_k$ استفاده شود، کار باقی‌مانده ساخت مجموع $x-w_k$ با $k-1$ وزن اول است،
+و اگر $w_k$ استفاده نشود،
+کار باقی‌مانده ساخت مجموع $x$ با $k-1$ وزن اول است.
+به عنوان حالت‌های پایه:
 \begin{equation*}
     \texttt{possible}(x,0) = \begin{cases}
                \textrm{true}    & x = 0\\
                \textrm{false}   & x \neq 0 \\
            \end{cases}
 \end{equation*}
-because if no weights are used,
-we can only form the sum 0.
+چون اگر هیچ وزنی استفاده نشود،
+فقط مجموع 0 قابل ساخت است.
 
-The following table shows all values of the function
-for the weights $[1,3,3,5]$ (the symbol ''X''
-indicates the true values):
+جدول زیر همه مقادیر تابع را برای وزن‌های $[1,3,3,5]$ نشان می‌دهد (علامت ''X'' نشان‌دهنده مقادیر درست است):
 
 \begin{center}
 \begin{tabular}{r|rrrrrrrrrrrrr}
@@ -717,14 +606,9 @@ $k \backslash x$ & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 \\
 \end{tabular}
 \end{center}
 
-After calculating those values, $\texttt{possible}(x,n)$
-tells us whether we can construct a
-sum $x$ using \emph{all} weights.
+پس از محاسبه این مقادیر، $\texttt{possible}(x,n)$ مشخص می‌کند آیا می‌توان با استفاده از \emph{همه} وزن‌ها به مجموع $x$ رسید یا خیر.
 
-Let $W$ denote the total sum of the weights.
-The following $O(nW)$ time
-dynamic programming solution
-corresponds to the recursive function:
+فرض کنید $W$ مجموع کل وزن‌ها باشد. راه‌حل برنامه‌نویسی پویا زیر با پیچیدگی زمانی $O(nW)$ متناظر با تابع بازگشتی است:
 \begin{lstlisting}
 possible[0][0] = true;
 for (int k = 1; k <= n; k++) {
@@ -735,11 +619,7 @@ for (int k = 1; k <= n; k++) {
 }
 \end{lstlisting}
 
-However, here is a better implementation that only uses
-a one-dimensional array $\texttt{possible}[x]$
-that indicates whether we can construct a subset with sum $x$.
-The trick is to update the array from right to left for
-each new weight:
+با این حال، پیاده‌سازی بهتری وجود دارد که تنها از یک آرایه یک‌بعدی $\texttt{possible}[x]$ استفاده می‌کند؛ آرایه‌ای که مشخص می‌سازد آیا ساخت زیرمجموعه‌ای با مجموع $x$ ممکن است یا خیر. ترفند کار، به‌روزرسانی آرایه از راست به چپ برای هر وزن جدید است:
 \begin{lstlisting}
 possible[0] = true;
 for (int k = 1; k <= n; k++) {
@@ -749,52 +629,30 @@ for (int k = 1; k <= n; k++) {
 }
 \end{lstlisting}
 
-Note that the general idea presented here can be used
-in many knapsack problems.
-For example, if we are given objects with weights and values,
-we can determine for each weight sum the maximum value
-sum of a subset.
+توجه داشته باشید که ایده کلی ارائه‌شده در اینجا در بسیاری از مسائل کوله‌پشتی کاربرد دارد. به عنوان مثال، اگر اشیایی با وزن‌ها و ارزش‌های مشخص داده شوند، می‌توانیم به ازای هر مجموع وزن، بیشترین مجموع ارزش یک زیرمجموعه را تعیین کنیم.
 
-\section{Edit distance}
+\section{فاصله ویرایشی}
 
-\index{edit distance}
-\index{Levenshtein distance}
+\index{فاصله ویرایشی}
+\index{فاصله لون‌اشتاین}
 
-The \key{edit distance} or \key{Levenshtein distance}\footnote{The distance
-is named after V. I. Levenshtein who studied it in connection with binary codes \cite{lev66}.}
-is the minimum number of editing operations
-needed to transform a string
-into another string.
-The allowed editing operations are as follows:
+\key{فاصله ویرایشی} یا \key{فاصله لون‌اشتاین}\footnote{این فاصله به نام وی. آی. لون‌اشتاین نام‌گذاری شده است که آن را در ارتباط با کدهای دودویی بررسی کرد \cite{lev66}.} کمینه تعداد عملیات‌های ویرایشی مورد نیاز برای تبدیل یک رشته به رشته‌ای دیگر است. عملیات‌های ویرایشی مجاز عبارتند از:
 \begin{itemize}
-\item insert a character (e.g. \texttt{ABC} $\rightarrow$ \texttt{ABCA})
-\item remove a character (e.g. \texttt{ABC} $\rightarrow$ \texttt{AC})
-\item modify a character (e.g. \texttt{ABC} $\rightarrow$ \texttt{ADC})
+\item درج یک نویسه (مثال: \texttt{ABC} $\rightarrow$ \texttt{ABCA})
+\item حذف یک نویسه (مثال: \texttt{ABC} $\rightarrow$ \texttt{AC})
+\item تغییر یک نویسه (مثال: \texttt{ABC} $\rightarrow$ \texttt{ADC})
 \end{itemize}
 
-For example, the edit distance between
-\texttt{LOVE} and \texttt{MOVIE} is 2,
-because we can first perform the operation
- \texttt{LOVE} $\rightarrow$ \texttt{MOVE}
-(modify) and then the operation
-\texttt{MOVE} $\rightarrow$ \texttt{MOVIE}
-(insert).
-This is the smallest possible number of operations,
-because it is clear that only one operation is not enough.
+برای نمونه، فاصله ویرایشی بین \texttt{LOVE} و \texttt{MOVIE} برابر ۲ است، زیرا ابتدا می‌توان عملیات \texttt{LOVE} $\rightarrow$ \texttt{MOVE} (تغییر) و سپس عملیات \texttt{MOVE} $\rightarrow$ \texttt{MOVIE} (درج) را انجام داد. این کمترین تعداد عملیات ممکن است، زیرا مشخص است که تنها یک عملیات کافی نیست.
 
-Suppose that we are given a string \texttt{x}
-of length $n$ and a string \texttt{y} of length $m$,
-and we want to calculate the edit distance between
-\texttt{x} and \texttt{y}.
-To solve the problem, we define a function
-$\texttt{distance}(a,b)$ that gives the
-edit distance between prefixes
-$\texttt{x}[0 \ldots a]$ and $\texttt{y}[0 \ldots b]$.
-Thus, using this function, the edit distance
-between \texttt{x} and \texttt{y} equals $\texttt{distance}(n-1,m-1)$.
+فرض کنید رشته \texttt{x} با طول $n$ و رشته \texttt{y} با طول $m$ داده شده‌اند
+و هدف، محاسبه فاصله ویرایشی بین \texttt{x} و \texttt{y} است.
+برای حل مسئله، تابع $\texttt{distance}(a,b)$ را تعریف می‌کنیم
+که فاصله ویرایشی بین پیشوندهای $\texttt{x}[0 \ldots a]$ و $\texttt{y}[0 \ldots b]$ را می‌دهد.
+بنابراین با استفاده از این تابع، فاصله ویرایشی
+بین \texttt{x} و \texttt{y} برابر با $\texttt{distance}(n-1,m-1)$ است.
 
-We can calculate values of \texttt{distance}
-as follows:
+مقادیر \texttt{distance} را می‌توان به این صورت محاسبه کرد:
 \begin{equation*}
 \begin{split}
 \texttt{distance}(a,b) = \min(& \texttt{distance}(a,b-1)+1, \\
@@ -802,23 +660,21 @@ as follows:
                            & \texttt{distance}(a-1,b-1)+\texttt{cost}(a,b)).
 \end{split}
 \end{equation*}
-Here $\texttt{cost}(a,b)=0$ if $\texttt{x}[a]=\texttt{y}[b]$,
-and otherwise $\texttt{cost}(a,b)=1$.
-The formula considers the following ways to
-edit the string \texttt{x}:
+در اینجا اگر $\texttt{x}[a]=\texttt{y}[b]$ باشد مقدار $\texttt{cost}(a,b)=0$،
+و در غیر این صورت $\texttt{cost}(a,b)=1$ است.
+این رابطه حالات زیر را برای ویرایش رشته \texttt{x} در نظر می‌گیرد:
 \begin{itemize}
-\item $\texttt{distance}(a,b-1)$: insert a character at the end of \texttt{x}
-\item $\texttt{distance}(a-1,b)$: remove the last character from \texttt{x}
-\item $\texttt{distance}(a-1,b-1)$: match or modify the last character of \texttt{x}
+\item $\texttt{distance}(a,b-1)$: درج یک نویسه در انتهای \texttt{x}
+\item $\texttt{distance}(a-1,b)$: حذف آخرین نویسه از \texttt{x}
+\item $\texttt{distance}(a-1,b-1)$: تطابق یا تغییر آخرین نویسه \texttt{x}
 \end{itemize}
-In the two first cases, one editing operation is needed
-(insert or remove).
-In the last case, if $\texttt{x}[a]=\texttt{y}[b]$,
-we can match the last characters without editing,
-and otherwise one editing operation is needed (modify).
+در دو حالت اول، یک عملیات ویرایش نیاز است
+(درج یا حذف).
+در حالت آخر، اگر $\texttt{x}[a]=\texttt{y}[b]$ باشد،
+می‌توان آخرین نویسه‌ها را بدون ویرایش تطابق داد،
+و در غیر این صورت یک عملیات ویرایش نیاز است (تغییر).
 
-The following table shows the values of \texttt{distance}
-in the example case:
+جدول زیر مقادیر \texttt{distance} را در مثال نمونه نشان می‌دهد:
 \begin{center}
 \begin{tikzpicture}[scale=.65]
   \begin{scope}
@@ -870,12 +726,12 @@ in the example case:
 \end{tikzpicture}
 \end{center}
 
-The lower-right corner of the table
-tells us that the edit distance between
-\texttt{LOVE} and \texttt{MOVIE} is 2.
-The table also shows how to construct
-the shortest sequence of editing operations.
-In this case the path is as follows:
+گوشه پایین و راست جدول
+نشان می‌دهد فاصله ویرایشی بین
+\texttt{LOVE} و \texttt{MOVIE} برابر ۲ است.
+همچنین، جدول نحوه ساخت
+کوتاه‌ترین دنباله از عملیات ویرایشی را نشان می‌دهد.
+در این حالت، مسیر به صورت زیر است:
 
 \begin{center}
 \begin{tikzpicture}[scale=.65]
@@ -931,25 +787,23 @@ In this case the path is as follows:
 \end{tikzpicture}
 \end{center}
 
-The last characters of \texttt{LOVE} and \texttt{MOVIE}
-are equal, so the edit distance between them
-equals the edit distance between \texttt{LOV} and \texttt{MOVI}.
-We can use one editing operation to remove the
-character \texttt{I} from \texttt{MOVI}.
-Thus, the edit distance is one larger than
-the edit distance between \texttt{LOV} and \texttt{MOV}, etc.
+نویسه‌های آخر \texttt{LOVE} و \texttt{MOVIE}
+برابرند، بنابراین فاصله ویرایشی بین آن‌ها
+برابر با فاصله ویرایشی بین \texttt{LOV} و \texttt{MOVI} است.
+می‌توان با یک عمل ویرایشی نویسه \texttt{I} را
+از \texttt{MOVI} حذف کرد.
+در نتیجه، فاصله ویرایشی یک واحد بیشتر از
+فاصله ویرایشی بین \texttt{LOV} و \texttt{MOV} است و به همین ترتیب.
 
-\section{Counting tilings}
+\section{شمارش کاشی‌کاری‌ها}
 
-Sometimes the states of a dynamic programming solution
-are more complex than fixed combinations of numbers.
-As an example,
-consider the problem of calculating
-the number of distinct ways to
-fill an $n \times m$ grid using
-$1 \times 2$ and $2 \times 1$ size tiles.
-For example, one valid solution
-for the $4 \times 7$ grid is
+گاهی حالت‌های یک راهکار برنامه‌نویسی پویا
+پیچیده‌تر از ترکیب‌های ثابتی از اعداد هستند.
+به‌عنوان مثال، مسئله محاسبه تعداد روش‌های متمایز برای
+پر کردن یک جدول $n \times m$ با استفاده از
+کاشی‌های با ابعاد $1 \times 2$ و $2 \times 1$ را در نظر بگیرید.
+به‌عنوان نمونه، یک جواب معتبر
+برای جدول $4 \times 7$ عبارت است از:
 \begin{center}
 \begin{tikzpicture}[scale=.65]
     \draw (0,0) grid (7,4);
@@ -971,15 +825,15 @@ for the $4 \times 7$ grid is
 
 \end{tikzpicture}
 \end{center}
-and the total number of solutions is 781.
+و تعداد کل جواب‌ها برابر ۷۸۱ است.
 
-The problem can be solved using dynamic programming
-by going through the grid row by row.
-Each row in a solution can be represented as a
-string that contains $m$ characters from the set
-$\{\sqcap, \sqcup, \sqsubset, \sqsupset \}$.
-For example, the above solution consists of four rows
-that correspond to the following strings:
+این مسئله را می‌توان با برنامه‌نویسی پویا
+و با پیمایش سطر به سطر جدول حل کرد.
+هر سطر در یک جواب را می‌توان به‌صورت رشته‌ای
+شامل $m$ نویسه از مجموعه
+$\{\sqcap, \sqcup, \sqsubset, \sqsupset \}$ نشان داد.
+برای مثال، جواب بالا شامل چهار سطر است
+که متناظر با رشته‌های زیر هستند:
 \begin{itemize}
 \item
 $\sqcap \sqsubset \sqsupset \sqcap \sqsubset \sqsupset \sqcap$
@@ -991,59 +845,31 @@ $\sqsubset \sqsupset \sqsubset \sqsupset \sqcup \sqcup \sqcap$
 $\sqsubset \sqsupset \sqsubset \sqsupset \sqsubset \sqsupset \sqcup$
 \end{itemize}
 
-Let $\texttt{count}(k,x)$ denote the number of ways to
-construct a solution for rows $1 \ldots k$
-of the grid such that string $x$ corresponds to row $k$.
-It is possible to use dynamic programming here,
-because the state of a row is constrained
-only by the state of the previous row.
+فرض کنید $\texttt{count}(k,x)$ بیانگر تعداد روش‌های
+ساخت یک جواب برای سطرهای $1 \ldots k$
+از جدول باشد به‌طوری که رشته $x$ متناظر با سطر $k$ باشد.
+استفاده از برنامه‌نویسی پویا در اینجا ممکن است،
+زیرا وضعیت یک سطر فقط توسط
+وضعیت سطر قبلی محدود می‌شود.
 
-A solution is valid if row $1$ does not contain
-the character $\sqcup$,
-row $n$ does not contain the character $\sqcap$,
-and all consecutive rows are \emph{compatible}.
-For example, the rows
-$\sqcup \sqsubset \sqsupset \sqcup \sqcap \sqcap \sqcup$ and
+یک پاسخ معتبر است اگر سطر $1$ شامل نویسه $\sqcup$ نباشد، سطر $n$ شامل نویسه $\sqcap$ نباشد، و تمام سطرهای متوالی \emph{سازگار} باشند.
+برای نمونه، سطرهای
+$\sqcup \sqsubset \sqsupset \sqcup \sqcap \sqcap \sqcup$ و
 $\sqsubset \sqsupset \sqsubset \sqsupset \sqcup \sqcup \sqcap$ 
-are compatible, while the rows
-$\sqcap \sqsubset \sqsupset \sqcap \sqsubset \sqsupset \sqcap$ and
+سازگارند، در حالی که سطرهای
+$\sqcap \sqsubset \sqsupset \sqcap \sqsubset \sqsupset \sqcap$ و
 $\sqsubset \sqsupset \sqsubset \sqsupset \sqsubset \sqsupset \sqcup$
-are not compatible.
+سازگار نیستند.
 
-Since a row consists of $m$ characters and there are
-four choices for each character, the number of distinct
-rows is at most $4^m$.
-Thus, the time complexity of the solution is
-$O(n 4^{2m})$ because we can go through the
-$O(4^m)$ possible states for each row,
-and for each state, there are $O(4^m)$
-possible states for the previous row.
-In practice, it is a good idea to rotate the grid
-so that the shorter side has length $m$,
-because the factor $4^{2m}$ dominates the time complexity.
+چون هر سطر شامل $m$ نویسه است و برای هر نویسه چهار انتخاب وجود دارد، تعداد سطرهای متمایز حداکثر $4^m$ است.
+بنابراین، پیچیدگی زمانی راه حل $O(n 4^{2m})$ است؛ چون برای هر سطر می‌توان $O(4^m)$ حالت ممکن را پیمایش کرد، و برای هر حالت، $O(4^m)$ حالت ممکن برای سطر قبلی وجود دارد.
+در عمل، بهتر است جدول چرخ Mel شود تا ضلع کوتاه‌تر طول $m$ داشته باشد، زیرا ضریب $4^{2m}$ بر پیچیدگی زمانی غالب است.
 
-It is possible to make the solution more efficient
-by using a more compact representation for the rows.
-It turns out that it is sufficient to know which
-columns of the previous row contain the upper square
-of a vertical tile.
-Thus, we can represent a row using only characters
-$\sqcap$ and $\Box$, where $\Box$ is a combination
-of characters
-$\sqcup$, $\sqsubset$ and $\sqsupset$.
-Using this representation, there are only
-$2^m$ distinct rows and the time complexity is
-$O(n 2^{2m})$.
+می‌توان با استفاده از نمایش فشرده‌تر برای سطرها، کارایی راه حل را افزایش داد.
+مشخص می‌شود کافی است بدانیم کدام ستون‌های سطر قبل شامل مربع بالایی یک کاشی عمودی هستند.
+بنابراین، می‌توان یک سطر را تنها با استفاده از نویسه‌های $\sqcap$ و $\Box$ نشان داد، که در آن $\Box$ ترکیبی از نویسه‌های $\sqcup$، $\sqsubset$ و $\sqsupset$ است.
+با استفاده از این نمایش، تنها $2^m$ سطر متمایز وجود دارد و پیچیدگی زمانی $O(n 2^{2m})$ خواهد بود.
 
-As a final note, there is also a surprising direct formula
-for calculating the number of tilings\footnote{Surprisingly,
-this formula was discovered in 1961 by two research teams \cite{kas61,tem61}
-that worked independently.}:
+به عنوان نکته پایانی، یک فرمول مستقیم شگفت‌انگیز نیز برای محاسبه تعداد کاشی‌کاری‌ها وجود دارد\footnote{به طرز شگفت‌آوری، این فرمول در سال ۱۹۶۱ توسط دو تیم پژوهشی \cite{kas61,tem61} که به طور مستقل کار می‌کردند کشف شد.}:
 \[ \prod_{a=1}^{\lceil n/2 \rceil} \prod_{b=1}^{\lceil m/2 \rceil} 4 \cdot (\cos^2 \frac{\pi a}{n + 1} + \cos^2 \frac{\pi b}{m+1})\]
-This formula is very efficient, because it calculates
-the number of tilings in $O(nm)$ time,
-but since the answer is a product of real numbers,
-a problem when using the formula is
-how to store the intermediate results accurately.
-
-
+این فرمول بسیار کارآمد است، زیرا تعداد کاشی‌کاری‌ها را در زمان $O(nm)$ محاسبه می‌کند، اما چون پاسخ حاصل‌ضرب اعداد حقیقی است، چالش هنگام استفاده از فرمول، ذخیره دقیق نتایج میانی است.
