@@ -1,259 +1,251 @@
-\chapter{Probability}
+\chapter{احتمال}
 
-\index{probability}
+\index{احتمال}
 
-A \key{probability} is a real number between $0$ and $1$
-that indicates how probable an event is.
-If an event is certain to happen,
-its probability is 1,
-and if an event is impossible,
-its probability is 0.
-The probability of an event is denoted $P(\cdots)$
-where the three dots describe the event.
+یک \key{احتمال} عددی حقیقی بین $0$ و $1$ است
+که میزان محتمل بودن یک پیشامد را نشان می‌دهد.
+اگر رخ دادن پیشامدی قطعی باشد،
+احتمال آن 1 است،
+و اگر پیشامدی غیرممکن باشد،
+احتمال آن 0 است.
+احتمال یک پیشامد با $P(\cdots)$ نشان داده می‌شود
+که در آن سه نقطه پیشامد را توصیف می‌کند.
 
-For example, when throwing a dice,
-the outcome is an integer between $1$ and $6$,
-and the probability of each outcome is $1/6$.
-For example, we can calculate the following probabilities:
+برای مثال، هنگام پرتاب یک تاس،
+نتیجه یک عدد صحیح بین $1$ و $6$ است،
+و احتمال هر نتیجه $1/6$ است.
+برای مثال، می‌توانیم احتمال‌های زیر را محاسبه کنیم:
 
 \begin{itemize}[noitemsep]
-\item $P(\textrm{''the outcome is 4''})=1/6$
-\item $P(\textrm{''the outcome is not 6''})=5/6$
-\item $P(\textrm{''the outcome is even''})=1/2$
+\item $P(\textrm{''نتیجه 4 باشد''})=1/6$
+\item $P(\textrm{''نتیجه 6 نباشد''})=5/6$
+\item $P(\textrm{''نتیجه زوج باشد''})=1/2$
 \end{itemize}
 
-\section{Calculation}
+\section{محاسبه}
 
-To calculate the probability of an event,
-we can either use combinatorics
-or simulate the process that generates the event.
-As an example, let us calculate the probability
-of drawing three cards with the same value
-from a shuffled deck of cards
-(for example, $\spadesuit 8$, $\clubsuit 8$ and $\diamondsuit 8$).
+برای محاسبه احتمال یک پیشامد،
+می‌توانیم از ترکیبیات استفاده کنیم
+یا فرآیندی را که پیشامد را تولید می‌کند شبیه‌سازی نماییم.
+به عنوان مثال، بیایید احتمال کشیدن سه کارت با ارزش یکسان
+از یک دسته کارت بر خورده را محاسبه کنیم
+(برای مثال، $\spadesuit 8$، $\clubsuit 8$ و $\diamondsuit 8$).
 
-\subsubsection*{Method 1}
+\subsubsection*{روش ۱}
 
-We can calculate the probability using the formula
+می‌توانیم احتمال را با استفاده از فرمول زیر محاسبه کنیم:
 
-\[\frac{\textrm{number of desired outcomes}}{\textrm{total number of outcomes}}.\]
+\[\frac{\textrm{تعداد پیشامدهای مطلوب}}{\textrm{تعداد کل پیشامدها}}.\]
 
-In this problem, the desired outcomes are those
-in which the value of each card is the same.
-There are $13 {4 \choose 3}$ such outcomes,
-because there are $13$ possibilities for the
-value of the cards and ${4 \choose 3}$ ways to
-choose $3$ suits from $4$ possible suits.
+در این مسئله، پیشامدهای مطلوب مواردی هستند
+که در آن‌ها ارزش هر کارت یکسان است.
+تعداد $13 {4 \choose 3}$ از این پیشامدها وجود دارد،
+زیرا $13$ حالت ممکن برای ارزش کارت‌ها
+و ${4 \choose 3}$ روش برای انتخاب $3$ خال از $4$ خال ممکن وجود دارد.
 
-There are a total of ${52 \choose 3}$ outcomes,
-because we choose 3 cards from 52 cards.
-Thus, the probability of the event is
+در مجموع ${52 \choose 3}$ برآمد وجود دارد،
+زیرا ما 3 کارت از 52 کارت را انتخاب می‌کنیم.
+بنابراین، احتمال پیشامد برابر است با:
 
 \[\frac{13 {4 \choose 3}}{{52 \choose 3}} = \frac{1}{425}.\]
 
-\subsubsection*{Method 2}
+\subsubsection*{روش ۲}
 
-Another way to calculate the probability is
-to simulate the process that generates the event.
-In this example, we draw three cards, so the process
-consists of three steps.
-We require that each step of the process is successful.
+روش دیگر برای محاسبه احتمال،
+شبیه‌سازی فرآیندی است که پیشامد را تولید می‌کند.
+در این مثال، سه کارت می‌کشیم، بنابراین فرآیند
+شامل سه مرحله است.
+لازم است که هر مرحله از فرآیند موفقیت‌آمیز باشد.
 
-Drawing the first card certainly succeeds,
-because there are no restrictions.
-The second step succeeds with probability $3/51$,
-because there are 51 cards left and 3 of them
-have the same value as the first card.
-In a similar way, the third step succeeds with probability $2/50$.
+کشیدن اولین کارت قطعا موفقیت‌آمیز است،
+زیرا هیچ محدودیتی وجود ندارد.
+مرحله دوم با احتمال $3/51$ موفق می‌شود،
+زیرا 51 کارت باقی مانده و 3 تا از آن‌ها
+ارزشی یکسان با کارت اول دارند.
+به طور مشابه، مرحله سوم با احتمال $2/50$ موفق می‌شود.
 
-The probability that the entire process succeeds is
+احتمال اینکه کل فرآیند موفقیت‌آمیز باشد برابر است با:
 
 \[1 \cdot \frac{3}{51} \cdot \frac{2}{50} = \frac{1}{425}.\]
 
-\section{Events}
+\section{پیشامدها}
 
-An event in probability theory can be represented as a set
+یک پیشامد در نظریه احتمال می‌تواند به عنوان یک مجموعه نمایش داده شود:
 \[A \subset X,\]
-where $X$ contains all possible outcomes
-and $A$ is a subset of outcomes.
-For example, when drawing a dice, the outcomes are
+که در آن $X$ شامل همه برآمدهای ممکن است
+و $A$ زیرمجموعه‌ای از برآمدهاست.
+برای مثال، هنگام پرتاب یک تاس، برآمدها عبارتند از:
 \[X = \{1,2,3,4,5,6\}.\]
-Now, for example, the event ''the outcome is even''
-corresponds to the set
+حال، به عنوان مثال، پیشامد ''نتیجه زوج باشد''
+متناظر با مجموعه زیر است:
 \[A = \{2,4,6\}.\]
 
-Each outcome $x$ is assigned a probability $p(x)$.
-Then, the probability $P(A)$ of an event
-$A$ can be calculated as a sum
-of probabilities of outcomes using the formula
+به هر برآمد $x$ یک احتمال $p(x)$ نسبت داده می‌شود.
+سپس، احتمال $P(A)$ برای یک پیشامد
+$A$ را می‌توان به صورت مجموع
+احتمال‌های برآمدها با استفاده از فرمول زیر محاسبه کرد:
 \[P(A) = \sum_{x \in A} p(x).\]
-For example, when throwing a dice,
-$p(x)=1/6$ for each outcome $x$,
-so the probability of the event
-''the outcome is even'' is
+به عنوان مثال، هنگام پرتاب یک تاس،
+برای هر برآمد $x$ داریم $p(x)=1/6$،
+بنابراین احتمال پیشامد
+«برآمد زوج است» برابر است با:
 \[p(2)+p(4)+p(6)=1/2.\]
 
-The total probability of the outcomes in $X$ must
-be 1, i.e., $P(X)=1$.
+مجموع احتمال برآمدهای موجود در $X$ باید
+برابر با ۱ باشد، یعنی $P(X)=1$.
 
-Since the events in probability theory are sets,
-we can manipulate them using standard set operations:
+از آنجا که پیشامدها در نظریه احتمالات مجموعه‌ هستند،
+می‌توانیم با استفاده از عملگرهای استاندارد مجموعه‌ها روی آن‌ها عملیات انجام دهیم:
 
 \begin{itemize}
-\item The \key{complement} $\bar A$ means
-''$A$ does not happen''.
-For example, when throwing a dice, 
-the complement of $A=\{2,4,6\}$ is
+\item \key{متمم} $\bar A$ یعنی
+«$A$ رخ ندهد».
+به عنوان مثال، هنگام پرتاب تاس،
+متمم $A=\{2,4,6\}$ برابر است با
 $\bar A = \{1,3,5\}$.
-\item The \key{union} $A \cup B$ means
-''$A$ or $B$ happen''.
-For example, the union of
+\item \key{اجتماع} $A \cup B$ یعنی
+«$A$ یا $B$ رخ دهد».
+به عنوان مثال، اجتماع
 $A=\{2,5\}$
-and $B=\{4,5,6\}$ is
+و $B=\{4,5,6\}$ برابر است با
 $A \cup B = \{2,4,5,6\}$.
-\item The \key{intersection} $A \cap B$ means
-''$A$ and $B$ happen''.
-For example, the intersection of
-$A=\{2,5\}$ and $B=\{4,5,6\}$ is
+\item \key{اشتراک} $A \cap B$ یعنی
+«$A$ و $B$ رخ دهند».
+به عنوان مثال، اشتراک
+$A=\{2,5\}$ و $B=\{4,5,6\}$ برابر است با
 $A \cap B = \{5\}$.
 \end{itemize}
 
-\subsubsection{Complement}
+\subsubsection{متمم}
 
-The probability of the complement
-$\bar A$ is calculated using the formula
+احتمال متمم
+$\bar A$ با فرمول زیر محاسبه می‌شود:
 \[P(\bar A)=1-P(A).\]
 
-Sometimes, we can solve a problem easily
-using complements by solving the opposite problem.
-For example, the probability of getting
-at least one six when throwing a dice ten times is
+گاهی می‌توان یک مسئله را به سادگی
+با کمک متمم و حل مسئله معکوس آن حل کرد.
+به عنوان مثال، احتمال به دست آوردن
+حداقل یک ۶ در ده بار پرتاب تاس برابر است با:
 \[1-(5/6)^{10}.\]
 
-Here $5/6$ is the probability that the outcome
-of a single throw is not six, and
-$(5/6)^{10}$ is the probability that none of
-the ten throws is a six.
-The complement of this is the answer to the problem.
+در اینجا $5/6$ احتمال آن است که برآمد
+یک بار پرتاب، ۶ نباشد، و
+$(5/6)^{10}$ احتمال آن است که هیچ‌کدام از
+ده پرتاب، ۶ نشوند.
+متمم این پیشامد پاسخ مسئله است.
 
-\subsubsection{Union}
+\subsubsection{اجتماع}
 
-The probability of the union $A \cup B$
-is calculated using the formula
+احتمال اجتماع $A \cup B$
+با فرمول زیر محاسبه می‌شود:
 \[P(A \cup B)=P(A)+P(B)-P(A \cap B).\]
-For example, when throwing a dice,
-the union of the events
-\[A=\textrm{''the outcome is even''}\]
-and
-\[B=\textrm{''the outcome is less than 4''}\]
-is
-\[A \cup B=\textrm{''the outcome is even or less than 4''},\]
-and its probability is
+به عنوان مثال، هنگام پرتاب تاس،
+اجتماع پیشامدهای
+\[A=\textrm{«برآمد زوج باشد»}\]
+و
+\[B=\textrm{«برآمد کمتر از ۴ باشد»}\]
+برابر است با
+\[A \cup B=\textrm{«برآمد زوج باشد یا کمتر از ۴ باشد»}،\]
+و احتمال آن برابر است با:
 \[P(A \cup B) = P(A)+P(B)-P(A \cap B)=1/2+1/2-1/6=5/6.\]
 
-If the events $A$ and $B$ are \key{disjoint}, i.e.,
-$A \cap B$ is empty,
-the probability of the event $A \cup B$ is simply
+اگر پیشامدهای $A$ و $B$ \key{ناسازگار} باشند، یعنی
+$A \cap B$ تهی باشد،
+احتمال پیشامد $A \cup B$ به سادگی برابر است با:
 
 \[P(A \cup B)=P(A)+P(B).\]
 
-\subsubsection{Conditional probability}
+\subsubsection{احتمال شرطی}
 
 \index{conditional probability}
 
-The \key{conditional probability}
+\key{احتمال شرطی}
 \[P(A | B) = \frac{P(A \cap B)}{P(B)}\]
-is the probability of $A$
-assuming that $B$ happens.
-Hence, when calculating the
-probability of $A$, we only consider the outcomes
-that also belong to $B$.
+احتمال رخ دادن $A$ است
+به فرض این که $B$ رخ داده باشد.
+بنابراین، هنگام محاسبه
+احتمال $A$، تنها برآمدهایی را بررسی می‌کنیم
+که متعلق به $B$ نیز باشند.
 
-Using the previous sets,
+با استفاده از مجموعه‌های قبلی،
 \[P(A | B)= 1/3,\]
-because the outcomes of $B$ are
-$\{1,2,3\}$, and one of them is even.
-This is the probability of an even outcome
-if we know that the outcome is between $1 \ldots 3$.
+زیرا برآمدهای $B$ برابر هستند با
+$\{1,2,3\}$، و یکی از آن‌ها زوج است.
+این مقدار، احتمال زوج بودن برآمد است
+اگر بدانیم برآمد بین $1 \ldots 3$ است.
 
-\subsubsection{Intersection}
+\subsubsection{اشتراک}
 
 \index{independence}
 
-Using conditional probability,
-the probability of the intersection
-$A \cap B$ can be calculated using the formula
+با استفاده از احتمال شرطی،
+احتمال اشتراک
+$A \cap B$ با رابطه زیر محاسبه می‌شود:
 \[P(A \cap B)=P(A)P(B|A).\]
-Events $A$ and $B$ are \key{independent} if
-\[P(A|B)=P(A) \hspace{10px}\textrm{and}\hspace{10px} P(B|A)=P(B),\]
-which means that the fact that $B$ happens does not
-change the probability of $A$, and vice versa.
-In this case, the probability of the intersection is
+پیشامدهای $A$ و $B$ \key{مستقل} هستند اگر
+\[P(A|B)=P(A) \hspace{10px}\textrm{و}\hspace{10px} P(B|A)=P(B)،\]
+به این معنی که رخ دادن $B$ احتمال وقوع $A$ را تغییر نمی‌دهد و بالعکس.
+در این حالت، احتمال اشتراک برابر است با:
 \[P(A \cap B)=P(A)P(B).\]
-For example, when drawing a card from a deck, the events
-\[A = \textrm{''the suit is clubs''}\]
-and
-\[B = \textrm{''the value is four''}\]
-are independent. Hence the event
-\[A \cap B = \textrm{''the card is the four of clubs''}\]
-happens with probability
+برای نمونه، هنگام کشیدن یک کارت از دسته ورق، پیشامدهای
+\[A = \textrm{''خال کارت گشنیز است''}\]
+و
+\[B = \textrm{''ارزش کارت چهار است''}\]
+مستقل هستند. بنابراین پیشامد
+\[A \cap B = \textrm{''کارت، چهار گشنیز است''}\]
+با احتمال زیر رخ می‌دهد:
 \[P(A \cap B)=P(A)P(B)=1/4 \cdot 1/13 = 1/52.\]
 
-\section{Random variables}
+\section{متغیرهای تصادفی}
 
-\index{random variable}
+\index{متغیر تصادفی}
 
-A \key{random variable} is a value that is generated
-by a random process.
-For example, when throwing two dice,
-a possible random variable is
-\[X=\textrm{''the sum of the outcomes''}.\]
-For example, if the outcomes are $[4,6]$
-(meaning that we first throw a four and then a six),
-then the value of $X$ is 10.
+یک \key{متغیر تصادفی} مقداری است که توسط یک فرآیند تصادفی تولید می‌شود.
+برای نمونه، هنگام پرتاب دو تاس،
+یک متغیر تصادفی ممکن عبارت است از:
+\[X=\textrm{''مجموع برآمدها''}.\]
+برای مثال، اگر برآمدها $[4,6]$ باشند
+(یعنی ابتدا چهار و سپس شش بیاید)،
+آنگاه مقدار $X$ برابر ۱۰ است.
 
-We denote $P(X=x)$ the probability that
-the value of a random variable $X$ is $x$.
-For example, when throwing two dice,
-$P(X=10)=3/36$,
-because the total number of outcomes is 36
-and there are three possible ways to obtain
-the sum 10: $[4,6]$, $[5,5]$ and $[6,4]$.
+احتمال اینکه مقدار متغیر تصادفی $X$ برابر $x$ باشد را با $P(X=x)$ نشان می‌دهیم.
+برای نمونه، هنگام پرتاب دو تاس،
+$P(X=10)=3/36$،
+زیرا کل حالات ممکن ۳۶ است
+و سه روش ممکن برای به‌دست آوردن
+مجموع ۱۰ وجود دارد: $[4,6]$، $[5,5]$ و $[6,4]$.
 
-\subsubsection{Expected value}
+\subsubsection{امید ریاضی}
 
-\index{expected value}
+\index{امید ریاضی}
 
-The \key{expected value} $E[X]$ indicates the
-average value of a random variable $X$.
-The expected value can be calculated as the sum
-\[\sum_x P(X=x)x,\]
-where $x$ goes through all possible values of $X$.
+\key{امید ریاضی} $E[X]$ میانگین مقدار یک متغیر تصادفی $X$ را نشان می‌دهد.
+امید ریاضی به صورت مجموع زیر محاسبه می‌شود:
+\[\sum_x P(X=x)x،\]
+که در آن $x$ تمام مقادیر ممکن $X$ را طی می‌کند.
 
-For example, when throwing a dice,
-the expected outcome is
+برای نمونه، هنگام پرتاب یک تاس،
+برآمد مورد انتظار برابر است با:
 \[1/6 \cdot 1 + 1/6 \cdot 2 + 1/6 \cdot 3 + 1/6 \cdot 4 + 1/6 \cdot 5 + 1/6 \cdot 6 = 7/2.\]
 
-A useful property of expected values is \key{linearity}.
-It means that the sum
+یک ویژگی مفید امید ریاضی، \key{خطی بودن} آن است.
+این ویژگی نشان می‌دهد مجموع
 $E[X_1+X_2+\cdots+X_n]$
-always equals the sum
+همواره برابر است با مجموع
 $E[X_1]+E[X_2]+\cdots+E[X_n]$.
-This formula holds even if random variables
-depend on each other.
+این رابطه حتی در صورتی که متغیرهای تصادفی به یکدیگر وابسته باشند نیز برقرار است.
 
-For example, when throwing two dice,
-the expected sum is
+برای نمونه، هنگام پرتاب دو تاس،
+مجموع مورد انتظار برابر است با:
 \[E[X_1+X_2]=E[X_1]+E[X_2]=7/2+7/2=7.\]
 
-Let us now consider a problem where
-$n$ balls are randomly placed in $n$ boxes,
-and our task is to calculate the expected
-number of empty boxes.
-Each ball has an equal probability to
-be placed in any of the boxes.
-For example, if $n=2$, the possibilities
-are as follows:
+اکنون مسئله‌ای را در نظر بگیرید که در آن
+$n$ توپ به صورت تصادفی درون $n$ جعبه قرار داده می‌شوند،
+و هدف محاسبه امید ریاضی تعداد جعبه‌های خالی است.
+هر توپ احتمال برابری برای قرار گرفتن
+در هر یک از جعبه‌ها دارد.
+برای نمونه، اگر $n=2$ باشد، حالت‌های ممکن
+به صورت زیر خواهند بود:
 \begin{center}
 \begin{tikzpicture}
 \draw (0,0) rectangle (1,1);
@@ -275,27 +267,21 @@ are as follows:
 \draw[fill=red] (10.95,0.2) circle (0.1);
 \end{tikzpicture}
 \end{center}
-In this case, the expected number of
-empty boxes is
+در این حالت، امید ریاضی تعداد جعبه‌های خالی برابر است با:
 \[\frac{0+0+1+1}{4} = \frac{1}{2}.\]
-In the general case, the probability that a
-single box is empty is
+در حالت کلی، احتمال خالی ماندن یک جعبه خاص برابر است با:
 \[\Big(\frac{n-1}{n}\Big)^n,\]
-because no ball should be placed in it.
-Hence, using linearity, the expected number of
-empty boxes is
+زیرا هیچ توپی نباید درون آن قرار گیرد.
+بنابراین با استفاده از خطی بودن امید ریاضی، امید ریاضی تعداد جعبه‌های خالی برابر است با:
 \[n \cdot \Big(\frac{n-1}{n}\Big)^n.\]
 
-\subsubsection{Distributions}
+\subsubsection{توزیع‌ها}
 
-\index{distribution}
+\index{distribution@توزیع}
 
-The \key{distribution} of a random variable $X$
-shows the probability of each value that
-$X$ may have.
-The distribution consists of values $P(X=x)$.
-For example, when throwing two dice,
-the distribution for their sum is:
+\key{توزیع} یک متغیر تصادفی $X$، احتمال هر مقداری را که $X$ می‌تواند داشته باشد نشان می‌دهد.
+توزیع از مقادیر $P(X=x)$ تشکیل می‌شود.
+برای مثال هنگام پرتاب دو تاس، توزیع مجموع آن‌ها برابر است با:
 \begin{center}
 \small {
 \begin{tabular}{r|rrrrrrrrrrrrr}
@@ -305,81 +291,56 @@ $P(X=x)$ & $1/36$ & $2/36$ & $3/36$ & $4/36$ & $5/36$ & $6/36$ & $5/36$ & $4/36$
 }
 \end{center}
 
-\index{uniform distribution}
-In a \key{uniform distribution},
-the random variable $X$ has $n$ possible
-values $a,a+1,\ldots,b$ and the probability of each value is $1/n$.
-For example, when throwing a dice,
-$a=1$, $b=6$ and $P(X=x)=1/6$ for each value $x$.
+\index{uniform distribution@توزیع یکنواخت}
+در یک \key{توزیع یکنواخت}، متغیر تصادفی $X$ دارای $n$ مقدار ممکن $a,a+1,\ldots,b$ است و احتمال هر مقدار برابر با $1/n$ می‌باشد.
+به عنوان مثال، هنگام پرتاب یک تاس، $a=1$ و $b=6$ است و برای هر مقدار $x$ داریم $P(X=x)=1/6$.
 
-The expected value of $X$ in a uniform distribution is
+امید ریاضی $X$ در یک توزیع یکنواخت برابر است با:
 \[E[X] = \frac{a+b}{2}.\]
 
-\index{binomial distribution}
-In a \key{binomial distribution}, $n$ attempts
-are made
-and the probability that a single attempt succeeds
-is $p$.
-The random variable $X$ counts the number of
-successful attempts,
-and the probability of a value $x$ is
+\index{binomial distribution@توزیع دو‌جمله‌ای}
+در یک \key{توزیع دو‌جمله‌ای}، $n$ آزمایش انجام می‌شود و احتمال موفقیت در هر آزمایش برابر با $p$ است.
+متغیر تصادفی $X$ تعداد آزمایش‌های موفق را می‌شمارد و احتمال مقدار $x$ برابر است با:
 \[P(X=x)=p^x (1-p)^{n-x} {n \choose x},\]
-where $p^x$ and $(1-p)^{n-x}$ correspond to
-successful and unsuccessful attemps,
-and ${n \choose x}$ is the number of ways
-we can choose the order of the attempts.
+که در آن $p^x$ و $(1-p)^{n-x}$ متناظر با آزمایش‌های موفق و ناموفق هستند، و ${n \choose x}$ بیانگر تعداد روش‌های انتخاب ترتیب آزمایش‌ها است.
 
-For example, when throwing a dice ten times,
-the probability of throwing a six exactly
-three times is $(1/6)^3 (5/6)^7 {10 \choose 3}$.
+برای مثال در ده بار پرتاب یک تاس، احتمال این‌که دقیقاً سه بار عدد شش بیاید برابر است با $(1/6)^3 (5/6)^7 {10 \choose 3}$.
 
-The expected value of $X$ in a binomial distribution is
+امید ریاضی $X$ در توزیع دو‌جمله‌ای برابر است با:
 \[E[X] = pn.\]
 
-\index{geometric distribution}
-In a \key{geometric distribution},
-the probability that an attempt succeeds is $p$,
-and we continue until the first success happens.
-The random variable $X$ counts the number
-of attempts needed, and the probability of
-a value $x$ is
+\index{geometric distribution@توزیع هندسی}
+در یک \key{توزیع هندسی}، احتمال موفقیت در هر آزمایش برابر با $p$ است و تا زمان رخ دادن اولین موفقیت ادامه می‌دهیم.
+متغیر تصادفی $X$ تعداد آزمایش‌های لازم را می‌شمارد و احتمال مقدار $x$ برابر است با:
 \[P(X=x)=(1-p)^{x-1} p,\]
-where $(1-p)^{x-1}$ corresponds to the unsuccessful attemps
-and $p$ corresponds to the first successful attempt.
+که در آن $(1-p)^{x-1}$ متناظر با آزمایش‌های ناموفق و $p$ متناظر با اولین آزمایش موفق است.
 
-For example, if we throw a dice until we throw a six,
-the probability that the number of throws
-is exactly 4 is $(5/6)^3 1/6$.
+به عنوان مثال، اگر یک تاس را تا زمانی که عدد شش ظاهر شود پرتاب کنیم، احتمال این‌که تعداد پرتاب‌ها دقیقاً ۴ بار باشد برابر است با $(5/6)^3 1/6$.
 
-The expected value of $X$ in a geometric distribution is
+امید ریاضی $X$ در یک توزیع هندسی برابر است با:
 \[E[X]=\frac{1}{p}.\]
 
-\section{Markov chains}
+\section{زنجیره‌های مارکوف}
 
-\index{Markov chain}
+\index{Markov chain@زنجیره مارکوف}
 
-A \key{Markov chain}
+یک \key{زنجیره مارکوف}
 % \footnote{A. A. Markov (1856--1922)
 % was a Russian mathematician.}
-is a random process
-that consists of states and transitions between them.
-For each state, we know the probabilities
-for moving to other states.
-A Markov chain can be represented as a graph
-whose nodes are states and edges are transitions.
+فرآیندی تصادفی شامل مجموعه‌ای از وضعیت‌ها و گذارهای بین آن‌ها است.
+به ازای هر وضعیت، احتمال انتقال به وضعیت‌های دیگر معلوم است.
+زنجیره مارکوف با گرافی نمایش داده می‌شود
+که رأس‌های آن وضعیت‌ها و یال‌های آن گذارها هستند.
 
-As an example, consider a problem
-where we are in floor 1 in an $n$ floor building.
-At each step, we randomly walk either one floor
-up or one floor down, except that we always
-walk one floor up from floor 1 and one floor down
-from floor $n$.
-What is the probability of being in floor $m$
-after $k$ steps?
+به عنوان مثال، مسئله‌ای را در نظر بگیرید
+که در طبقه ۱ ساختمانی با $n$ طبقه قرار داریم.
+در هر گام، به صورت تصادفی یک طبقه به بالا
+یا یک طبقه به پایین می‌رویم، به جز اینکه از طبقه ۱
+همیشه یک طبقه بالا رفته و از طبقه $n$ همیشه یک طبقه پایین می‌آییم.
+احتمال حضور در طبقه $m$ پس از $k$ گام چقدر است؟
 
-In this problem, each floor of the building
-corresponds to a state in a Markov chain.
-For example, if $n=5$, the graph is as follows:
+در این مسئله، هر طبقه از ساختمان متناظر با وضعیتی در زنجیره مارکوف است.
+مثلاً اگر $n=5$ باشد، گراف به شکل زیر خواهد بود:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
@@ -403,32 +364,26 @@ For example, if $n=5$, the graph is as follows:
 \end{tikzpicture}
 \end{center}
 
-The probability distribution
-of a Markov chain is a vector
-$[p_1,p_2,\ldots,p_n]$, where $p_k$ is the
-probability that the current state is $k$.
-The formula $p_1+p_2+\cdots+p_n=1$ always holds.
+توزیع احتمال زنجیره مارکوف، برداری به صورت
+$[p_1,p_2,\ldots,p_n]$ است که در آن $p_k$ بیانگر
+احتمال قرار گرفتن در وضعیت $k$ است.
+همواره رابطه $p_1+p_2+\cdots+p_n=1$ برقرار است.
 
-In the above scenario, the initial distribution is
-$[1,0,0,0,0]$, because we always begin in floor 1.
-The next distribution is $[0,1,0,0,0]$,
-because we can only move from floor 1 to floor 2.
-After this, we can either move one floor up
-or one floor down, so the next distribution is
-$[1/2,0,1/2,0,0]$, and so on.
+در سناریوی بالا، توزیع اولیه برابر با
+$[1,0,0,0,0]$ است، چون همیشه از طبقه ۱ شروع می‌کنیم.
+توزیع بعدی $[0,1,0,0,0]$ است،
+چرا که از طبقه ۱ فقط به طبقه ۲ می‌توان رفت.
+پس از آن، می‌توان یا یک طبقه بالا رفت یا یک طبقه پایین،
+بنابراین توزیع بعدی برابر با $[1/2,0,1/2,0,0]$ است و به همین ترتیب ادامه می‌یابد.
 
-An efficient way to simulate the walk in
-a Markov chain is to use dynamic programming.
-The idea is to maintain the probability distribution,
-and at each step go through all possibilities
-how we can move.
-Using this method, we can simulate
-a walk of $m$ steps in $O(n^2 m)$ time.
+روشی کارآمد برای شبیه‌سازی حرکت در زنجیره مارکوف، استفاده از برنامه‌نویسی پویا است.
+ایده کار نگهداری توزیع احتمال
+و در هر گام، بررسی تمام حالت‌های ممکن برای جابه‌جایی است.
+با این روش، می‌توان یک مسیر به طول $m$ گام را در زمان $O(n^2 m)$ شبیه‌سازی کرد.
 
-The transitions of a Markov chain can also be
-represented as a matrix that updates the
-probability distribution.
-In the above scenario, the matrix is
+گذارهای زنجیره مارکوف را می‌توان به صورت ماتریسی
+نیز نمایش داد که توزیع احتمال را به‌روزرسانی می‌کند.
+در سناریوی بالا، این ماتریس به شکل زیر است:
 
 \[ 
  \begin{bmatrix}
@@ -440,11 +395,11 @@ In the above scenario, the matrix is
  \end{bmatrix}.
 \]
 
-When we multiply a probability distribution by this matrix,
-we get the new distribution after moving one step.
-For example, we can move from the distribution
-$[1,0,0,0,0]$ to the distribution
-$[0,1,0,0,0]$ as follows:
+وقتی یک توزیع احتمال را در این ماتریس ضرب کنیم،
+توزیع جدید پس از یک گام حرکت به دست می‌آید.
+برای نمونه، می‌توان از توزیع
+$[1,0,0,0,0]$ به توزیع
+$[0,1,0,0,0]$ به صورت زیر رفت:
 
 \[ 
  \begin{bmatrix}
@@ -471,122 +426,119 @@ $[0,1,0,0,0]$ as follows:
  \end{bmatrix}.
 \]
 
-By calculating matrix powers efficiently,
-we can calculate the distribution after $m$ steps
-in $O(n^3 \log m)$ time.
+با محاسبه توان‌های ماتریس به شکل بهینه،
+می‌توان توزیع پس از $m$ گام را
+در زمان $O(n^3 \log m)$ محاسبه کرد.
 
-\section{Randomized algorithms}
+\section{الگوریتم‌های تصادفی}
 
 \index{randomized algorithm}
 
-Sometimes we can use randomness for solving a problem,
-even if the problem is not related to probabilities.
-A \key{randomized algorithm} is an algorithm that
-is based on randomness.
+گاهی می‌توان از تصادف برای حل مسئله استفاده کرد،
+حتی اگر مسئله ربطی به احتمال نداشته باشد.
+یک \key{الگوریتم تصادفی} الگوریتمی است که
+بر پایه تصادف کار می‌کند.
 
 \index{Monte Carlo algorithm}
 
-A \key{Monte Carlo algorithm} is a randomized algorithm
-that may sometimes give a wrong answer.
-For such an algorithm to be useful,
-the probability of a wrong answer should be small.
+یک \key{الگوریتم مونت‌کارلو} الگوریتمی تصادفی است
+که ممکن است گاهی پاسخ نادرست بدهد.
+برای کاربردی بودن چنین الگوریتمی،
+احتمال پاسخ نادرست باید کم باشد.
 
 \index{Las Vegas algorithm}
 
-A \key{Las Vegas algorithm} is a randomized algorithm
-that always gives the correct answer,
-but its running time varies randomly.
-The goal is to design an algorithm that is
-efficient with high probability.
+یک \key{الگوریتم لاس‌وگاس} الگوریتمی تصادفی است
+که همیشه پاسخ درست می‌دهد،
+ولی زمان اجرای آن به صورت تصادفی تغییر می‌کند.
+هدف طراحی الگوریتمی است که
+با احتمال بالا کارآمد باشد.
 
-Next we will go through three example problems that
-can be solved using randomness.
+در ادامه به سه مسئله نمونه می‌پردازیم که
+با تصادف حل می‌شوند.
 
-\subsubsection{Order statistics}
+\subsubsection{آماره‌های ترتیبی}
 
 \index{order statistic}
 
-The $kth$ \key{order statistic} of an array
-is the element at position $k$ after sorting
-the array in increasing order.
-It is easy to calculate any order statistic
-in $O(n \log n)$ time by first sorting the array,
-but is it really needed to sort the entire array
-just to find one element?
+$k$-امین \key{آماره ترتیبی} در یک آرایه،
+عنصر واقع در موقعیت $k$ پس از مرتب‌سازی
+صعودی آرایه است.
+محاسبه هر آماره ترتیبی با مرتب‌سازی اولیه آرایه
+در زمان $O(n \log n)$ آسان است،
+ولی آیا واقعاً مرتب‌سازی کل آرایه
+فقط برای یافتن یک عنصر لازم است؟
 
-It turns out that we can find order statistics
-using a randomized algorithm without sorting the array.
-The algorithm, called \key{quickselect}\footnote{In 1961,
-C. A. R. Hoare published two algorithms that
-are efficient on average: \index{quicksort} \index{quickselect}
-\key{quicksort} \cite{hoa61a} for sorting arrays and
-\key{quickselect} \cite{hoa61b} for finding order statistics.}, is a Las Vegas algorithm:
-its running time is usually $O(n)$
-but $O(n^2)$ in the worst case.
+مشخص می‌شود می‌توان آماره‌های ترتیبی را
+با الگوریتم تصادفی بدون مرتب‌سازی آرایه یافت.
+این الگوریتم، معروف به \key{انتخاب سریع}\footnote{در سال ۱۹۶۱،
+سی. ای. آر. هاور دو الگوریتم معرفی کرد که
+در حالت میانگین کارآمد هستند: \index{quicksort} \index{quickselect}
+\key{مرتب‌سازی سریع} \cite{hoa61a} برای مرتب‌سازی آرایه‌ها و
+\key{انتخاب سریع} \cite{hoa61b} برای یافتن آماره‌های ترتیبی.}، یک الگوریتم لاس‌وگاس است:
+زمان اجرای آن معمولاً $O(n)$ است
+ولی در بدترین حالت $O(n^2)$ می‌شود.
 
-The algorithm chooses a random element $x$
-of the array, and moves elements smaller than $x$
-to the left part of the array,
-and all other elements to the right part of the array.
-This takes $O(n)$ time when there are $n$ elements.
-Assume that the left part contains $a$ elements
-and the right part contains $b$ elements.
-If $a=k$, element $x$ is the $k$th order statistic.
-Otherwise, if $a>k$, we recursively find the $k$th order
-statistic for the left part,
-and if $a<k$, we recursively find the $r$th order
-statistic for the right part where $r=k-a$.
-The search continues in a similar way, until the element
-has been found.
+الگوریتم یک عنصر تصادفی $x$
+از آرایه انتخاب می‌کند، و عناصر کوچک‌تر از $x$ را
+به بخش چپ آرایه منتقل می‌کند،
+و سایر عناصر را به بخش راست آرایه می‌برد.
+این کار در حضور $n$ عنصر، زمان $O(n)$ می‌برد.
+فرض کنید بخش چپ شامل $a$ عنصر
+و بخش راست شامل $b$ عنصر باشد.
+اگر $a=k$ باشد، عنصر $x$ همان $k$-امین آماره ترتیبی است.
+در غیر این صورت، اگر $a>k$ باشد، به شکل بازگشتی $k$-امین آماره
+ترتیبی را برای بخش چپ پیدا می‌کنیم،
+و اگر $a<k$ باشد، به شکل بازگشتی $r$-امین آماره
+ترتیبی را برای بخش راست می‌یابیم که در آن $r=k-a$ است.
+جستجو به همین ترتیب ادامه می‌یابد تا عنصر
+پیدا شود.
 
-When each element $x$ is randomly chosen,
-the size of the array about halves at each step,
-so the time complexity for
-finding the $k$th order statistic is about
+وقتی هر عنصر $x$ تصادفی انتخاب شود،
+اندازه آرایه در هر مرحله تقریباً نصف می‌شود،
+بنابراین پیچیدگی زمانی برای
+یافتن $k$-امین آماره ترتیبی تقریباً برابر است با
 \[n+n/2+n/4+n/8+\cdots < 2n = O(n).\]
 
-The worst case of the algorithm requires still $O(n^2)$ time,
-because it is possible that $x$ is always chosen
-in such a way that it is one of the smallest or largest
-elements in the array and $O(n)$ steps are needed.
-However, the probability for this is so small
-that this never happens in practice.
+بدترین حالت الگوریتم همچنان به زمان $O(n^2)$ نیاز دارد،
+زیرا ممکن است $x$ همواره به گونه‌ای انتخاب شود
+که یکی از کوچک‌ترین یا بزرگ‌ترین عناصر آرایه باشد
+و به $O(n)$ مرحله نیاز شود.
+با این حال، احتمال وقوع این حالت آن‌قدر کم است
+که در عمل هرگز رخ نمی‌دهد.
 
-\subsubsection{Verifying matrix multiplication}
+\subsubsection{بررسی درستی ضرب ماتریس‌ها}
 
 \index{matrix multiplication}
 
-Our next problem is to \emph{verify}
-if $AB=C$ holds when $A$, $B$ and $C$
-are matrices of size $n \times n$.
-Of course, we can solve the problem
-by calculating the product $AB$ again
-(in $O(n^3)$ time using the basic algorithm),
-but one could hope that verifying the
-answer would by easier than to calculate it from scratch.
+مسئله بعدی ما \emph{بررسی} این است
+که آیا رابطه $AB=C$ برقرار است یا خیر، در حالی که $A$، $B$ و $C$
+ماتریس‌هایی با اندازه $n \times n$ هستند.
+البته می‌توان مسئله را با محاسبه دوباره
+حاصل‌ضرب $AB$ حل کرد
+(در زمان $O(n^3)$ با استفاده از الگوریتم پایه)،
+اما انتظار می‌رود که بررسی درستی پاسخ
+آسان‌تر از محاسبه آن از ابتدا باشد.
 
-It turns out that we can solve the problem
-using a Monte Carlo algorithm\footnote{R. M. Freivalds published
-this algorithm in 1977 \cite{fre77}, and it is sometimes
-called \index{Freivalds' algoritm} \key{Freivalds' algorithm}.} whose
-time complexity is only $O(n^2)$.
-The idea is simple: we choose a random vector
-$X$ of $n$ elements, and calculate the matrices
-$ABX$ and $CX$. If $ABX=CX$, we report that $AB=C$,
-and otherwise we report that $AB \neq C$.
+مشخص می‌شود که می‌توان مسئله را با
+یک الگوریتم مونت‌کارلو\footnote{آر. ام. فرایوالدز این الگوریتم را در سال ۱۹۷۷ منتشر کرد \cite{fre77}، و گاهی
+\index{Freivalds' algoritm} \key{الگوریتم فرایوالدز} نامیده می‌شود.} حل کرد که
+پیچیدگی زمانی آن تنها $O(n^2)$ است.
+ایده ساده است: بردار تصادفی $X$
+شامل $n$ عنصر را انتخاب می‌کنیم و ماتریس‌های
+$ABX$ و $CX$ را محاسبه می‌نماییم. اگر $ABX=CX$ باشد، اعلام می‌کنیم $AB=C$،
+و در غیر این صورت گزارش می‌دهیم $AB \neq C$.
 
-The time complexity of the algorithm is
-$O(n^2)$, because we can calculate the matrices
-$ABX$ and $CX$ in $O(n^2)$ time.
-We can calculate the matrix $ABX$ efficiently
-by using the representation $A(BX)$, so only two
-multiplications of $n \times n$ and $n \times 1$
-size matrices are needed.
+پیچیدگی زمانی الگوریتم
+$O(n^2)$ است، زیرا می‌توان ماتریس‌های
+$ABX$ و $CX$ را در زمان $O(n^2)$ محاسبه کرد.
+می‌توان ماتریس $ABX$ را با استفاده از نمایش $A(BX)$ بهینه محاسبه کرد،
+بنابراین تنها به دو ضرب ماتریس
+با اندازه‌های $n \times n$ و $n \times 1$ نیاز است.
 
-The drawback of the algorithm is
-that there is a small chance that the algorithm
-makes a mistake when it reports that $AB=C$.
-For example, 
+نقطه ضعف الگوریتم این است
+که احتمال کمی وجود دارد که هنگام اعلام $AB=C$ دچار خطا شود.
+برای مثال،
 \[
  \begin{bmatrix}
   6 & 8 \\
@@ -598,7 +550,7 @@ For example,
   3 & 2 \\
  \end{bmatrix},
 \]
-but
+اما
 \[
  \begin{bmatrix}
   6 & 8 \\
@@ -618,22 +570,20 @@ but
   6 \\
  \end{bmatrix}.
 \]
-However, in practice, the probability that the
-algorithm makes a mistake is small,
-and we can decrease the probability by
-verifying the result using multiple random vectors $X$
-before reporting that $AB=C$.
+با این حال در عمل، احتمال خطای الگوریتم اندک است،
+و می‌توان این احتمال را با بررسی نتیجه با چندین
+بردار تصادفی $X$ پیش از اعلام $AB=C$، کاهش داد.
 
-\subsubsection{Graph coloring}
+\subsubsection{رنگ‌آمیزی گراف}
 
 \index{coloring}
 
-Given a graph that contains $n$ nodes and $m$ edges,
-our task is to find a way to color the nodes
-of the graph using two colors so that
-for at least $m/2$ edges, the endpoints 
-have different colors.
-For example, in the graph
+با فرض داشتن گرافی شامل $n$ رأس و $m$ یال،
+وظیفه ما یافتن روشی برای رنگ‌آمیزی رأس‌های
+گراف با دو رنگ است به طوری که
+حداقل برای $m/2$ یال، دو سر یال دارای
+رنگ‌های متفاوتی باشند.
+برای مثال، در گراف
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
 \node[draw, circle] (1) at (1,3) {$1$};
@@ -651,7 +601,7 @@ For example, in the graph
 \path[draw,thick,-] (4) -- (5);
 \end{tikzpicture}
 \end{center}
-a valid coloring is as follows:
+یک رنگ‌آمیزی معتبر به صورت زیر است:
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
 \node[draw, circle, fill=blue!40] (1) at (1,3) {$1$};
@@ -669,21 +619,20 @@ a valid coloring is as follows:
 \path[draw,thick,-] (4) -- (5);
 \end{tikzpicture}
 \end{center}
-The above graph contains 7 edges, and for 5 of them,
-the endpoints have different colors,
-so the coloring is valid.
+گراف بالا دارای ۷ یال است و برای ۵ تای آن‌ها،
+دو سر یال رنگ‌های متفاوتی دارند،
+بنابراین رنگ‌آمیزی معتبر است.
 
-The problem can be solved using a Las Vegas algorithm
-that generates random colorings until a valid coloring
-has been found.
-In a random coloring, the color of each node is
-independently chosen so that the probability of
-both colors is $1/2$.
+مسئله را می‌توان با الگوریتم لاس‌وگاس حل کرد
+که رنگ‌آمیزی‌های تصادفی تولید می‌کند تا زمانی که رنگ‌آمیزی معتبر
+یافت شود.
+در رنگ‌آمیزی تصادفی، رنگ هر رأس به‌طور
+مستقل انتخاب می‌شود به‌طوری که احتمال
+هر دو رنگ برابر $1/2$ است.
 
-In a random coloring, the probability that the endpoints
-of a single edge have different colors is $1/2$.
-Hence, the expected number of edges whose endpoints
-have different colors is $m/2$.
-Since it is expected that a random coloring is valid,
-we will quickly find a valid coloring in practice.
-
+در رنگ‌آمیزی تصادفی، احتمال اینکه دو سر
+یک یال رنگ‌های متفاوت داشته باشند $1/2$ است.
+بنابراین، امید ریاضی تعداد یال‌هایی که دو سر آن‌ها
+رنگ‌های متفاوت دارند $m/2$ است.
+از آنجا که انتظار می‌رود رنگ‌آمیزی تصادفی معتبر باشد،
+در عمل خیلی سریع رنگ‌آمیزی معتبر پیدا می‌کنیم.
