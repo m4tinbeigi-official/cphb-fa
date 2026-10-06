@@ -1,19 +1,19 @@
-\chapter{Number theory}
+\chapter{نظریه اعداد}
 
-\index{number theory}
+\index{نظریه اعداد}
 
-\key{Number theory} is a branch of mathematics
-that studies integers.
-Number theory is a fascinating field,
-because many questions involving integers
-are very difficult to solve even if they
-seem simple at first glance.
+\key{نظریه اعداد} شاخه‌ای از ریاضیات است
+که به مطالعه اعداد صحیح می‌پردازد.
+نظریه اعداد حوزه‌ای شگفت‌انگیز است،
+چرا که بسیاری از پرسش‌های مربوط به اعداد صحیح،
+حتی اگر در نگاه اول ساده به نظر برسند،
+حل بسیار دشواری دارند.
 
-As an example, consider the following equation:
+به عنوان مثال، معادله زیر را در نظر بگیرید:
 \[x^3 + y^3 + z^3 = 33\]
-It is easy to find three real numbers $x$, $y$ and $z$
-that satisfy the equation.
-For example, we can choose
+یافتن سه عدد حقیقی $x$، $y$ و $z$
+که در این معادله صدق کنند آسان است.
+برای نمونه می‌توان انتخاب کرد:
 \[
 \begin{array}{lcl}
 x = 3, \\
@@ -21,145 +21,138 @@ y = \sqrt[3]{3}, \\
 z = \sqrt[3]{3}.\\
 \end{array}
 \]
-However, it is an open problem in number theory
-if there are any three
-\emph{integers} $x$, $y$ and $z$
-that would satisfy the equation \cite{bec07}.
+با این حال، در نظریه اعداد این مسئله‌ای باز است
+که آیا سه \emph{عدد صحیح} $x$، $y$ و $z$ وجود دارند
+که در این معادله صدق کنند یا خیر \cite{bec07}.
 
-In this chapter, we will focus on basic concepts
-and algorithms in number theory.
-Throughout the chapter, we will assume that all numbers
-are integers, if not otherwise stated.
+در این فصل، روی مفاهیم پایه
+و الگوریتم‌های نظریه اعداد تمرکز خواهیم کرد.
+در سرتاسر این فصل، فرض بر این است که همه اعداد
+صحیح هستند، مگر خلاف آن بیان شود.
 
-\section{Primes and factors}
+\section{اعداد اول و مقسوم‌علیه‌ها}
 
-\index{divisibility}
-\index{factor}
-\index{divisor}
+\index{بخش‌پذیری}
+\index{عامل}
+\index{مقسوم‌علیه}
 
-A number $a$ is called a \key{factor} or a \key{divisor} of a number $b$
-if $a$ divides $b$.
-If $a$ is a factor of $b$,
-we write $a \mid b$, and otherwise we write $a \nmid b$.
-For example, the factors of 24 are
-1, 2, 3, 4, 6, 8, 12 and 24.
+عدد $a$ را یک \key{عامل} یا \key{مقسوم‌علیه} عدد $b$ می‌نامند
+هرگاه $a$ عدد $b$ را عاد کند (تقسیم کند).
+اگر $a$ مقسوم‌علیه $b$ باشد،
+می‌نویسیم $a \mid b$، و در غیر این صورت می‌نویسیم $a \nmid b$.
+برای مثال، مقسوم‌علیه‌های 24 عبارتند از:
+1، 2، 3، 4، 6، 8، 12 و 24.
 
-\index{prime}
-\index{prime decomposition}
+\index{عدد اول}
+\index{تجزیه به عوامل اول}
 
-A number $n>1$ is a \key{prime}
-if its only positive factors are 1 and $n$.
-For example, 7, 19 and 41 are primes,
-but 35 is not a prime, because $5 \cdot 7 = 35$.
-For every number $n>1$, there is a unique
-\key{prime factorization}
+عدد $n>1$ یک \key{عدد اول} است
+اگر تنها مقسوم‌علیه‌های مثبت آن 1 و $n$ باشند.
+برای نمونه، 7، 19 و 41 اول هستند،
+اما 35 اول نیست، زیرا $5 \cdot 7 = 35$.
+به ازای هر عدد $n>1$، یک \key{تجزیه به عوامل اول} یکتا وجود دارد:
 \[ n = p_1^{\alpha_1} p_2^{\alpha_2} \cdots p_k^{\alpha_k},\]
-where $p_1,p_2,\ldots,p_k$ are distinct primes and
-$\alpha_1,\alpha_2,\ldots,\alpha_k$ are positive numbers.
-For example, the prime factorization for 84 is
+که در آن $p_1,p_2,\ldots,p_k$ اعداد اول متمایز و
+$\alpha_1,\alpha_2,\ldots,\alpha_k$ اعداد مثبت هستند.
+برای مثال، تجزیه به عوامل اول برای 84 به صورت زیر است:
 \[84 = 2^2 \cdot 3^1 \cdot 7^1.\]
 
-The \key{number of factors} of a number $n$ is
+\key{تعداد مقسوم‌علیه‌ها}ی عدد $n$ برابر است با:
 \[\tau(n)=\prod_{i=1}^k (\alpha_i+1),\]
-because for each prime $p_i$, there are
-$\alpha_i+1$ ways to choose how many times
-it appears in the factor.
-For example, the number of factors
-of 84 is
+زیرا برای هر عامل اول $p_i$، به تعداد $\alpha_i+1$
+روش برای انتخاب تعداد دفعات حضور آن
+در مقسوم‌علیه وجود دارد.
+برای مثال، تعداد مقسوم‌علیه‌های 84 برابر است با:
 $\tau(84)=3 \cdot 2 \cdot 2 = 12$.
-The factors are
-1, 2, 3, 4, 6, 7, 12, 14, 21, 28, 42 and 84.
+این مقسوم‌علیه‌ها عبارتند از:
+1، 2، 3، 4، 6، 7، 12، 14، 21، 28، 42 و 84.
 
-The \key{sum of factors} of $n$ is
+\key{مجموع مقسوم‌علیه‌ها}ی $n$ برابر است با:
 \[\sigma(n)=\prod_{i=1}^k (1+p_i+\ldots+p_i^{\alpha_i}) = \prod_{i=1}^k \frac{p_i^{a_i+1}-1}{p_i-1},\]
-where the latter formula is based on the geometric progression formula.
-For example, the sum of factors of 84 is
+که در آن، فرمول دوم بر اساس فرمول تصاعد هندسی به دست آمده است.
+برای مثال، مجموع مقسوم‌علیه‌های 84 برابر است با:
 \[\sigma(84)=\frac{2^3-1}{2-1} \cdot \frac{3^2-1}{3-1} \cdot \frac{7^2-1}{7-1} = 7 \cdot 4 \cdot 8 = 224.\]
 
-The \key{product of factors} of $n$ is
+\key{حاصل‌ضرب مقسوم‌علیه‌ها}ی $n$ برابر است با:
 \[\mu(n)=n^{\tau(n)/2},\]
-because we can form $\tau(n)/2$ pairs from the factors,
-each with product $n$.
-For example, the factors of 84
-produce the pairs
-$1 \cdot 84$, $2 \cdot 42$, $3 \cdot 28$, etc.,
-and the product of the factors is $\mu(84)=84^6=351298031616$.
+زیرا می‌توان از میان مقسوم‌علیه‌ها $\tau(n)/2$ جفت تشکیل داد
+که حاصل‌ضرب هر جفت برابر با $n$ است.
+برای نمونه، مقسوم‌علیه‌های 84 این جفت‌ها را می‌سازند:
+$1 \cdot 84$، $2 \cdot 42$، $3 \cdot 28$ و غیره،
+و حاصل‌ضرب مقسوم‌علیه‌ها برابر است با: $\mu(84)=84^6=351298031616$.
 
-\index{perfect number}
+\index{عدد کامل}
 
-A number $n$ is called a \key{perfect number} if $n=\sigma(n)-n$,
-i.e., $n$ equals the sum of its factors
-between $1$ and $n-1$.
-For example, 28 is a perfect number,
-because $28=1+2+4+7+14$.
+عدد $n$ یک \key{عدد کامل} نامیده می‌شود اگر $n=\sigma(n)-n$ باشد؛
+یعنی $n$ برابر با مجموع مقسوم‌علیه‌های خود
+بین $1$ و $n-1$ باشد.
+برای مثال، 28 یک عدد کامل است،
+زیرا $28=1+2+4+7+14$.
 
-\subsubsection{Number of primes}
+\subsubsection{تعداد اعداد اول}
 
-It is easy to show that there is an infinite number
-of primes.
-If the number of primes would be finite,
-we could construct a set $P=\{p_1,p_2,\ldots,p_n\}$
-that would contain all the primes.
-For example, $p_1=2$, $p_2=3$, $p_3=5$, and so on.
-However, using $P$, we could form a new prime
+نشان دادن نامتناهی بودن اعداد اول ساده است.
+اگر تعداد اعداد اول متناهی بود،
+مجموعه $P=\{p_1,p_2,\ldots,p_n\}$
+شامل همه اعداد اول تشکیل می‌شد.
+مثال: $p_1=2$، $p_2=3$، $p_3=5$ و الی آخر.
+ولی با اعضای $P$، عدد اول جدید
 \[p_1 p_2 \cdots p_n+1\]
-that is larger than all elements in $P$.
-This is a contradiction, and the number of primes
-has to be infinite.
+ساخته می‌شود
+که از تمام اعضای $P$ بزرگ‌تر است.
+این تناقض است. تعداد اعداد اول باید نامتناهی باشد.
 
-\subsubsection{Density of primes}
+\subsubsection{تراکم اعداد اول}
 
-The density of primes means how often there are primes
-among the numbers.
-Let $\pi(n)$ denote the number of primes between
-$1$ and $n$. For example, $\pi(10)=4$, because
-there are 4 primes between $1$ and $10$: 2, 3, 5 and 7.
+تراکم اعداد اول یعنی بسامد رخداد اعداد اول میان اعداد.
+فرض کنید $\pi(n)$ نماد تعداد اعداد اول بین
+$1$ و $n$ باشد. مثال: $\pi(10)=4$، چون
+۴ عدد اول بین $1$ و $10$ هست: 2، 3، 5 و 7.
 
-It is possible to show that
+می‌توان نشان داد
 \[\pi(n) \approx \frac{n}{\ln n},\]
-which means that primes are quite frequent.
-For example, the number of primes between
-$1$ and $10^6$ is $\pi(10^6)=78498$,
-and $10^6 / \ln 10^6 \approx 72382$.
+یعنی اعداد اول متداول هستند.
+مثال: تعداد اعداد اول بین
+$1$ و $10^6$ برابر $\pi(10^6)=78498$ است،
+و $10^6 / \ln 10^6 \approx 72382$.
 
-\subsubsection{Conjectures}
+\subsubsection{حدس‌ها}
 
-There are many \emph{conjectures} involving primes.
-Most people think that the conjectures are true,
-but nobody has been able to prove them.
-For example, the following conjectures are famous:
+\emph{حدس‌های} زیادی درباره اعداد اول وجود دارد.
+اکثر افراد حدس‌ها را درست می‌دانند،
+اما اثباتی برای آن‌ها نیست.
+حدس‌های مشهور:
 
 \begin{itemize}
-\index{Goldbach's conjecture}
-\item \key{Goldbach's conjecture}:
-Each even integer $n>2$ can be represented as a
-sum $n=a+b$ so that both $a$ and $b$ are primes.
-\index{twin prime}
-\item \key{Twin prime conjecture}:
-There is an infinite number of pairs
-of the form $\{p,p+2\}$,
-where both $p$ and $p+2$ are primes.
-\index{Legendre's conjecture}
-\item \key{Legendre's conjecture}:
-There is always a prime between numbers
-$n^2$ and $(n+1)^2$, where $n$ is any positive integer.
+\index{حدس گلدباخ}
+\item \key{حدس گلدباخ}:
+هر عدد صحیح زوج $n>2$ به شکل
+مجموع $n=a+b$ نوشته می‌شود که هر دو عدد $a$ و $b$ اول هستند.
+\index{اعداد اول دوقلو}
+\item \key{حدس اعداد اول دوقلو}:
+تعداد نامتناهی جفت
+به فرم $\{p,p+2\}$ وجود دارد
+که در آن هم $p$ و هم $p+2$ اول هستند.
+\index{حدس لژاندر}
+\item \key{حدس لژاندر}:
+همیشه یک عدد اول بین
+$n^2$ و $(n+1)^2$ هست، که $n$ هر عدد صحیح مثبت است.
 \end{itemize}
 
-\subsubsection{Basic algorithms}
+\subsubsection{الگوریتم‌های پایه}
 
-If a number $n$ is not prime,
-it can be represented as a product $a \cdot b$,
-where $a \le \sqrt n$ or $b \le \sqrt n$,
-so it certainly has a factor between $2$ and $\lfloor \sqrt n \rfloor$.
-Using this observation, we can both test
-if a number is prime and find the prime factorization
-of a number in $O(\sqrt n)$ time.
+اگر عدد $n$ اول نباشد،
+به صورت حاصل‌ضرب $a \cdot b$ نوشته می‌شود،
+که $a \le \sqrt n$ یا $b \le \sqrt n$ است،
+پس قطعا عاملی بین $2$ و $\lfloor \sqrt n \rfloor$ دارد.
+با این نکته، تست اول بودن عدد
+و تجزیه به عوامل اول در زمان $O(\sqrt n)$ انجام می‌شود.
 
-The following function \texttt{prime} checks
-if the given number $n$ is prime.
-The function attempts to divide $n$ by
-all numbers between $2$ and $\lfloor \sqrt n \rfloor$,
-and if none of them divides $n$, then $n$ is prime.
+تابع \texttt{prime} بررسی می‌کند
+آیا عدد ورودی $n$ اول است یا خیر.
+تابع تقسیم $n$ بر
+تمام اعداد بین $2$ و $\lfloor \sqrt n \rfloor$ را امتحان می‌کند،
+و اگر هیچ‌کدام $n$ را عاد نکند، $n$ اول است.
 
 \begin{lstlisting}
 bool prime(int n) {
@@ -172,14 +165,14 @@ bool prime(int n) {
 \end{lstlisting}
 
 \noindent
-The following function \texttt{factors}
-constructs a vector that contains the prime
-factorization of $n$.
-The function divides $n$ by its prime factors,
-and adds them to the vector.
-The process ends when the remaining number $n$
-has no factors between $2$ and $\lfloor \sqrt n \rfloor$.
-If $n>1$, it is prime and the last factor.
+تابع \texttt{factors}
+یک بردار شامل عوامل اول $n$
+می‌سازد.
+تابع $n$ را بر عوامل اولش تقسیم می‌کند،
+و آن‌ها را به بردار می‌افزاید.
+فرایند زمانی پایان می‌یابد که عدد باقی‌مانده $n$
+عاملی بین $2$ و $\lfloor \sqrt n \rfloor$ نداشته باشد.
+اگر $n>1$، اول است و آخرین عامل خواهد بود.
 
 \begin{lstlisting}
 vector<int> factors(int n) {
@@ -195,38 +188,26 @@ vector<int> factors(int n) {
 }
 \end{lstlisting}
 
-Note that each prime factor appears in the vector
-as many times as it divides the number.
-For example, $24=2^3 \cdot 3$,
-so the result of the function is $[2,2,2,3]$.
+توجه کنید هر عامل اول به تعداد دفعاتی که عدد را عاد می‌کند در بردار ظاهر می‌شود.
+برای مثال، $24=2^3 \cdot 3$،
+بنابراین خروجی تابع $[2,2,2,3]$ است.
 
-\subsubsection{Sieve of Eratosthenes}
+\subsubsection{غربال اراتستن}
 
-\index{sieve of Eratosthenes}
+\index{غربال اراتستن}
 
-The \key{sieve of Eratosthenes}
+\key{غربال اراتستن}
 %\footnote{Eratosthenes (c. 276 BC -- c. 194 BC) was a Greek mathematician.}
-is a preprocessing
-algorithm that builds an array using which we
-can efficiently check if a given number between $2 \ldots n$
-is prime and, if it is not, find one prime factor of the number.
+الگوریتم پیش‌پردازشی است که آرایه‌ای می‌سازد. با این آرایه می‌توان اول بودن هر عدد دلخواه بین $2 \ldots n$ را به‌طور کارآمد بررسی کرد و در صورت اول نبودن، یکی از عامل‌های اول آن را یافت.
 
-The algorithm builds an array $\texttt{sieve}$
-whose positions $2,3,\ldots,n$ are used.
-The value $\texttt{sieve}[k]=0$ means
-that $k$ is prime,
-and the value $\texttt{sieve}[k] \neq 0$
-means that $k$ is not a prime and one
-of its prime factors is $\texttt{sieve}[k]$.
+این الگوریتم آرایه‌ای به نام $\texttt{sieve}$ می‌سازد که خانه‌های $2,3,\ldots,n$ آن استفاده می‌شوند.
+مقدار $\texttt{sieve}[k]=0$ یعنی $k$ اول است،
+و مقدار $\texttt{sieve}[k] \neq 0$ یعنی $k$ مرکب است و یکی از عامل‌های اول آن $\texttt{sieve}[k]$ است.
 
-The algorithm iterates through the numbers
-$2 \ldots n$ one by one.
-Always when a new prime $x$ is found,
-the algorithm records that the multiples
-of $x$ ($2x,3x,4x,\ldots$) are not primes,
-because the number $x$ divides them.
+الگوریتم اعداد $2 \ldots n$ را تک‌به‌تک پیمایش می‌کند.
+هر بار با یافتن عدد اول جدید $x$، مضرب‌های آن ($2x,3x,4x,\ldots$) را به عنوان عدد غیر اول علامت‌گذاری می‌کند، چون عدد $x$ آنها را عاد می‌کند.
 
-For example, if $n=20$, the array is as follows:
+برای مثال، اگر $n=20$ باشد، آرایه به این صورت است:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
@@ -277,10 +258,8 @@ For example, if $n=20$, the array is as follows:
 \end{tikzpicture}
 \end{center}
 
-The following code implements the sieve of
-Eratosthenes.
-The code assumes that each element of
-\texttt{sieve} is initially zero.
+کد زیر غربال اراتستن را پیاده‌سازی می‌کند.
+کد فرض می‌کند تمام عناصر $\texttt{sieve}$ در ابتدا صفر هستند.
 
 \begin{lstlisting}
 for (int x = 2; x <= n; x++) {
@@ -291,46 +270,46 @@ for (int x = 2; x <= n; x++) {
 }
 \end{lstlisting}
 
-The inner loop of the algorithm is executed
-$n/x$ times for each value of $x$.
-Thus, an upper bound for the running time
-of the algorithm is the harmonic sum
+حلقه داخلی الگوریتم به ازای هر مقدار $x$،
+به تعداد $n/x$ بار اجرا می‌شود.
+بنابراین، یک کران بالا برای زمان اجرای
+الگوریتم، مجموع هارمونیک زیر است:
 \[\sum_{x=2}^n n/x = n/2 + n/3 + n/4 + \cdots + n/n = O(n \log n).\]
 
-\index{harmonic sum}
+\index{harmonic sum@مجموع هارمونیک}
 
-In fact, the algorithm is more efficient,
-because the inner loop will be executed only if
-the number $x$ is prime.
-It can be shown that the running time of the
-algorithm is only $O(n \log \log n)$,
-a complexity very near to $O(n)$. 
+در واقع، الگوریتم کارآمدتر است،
+زیرا حلقه داخلی تنها زمانی اجرا می‌شود که
+عدد $x$ اول باشد.
+می‌توان نشان داد که زمان اجرای
+الگوریتم تنها $O(n \log \log n)$ است؛
+پیچیدگی زمانی بسیار نزدیکی به $O(n)$.
 
-\subsubsection{Euclid's algorithm}
+\subsubsection{الگوریتم اقلیدس}
 
-\index{greatest common divisor}
-\index{least common multiple}
-\index{Euclid's algorithm}
+\index{greatest common divisor@بزرگ‌ترین مقسوم‌علیه مشترک}
+\index{least common multiple@کوچک‌ترین مضرب مشترک}
+\index{Euclid's algorithm@الگوریتم اقلیدس}
 
-The \key{greatest common divisor} of
-numbers $a$ and $b$, $\gcd(a,b)$,
-is the greatest number that divides both $a$ and $b$,
-and the \key{least common multiple} of
-$a$ and $b$, $\textrm{lcm}(a,b)$,
-is the smallest number that is divisible by
-both $a$ and $b$.
-For example,
-$\gcd(24,36)=12$ and
+\key{بزرگ‌ترین مقسوم‌علیه مشترک}
+دو عدد $a$ و $b$، یعنی $\gcd(a,b)$،
+بزرگ‌ترین عددی است که هر دو عدد $a$ و $b$ را عاد می‌کند،
+و \key{کوچک‌ترین مضرب مشترک}
+$a$ و $b$، یعنی $\textrm{lcm}(a,b)$،
+کوچک‌ترین عددی است که بر
+هر دوی $a$ و $b$ بخش‌پذیر است.
+به عنوان مثال،
+$\gcd(24,36)=12$ و
 $\textrm{lcm}(24,36)=72$.
 
-The greatest common divisor and the least common multiple
-are connected as follows:
+بزرگ‌ترین مقسوم‌علیه مشترک و کوچک‌ترین مضرب مشترک
+به شکل زیر به هم مرتبط هستند:
 \[\textrm{lcm}(a,b)=\frac{ab}{\textrm{gcd}(a,b)}\]
 
-\key{Euclid's algorithm}\footnote{Euclid was a Greek mathematician who
-lived in about 300 BC. This is perhaps the first known algorithm in history.} provides an efficient way
-to find the greatest common divisor of two numbers.
-The algorithm is based on the following formula:
+\key{الگوریتم اقلیدس}\footnote{اقلیدس ریاضی‌دانی یونانی بود که
+حدود ۳۰۰ سال پیش از میلاد می‌زیست. این احتمالاً نخستین الگوریتم شناخته‌شده در تاریخ است.} روشی کارآمد برای
+یافتن بزرگ‌ترین مقسوم‌علیه مشترک دو عدد فراهم می‌کند.
+این الگوریتم مبتنی بر فرمول زیر است:
 \begin{equation*}
     \textrm{gcd}(a,b) = \begin{cases}
                a        & b = 0\\
@@ -338,11 +317,11 @@ The algorithm is based on the following formula:
            \end{cases}
 \end{equation*}
 
-For example,
+برای نمونه،
 \[\textrm{gcd}(24,36) = \textrm{gcd}(36,24)
 = \textrm{gcd}(24,12) = \textrm{gcd}(12,0)=12.\]
 
-The algorithm can be implemented as follows:
+الگوریتم را می‌توان به صورت زیر پیاده‌سازی کرد:
 \begin{lstlisting}
 int gcd(int a, int b) {
     if (b == 0) return a;
@@ -350,53 +329,53 @@ int gcd(int a, int b) {
 }
 \end{lstlisting}
 
-It can be shown that Euclid's algorithm works
-in $O(\log n)$ time, where $n=\min(a,b)$.
-The worst case for the algorithm is
-the case when $a$ and $b$ are consecutive Fibonacci numbers.
-For example,
+می‌توان نشان داد که الگوریتم اقلیدس در زمان
+$O(\log n)$ اجرا می‌شود که در آن $n=\min(a,b)$ است.
+بدترین حالت برای این الگوریتم،
+زمانی رخ می‌دهد که $a$ و $b$ دو عدد متوالی فیبوناچی باشند.
+برای نمونه،
 \[\textrm{gcd}(13,8)=\textrm{gcd}(8,5)
 =\textrm{gcd}(5,3)=\textrm{gcd}(3,2)=\textrm{gcd}(2,1)=\textrm{gcd}(1,0)=1.\]
 
-\subsubsection{Euler's totient function}
+\subsubsection{تابع فی اویلر}
 
-\index{coprime}
-\index{Euler's totient function}
+\index{coprime@نسبت به هم اول}
+\index{Euler's totient function@تابع فی اویلر}
 
-Numbers $a$ and $b$ are \key{coprime}
-if $\textrm{gcd}(a,b)=1$.
-\key{Euler's totient function} $\varphi(n)$
-%\footnote{Euler presented this function in 1763.}
-gives the number of coprime numbers to $n$
-between $1$ and $n$.
-For example, $\varphi(12)=4$,
-because 1, 5, 7 and 11
-are coprime to 12.
+دو عدد $a$ و $b$ را \key{متباین} (نسبت به هم اول) می‌نامند
+اگر $\textrm{gcd}(a,b)=1$ باشد.
+\key{تابع فی اویلر} $\varphi(n)$
+%\footnote{اویلر این تابع را در سال ۱۷۶۳ معرفی کرد.}
+تعداد اعداد متباین با $n$
+را در بازهٔ $1$ تا $n$ به دست می‌دهد.
+برای نمونه، $\varphi(12)=4$،
+زیرا اعداد ۱، ۵، ۷ و ۱۱
+نسبت به ۱۲ اول هستند.
 
-The value of $\varphi(n)$ can be calculated
-from the prime factorization of $n$
-using the formula
+مقدار $\varphi(n)$ را می‌توان از روی
+تجزیه $n$ به عوامل اول
+با استفاده از فرمول زیر محاسبه کرد:
 \[ \varphi(n) = \prod_{i=1}^k p_i^{\alpha_i-1}(p_i-1). \]
-For example, $\varphi(12)=2^1 \cdot (2-1) \cdot 3^0 \cdot (3-1)=4$.
-Note that $\varphi(n)=n-1$ if $n$ is prime.
+برای نمونه، $\varphi(12)=2^1 \cdot (2-1) \cdot 3^0 \cdot (3-1)=4$.
+دقت کنید که اگر $n$ اول باشد، $\varphi(n)=n-1$ خواهد بود.
 
-\section{Modular arithmetic}
+\section{حساب پیمانه‌ای}
 
-\index{modular arithmetic}
+\index{modular arithmetic@حساب پیمانه‌ای}
 
-In \key{modular arithmetic},
-the set of numbers is limited so
-that only numbers $0,1,2,\ldots,m-1$ are used,
-where $m$ is a constant.
-Each number $x$ is
-represented by the number $x \bmod m$:
-the remainder after dividing $x$ by $m$.
-For example, if $m=17$, then $75$
-is represented by $75 \bmod 17 = 7$.
+در \key{حساب پیمانه‌ای}،
+مجموعه اعداد به گونه‌ای محدود می‌شود که
+تنها اعداد $0,1,2,\ldots,m-1$ به کار می‌روند؛
+جایی که $m$ یک عدد ثابت است.
+هر عدد $x$ با
+عدد $x \bmod m$ نشان داده می‌شود:
+باقی‌مانده تقسیم $x$ بر $m$.
+برای نمونه، اگر $m=17$ باشد، عدد $75$
+به صورت $75 \bmod 17 = 7$ نشان داده می‌شود.
 
-Often we can take remainders before doing
-calculations.
-In particular, the following formulas hold:
+اغلب می‌توان پیش از انجام محاسبات،
+باقی‌مانده را محاسبه کرد.
+به ویژه، روابط زیر برقرار هستند:
 \[
 \begin{array}{rcl}
 (x+y) \bmod m & = & (x \bmod m + y \bmod m) \bmod m \\
@@ -406,28 +385,26 @@ x^n \bmod m & = & (x \bmod m)^n \bmod m \\
 \end{array}
 \]
 
-\subsubsection{Modular exponentiation}
+\subsubsection{توان‌رسانی پیمانه‌ای}
 
-There is often need to efficiently calculate
-the value of $x^n \bmod m$.
-This can be done in $O(\log n)$ time
-using the following recursion:
+اغلب نیاز است مقدار $x^n \bmod m$
+به شکل کارآمد محاسبه شود.
+این کار را می‌توان در زمان $O(\log n)$
+و با استفاده از رابطه بازگشتی زیر انجام داد:
 \begin{equation*}
     x^n = \begin{cases}
                1        & n = 0\\
-               x^{n/2} \cdot x^{n/2} & \text{$n$ is even}\\
-               x^{n-1} \cdot x & \text{$n$ is odd}
+               x^{n/2} \cdot x^{n/2} & \text{$n$ زوج است}\\
+               x^{n-1} \cdot x & \text{$n$ فرد است}
            \end{cases}
 \end{equation*}
 
-It is important that in the case of an even $n$,
-the value of $x^{n/2}$ is calculated only once.
-This guarantees that the time complexity of the
-algorithm is $O(\log n)$, because $n$ is always halved
-when it is even.
+مهم است که در حالت $n$ زوج،
+مقدار $x^{n/2}$ تنها یک بار محاسبه شود.
+این امر تضمین می‌کند که پیچیدگی زمانی الگوریتم
+برابر $O(\log n)$ باشد، چرا که $n$ در صورت زوج بودن همواره نصف می‌شود.
 
-The following function calculates the value of
-$x^n \bmod m$:
+تابع زیر مقدار $x^n \bmod m$ را محاسبه می‌کند:
 
 \begin{lstlisting}
 int modpow(int x, int n, int m) {
@@ -439,89 +416,85 @@ int modpow(int x, int n, int m) {
 }
 \end{lstlisting}
 
-\subsubsection{Fermat's theorem and Euler's theorem}
+\subsubsection{قضیه فرما و قضیه اویلر}
 
-\index{Fermat's theorem}
-\index{Euler's theorem}
+\index{قضیه فرما}
+\index{قضیه اویلر}
 
-\key{Fermat's theorem}
-%\footnote{Fermat discovered this theorem in 1640.}
-states that
+\key{قضیه فرما}
+%\footnote{فرما این قضیه را در سال ۱۶۴۰ کشف کرد.}
+بیان می‌کند که
 \[x^{m-1} \bmod m = 1\]
-when $m$ is prime and $x$ and $m$ are coprime.
-This also yields
+وقتی که $m$ اول باشد و $x$ و $m$ نسبت به هم اول باشند.
+همچنین نتیجه می‌دهد:
 \[x^k \bmod m = x^{k \bmod (m-1)} \bmod m.\]
-More generally, \key{Euler's theorem}
-%\footnote{Euler published this theorem in 1763.}
-states that
+در حالتی کلی‌تر، \key{قضیه اویلر}
+%\footnote{اویلر این قضیه را در سال ۱۷۶۳ منتشر کرد.}
+بیان می‌کند که
 \[x^{\varphi(m)} \bmod m = 1\]
-when $x$ and $m$ are coprime.
-Fermat's theorem follows from Euler's theorem,
-because if $m$ is a prime, then $\varphi(m)=m-1$.
+وقتی که $x$ و $m$ نسبت به هم اول باشند.
+قضیه فرما از قضیه اویلر به دست می‌آید،
+زیرا اگر $m$ عددی اول باشد، $\varphi(m)=m-1$ خواهد بود.
 
-\subsubsection{Modular inverse}
+\subsubsection{معکوس پیمانه‌ای}
 
-\index{modular inverse}
+\index{معکوس پیمانه‌ای}
 
-The inverse of $x$ modulo $m$
-is a number $x^{-1}$ such that
+معکوس $x$ به پیمانه $m$
+عددی مانند $x^{-1}$ است به طوری که:
 \[ x x^{-1} \bmod m = 1. \]
-For example, if $x=6$ and $m=17$,
-then $x^{-1}=3$, because $6\cdot3 \bmod 17=1$.
+برای نمونه، اگر $x=6$ و $m=17$ باشد،
+آن‌گاه $x^{-1}=3$ است، زیرا $6\cdot3 \bmod 17=1$.
 
-Using modular inverses, we can divide numbers
-modulo $m$, because division by $x$
-corresponds to multiplication by $x^{-1}$.
-For example, to evaluate the value of $36/6 \bmod 17$,
-we can use the formula $2 \cdot 3 \bmod 17$,
-because $36 \bmod 17 = 2$ and $6^{-1} \bmod 17 = 3$.
+با استفاده از معکوس‌های پیمانه‌ای، می‌توان اعداد را
+به پیمانه $m$ تقسیم کرد، چرا که تقسیم بر $x$
+معادل ضرب در $x^{-1}$ است.
+برای نمونه، جهت محاسبه مقدار $36/6 \bmod 17$،
+می‌توان از فرمول $2 \cdot 3 \bmod 17$ استفاده کرد،
+زیرا $36 \bmod 17 = 2$ و $6^{-1} \bmod 17 = 3$ است.
 
-However, a modular inverse does not always exist.
-For example, if $x=2$ and $m=4$, the equation
+با این حال، معکوس پیمانه‌ای همواره وجود ندارد.
+برای نمونه، اگر $x=2$ و $m=4$ باشد، معادله
 \[ x x^{-1} \bmod m = 1 \]
-cannot be solved, because all multiples of 2
-are even and the remainder can never be 1 when $m=4$.
-It turns out that the value of $x^{-1} \bmod m$
-can be calculated exactly when $x$ and $m$ are coprime.
+پاسخی ندارد، زیرا همه مضارب ۲ زوج هستند
+و باقی‌مانده آن‌ها در تقسیم بر $m=4$ هرگز نمی‌تواند ۱ باشد.
+مشخص می‌شود که مقدار $x^{-1} \bmod m$
+دقیقاً زمانی قابل محاسبه است که $x$ و $m$ نسبت به هم اول باشند.
 
-If a modular inverse exists, it can be
-calculated using the formula
+اگر معکوس ضربی به هنگ وجود داشته باشد، با فرمول زیر به دست می‌آید:
 \[
 x^{-1} = x^{\varphi(m)-1}.
 \]
-If $m$ is prime, the formula becomes
+اگر $m$ اول باشد، فرمول به صورت زیر درمی‌آید:
 \[
 x^{-1} = x^{m-2}.
 \]
-For example,
+به عنوان مثال،
 \[6^{-1} \bmod 17 =6^{17-2} \bmod 17 = 3.\]
 
-This formula allows us to efficiently calculate
-modular inverses using the modular exponentation algorithm.
-The formula can be derived using Euler's theorem.
-First, the modular inverse should satisfy the following equation:
+این فرمول امکان محاسبه کارآمد معکوس ضربی پیمانه‌ای با الگوریتم توان‌رسانی پیمانه‌ای را فراهم می‌سازد.
+فرمول با قضیه اویلر اثبات می‌شود.
+نخست، معکوس ضربی پیمانه‌ای باید در رابطه زیر صدق کند:
 \[
 x x^{-1} \bmod m = 1.
 \]
-On the other hand, according to Euler's theorem,
+از سوی دیگر، بر اساس قضیه اویلر:
 \[
 x^{\varphi(m)} \bmod m =  xx^{\varphi(m)-1} \bmod m = 1,
 \]
-so the numbers $x^{-1}$ and $x^{\varphi(m)-1}$ are equal.
+بنابراین دو مقدار $x^{-1}$ و $x^{\varphi(m)-1}$ برابر هستند.
 
-\subsubsection{Computer arithmetic}
+\subsubsection{حساب کامپیوتری}
 
-In programming, unsigned integers are represented modulo $2^k$,
-where $k$ is the number of bits of the data type.
-A usual consequence of this is that a number wraps around
-if it becomes too large.
+در برنامه‌نویسی، اعداد صحیح بدون علامت در پیمانه $2^k$ نمایش داده می‌شوند که در آن $k$ تعداد بیت‌های نوع داده است.
+پیامد معمول این شیوه سرریز شدن عدد و بازگشت به صفر هنگام بزرگ شدن بیش از حد مقدار است.
 
-For example, in C++, numbers of type \texttt{unsigned int}
-are represented modulo $2^{32}$.
-The following code declares an \texttt{unsigned int}
-variable whose value is $123456789$.
-After this, the value will be multiplied by itself,
-and the result is
+برای نمونه، در ++C اعداد از نوع \texttt{unsigned int}
+در پیمانه $2^{32}$ نشان داده می‌شوند.
+کد زیر متغیری از نوع \texttt{unsigned int}
+با مقدار $123456789$ تعریف می‌کند.
+سپس مقدار در خودش ضرب می‌شود
+و نتیجه برابر است با:
 $123456789^2 \bmod 2^{32} = 2537071545$.
 
 \begin{lstlisting}
@@ -529,53 +502,50 @@ unsigned int x = 123456789;
 cout << x*x << "\n"; // 2537071545
 \end{lstlisting}
 
-\section{Solving equations}
+\section{حل معادلات}
 
-\subsubsection*{Diophantine equations}
+\subsubsection*{معادلات سیاله‌ای}
 
 \index{Diophantine equation}
 
-A \key{Diophantine equation}
-%\footnote{Diophantus of Alexandria was a Greek mathematician who lived in the 3th century.}
-is an equation of the form
+یک \key{معادله سیاله‌ای}
+%\footnote{دیوفانت اسکندرانی ریاضی‌دان یونانی قرن سوم میلادی بود.}
+معادله‌ای است به شکل
 \[ ax + by = c, \]
-where $a$, $b$ and $c$ are constants
-and the values of $x$ and $y$ should be found.
-Each number in the equation has to be an integer.
-For example, one solution for the equation
-$5x+2y=11$ is $x=3$ and $y=-2$.
+که در آن $a$ و $b$ و $c$ مقادیر ثابت هستند
+و باید مقادیر $x$ و $y$ تعیین شوند.
+تمامی اعداد در معادله باید صحیح باشند.
+برای مثال، یک جواب برای معادله
+$5x+2y=11$ عبارت است از $x=3$ و $y=-2$.
 
 \index{extended Euclid's algorithm}
 
-We can efficiently solve a Diophantine equation
-by using Euclid's algorithm.
-It turns out that we can extend Euclid's algorithm
-so that it will find numbers $x$ and $y$
-that satisfy the following equation:
+حل کارآمد معادله سیاله‌ای با استفاده از الگوریتم اقلیدس امکان‌پذیر است.
+می‌توان الگوریتم اقلیدس را گسترش داد
+به طوری که مقادیر $x$ و $y$ را برای برقراری معادله زیر به دست آورد:
 \[
 ax + by = \textrm{gcd}(a,b)
 \]
 
-A Diophantine equation can be solved if
-$c$ is divisible by
-$\textrm{gcd}(a,b)$,
-and otherwise it cannot be solved.
+یک معادله سیاله‌ای در صورتی جواب دارد که
+$c$ بر
+$\textrm{gcd}(a,b)$
+بخش‌پذیر باشد،
+در غیر این صورت قابل حل نیست.
 
-As an example, let us find numbers $x$ and $y$
-that satisfy the following equation:
+به عنوان نمونه، مقادیر $x$ و $y$ را برای رابطه زیر بیابیم:
 \[
 39x + 15y = 12
 \]
-The equation can be solved, because
-$\textrm{gcd}(39,15)=3$ and $3 \mid 12$.
-When Euclid's algorithm calculates the
-greatest common divisor of 39 and 15,
-it produces the following sequence of function calls:
+معادله قابل حل است، چون
+$\textrm{gcd}(39,15)=3$ و $3 \mid 12$.
+هنگامی که الگوریتم اقلیدس بزرگ‌ترین مقسوم‌علیه مشترک ۳۹ و ۱۵ را محاسبه می‌کند،
+دنباله زیر از فراخوانی توابع تولید می‌شود:
 \[
 \textrm{gcd}(39,15) = \textrm{gcd}(15,9)
 = \textrm{gcd}(9,6) = \textrm{gcd}(6,3)
 = \textrm{gcd}(3,0) = 3 \]
-This corresponds to the following equations:
+این روند متناظر با معادلات زیر است:
 \[
 \begin{array}{lcl}
 39 - 2 \cdot 15 & = & 9 \\
@@ -583,30 +553,28 @@ This corresponds to the following equations:
 9 - 1 \cdot 6 & = & 3 \\
 \end{array}
 \]
-Using these equations, we can derive
+با استفاده از این معادلات نتیجه می‌شود:
 \[
 39 \cdot 2 + 15 \cdot (-5) = 3
 \]
-and by multiplying this by 4, the result is
+و با ضرب آن در ۴، مقدار حاصل برابر است با:
 \[
 39 \cdot 8 + 15 \cdot (-20) = 12,
 \]
-so a solution to the equation is
-$x=8$ and $y=-20$.
+بنابراین یک پاسخ برای معادله
+$x=8$ و $y=-20$ است.
 
-A solution to a Diophantine equation is not unique,
-because we can form an infinite number of solutions
-if we know one solution.
-If a pair $(x,y)$ is a solution, then also all pairs
+پاسخ یک معادله سیاله‌ای یکتا نیست،
+زیرا در صورت دانستن یک پاسخ، می‌توان بی‌شمار پاسخ دیگر ساخت.
+اگر جفت $(x,y)$ یک پاسخ باشد، تمامی جفت‌های
 \[(x+\frac{kb}{\textrm{gcd}(a,b)},y-\frac{ka}{\textrm{gcd}(a,b)})\]
-are solutions, where $k$ is any integer.
+نیز پاسخ خواهند بود، به طوری که $k$ هر عدد صحیحی است.
 
-\subsubsection{Chinese remainder theorem}
+\subsubsection{قضیه باقیمانده چینی}
 
-\index{Chinese remainder theorem}
+\index{قضیه باقیمانده چینی}
 
-The \key{Chinese remainder theorem} solves
-a group of equations of the form
+\key{قضیه باقیمانده چینی} دسته‌ای از معادلات به شکل
 \[
 \begin{array}{lcl}
 x & = & a_1 \bmod m_1 \\
@@ -615,21 +583,21 @@ x & = & a_2 \bmod m_2 \\
 x & = & a_n \bmod m_n \\
 \end{array}
 \]
-where all pairs of $m_1,m_2,\ldots,m_n$ are coprime.
+را حل می‌کند که در آن تمام جفت‌های $m_1,m_2,\ldots,m_n$ نسبت به هم اول هستند.
 
-Let $x^{-1}_m$ be the inverse of $x$ modulo $m$, and
+فرض کنید $x^{-1}_m$ معکوس ضربی $x$ به پیمانه $m$ باشد، و
 \[ X_k = \frac{m_1 m_2 \cdots m_n}{m_k}.\]
-Using this notation, a solution to the equations is
+با استفاده از این نمادگذاری، یک پاسخ برای معادلات برابر است با
 \[x = a_1 X_1 {X_1}^{-1}_{m_1} + a_2 X_2 {X_2}^{-1}_{m_2} + \cdots + a_n X_n {X_n}^{-1}_{m_n}.\]
-In this solution, for each $k=1,2,\ldots,n$,
+در این پاسخ، به ازای هر $k=1,2,\ldots,n$ داریم:
 \[a_k X_k {X_k}^{-1}_{m_k} \bmod m_k = a_k,\]
-because
+زیرا
 \[X_k {X_k}^{-1}_{m_k} \bmod m_k = 1.\]
-Since all other terms in the sum are divisible by $m_k$,
-they have no effect on the remainder,
-and $x \bmod m_k = a_k$.
+از آنجا که تمام جملات دیگر در مجموع بر $m_k$ بخش‌پذیرند،
+هیچ تأثیری روی باقیمانده ندارند،
+و $x \bmod m_k = a_k$ برقرار است.
 
-For example, a solution for
+به عنوان مثال، یک پاسخ برای
 \[
 \begin{array}{lcl}
 x & = & 3 \bmod 5 \\
@@ -637,90 +605,87 @@ x & = & 4 \bmod 7 \\
 x & = & 2 \bmod 3 \\
 \end{array}
 \]
-is
+برابر است با
 \[ 3 \cdot 21 \cdot 1 + 4 \cdot 15 \cdot 1 + 2 \cdot 35 \cdot 2 = 263.\]
 
-Once we have found a solution $x$,
-we can create an infinite number of other solutions,
-because all numbers of the form
+پس از یافتن یک پاسخ $x$،
+می‌توان بی‌شمار پاسخ دیگر تولید کرد،
+زیرا تمام اعداد به شکل
 \[x+m_1 m_2 \cdots m_n\]
-are solutions.
+نیز پاسخ هستند.
 
-\section{Other results}
+\section{سایر نتایج}
 
-\subsubsection{Lagrange's theorem}
+\subsubsection{قضیه لاگرانژ}
 
-\index{Lagrange's theorem}
+\index{قضیه لاگرانژ}
 
-\key{Lagrange's theorem}
-%\footnote{J.-L. Lagrange (1736--1813) was an Italian mathematician.}
-states that every positive integer
-can be represented as a sum of four squares, i.e.,
-$a^2+b^2+c^2+d^2$.
-For example, the number 123 can be represented
-as the sum $8^2+5^2+5^2+3^2$.
+\key{قضیه لاگرانژ}
+%\footnote{ژ.-ل. لاگرانژ (۱۷۳۶--۱۸۱۳) ریاضی‌دان ایتالیایی بود.}
+بیان می‌کند که هر عدد صحیح مثبت
+می‌تواند به صورت مجموع چهار مربع کامل، یعنی
+$a^2+b^2+c^2+d^2$ نمایش داده شود.
+برای مثال، عدد ۱۲۳ می‌تواند به صورت
+مجموع $8^2+5^2+5^2+3^2$ نمایش یابد.
 
-\subsubsection{Zeckendorf's theorem}
+\subsubsection{قضیه زکندورف}
 
-\index{Zeckendorf's theorem}
-\index{Fibonacci number}
+\index{قضیه زکندورف}
+\index{عدد فیبوناچی}
 
-\key{Zeckendorf's theorem}
-%\footnote{E. Zeckendorf published the theorem in 1972 \cite{zec72}; however, this was not a new result.}
-states that every
-positive integer has a unique representation
-as a sum of Fibonacci numbers such that
-no two numbers are equal or consecutive
-Fibonacci numbers.
-For example, the number 74 can be represented
-as the sum $55+13+5+1$.
+\key{قضیه زکندورف}
+%\footnote{ای. زکندورف قضیه را در ۱۹۷۲ منتشر کرد \cite{zec72}؛ با این حال، این نتیجه جدیدی نبود.}
+بیان می‌کند که هر
+عدد صحیح مثبت نمایش یکتایی
+به صورت مجموع اعداد فیبوناچی دارد، به طوری که
+هیچ دو عددی برابر نبوده و دو عدد متوالی از
+دنباله فیبوناچی نیز نباشند.
+برای مثال، عدد ۷۴ می‌تواند به صورت
+مجموع $55+13+5+1$ نمایش یابد.
 
-\subsubsection{Pythagorean triples}
+\subsubsection{سه‌تایی‌های فیثاغورسی}
 
-\index{Pythagorean triple}
-\index{Euclid's formula}
+\index{سه‌تایی فیثاغورسی}
+\index{فرمول اقلیدس}
 
-A \key{Pythagorean triple} is a triple $(a,b,c)$
-that satisfies the Pythagorean theorem
-$a^2+b^2=c^2$, which means that there is a right triangle
-with side lengths $a$, $b$ and $c$.
-For example, $(3,4,5)$ is a Pythagorean triple.
+یک \key{سه‌تایی فیثاغورسی}، سه‌تایی $(a,b,c)$ است
+که در قضیه فیثاغورس $a^2+b^2=c^2$ صدق می‌کند؛
+به این معنی که یک مثلث قائم‌الزاویه
+با طول اضلاع $a$، $b$ و $c$ وجود دارد.
+برای مثال، $(3,4,5)$ یک سه‌تایی فیثاغورسی است.
 
-If $(a,b,c)$ is a Pythagorean triple,
-all triples of the form $(ka,kb,kc)$
-are also Pythagorean triples where $k>1$.
-A Pythagorean triple is \emph{primitive} if
-$a$, $b$ and $c$ are coprime,
-and all Pythagorean triples can be constructed
-from primitive triples using a multiplier $k$.
+اگر $(a,b,c)$ یک سه‌تایی فیثاغورسی باشد،
+تمام سه‌تایی‌ها به شکل $(ka,kb,kc)$
+که در آن $k>1$ است نیز سه‌تایی‌های فیثاغورسی هستند.
+یک سه‌تایی فیثاغورسی \emph{ابتدایی} نامیده می‌شود اگر
+$a$، $b$ و $c$ نسبت به هم اول باشند،
+و تمام سه‌تایی‌های فیثاغورسی را می‌توان
+از سه‌تایی‌های ابتدایی با استفاده از یک ضریب $k$ ساخت.
 
-\key{Euclid's formula} can be used to produce
-all primitive Pythagorean triples.
-Each such triple is of the form
+\key{فرمول اقلیدس} می‌تواند برای تولید تمام سه‌تایی‌های فیثاغورسی ابتدایی استفاده شود.
+هر یک از این سه‌تایی‌ها به شکل زیر است:
 \[(n^2-m^2,2nm,n^2+m^2),\]
-where $0<m<n$, $n$ and $m$ are coprime
-and at least one of $n$ and $m$ is even.
-For example, when $m=1$ and $n=2$, the formula
-produces the smallest Pythagorean triple
+که در آن $0<m<n$ است، $n$ و $m$ نسبت به هم اول هستند
+و حداقل یکی از بین $n$ و $m$ زوج است.
+به عنوان مثال، وقتی $m=1$ و $n=2$ باشد، فرمول
+کوچک‌ترین سه‌تایی فیثاغورسی را تولید می‌کند:
 \[(2^2-1^2,2\cdot2\cdot1,2^2+1^2)=(3,4,5).\]
 
-\subsubsection{Wilson's theorem}
+\subsubsection{قضیه ویلسون}
 
-\index{Wilson's theorem}
+\index{قضیه ویلسون}
 
-\key{Wilson's theorem}
+\key{قضیه ویلسون}
 %\footnote{J. Wilson (1741--1793) was an English mathematician.}
-states that a number $n$
-is prime exactly when
+بیان می‌کند که یک عدد $n$
+اول است دقیقا اگر
 \[(n-1)! \bmod n = n-1.\]
-For example, the number 11 is prime, because
+برای مثال، عدد 11 اول است، زیرا
 \[10! \bmod 11 = 10,\]
-and the number 12 is not prime, because
+و عدد 12 اول نیست، زیرا
 \[11! \bmod 12 = 0 \neq 11.\]
 
-Hence, Wilson's theorem can be used to find out
-whether a number is prime. However, in practice, the theorem cannot be
-applied to large values of $n$, because it is difficult
-to calculate values of $(n-1)!$ when $n$ is large.
-
-
+بنابراین، از قضیه ویلسون می‌توان برای تشخیص
+اول بودن یک عدد استفاده کرد. با این حال، در عمل، این قضیه نمی‌تواند
+برای مقادیر بزرگ $n$ به کار رود، زیرا محاسبه
+مقادیر $(n-1)!$ در شرایطی که $n$ بزرگ باشد دشوار است.
