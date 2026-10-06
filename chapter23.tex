@@ -1,10 +1,9 @@
-\chapter{Matrices}
+\chapter{ماتریس‌ها}
 
-\index{matrix}
+\index{ماتریس}
 
-A \key{matrix} is a mathematical concept
-that corresponds to a two-dimensional array
-in programming. For example,
+یک \key{ماتریس} مفهومی ریاضی است
+که در برنامه‌نویسی متناظر با یک آرایه دوبعدی است. برای مثال،
 \[
 A = 
  \begin{bmatrix}
@@ -13,19 +12,18 @@ A =
   9 & 5 & 4 & 18 \\
  \end{bmatrix}
 \]
-is a matrix of size $3 \times 4$, i.e.,
-it has 3 rows and 4 columns.
-The notation $[i,j]$ refers to
-the element in row $i$ and column $j$
-in a matrix.
-For example, in the above matrix,
-$A[2,3]=8$ and $A[3,1]=9$.
+یک ماتریس با ابعاد $3 \times 4$ است، یعنی
+دارای ۳ سطر و ۴ ستون است.
+نماد $[i,j]$ به عنصر واقع در سطر $i$ و ستون $j$
+در یک ماتریس اشاره دارد.
+برای نمونه، در ماتریس بالا،
+$A[2,3]=8$ و $A[3,1]=9$ است.
 
-\index{vector}
+\index{بردار}
 
-A special case of a matrix is a \key{vector}
-that is a one-dimensional matrix of size $n \times 1$.
-For example,
+حالت خاصی از ماتریس، یک \key{بردار} است
+که ماتریسی یک‌بعدی با ابعاد $n \times 1$ است.
+برای مثال،
 \[
 V =
 \begin{bmatrix}
@@ -34,13 +32,13 @@ V =
 5 \\
 \end{bmatrix}
 \]
-is a vector that contains three elements.
+یک بردار است که سه عنصر دارد.
 
-\index{transpose}
+\index{ترانهاده}
 
-The \key{transpose} $A^T$ of a matrix $A$
-is obtained when the rows and columns of $A$
-are swapped, i.e., $A^T[i,j]=A[j,i]$:
+\key{ترانهاده} $A^T$ از ماتریس $A$
+زمانی به دست می‌آید که سطرها و ستون‌های $A$
+جابه‌جا شوند، یعنی $A^T[i,j]=A[j,i]$:
 \[
 A^T = 
  \begin{bmatrix}
@@ -51,12 +49,12 @@ A^T =
  \end{bmatrix}
 \]
 
-\index{square matrix}
+\index{ماتریس مربعی}
 
-A matrix is a \key{square matrix} if it
-has the same number of rows and columns.
-For example, the following matrix is a
-square matrix:
+یک ماتریس را \key{ماتریس مربعی} گویند اگر
+تعداد سطرها و ستون‌های آن برابر باشد.
+برای نمونه، ماتریس زیر یک
+ماتریس مربعی است:
 
 \[
 S = 
@@ -67,15 +65,15 @@ S =
  \end{bmatrix}
 \]
 
-\section{Operations}
+\section{عملگرها}
 
-The sum $A+B$ of matrices $A$ and $B$
-is defined if the matrices are of the same size.
-The result is a matrix where each element
-is the sum of the corresponding elements
-in $A$ and $B$.
+مجموع $A+B$ برای ماتریس‌های $A$ و $B$
+زمانی تعریف می‌شود که ابعاد آن‌ها یکسان باشد.
+نتیجه ماتریسی است که هر عنصر آن
+برابر با مجموع عناصر متناظر
+در $A$ و $B$ است.
 
-For example,
+برای مثال،
 \[
  \begin{bmatrix}
   6 & 1 & 4 \\
@@ -98,9 +96,9 @@ For example,
  \end{bmatrix}.
 \]
 
-Multiplying a matrix $A$ by a value $x$ means
-that each element of $A$ is multiplied by $x$.
-For example,
+ضرب ماتریس $A$ در مقدار $x$ به این معنی است
+که هر عنصر از $A$ در $x$ ضرب می‌شود.
+برای مثال،
 \[
  2 \cdot \begin{bmatrix}
   6 & 1 & 4 \\
@@ -118,23 +116,23 @@ For example,
  \end{bmatrix}.
 \]
 
-\subsubsection{Matrix multiplication}
+\subsubsection{ضرب ماتریس}
 
-\index{matrix multiplication}
+\index{ضرب ماتریس}
 
-The product $AB$ of matrices $A$ and $B$
-is defined if $A$ is of size $a \times n$
-and $B$ is of size $n \times b$, i.e.,
-the width of $A$ equals the height of $B$.
-The result is a matrix of size $a \times b$
-whose elements are calculated using the formula
+حاصل‌ضرب $AB$ برای ماتریس‌های $A$ و $B$
+زمانی تعریف می‌شود که اندازه $A$ برابر $a \times n$
+و اندازه $B$ برابر $n \times b$ باشد، یعنی
+تعداد ستون‌های $A$ برابر با تعداد سطرهای $B$ باشد.
+نتیجه ماتریسی به ابعاد $a \times b$ است
+که عناصر آن با رابطه زیر محاسبه می‌شوند:
 \[
 AB[i,j] = \sum_{k=1}^n A[i,k] \cdot B[k,j].
 \]
 
-The idea is that each element of $AB$
-is a sum of products of elements of $A$ and $B$
-according to the following picture:
+ایده اصلی این است که هر عنصر از $AB$
+برابر با مجموع حاصل‌ضرب‌های عناصر $A$ و $B$
+مطابق تصویر زیر است:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.5]
@@ -152,7 +150,7 @@ according to the following picture:
 \end{tikzpicture}
 \end{center}
 
-For example,
+برای مثال،
 
 \[
  \begin{bmatrix}
@@ -179,18 +177,18 @@ For example,
  \end{bmatrix}.
 \]
 
-Matrix multiplication is associative,
-so $A(BC)=(AB)C$ holds,
-but it is not commutative,
-so $AB = BA$ does not usually hold.
+ضرب ماتریس‌ها شرکت‌پذیر است،
+بنابراین $A(BC)=(AB)C$ برقرار است،
+اما جابه‌جایی‌پذیر نیست،
+بنابراین $AB = BA$ معمولاً برقرار نیست.
 
-\index{identity matrix}
+\index{ماتریس همانی}
 
-An \key{identity matrix} is a square matrix
-where each element on the diagonal is 1
-and all other elements are 0.
-For example, the following matrix
-is the $3 \times 3$ identity matrix:
+یک \key{ماتریس همانی} ماتریسی مربعی است
+که در آن هر عنصر روی قطر اصلی ۱
+و تمام عناصر دیگر ۰ هستند.
+برای مثال، ماتریس زیر
+ماتریس همانی $3 \times 3$ است:
 \[
  I = \begin{bmatrix}
   1 & 0 & 0 \\
@@ -200,8 +198,8 @@ is the $3 \times 3$ identity matrix:
 \]
 
 \begin{samepage}
-Multiplying a matrix by an identity matrix
-does not change it. For example,
+ضرب یک ماتریس در ماتریس همانی
+آن را تغییر نمی‌دهد. برای مثال،
 \[
  \begin{bmatrix}
   1 & 0 & 0 \\
@@ -219,7 +217,7 @@ does not change it. For example,
   1 & 4 \\
   3 & 9 \\
   8 & 6 \\
- \end{bmatrix} \hspace{10px} \textrm{and} \hspace{10px}
+ \end{bmatrix} \hspace{10px} \textrm{و} \hspace{10px}
  \begin{bmatrix}
   1 & 4 \\
   3 & 9 \\
@@ -239,31 +237,27 @@ does not change it. For example,
 \]
 \end{samepage}
 
-Using a straightforward algorithm,
-we can calculate the product of
-two $n \times n$ matrices
-in $O(n^3)$ time.
-There are also more efficient algorithms
-for matrix multiplication\footnote{The first such
-algorithm was Strassen's algorithm,
-published in 1969 \cite{str69},
-whose time complexity is $O(n^{2.80735})$;
-the best current algorithm \cite{gal14}
-works in $O(n^{2.37286})$ time.},
-but they are mostly of theoretical interest
-and such algorithms are not necessary
-in competitive programming.
+با استفاده از یک الگوریتم سرراست،
+می‌توان حاصل‌ضرب دو ماتریس $n \times n$ را
+در زمان $O(n^3)$ محاسبه کرد.
+الگوریتم‌های کارآمدتری نیز برای ضرب ماتریس‌ها وجود دارند\footnote{نخستین مورد از این الگوریتم‌ها الگوریتم استراسن بود،
+منتشر شده در سال ۱۹۶۹ \cite{str69}،
+که پیچیدگی زمانی آن $O(n^{2.80735})$ است؛
+بهترین الگوریتم فعلی \cite{gal14}
+در زمان $O(n^{2.37286})$ کار می‌کند.}،
+اما آنها عمدتاً جنبه نظری دارند
+و چنین الگوریتم‌هایی در برنامه‌نویسی رقابتی لازم نیستند.
 
 
-\subsubsection{Matrix power}
+\subsubsection{توان ماتریس}
 
-\index{matrix power}
+\index{توان ماتریس}
 
-The power $A^k$ of a matrix $A$ is defined
-if $A$ is a square matrix.
-The definition is based on matrix multiplication:
-\[ A^k = \underbrace{A \cdot A \cdot A \cdots A}_{\textrm{$k$ times}} \]
-For example,
+توان $A^k$ ماتریس $A$ در صورتی تعریف می‌شود
+که $A$ یک ماتریس مربعی باشد.
+این تعریف مبتنی بر ضرب ماتریس‌ها است:
+\[ A^k = \underbrace{A \cdot A \cdot A \cdots A}_{\textrm{$k$ بار}} \]
+برای مثال،
 
 \[
  \begin{bmatrix}
@@ -287,7 +281,7 @@ For example,
   33 & 114 \\
  \end{bmatrix}.
 \]
-In addition, $A^0$ is an identity matrix. For example,
+علاوه بر این، $A^0$ ماتریس همانی است. برای مثال،
 \[
  \begin{bmatrix}
   2 & 5 \\
@@ -299,9 +293,8 @@ In addition, $A^0$ is an identity matrix. For example,
  \end{bmatrix}.
 \]
 
-The matrix $A^k$ can be efficiently calculated
-in $O(n^3 \log k)$ time using the
-algorithm in Chapter 21.2. For example,
+ماتریس $A^k$ را می‌توان با استفاده از الگوریتم فصل ۲۱.۲
+به‌طور کارآمد در زمان $O(n^3 \log k)$ محاسبه کرد. برای مثال،
 \[
  \begin{bmatrix}
   2 & 5 \\
@@ -317,27 +310,27 @@ algorithm in Chapter 21.2. For example,
  \end{bmatrix}^4.
 \]
 
-\subsubsection{Determinant}
+\subsubsection{دترمینان}
 
-\index{determinant}
+\index{دترمینان}
 
-The \key{determinant} $\det(A)$ of a matrix $A$
-is defined if $A$ is a square matrix.
-If $A$ is of size $1 \times 1$,
-then $\det(A)=A[1,1]$.
-The determinant of a larger matrix is
-calculated recursively using the formula \index{cofactor}
+\key{دترمینان} $\det(A)$ ماتریس $A$
+زمانی تعریف می‌شود که $A$ ماتریسی مربعی باشد.
+اگر اندازه $A$ برابر $1 \times 1$ باشد،
+آن‌گاه $\det(A)=A[1,1]$.
+دترمینان ماتریس‌های بزرگ‌تر
+به‌صورت بازگشتی با این رابطه محاسبه می‌شود: \index{همساز@همساز (cofactor)}
 \[\det(A)=\sum_{j=1}^n A[1,j] C[1,j],\]
-where $C[i,j]$ is the \key{cofactor} of $A$
-at $[i,j]$.
-The cofactor is calculated using the formula
+که در آن $C[i,j]$ \key{همساز} ماتریس $A$
+در سطر $i$ و ستون $j$ است.
+همساز از رابطه زیر محاسبه می‌شود:
 \[C[i,j] = (-1)^{i+j} \det(M[i,j]),\]
-where $M[i,j]$ is obtained by removing
-row $i$ and column $j$ from $A$.
-Due to the coefficient $(-1)^{i+j}$ in the cofactor,
-every other determinant is positive
-and negative.
-For example,
+که در آن $M[i,j]$ از حذف سطر $i$
+و ستون $j$ ماتریس $A$ به‌دست می‌آید.
+به‌دلیل وجود ضریب $(-1)^{i+j}$ در همساز،
+علامت دترمینان‌ها یک‌درمیان مثبت
+و منفی می‌شود.
+برای نمونه،
 \[
 \det(
  \begin{bmatrix}
@@ -346,7 +339,7 @@ For example,
  \end{bmatrix}
 ) = 3 \cdot 6 - 4 \cdot 1 = 14 
 \]
-and
+و
 \[
 \det(
  \begin{bmatrix}
@@ -378,19 +371,19 @@ and
 ) = 81.
 \]
 
-\index{inverse matrix}
+\index{ماتریس معکوس}
 
-The determinant of $A$ tells us
-whether there is an \key{inverse matrix}
-$A^{-1}$ such that $A \cdot A^{-1} = I$,
-where $I$ is an identity matrix.
-It turns out that $A^{-1}$ exists
-exactly when $\det(A) \neq 0$,
-and it can be calculated using the formula
+دترمینان $A$ نشان می‌دهد
+آیا \key{ماتریس معکوس} $A^{-1}$ وجود دارد
+که در رابطه $A \cdot A^{-1} = I$ صدق کند یا خیر؛
+که در آن $I$ ماتریس همانی است.
+معلوم شده است که $A^{-1}$ دقیقا زمانی وجود دارد
+که $\det(A) \neq 0$ باشد،
+و می‌توان آن را با فرمول زیر محاسبه کرد:
 
 \[A^{-1}[i,j] = \frac{C[j,i]}{det(A)}.\]
 
-For example,
+برای نمونه،
 
 \[
 \underbrace{
@@ -419,32 +412,32 @@ For example,
 }_{I}.
 \]
 
-\section{Linear recurrences}
+\section{رابطه‌های بازگشتی خطی}
 
-\index{linear recurrence}
+\index{رابطه بازگشتی خطی}
 
-A \key{linear recurrence}
-is a function $f(n)$
-whose initial values are
-$f(0),f(1),\ldots,f(k-1)$
-and larger values
-are calculated recursively using the formula
+یک \key{رابطه بازگشتی خطی}
+تابعی مانند $f(n)$ است
+که مقادیر آغازین آن
+$f(0),f(1),\ldots,f(k-1)$ بوده
+و مقادیر بزرگ‌تر آن
+به‌صورت بازگشتی با این رابطه محاسبه می‌شوند:
 \[f(n) = c_1 f(n-1) + c_2 f(n-2) + \ldots + c_k f (n-k),\]
-where $c_1,c_2,\ldots,c_k$ are constant coefficients.
+که در آن $c_1,c_2,\ldots,c_k$ ضرایب ثابت هستند.
 
-Dynamic programming can be used to calculate
-any value of $f(n)$ in $O(kn)$ time by calculating
-all values of $f(0),f(1),\ldots,f(n)$ one after another.
-However, if $k$ is small, it is possible to calculate
-$f(n)$ much more efficiently in $O(k^3 \log n)$
-time using matrix operations.
+با برنامه‌نویسی پویا می‌توان
+هر مقداری از $f(n)$ را در زمان $O(kn)$ با محاسبه
+پشت‌سر‌هم مقادیر $f(0),f(1),\ldots,f(n)$ به‌دست آورد.
+اما اگر $k$ کوچک باشد، می‌توان
+$f(n)$ را با عملیات ماتریسی بسیار کارآمدتر در زمان
+$O(k^3 \log n)$ محاسبه کرد.
 
-\subsubsection{Fibonacci numbers}
+\subsubsection{اعداد فیبوناچی}
 
-\index{Fibonacci number}
+\index{اعداد فیبوناچی}
 
-A simple example of a linear recurrence is the
-following function that defines the Fibonacci numbers:
+یک نمونه ساده از رابطه بازگشتی خطی،
+تابع زیر است که اعداد فیبوناچی را تعریف می‌کند:
 \[
 \begin{array}{lcl}
 f(0) & = & 0 \\
@@ -452,14 +445,12 @@ f(1) & = & 1 \\
 f(n) & = & f(n-1)+f(n-2) \\
 \end{array}
 \]
-In this case, $k=2$ and $c_1=c_2=1$.
+در این حالت، $k=2$ و $c_1=c_2=1$ است.
 
 \begin{samepage}
-To efficiently calculate Fibonacci numbers,
-we represent the
-Fibonacci formula as a
-square matrix $X$ of size $2 \times 2$,
-for which the following holds:
+برای محاسبه کارآمد اعداد فیبوناچی،
+رابطه فیبوناچی را به صورت یک ماتریس مربعی $X$ با اندازه $2 \times 2$
+نمایش می‌دهیم که رابطه زیر برای آن برقرار است:
 \[ X \cdot
  \begin{bmatrix}
   f(i) \\
@@ -471,11 +462,9 @@ for which the following holds:
   f(i+2) \\
  \end{bmatrix}
  \]
-Thus, values $f(i)$ and $f(i+1)$ are given as
-''input'' for $X$,
-and $X$ calculates values $f(i+1)$ and $f(i+2)$
-from them.
-It turns out that such a matrix is
+بنابراین، مقادیر $f(i)$ و $f(i+1)$ به عنوان «ورودی» به $X$ داده می‌شوند
+و $X$ مقادیر $f(i+1)$ و $f(i+2)$ را از روی آن‌ها محاسبه می‌کند.
+چنین ماتریسی برابر است با:
 
 \[ X = 
  \begin{bmatrix}
@@ -485,7 +474,7 @@ It turns out that such a matrix is
 \]
 \end{samepage}
 \noindent
-For example,
+برای مثال،
 \[
  \begin{bmatrix}
   0 & 1 \\
@@ -517,7 +506,7 @@ For example,
   f(7) \\
  \end{bmatrix}.
 \]
-Thus, we can calculate $f(n)$ using the formula
+از این رو، می‌توانیم $f(n)$ را با استفاده از فرمول زیر محاسبه کنیم:
 \[
  \begin{bmatrix}
   f(n) \\
@@ -540,17 +529,14 @@ X^n \cdot
   1 \\
  \end{bmatrix}.
 \]
-The value of $X^n$ can be calculated in
-$O(\log n)$ time,
-so the value of $f(n)$ can also be calculated
-in $O(\log n)$ time.
+مقدار $X^n$ در زمان $O(\log n)$ قابل محاسبه است،
+بنابراین مقدار $f(n)$ نیز در زمان $O(\log n)$ به دست می‌آید.
 
-\subsubsection{General case}
+\subsubsection{حالت کلی}
 
-Let us now consider the general case where
-$f(n)$ is any linear recurrence.
-Again, our goal is to construct a matrix $X$
-for which
+اکنون حالت کلی را در نظر می‌گیریم که در آن
+$f(n)$ یک رابطه بازگشتی خطی دلخواه است.
+هدف دوباره ساخت ماتریس $X$ است به گونه‌ای که:
 
 \[ X \cdot
  \begin{bmatrix}
@@ -567,7 +553,7 @@ for which
   f(i+k) \\
  \end{bmatrix}.
 \]
-Such a matrix is
+چنین ماتریسی عبارت است از:
 \[
 X =
  \begin{bmatrix}
@@ -579,16 +565,14 @@ X =
   c_k & c_{k-1} & c_{k-2} & c_{k-3} & \cdots & c_1 \\
  \end{bmatrix}.
 \]
-In the first $k-1$ rows, each element is 0
-except that one element is 1.
-These rows replace $f(i)$ with $f(i+1)$,
-$f(i+1)$ with $f(i+2)$, and so on.
-The last row contains the coefficients of the recurrence
-to calculate the new value $f(i+k)$.
+در $k-1$ سطر اول، هر عنصر برابر 0 است
+به جز یک عنصر که 1 است.
+این سطرها $f(i)$ را با $f(i+1)$،
+$f(i+1)$ را با $f(i+2)$ و به همین ترتیب جایگزین می‌کنند.
+سطر آخر شامل ضرایب رابطه بازگشتی برای محاسبه مقدار جدید $f(i+k)$ است.
 
 \begin{samepage}
-Now, $f(n)$ can be calculated in
-$O(k^3 \log n)$ time using the formula
+اکنون، $f(n)$ در زمان $O(k^3 \log n)$ با استفاده از فرمول زیر قابل محاسبه است:
 \[
  \begin{bmatrix}
   f(n) \\
@@ -607,17 +591,15 @@ X^n \cdot
 \]
 \end{samepage}
 
-\section{Graphs and matrices}
+\section{گراف‌ها و ماتریس‌ها}
 
-\subsubsection{Counting paths}
+\subsubsection{شمارش مسیرها}
 
-The powers of an adjacency matrix of a graph
-have an interesting property.
-When $V$ is an adjacency matrix of an unweighted graph,
-the matrix $V^n$ contains the numbers of paths of
-$n$ edges between the nodes in the graph.
+توان‌های ماتریس مجاورت یک گراف ویژگی جالبی دارند.
+وقتی $V$ ماتریس مجاورت یک گراف بدون وزن باشد،
+ماتریس $V^n$ شامل تعداد مسیرهای به طول $n$ یال بین رأس‌های گراف است.
 
-For example, for the graph
+برای مثال، برای گراف
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
 \node[draw, circle] (1) at (1,3) {$1$};
@@ -637,7 +619,7 @@ For example, for the graph
 \path[draw,thick,->,>=latex] (6) -- (5);
 \end{tikzpicture}
 \end{center}
-the adjacency matrix is
+ماتریس مجاورت به صورت زیر است:
 \[
 V= \begin{bmatrix}
   0 & 0 & 0 & 1 & 0 & 0 \\
@@ -648,7 +630,7 @@ V= \begin{bmatrix}
   0 & 0 & 1 & 0 & 1 & 0 \\
  \end{bmatrix}.
 \]
-Now, for example, the matrix
+اکنون، برای مثال، ماتریس
 \[
 V^4= \begin{bmatrix}
   0 & 0 & 1 & 1 & 1 & 0 \\
@@ -659,27 +641,26 @@ V^4= \begin{bmatrix}
   0 & 0 & 1 & 1 & 1 & 0 \\
  \end{bmatrix}
 \]
-contains the numbers of paths of 4 edges
-between the nodes.
-For example, $V^4[2,5]=2$,
-because there are two paths of 4 edges
-from node 2 to node 5:
+شامل تعداد مسیرهای با ۴ یال
+بین رأس‌ها است.
+برای مثال، $V^4[2,5]=2$،
+زیرا دو مسیر با ۴ یال
+از رأس ۲ به رأس ۵ وجود دارد:
 $2 \rightarrow 1 \rightarrow 4 \rightarrow 2 \rightarrow 5$
-and 
+و 
 $2 \rightarrow 6 \rightarrow 3 \rightarrow 2 \rightarrow 5$.
 
-\subsubsection{Shortest paths}
+\subsubsection{کوتاه‌ترین مسیرها}
 
-Using a similar idea in a weighted graph,
-we can calculate for each pair of nodes the minimum
-length of a path
-between them that contains exactly $n$ edges.
-To calculate this, we have to define matrix multiplication
-in a new way, so that we do not calculate the numbers
-of paths but minimize the lengths of paths.
+با استفاده از ایده‌ای مشابه در یک گراف وزن‌دار،
+می‌توان برای هر جفت از رأس‌ها کمینه طول مسیری
+بین آن‌ها را که دقیقاً شامل $n$ یال است محاسبه کرد.
+برای محاسبه این مقدار، باید ضرب ماتریسی را
+به روشی جدید تعریف کنیم تا به جای محاسبه تعداد
+مسیرها، طول مسیرها را کمینه کنیم.
 
 \begin{samepage}
-As an example, consider the following graph:
+به عنوان مثال، گراف زیر را در نظر بگیرید:
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
 \node[draw, circle] (1) at (1,3) {$1$};
@@ -701,10 +682,10 @@ As an example, consider the following graph:
 \end{center}
 \end{samepage}
 
-Let us construct an adjacency matrix where
-$\infty$ means that an edge does not exist,
-and other values correspond to edge weights.
-The matrix is
+ماتریس مجاورتی تشکیل می‌دهیم که در آن
+$\infty$ به معنای نبود یال است
+و سایر مقادیر نشان‌دهنده وزن یال‌ها هستند.
+ماتریس عبارت است از:
 \[
 V= \begin{bmatrix}
   \infty & \infty & \infty & 4 & \infty & \infty \\
@@ -716,22 +697,22 @@ V= \begin{bmatrix}
  \end{bmatrix}.
 \]
 
-Instead of the formula
+به جای فرمول
 \[
 AB[i,j] = \sum_{k=1}^n A[i,k] \cdot B[k,j]
 \]
-we now use the formula
+اکنون از فرمول
 \[
 AB[i,j] = \min_{k=1}^n A[i,k] + B[k,j]
 \]
-for matrix multiplication, so we calculate
-a minimum instead of a sum,
-and a sum of elements instead of a product.
-After this modification,
-matrix powers correspond to
-shortest paths in the graph.
+برای ضرب ماتریس‌ها استفاده می‌کنیم؛ یعنی به جای جمع
+کمینه را حساب می‌کنیم
+و به جای ضرب مقادیر، مجموع آن‌ها را به دست می‌آوریم.
+پس از این تغییر،
+توان‌های ماتریس متناظر با
+کوتاه‌ترین مسیرها در گراف خواهند بود.
 
-For example, as
+برای نمونه، با توجه به اینکه
 \[
 V^4= \begin{bmatrix}
   \infty & \infty & 10 & 11 & 9 & \infty \\
@@ -742,23 +723,24 @@ V^4= \begin{bmatrix}
   \infty & \infty & 12 & 13 & 11 & \infty \\
  \end{bmatrix},
 \]
-we can conclude that the minimum length of a path
-of 4 edges
-from node 2 to node 5 is 8.
-Such a path is
-$2 \rightarrow 1 \rightarrow 4 \rightarrow 2 \rightarrow 5$.
+می‌توان نتیجه گرفت که کمینه طول یک مسیر
+با ۴ یال
+از رأس ۲ به رأس ۵ برابر ۸ است.
+یک نمونه از چنین مسیری
+$2 \rightarrow 1 \rightarrow 4 \rightarrow 2 \rightarrow 5$
+است.
 
-\subsubsection{Kirchhoff's theorem}
+\subsubsection{قضیه کیرشهف}
 
 \index{Kirchhoff's theorem}
 \index{spanning tree}
 
-\key{Kirchhoff's theorem}
+\key{قضیه کیرشهف}
 %\footnote{G. R. Kirchhoff (1824--1887) was a German physicist.}
-provides a way
-to calculate the number of spanning trees
-of a graph as a determinant of a special matrix.
-For example, the graph
+روشی ارائه می‌دهد
+تا تعداد درخت‌های پوشای
+یک گراف را با استفاده از دترمینان یک ماتریس خاص محاسبه کنیم.
+به عنوان مثال، گراف
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
 \node[draw, circle] (1) at (1,3) {$1$};
@@ -772,7 +754,7 @@ For example, the graph
 \path[draw,thick,-] (1) -- (4);
 \end{tikzpicture}
 \end{center}
-has three spanning trees:
+دارای سه درخت پوشا است:
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
 \node[draw, circle] (1a) at (1,3) {$1$};
@@ -806,13 +788,13 @@ has three spanning trees:
 %\path[draw,thick,-] (1c) -- (4c);
 \end{tikzpicture}
 \end{center}
-\index{Laplacean matrix}
-To calculate the number of spanning trees,
-we construct a \key{Laplacean matrix} $L$,
-where $L[i,i]$ is the degree of node $i$
-and $L[i,j]=-1$ if there is an edge between
-nodes $i$ and $j$, and otherwise $L[i,j]=0$.
-The Laplacean matrix for the above graph is as follows:
+\index{ماتریس لاپلاس}
+برای محاسبه تعداد درخت‌های فراگیر،
+یک \key{ماتریس لاپلاس} $L$ می‌سازیم،
+به طوری که $L[i,i]$ درجه رأس $i$ است
+و اگر یالی بین رئوس $i$ و $j$ وجود داشته باشد $L[i,j]=-1$،
+و در غیر این صورت $L[i,j]=0$ است.
+ماتریس لاپلاس برای گراف بالا به شکل زیر است:
 \[
 L= \begin{bmatrix}
   3 & -1 & -1 & -1 \\
@@ -822,12 +804,12 @@ L= \begin{bmatrix}
  \end{bmatrix}
 \]
 
-It can be shown that
-the number of spanning trees equals
-the determinant of a matrix that is obtained
-when we remove any row and any column from $L$.
-For example, if we remove the first row
-and column, the result is
+می‌توان نشان داد که
+تعداد درخت‌های فراگیر برابر است با
+دترمینان ماتریسی که از حذف
+هر سطر و هر ستون دلخواه از $L$ به دست می‌آید.
+برای مثال، اگر سطر و ستون اول را حذف کنیم،
+نتیجه برابر است با:
 
 \[ \det(
 \begin{bmatrix}
@@ -836,12 +818,12 @@ and column, the result is
   0 & -1 & 2 \\
  \end{bmatrix}
 ) =3.\]
-The determinant is always the same,
-regardless of which row and column we remove from $L$.
+مقدار دترمینان همواره یکسان است،
+صرف‌نظر از اینکه کدام سطر و ستون از $L$ حذف شود.
 
-Note that Cayley's formula in Chapter 22.5 is
-a special case of Kirchhoff's theorem,
-because in a complete graph of $n$ nodes
+توجه کنید که فرمول کیلی در بخش ۲۲.۵ یک
+حالت خاص از قضیه کیرشهف است،
+زیرا در یک گراف کامل با $n$ رأس داریم:
 
 \[ \det(
 \begin{bmatrix}
@@ -851,6 +833,3 @@ because in a complete graph of $n$ nodes
   -1 & -1 & \cdots & n-1 \\
  \end{bmatrix}
 ) =n^{n-2}.\]
-
-
-
