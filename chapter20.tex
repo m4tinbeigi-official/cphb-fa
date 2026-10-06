@@ -1,25 +1,21 @@
-\chapter{Flows and cuts}
+\chapter{شاره‌ها و برش‌ها}
 
-In this chapter, we focus on the following
-two problems:
+در این فصل، روی دو مسئله زیر تمرکز می‌کنیم:
 
 \begin{itemize}
-\item \key{Finding a maximum flow}:
-What is the maximum amount of flow we can
-send from a node to another node?
-\item \key{Finding a minimum cut}:
-What is a minimum-weight set of edges
-that separates two nodes of the graph?
+\item \key{یافتن بیشینه شاره}:
+بیشترین مقدار شاره که می‌توان از یک رأس به رأس دیگر فرستاد چقدر است؟
+\item \key{یافتن کمینه برش}:
+مجموعه‌ای از یال‌ها با کمینه وزن که دو رأس گراف را از هم جدا کند چیست؟
 \end{itemize}
 
-The input for both these problems is a directed,
-weighted graph that contains two special nodes:
-the \emph{source} is a node with no incoming edges,
-and the \emph{sink} is a node with no outgoing edges.
+ورودی هر دو مسئله یک گراف جهت‌دار و وزن‌دار شامل دو رأس خاص است:
+\emph{مبدأ} رأسی بدون یال ورودی است،
+و \emph{مقصد} رأسی بدون یال خروجی است.
 
-As an example, we will use the following graph
-where node 1 is the source and node 6
-is the sink:
+به عنوان مثال، از گراف زیر استفاده می‌کنیم
+که رأس 1 مبدأ و رأس 6
+مقصد است:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
@@ -40,25 +36,23 @@ is the sink:
 \end{tikzpicture}
 \end{center}
 
-\subsubsection{Maximum flow}
+\subsubsection{بیشینه شاره}
 
-\index{flow}
-\index{maximum flow}
+\index{شاره}
+\index{بیشینه شاره}
 
-In the \key{maximum flow} problem,
-our task is to send as much flow as possible
-from the source to the sink.
-The weight of each edge is a capacity that
-restricts the flow
-that can go through the edge.
-In each intermediate node,
-the incoming and outgoing
-flow has to be equal.
+در مسئله \key{بیشینه شاره}،
+هدف فرستادن بیشترین مقدار ممکن شاره
+از مبدأ به مقصد است.
+وزن هر یال ظرفیتی است که
+شاره عبوری از آن یال را محدود می‌کند.
+در هر رأس میانی،
+مقدار شاره ورودی و خروجی
+باید برابر باشد.
 
-For example, the maximum size of a flow
-in the example graph is 7.
-The following picture shows how we can
-route the flow:
+برای نمونه، بیشینه مقدار شاره
+در گراف مثال برابر 7 است.
+تصویر زیر نحوه هدایت شاره را نشان می‌دهد:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
@@ -79,32 +73,32 @@ route the flow:
 \end{tikzpicture}
 \end{center}
 
-The notation $v/k$ means
-that a flow of $v$ units is routed through
-an edge whose capacity is $k$ units.
-The size of the flow is $7$,
-because the source sends $3+4$ units of flow
-and the sink receives $5+2$ units of flow.
-It is easy see that this flow is maximum,
-because the total capacity of the edges
-leading to the sink is $7$.
+نمادگذاری $v/k$ به این معنی است
+که جریانی به اندازه $v$ واحد از
+یالی با ظرفیت $k$ واحد عبور داده شده است.
+اندازه جریان $7$ است،
+زیرا مبدأ $3+4$ واحد جریان می‌فرستد
+و مقصد $5+2$ واحد جریان دریافت می‌کند.
+به‌سادگی می‌توان دریافت که این جریان بیشینه است،
+زیرا ظرفیت کل یال‌های
+منتهی به مقصد برابر $7$ است.
 
-\subsubsection{Minimum cut}
+\subsubsection{برش کمینه}
 
 \index{cut}
 \index{minimum cut}
 
-In the \key{minimum cut} problem,
-our task is to remove a set
-of edges from the graph
-such that there will be no path from the source
-to the sink after the removal
-and the total weight of the removed edges
-is minimum.
+در مسئله \key{برش کمینه} (minimum cut)،
+هدف ما حذف مجموعه‌ای
+از یال‌ها از گراف است
+به‌طوری که پس از حذف هیچ مسیری از مبدأ
+به مقصد وجود نداشته باشد
+و مجموع وزن یال‌های حذف‌شده
+کمینه باشد.
 
-The minimum size of a cut in the example graph is 7.
-It suffices to remove the edges $2 \rightarrow 3$
-and $4 \rightarrow 5$:
+اندازه کمینه برش در گراف نمونه برابر 7 است.
+کافی است یال‌های $2 \rightarrow 3$
+و $4 \rightarrow 5$ را حذف کنیم:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
@@ -130,53 +124,49 @@ and $4 \rightarrow 5$:
 \end{tikzpicture}
 \end{center}
 
-After removing the edges,
-there will be no path from the source to the sink.
-The size of the cut is $7$,
-because the weights of the removed edges
-are $6$ and $1$.
-The cut is minimum, because there is no valid
-way to remove edges from the graph such that
-their total weight would be less than $7$.
+پس از حذف این یال‌ها،
+هیچ مسیری از مبدأ به مقصد وجود نخواهد داشت.
+اندازه برش برابر $7$ است،
+زیرا وزن‌های یال‌های حذف‌شده
+$6$ و $1$ هستند.
+این برش کمینه است، زیرا هیچ روش
+معتبری برای حذف یال‌ها از گراف وجود ندارد به شکلی که
+مجموع وزن آن‌ها کمتر از $7$ شود.
 \\\\
-It is not a coincidence that
-the maximum size of a flow
-and the minimum size of a cut
-are the same in the above example.
-It turns out that a maximum flow
-and a minimum cut are
-\emph{always} equally large,
-so the concepts are two sides of the same coin.
+تصادفی نیست که
+اندازه بیشینه یک جریان
+و اندازه کمینه یک برش
+در مثال بالا یکسان است.
+مشخص می‌شود که یک جریان بیشینه
+و یک برش کمینه
+\emph{همیشه} هم‌اندازه‌اند؛
+بنابراین این مفاهیم دو روی یک سکه‌اند.
 
-Next we will discuss the Ford–Fulkerson
-algorithm that can be used to find
-the maximum flow and minimum cut of a graph.
-The algorithm also helps us to understand
-\emph{why} they are equally large.
+در ادامه الگوریتم فورد–فالکرسون
+را بررسی می‌کنیم که می‌توان از آن برای یافتن
+جریان بیشینه و برش کمینه در یک گراف استفاده کرد.
+این الگوریتم همچنین به ما کمک می‌کند تا بفهمیم
+\emph{چرا} این دو مقدار همواره برابر هستند.
 
-\section{Ford–Fulkerson algorithm}
+\section{الگوریتم فورد–فالکرسون}
 
 \index{Ford–Fulkerson algorithm}
 
-The \key{Ford–Fulkerson algorithm} \cite{for56} finds
-the maximum flow in a graph.
-The algorithm begins with an empty flow,
-and at each step finds a path from the source
-to the sink that generates more flow.
-Finally, when the algorithm cannot increase the flow
-anymore, the maximum flow has been found.
+\key{الگوریتم فورد–فالکرسون} \cite{for56}
+جریان بیشینه را در یک گراف می‌یابد.
+الگوریتم با جریان تهی آغاز می‌شود،
+و در هر گام مسیری از مبدأ
+به مقصد پیدا می‌کند که جریان بیشتری تولید می‌نماید.
+در نهایت، هنگامی که الگوریتم نتواند جریان را بیش از این
+افزایش دهد، جریان بیشینه یافته شده است.
 
-The algorithm uses a special representation
-of the graph where each original edge has a reverse
-edge in another direction.
-The weight of each edge indicates how much more flow
-we could route through it.
-At the beginning of the algorithm, the weight of each original edge
-equals the capacity of the edge
-and the weight of each reverse edge is zero.
+این الگوریتم از نمایش ویژه‌ای از گراف استفاده می‌کند که در آن هر یال اصلی یک یال معکوس در جهت مخالف دارد.
+وزن هر یال نشان می‌دهد چه مقدار شار دیگر می‌توان از آن عبور داد.
+در آغاز الگوریتم، وزن هر یال اصلی برابر با ظرفیت آن یال
+و وزن هر یال معکوس برابر با صفر است.
 
 \begin{samepage}
-The new representation for the example graph is as follows:
+نمایش جدید برای گراف نمونه به شکل زیر است:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.9,label distance=-2mm]
@@ -207,17 +197,15 @@ The new representation for the example graph is as follows:
 \end{center}
 \end{samepage}
 
-\subsubsection{Algorithm description}
+\subsubsection{توصیف الگوریتم}
 
-The Ford–Fulkerson algorithm consists of several
-rounds.
-On each round, the algorithm finds
-a path from the source to the sink
-such that each edge on the path has a positive weight.
-If there is more than one possible path available,
-we can choose any of them.
+الگوریتم فورد-فالکرسون از چندین مرحله تشکیل شده است.
+در هر مرحله، الگوریتم مسیری از مبدأ به مقصد پیدا می‌کند
+به طوری که هر یال در این مسیر دارای وزنی مثبت باشد.
+اگر بیش از یک مسیر ممکن وجود داشته باشد،
+می‌توانیم هر یک از آنها را انتخاب کنیم.
 
-For example, suppose we choose the following path:
+برای مثال، فرض کنید مسیر زیر را انتخاب کنیم:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.9,label distance=-2mm]
@@ -252,17 +240,17 @@ For example, suppose we choose the following path:
 \end{tikzpicture}
 \end{center}
 
-After choosing the path, the flow increases by $x$ units,
-where $x$ is the smallest edge weight on the path.
-In addition, the weight of each edge on the path
-decreases by $x$ and the weight of each reverse edge
-increases by $x$.
+پس از انتخاب مسیر، شار به اندازهٔ $x$ واحد افزایش می‌یابد
+که در آن $x$ کمترین وزن یال روی مسیر است.
+علاوه بر این، وزن هر یال روی مسیر
+به اندازهٔ $x$ کاهش و وزن هر یال معکوس
+به اندازهٔ $x$ افزایش می‌یابد.
 
-In the above path, the weights of the
-edges are 5, 6, 8 and 2.
-The smallest weight is 2,
-so the flow increases by 2
-and the new graph is as follows:
+در مسیر بالا، وزن یال‌ها
+برابر ۵، ۶، ۸ و ۲ است.
+کمترین وزن ۲ است،
+بنابراین شار به اندازهٔ ۲ افزایش می‌یابد
+و گراف جدید به شکل زیر خواهد بود:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.9,label distance=-2mm]
@@ -292,17 +280,11 @@ and the new graph is as follows:
 \end{tikzpicture}
 \end{center}
 
-The idea is that increasing the flow decreases the amount of
-flow that can go through the edges in the future.
-On the other hand, it is possible to cancel
-flow later using the reverse edges of the graph
-if it turns out that
-it would be beneficial to route the flow in another way.
+ایده این است که افزایش شار، مقدار شاری را که می‌تواند در آینده از یال‌ها عبور کند کاهش می‌دهد.
+از سوی دیگر، می‌توان بعداً با استفاده از یال‌های معکوس گراف، شار را لغو کرد اگر مشخص شود که هدایت شار از مسیری دیگر سودمندتر است.
 
-The algorithm increases the flow as long as
-there is a path from the source
-to the sink through positive-weight edges.
-In the present example, our next path can be as follows:
+الگوریتم تا زمانی که مسیری با یال‌های دارای وزن مثبت از مبدأ به مقصد وجود داشته باشد، شار را افزایش می‌دهد.
+در این مثال، مسیر بعدی می‌تواند به صورت زیر باشد:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.9,label distance=-2mm]
@@ -337,12 +319,12 @@ In the present example, our next path can be as follows:
 \end{tikzpicture}
 \end{center}
 
-The minimum edge weight on this path is 3,
-so the path increases the flow by 3,
-and the total flow after processing the path is 5.
+کمینه وزن یال در این مسیر ۳ است،
+بنابراین این مسیر شار را به اندازه ۳ واحد افزایش می‌دهد،
+و شار کل پس از پردازش مسیر برابر ۵ می‌شود.
 
 \begin{samepage}
-The new graph will be as follows:
+گراف جدید به صورت زیر خواهد بود:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.9,label distance=-2mm]
@@ -373,12 +355,13 @@ The new graph will be as follows:
 \end{center}
 \end{samepage}
 
-We still need two more rounds before reaching the maximum flow.
-For example, we can choose the paths
-$1 \rightarrow 2 \rightarrow 3 \rightarrow 6$ and
-$1 \rightarrow 4 \rightarrow 5 \rightarrow 3 \rightarrow 6$.
-Both paths increase the flow by 1,
-and the final graph is as follows:
+هنوز دو مرحله دیگر تا رسیدن به بیشینه شار نیاز است.
+برای نمونه می‌توان مسیرهای
+$1 \rightarrow 2 \rightarrow 3 \rightarrow 6$ و
+$1 \rightarrow 4 \rightarrow 5 \rightarrow 3 \rightarrow 6$
+را برگزید.
+هر دو مسیر شار را به اندازه ۱ واحد افزایش می‌دهند
+و گراف نهایی به صورت زیر خواهد بود:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.9,label distance=-2mm]
@@ -408,67 +391,66 @@ and the final graph is as follows:
 \end{tikzpicture}
 \end{center}
 
-It is not possible to increase the flow anymore,
-because there is no path from the source
-to the sink with positive edge weights.
-Hence, the algorithm terminates and the maximum flow is 7.
+دیگر امکان افزایش شار وجود ندارد،
+زیرا مسیری با وزن یال‌های مثبت از مبدأ
+به مقصد موجود نیست.
+بنابراین، الگوریتم پایان می‌یابد و بیشینه شار برابر ۷ است.
 
-\subsubsection{Finding paths}
+\subsubsection{یافتن مسیرها}
 
-The Ford–Fulkerson algorithm does not specify
-how we should choose the paths that increase the flow.
-In any case, the algorithm will terminate sooner or later
-and correctly find the maximum flow.
-However, the efficiency of the algorithm depends on
-the way the paths are chosen.
+الگوریتم فورد--فالکرسون مشخص نمی‌کند که
+مسیرهای افزایندهٔ شار چگونه باید انتخاب شوند.
+در هر حال، الگوریتم دیر یا زود متوقف خواهد شد
+و بیشینه شار را به‌درستی پیدا می‌کند.
+با این وجود، کارایی الگوریتم به
+نحوهٔ انتخاب مسیرها وابسته است.
 
-A simple way to find paths is to use depth-first search.
-Usually, this works well, but in the worst case,
-each path only increases the flow by 1
-and the algorithm is slow.
-Fortunately, we can avoid this situation
-by using one of the following techniques:
+یک روش ساده برای یافتن مسیرها استفاده از جستجوی اول‌سطح عمق است.
+معمولاً این روش به‌خوبی کار می‌کند، اما در بدترین حالت،
+هر مسیر شار را تنها به اندازهٔ ۱ واحد افزایش می‌دهد
+و الگوریتم کند عمل خواهد کرد.
+خوشبختانه می‌توان با استفاده از
+یکی از فنون زیر از این وضعیت جلوگیری کرد:
 
-\index{Edmonds–Karp algorithm}
+\index{الگوریتم ادموندز--کارپ}
 
-The \key{Edmonds–Karp algorithm} \cite{edm72}
-chooses each path so that the number of edges
-on the path is as small as possible.
-This can be done by using breadth-first search
-instead of depth-first search for finding paths.
-It can be proven that this guarantees that
-the flow increases quickly, and the time complexity
-of the algorithm is $O(m^2 n)$.
+\key{الگوریتم ادموندز--کارپ} \cite{edm72}
+هر مسیر را طوری انتخاب می‌کند که تعداد یال‌های
+آن مسیر کمترین مقدار ممکن باشد.
+این کار با به‌کارگیری جستجوی اول‌سطح به‌جای
+جستجوی اول‌عمق برای یافتن مسیرها انجام‌پذیر است.
+می‌توان اثبات کرد این امر متضمن افزایش
+سریع شار است و پیچیدگی زمانی
+الگوریتم برابر $O(m^2 n)$ خواهد بود.
 
-\index{scaling algorithm}
+\index{الگوریتم مقیاس‌بندی}
 
-The \key{scaling algorithm} \cite{ahu91} uses depth-first
-search to find paths where each edge weight is
-at least a threshold value.
-Initially, the threshold value is
-some large number, for example the sum of all
-edge weights of the graph.
-Always when a path cannot be found,
-the threshold value is divided by 2.
-The time complexity of the algorithm is $O(m^2 \log c)$,
-where $c$ is the initial threshold value.
+\key{الگوریتم مقیاس‌بندی} \cite{ahu91} از جستجوی اول‌عمق
+جهت یافتن مسیرهایی استفاده می‌کند که در آن‌ها وزن هر یال
+دست‌کم برابر با یک مقدار آستانه است.
+در آغاز، مقدار آستانه عدد بزرگی در نظر گرفته می‌شود،
+مثلاً مجموع تمام وزن‌های یال‌های گراف.
+هر بار که یافتن مسیر ناممکن گردد،
+مقدار آستانه بر ۲ تقسیم می‌شود.
+پیچیدگی زمانی الگوریتم $O(m^2 \log c)$ است
+که در آن $c$ نمایانگر مقدار آستانهٔ اولیه است.
 
-In practice, the scaling algorithm is easier to implement,
-because depth-first search can be used for finding paths.
-Both algorithms are efficient enough for problems
-that typically appear in programming contests.
+در عمل، پیاده‌سازی الگوریتم مقیاس‌بندی آسان‌تر است،
+زیرا می‌توان از جستجوی اول عمق برای یافتن مسیرها استفاده کرد.
+هر دو الگوریتم برای مسائلی که معمولاً در مسابقات برنامه‌نویسی مطرح می‌شوند،
+به اندازه کافی کارآمد هستند.
 
-\subsubsection{Minimum cuts}
+\subsubsection{برش‌های کمینه}
 
-\index{minimum cut}
+\index{برش کمینه}
 
-It turns out that once the Ford–Fulkerson algorithm
-has found a maximum flow,
-it has also determined a minimum cut.
-Let $A$ be the set of nodes
-that can be reached from the source
-using positive-weight edges.
-In the example graph, $A$ contains nodes 1, 2 and 4:
+مشخص می‌شود به محض اینکه الگوریتم فورد–فالکرسون
+شار بیشینه را پیدا کند،
+یک برش کمینه را نیز مشخص کرده است.
+فرض کنید $A$ مجموعه‌ای از رأس‌ها باشد
+که می‌توان با استفاده از یال‌های با وزن مثبت
+از مبدأ به آن‌ها دسترسی پیدا کرد.
+در گراف نمونه، $A$ شامل رأس‌های ۱، ۲ و ۴ است:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.9,label distance=-2mm]
@@ -498,26 +480,26 @@ In the example graph, $A$ contains nodes 1, 2 and 4:
 \end{tikzpicture}
 \end{center}
 
-Now the minimum cut consists of the edges of the original graph
-that start at some node in $A$, end at some node outside $A$,
-and whose capacity is fully
-used in the maximum flow.
-In the above graph, such edges are
-$2 \rightarrow 3$ and $4 \rightarrow 5$,
-that correspond to the minimum cut $6+1=7$.
+اکنون برش کمینه شامل یال‌هایی از گراف اصلی است
+که از رأسی در $A$ شروع شده، به رأسی خارج از $A$ ختم می‌شوند،
+و ظرفیت آن‌ها در شار بیشینه به طور کامل
+استفاده شده است.
+در گراف فوق، این یال‌ها
+$2 \rightarrow 3$ و $4 \rightarrow 5$ هستند
+که متناظر با برش کمینه $6+1=7$ می‌باشند.
 
-Why is the flow produced by the algorithm maximum
-and why is the cut minimum?
-The reason is that a graph cannot
-contain a flow whose size is larger
-than the weight of any cut of the graph.
-Hence, always when a flow and a cut are equally large,
-they are a maximum flow and a minimum cut.
+چرا شار تولید شده توسط الگوریتم بیشینه است
+و چرا برش کمینه است؟
+دلیل آن این است که یک گراف نمی‌تواند
+شامل شاری باشد که اندازه آن از وزن
+هر برشی از گراف بزرگتر باشد.
+بنابراین، همواره هنگامی که یک شار و یک برش هم‌اندازه باشند،
+آن‌ها شار بیشینه و برش کمینه هستند.
 
-Let us consider any cut of the graph
-such that the source belongs to $A$,
-the sink belongs to $B$
-and there are some edges between the sets:
+برش دلخواهی از گراف را در نظر بگیرید
+به طوری که مبدأ متعلق به $A$ باشد،
+مقصد متعلق به $B$ باشد
+و یال‌هایی بین این دو مجموعه وجود داشته باشد:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
@@ -541,39 +523,39 @@ and there are some edges between the sets:
 \end{tikzpicture}
 \end{center}
 
-The size of the cut is the sum of the edges
-that go from $A$ to $B$.
-This is an upper bound for the flow
-in the graph, because the flow has to proceed
-from $A$ to $B$.
-Thus, the size of a maximum flow is smaller than or equal to
-the size of any cut in the graph.
+اندازه برش مجموع یال‌هایی است که
+از $A$ به $B$ می‌روند.
+این مقدار کران بالایی برای جریان
+در گراف است، زیرا جریان باید
+از $A$ به $B$ عبور کند.
+بنابراین اندازه بیشینه شار کوچک‌تر یا مساوی
+اندازه هر برشی در گراف است.
 
-On the other hand, the Ford–Fulkerson algorithm
-produces a flow whose size is \emph{exactly} as large
-as the size of a cut in the graph.
-Thus, the flow has to be a maximum flow
-and the cut has to be a minimum cut.
+از طرف دیگر، الگوریتم فورد-فالکرسون
+جریانی تولید می‌کند که اندازه‌اش \emph{دقیقاً} برابر
+با اندازه یک برش در گراف است.
+بنابراین، این جریان باید بیشینه شار
+و آن برش باید کمینه برش باشد.
 
-\section{Disjoint paths}
+\section{مسیرهای مجزا}
 
-Many graph problems can be solved by reducing
-them to the maximum flow problem.
-Our first example of such a problem is
-as follows: we are given a directed graph
-with a source and a sink,
-and our task is to find the maximum number
-of disjoint paths from the source to the sink.
+بسیاری از مسائل گراف را می‌توان با کاهش
+آن‌ها به مسئله بیشینه شار حل کرد.
+اولین نمونه از چنین مسئله‌ای
+به این صورت است: یک گراف جهت‌دار
+با یک مبدأ و یک مقصد داده شده است،
+و وظیفه ما یافتن بیشینه تعداد
+مسیرهای مجزا از مبدأ به مقصد است.
 
-\subsubsection{Edge-disjoint paths}
+\subsubsection{مسیرهای مجزا از یال}
 
-We will first focus on the problem of
-finding the maximum number of
-\key{edge-disjoint paths} from the source to the sink.
-This means that we should construct a set of paths
-such that each edge appears in at most one path.
+ابتدا بر روی مسئله یافتن
+بیشینه تعداد
+\key{مسیرهای مجزا از یال} از مبدأ به مقصد تمرکز می‌کنیم.
+این بدان معناست که باید مجموعه‌ای از مسیرها را تشکیل دهیم
+به طوری که هر یال حداکثر در یک مسیر ظاهر شود.
 
-For example, consider the following graph:
+به عنوان مثال، گراف زیر را در نظر بگیرید:
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
 \node[draw, circle] (1) at (1,2) {$1$};
@@ -594,11 +576,11 @@ For example, consider the following graph:
 \end{tikzpicture}
 \end{center}
 
-In this graph, the maximum number of edge-disjoint
-paths is 2.
-We can choose the paths
+در این گراف، بیشینه تعداد مسیرهای مجزا از یال
+برابر ۲ است.
+می‌توانیم مسیرهای
 $1 \rightarrow 2 \rightarrow 4 \rightarrow 3 \rightarrow 6$
-and $1 \rightarrow 4 \rightarrow 5 \rightarrow 6$ as follows:
+و $1 \rightarrow 4 \rightarrow 5 \rightarrow 6$ را به صورت زیر انتخاب کنیم:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
@@ -629,29 +611,29 @@ and $1 \rightarrow 4 \rightarrow 5 \rightarrow 6$ as follows:
 \end{tikzpicture}
 \end{center}
 
-It turns out that the maximum number of
-edge-disjoint paths
-equals the maximum flow of the graph,
-assuming that the capacity of each edge is one.
-After the maximum flow has been constructed,
-the edge-disjoint paths can be found greedily
-by following paths from the source to the sink.
+مشخص می‌شود که حداکثر تعداد
+مسیرهای یال‌مجزا
+برابر با بیشینه شار گراف است،
+با این فرض که ظرفیت هر یال برابر یک باشد.
+پس از ساخت بیشینه شار،
+مسیرهای یال‌مجزا را می‌توان به صورت حریصانه
+با دنبال کردن مسیرها از مبدأ تا مقصد یافت.
 
-\subsubsection{Node-disjoint paths}
+\subsubsection{مسیرهای رأس‌مجزا}
 
-Let us now consider another problem:
-finding the maximum number of
-\key{node-disjoint paths} from the source
-to the sink.
-In this problem, every node,
-except for the source and sink,
-may appear in at most one path.
-The number of node-disjoint paths
-may be smaller than the number of
-edge-disjoint paths.
+حال مسئله دیگری را بررسی می‌کنیم:
+یافتن بیشینه تعداد
+\key{مسیرهای رأس‌مجزا} از مبدأ
+به مقصد.
+در این مسئله، هر رأس،
+به جز مبدأ و مقصد،
+می‌تواند حداکثر در یک مسیر ظاهر شود.
+تعداد مسیرهای رأس‌مجزا
+ممکن است کمتر از تعداد
+مسیرهای یال‌مجزا باشد.
 
-For example, in the previous graph,
-the maximum number of node-disjoint paths is 1:
+برای نمونه، در گراف قبلی،
+بیشینه تعداد مسیرهای رأس‌مجزا برابر ۱ است:
 
 \begin{center}
 \begin{tikzpicture}
@@ -678,17 +660,17 @@ the maximum number of node-disjoint paths is 1:
 \end{tikzpicture}
 \end{center}
 
-We can reduce also this problem to the maximum flow problem.
-Since each node can appear in at most one path,
-we have to limit the flow that goes through the nodes.
-A standard method for this is to divide each node into
-two nodes such that the first node has the incoming edges
-of the original node, the second node has the outgoing
-edges of the original node, and
-there is a new edge from the first node
-to the second node.
+این مسئله را نیز می‌توان به مسئله بیشینه شار کاهش داد.
+از آنجا که هر رأس می‌تواند حداکثر در یک مسیر ظاهر شود،
+باید شاری را که از رأس‌ها عبور می‌کند محدود کنیم.
+یک روش استاندارد برای این کار، تقسیم هر رأس به
+دو رأس است به طوری که رأس نخست یال‌های ورودی
+رأس اصلی را داشته باشد، رأس دوم یال‌های خروجی
+رأس اصلی را شامل شود، و
+یک یال جدید از رأس نخست
+به رأس دوم وجود داشته باشد.
 
-In our example, the graph becomes as follows:
+در مثال ما، گراف به صورت زیر تبدیل می‌شود:
 \begin{center}
 \begin{tikzpicture}
 \node[draw, circle] (1) at (1,2) {$1$};
@@ -722,7 +704,7 @@ In our example, the graph becomes as follows:
 \end{tikzpicture}
 \end{center}
 
-The maximum flow for the graph is as follows:
+شار بیشینه برای گراف به صورت زیر است:
 \begin{center}
 \begin{tikzpicture}
 \node[draw, circle] (1) at (1,2) {$1$};
@@ -764,35 +746,26 @@ The maximum flow for the graph is as follows:
 \end{tikzpicture}
 \end{center}
 
-Thus, the maximum number of node-disjoint paths
-from the source to the sink is 1.
+بنابراین بیشینه تعداد مسیرهای مجزا از راس
+از مبدا به مقصد برابر با ۱ است.
 
-\section{Maximum matchings}
+\section{تطابق‌های بیشینه}
 
-\index{matching}
-\index{maximum matching}
+\index{matching@تطابق}
+\index{maximum matching@تطابق بیشینه}
 
-The \key{maximum matching} problem asks to find
-a maximum-size set of node pairs in an undirected graph
-such that each pair is connected with an edge and
-each node belongs to at most one pair.
+مسئله \key{تطابق بیشینه} به دنبال یافتن
+مجموعه‌ای با بیشترین اندازه از جفت‌راس‌ها در گراف بدون جهت است
+به طوری که هر جفت با یک یال متصل باشد و
+هر راس حداکثر به یک جفت تعلق داشته باشد.
 
-There are polynomial algorithms for finding
-maximum matchings in general graphs \cite{edm65},
-but such algorithms are complex and
-rarely seen in programming contests.
-However, in bipartite graphs,
-the maximum matching problem is much easier
-to solve, because we can reduce it to the
-maximum flow problem.
+الگوریتم‌های چندجمله‌ای برای یافتن تطابق بیشینه در گراف‌های کلی وجود دارند \cite{edm65}، اما این الگوریتم‌ها پیچیده‌اند و به‌ندرت در مسابقات برنامه‌نویسی دیده می‌شوند.
+با این حال، در گراف‌های دوبخشی، مسئله تطابق بیشینه بسیار ساده‌تر حل می‌شود، زیرا می‌توانیم آن را به مسئله شار بیشینه تبدیل کنیم.
 
-\subsubsection{Finding maximum matchings}
+\subsubsection{یافتن تطابق‌های بیشینه}
 
-The nodes of a bipartite graph can be always
-divided into two groups such that all edges
-of the graph go from the left group to the right group.
-For example, in the following bipartite graph,
-the groups are $\{1,2,3,4\}$ and $\{5,6,7,8\}$.
+گره‌های یک گراف دوبخشی همواره می‌توانند به دو گروه تقسیم شوند، به طوری که تمام یال‌های گراف از گروه سمت چپ به گروه سمت راست بروند.
+به عنوان مثال، در گراف دوبخشی زیر، گروه‌ها $\{1,2,3,4\}$ و $\{5,6,7,8\}$ هستند.
 
 \begin{center}
 \begin{tikzpicture}[scale=0.60]
@@ -813,7 +786,7 @@ the groups are $\{1,2,3,4\}$ and $\{5,6,7,8\}$.
 \path[draw,thick,-] (4) -- (7);
 \end{tikzpicture}
 \end{center}
-The size of a maximum matching of this graph is 3:
+اندازه تطابق بیشینه این گراف برابر ۳ است:
 \begin{center}
 \begin{tikzpicture}[scale=0.60]
 \node[draw, circle] (1) at (2,4.5) {1};
@@ -838,16 +811,11 @@ The size of a maximum matching of this graph is 3:
 \end{tikzpicture}
 \end{center}
 
-We can reduce the bipartite maximum matching problem
-to the maximum flow problem by adding two new nodes
-to the graph: a source and a sink.
-We also add edges from the source
-to each left node and from each right node to the sink.
-After this, the size of a maximum flow in the graph
-equals the size of a maximum matching in the original graph.
+می‌توانیم مسئله تطابق بیشینه دوبخشی را با افزودن دو گره جدید به گراف به مسئله شار بیشینه تقلیل دهیم: یک مبدأ و یک مقصد.
+همچنین یال‌هایی از مبدأ به هر گره سمت چپ، و از هر گره سمت راست به مقصد اضافه می‌کنیم.
+پس از این کار، اندازه شار بیشینه در گراف برابر با اندازه تطابق بیشینه در گراف اولیه خواهد بود.
 
-For example, the reduction for the above
-graph is as follows:
+برای نمونه، تقلیل گراف بالا به شکل زیر است:
 \begin{center}
 \begin{tikzpicture}[scale=0.60]
 \node[draw, circle] (1) at (2,4.5) {1};
@@ -880,7 +848,7 @@ graph is as follows:
 \end{tikzpicture}
 \end{center}
 
-The maximum flow of this graph is as follows:
+شار بیشینه این گراف به صورت زیر است:
 \begin{center}
 \begin{tikzpicture}[scale=0.60]
 \node[draw, circle] (1) at (2,4.5) {1};
@@ -923,29 +891,20 @@ The maximum flow of this graph is as follows:
 \end{tikzpicture}
 \end{center}
 
-\subsubsection{Hall's theorem}
+\subsubsection{قضیه هال}
 
-\index{Hall's theorem}
-\index{perfect matching}
+\index{Hall's theorem@قضیه هال}
+\index{perfect matching@تطابق کامل}
 
-\key{Hall's theorem} can be used to find out
-whether a bipartite graph has a matching
-that contains all left or right nodes.
-If the number of left and right nodes is the same,
-Hall's theorem tells us if it is possible to
-construct a \key{perfect matching} that
-contains all nodes of the graph.
+از \key{قضیه هال} می‌توان برای تشخیص وجود تطابقی در یک گراف دوبخشی استفاده کرد که تمام رأس‌های سمت چپ یا راست را شامل شود.
+اگر تعداد رأس‌های چپ و راست برابر باشد، قضیه هال مشخص می‌کند آیا امکان ساخت یک \key{تطابق کامل} شامل تمام رأس‌های گراف وجود دارد یا خیر.
 
-Assume that we want to find a matching
-that contains all left nodes.
-Let $X$ be any set of left nodes
-and let $f(X)$ be the set of their neighbors.
-According to Hall's theorem, a matching
-that contains all left nodes exists
-exactly when for each $X$, the condition $|X| \le |f(X)|$ holds.
+فرض کنید می‌خواهیم تطابقی شامل تمام رأس‌های سمت چپ بیابیم.
+فرض کنید $X$ زیرمجموعه‌ای دلخواه از رأس‌های سمت چپ و $f(X)$ مجموعه همسایه‌های آن‌ها باشد.
+طبق قضیه هال، تطابقی شامل تمام رأس‌های سمت چپ وجود دارد اگر و تنها اگر به ازای هر $X$، شرط $|X| \le |f(X)|$ برقرار باشد.
 
-Let us study Hall's theorem in the example graph.
-First, let $X=\{1,3\}$ which yields $f(X)=\{5,6,8\}$:
+قضیه هال را در گراف مثال بررسی می‌کنیم.
+ابتدا فرض کنید $X=\{1,3\}$ باشد که نتیجه می‌دهد $f(X)=\{5,6,8\}$:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.60]
@@ -967,9 +926,9 @@ First, let $X=\{1,3\}$ which yields $f(X)=\{5,6,8\}$:
 \end{tikzpicture}
 \end{center}
 
-The condition of Hall's theorem holds, because
-$|X|=2$ and $|f(X)|=3$.
-Next, let $X=\{2,4\}$ which yields $f(X)=\{7\}$:
+شرط قضیه هال برقرار است، زیرا
+$|X|=2$ و $|f(X)|=3$.
+سپس فرض کنید $X=\{2,4\}$ باشد که نتیجه می‌دهد $f(X)=\{7\}$:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.60]
@@ -991,41 +950,38 @@ Next, let $X=\{2,4\}$ which yields $f(X)=\{7\}$:
 \end{tikzpicture}
 \end{center}
 
-In this case, $|X|=2$ and $|f(X)|=1$,
-so the condition of Hall's theorem does not hold.
-This means that it is not possible to form
-a perfect matching for the graph.
-This result is not surprising, because we already
-know that the maximum matching of the graph is 3 and not 4.
+در این حالت، $|X|=2$ و $|f(X)|=1$ است،
+بنابراین شرط قضیه هال برقرار نیست.
+یعنی تشکیل تطابق کامل برای این گراف ممکن نیست.
+این نتیجه دور از انتظار نیست، چون از قبل
+می‌دانیم تطابق بیشینه گراف ۳ است نه ۴.
 
-If the condition of Hall's theorem does not hold,
-the set $X$ provides an explanation \emph{why}
-we cannot form such a matching.
-Since $X$ contains more nodes than $f(X)$,
-there are no pairs for all nodes in $X$.
-For example, in the above graph, both nodes 2 and 4
-should be connected with node 7 which is not possible.
+اگر شرط قضیه هال برقرار نباشد،
+مجموعه $X$ نشان می‌دهد \emph{چرا}
+نمی‌توان چنین تطابقی تشکیل داد.
+چون $X$ گره‌های بیشتری نسبت به $f(X)$ دارد،
+جفت کافی برای همه گره‌های $X$ وجود ندارد.
+مثلاً در گراف بالا، هر دو گره ۲ و ۴
+باید به گره ۷ متصل شوند که شدنی نیست.
 
-\subsubsection{Kőnig's theorem}
+\subsubsection{قضیه کونیگ}
 
-\index{Kőnig's theorem}
-\index{node cover}
-\index{minimum node cover}
+\index{قضیه کونیگ}
+\index{پوشش راس}
+\index{حداقل پوشش راس}
 
-A \key{minimum node cover} of a graph
-is a minimum set of nodes such that each edge of the graph
-has at least one endpoint in the set.
-In a general graph, finding a minimum node cover
-is a NP-hard problem.
-However, if the graph is bipartite,
-\key{Kőnig's theorem} tells us that
-the size of a minimum node cover
-and the size of a maximum matching are always equal.
-Thus, we can calculate the size of a minimum node cover
-using a maximum flow algorithm.
+یک \key{پوشش راس کمینه} برای گراف،
+مجموعه‌ای کمینه از گره‌هاست که هر یال گراف
+حداقل یک سرش در آن مجموعه باشد.
+در گراف کلی، پیدا کردن پوشش راس کمینه
+یک مسئله NP-hard است.
+اما اگر گراف دوبخشی باشد،
+\key{قضیه کونیگ} می‌گوید اندازه پوشش راس کمینه
+و اندازه تطابق بیشینه همیشه برابرند.
+بنابراین می‌توان اندازه پوشش راس کمینه را
+با الگوریتم شار بیشینه محاسبه کرد.
 
-Let us consider the following graph
-with a maximum matching of size 3:
+گراف زیر با تطابق بیشینه به اندازه ۳ را در نظر بگیرید:
 \begin{center}
 \begin{tikzpicture}[scale=0.60]
 \node[draw, circle] (1) at (2,4.5) {1};
@@ -1049,9 +1005,8 @@ with a maximum matching of size 3:
 \path[draw=red,thick,-,line width=2pt] (3) -- (6);
 \end{tikzpicture}
 \end{center}
-Now Kőnig's theorem tells us that the size
-of a minimum node cover is also 3.
-Such a cover can be constructed as follows:
+قضیه کونیگ بیان می‌کند اندازه پوشش راسی کمینه نیز برابر ۳ است.
+چنین پوششی را می‌توان به صورت زیر ساخت:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.60]
@@ -1073,21 +1028,17 @@ Such a cover can be constructed as follows:
 \end{tikzpicture}
 \end{center}
 
-\index{independent set}
-\index{maximum independent set}
+\index{مجموعه مستقل}
+\index{مجموعه مستقل بیشینه}
 
-The nodes that do \emph{not}
-belong to a minimum node cover
-form a \key{maximum independent set}.
-This is the largest possible set of nodes
-such that no two nodes in the set
-are connected with an edge.
-Once again, finding a maximum independent
-set in a general graph is a NP-hard problem,
-but in a bipartite graph we can use
-Kőnig's theorem to solve the problem efficiently.
-In the example graph, the maximum independent
-set is as follows:
+راس‌هایی که به پوشش راسی کمینه تعلق \emph{ندارند}،
+تشکیل یک \key{مجموعه مستقل بیشینه} می‌دهند.
+این بزرگ‌ترین مجموعه ممکن از راس‌ها است
+به‌طوری‌که هیچ دو راسی در مجموعه
+با یک یال به هم متصل نباشند.
+یافتن مجموعه مستقل بیشینه در گراف عمومی مسئله‌ای NP-hard است،
+اما در گراف دوبخشی می‌توان از قضیه کونیگ برای حل کارآمد مسئله استفاده کرد.
+در گراف نمونه، مجموعه مستقل بیشینه به صورت زیر است:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.60]
@@ -1109,22 +1060,22 @@ set is as follows:
 \end{tikzpicture}
 \end{center}
 
-\section{Path covers}
+\section{پوشش‌های مسیری}
 
-\index{path cover}
+\index{پوشش مسیری}
 
-A \key{path cover} is a set of paths in a graph
-such that each node of the graph belongs to at least one path.
-It turns out that in directed, acyclic graphs,
-we can reduce the problem of finding a minimum
-path cover to the problem of finding a maximum
-flow in another graph.
+یک \key{پوشش مسیری} (path cover) مجموعه‌ای از مسیرها در یک گراف است
+به‌طوری که هر رأس گراف متعلق به حداقل یک مسیر باشد.
+مشخص می‌شود که در گراف‌های جهت‌دار بدون دور (DAG)،
+می‌توان مسئله‌ی یافتن کمینه‌پوشش
+مسیری را به مسئله‌ی یافتن بیشینه‌شار
+در گرافی دیگر کاهش داد.
 
-\subsubsection{Node-disjoint path cover}
+\subsubsection{پوشش مسیری رأس‌جدا}
 
-In a \key{node-disjoint path cover},
-each node belongs to exactly one path.
-As an example, consider the following graph:
+در یک \key{پوشش مسیری رأس‌جدا} (node-disjoint path cover)،
+هر رأس دقیقاً متعلق به یک مسیر است.
+به عنوان مثال، گراف زیر را در نظر بگیرید:
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
 \node[draw, circle] (1) at (0,0) {1};
@@ -1144,10 +1095,10 @@ As an example, consider the following graph:
 \end{tikzpicture}
 \end{center}
 
-A minimum node-disjoint path cover
-of this graph
-consists of three paths.
-For example, we can choose the following paths:
+یک پوشش مسیری رأس‌جدای کمینه
+برای این گراف
+شامل سه مسیر است.
+به عنوان مثال، می‌توانیم مسیرهای زیر را انتخاب کنیم:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
@@ -1166,25 +1117,25 @@ For example, we can choose the following paths:
 \end{tikzpicture}
 \end{center}
 
-Note that one of the paths only contains node 2,
-so it is possible that a path does not contain any edges.
+توجه کنید یکی از مسیرها فقط شامل رأس ۲ است،
+بنابراین ممکن است یک مسیر اصلاً هیچ یالی نداشته باشد.
 
-We can find a minimum node-disjoint path cover
-by constructing a \emph{matching graph} where each node
-of the original graph is represented by
-two nodes: a left node and a right node.
-There is an edge from a left node to a right node
-if there is such an edge in the original graph.
-In addition, the matching graph contains a source and a sink,
-and there are edges from the source to all
-left nodes and from all right nodes to the sink.
+می‌توانیم با ساخت یک \emph{گراف تطابق}، پوشش مسیری رأس‌جدای کمینه را
+بیابیم که در آن هر رأس
+گراف اصلی با
+دو رأس نمایش داده می‌شود: یک رأس چپ و یک رأس راست.
+یالی از رأس چپ به رأس راست وجود دارد
+اگر چنین یالی در گراف اصلی موجود باشد.
+علاوه بر این، گراف تطابق شامل یک مبدأ و یک مقصد است،
+و یال‌هایی از مبدأ به همه‌ی
+رؤسای چپ و از همه‌ی رؤسای راست به مقصد وجود دارد.
 
-A maximum matching in the resulting graph corresponds
-to a minimum node-disjoint path cover in
-the original graph.
-For example, the following matching graph
-for the above graph contains
-a maximum matching of size 4:
+یک بیشینه‌تطابق در گراف حاصل متناظر
+با یک کمینه‌پوشش مسیری رأس‌جدا در
+گراف اصلی است.
+به عنوان مثال، گراف تطابق زیر
+برای گراف بالا شامل
+یک بیشینه‌تطابق با اندازه‌ی ۴ است:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
@@ -1238,21 +1189,18 @@ a maximum matching of size 4:
 \end{tikzpicture}
 \end{center}
 
-Each edge in the maximum matching of the matching graph corresponds
-to an edge in the minimum node-disjoint path cover
-of the original graph.
-Thus, the size of the minimum node-disjoint path cover is $n-c$,
-where $n$ is the number of nodes in the original graph
-and $c$ is the size of the maximum matching.
+هر یال در تطابق بیشینه گراف تطابق، متناظر با یک یال در پوشش مسیری گره‌مجزای کمینه گراف اصلی است.
+بنابراین، اندازه پوشش مسیری گره‌مجزای کمینه برابر با $n-c$ است،
+که در آن $n$ تعداد گره‌های گراف اصلی
+و $c$ اندازه تطابق بیشینه است.
 
-\subsubsection{General path cover}
+\subsubsection{پوشش مسیری عمومی}
 
-A \key{general path cover} is a path cover
-where a node can belong to more than one path.
-A minimum general path cover may be smaller
-than a minimum node-disjoint path cover,
-because a node can be used multiple times in paths.
-Consider again the following graph:
+یک \key{پوشش مسیری عمومی} پوششی از مسیرها است
+که در آن یک گره می‌تواند به بیش از یک مسیر تعلق داشته باشد.
+یک پوشش مسیری عمومی کمینه ممکن است از یک پوشش مسیری گره‌مجزای کمینه کوچک‌تر باشد،
+زیرا یک گره می‌تواند چندین بار در مسیرها استفاده شود.
+دوباره گراف زیر را در نظر بگیرید:
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
 \node[draw, circle] (1) at (0,0) {1};
@@ -1272,9 +1220,9 @@ Consider again the following graph:
 \end{tikzpicture}
 \end{center}
 
-The minimum general path cover of this graph
-consists of two paths.
-For example, the first path may be as follows:
+پوشش مسیر عمومی کمینه این گراف
+شامل دو مسیر است.
+برای نمونه، مسیر نخست می‌تواند به این صورت باشد:
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
 \node[draw, circle] (1) at (0,0) {1};
@@ -1291,7 +1239,7 @@ For example, the first path may be as follows:
 \path[draw=red,thick,->,line width=2pt] (3) -- (4);
 \end{tikzpicture}
 \end{center}
-And the second path may be as follows:
+و مسیر دوم می‌تواند چنین باشد:
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
 \node[draw, circle] (1) at (0,0) {1};
@@ -1307,14 +1255,14 @@ And the second path may be as follows:
 \end{tikzpicture}
 \end{center}
 
-A minimum general path cover can be found
-almost like a minimum node-disjoint path cover.
-It suffices to add some new edges to the matching graph
-so that there is an edge $a \rightarrow b$
-always when there is a path from $a$ to $b$
-in the original graph (possibly through several edges).
+یافتن پوشش مسیر عمومی کمینه
+تقریباً مشابه پوشش مسیر با راس‌های مجزا کمینه است.
+تنها افزودن یال‌های تازه به گراف تطابق کافی است
+به‌طوری که یال $a \rightarrow b$ همیشه برقرار باشد
+هرگاه مسیری از $a$ به $b$ در گراف اولیه وجود دارد
+(احتمالاً شامل چندین یال).
 
-The matching graph for the above graph is as follows:
+گراف تطابق برای گراف بالا بدین گونه است:
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
 \node[draw, circle] (1a) at (0,6) {1};
@@ -1354,7 +1302,6 @@ The matching graph for the above graph is as follows:
 \path[draw,thick,->,>=latex] (2a) -- (7b);
 \path[draw,thick,->,>=latex] (2a) -- (3b);
 \path[draw,thick,->,>=latex] (2a) -- (4b);
-
 
 \path[draw,thick,->,>=latex] (a) -- (1a);
 \path[draw,thick,->,>=latex] (a) -- (2a);
@@ -1399,22 +1346,21 @@ The matching graph for the above graph is as follows:
 \end{tikzpicture}
 \end{center}
 
-\subsubsection{Dilworth's theorem}
+\subsubsection{قضیه دیلوورث}
 
-\index{Dilworth's theorem}
-\index{antichain}
+\index{قضیه دیلوورث}
+\index{پادزنجیر}
 
-An \key{antichain} is a set of nodes of a graph
-such that there is no path
-from any node to another node
-using the edges of the graph.
-\key{Dilworth's theorem} states that
-in a directed acyclic graph, the size of
-a minimum general path cover
-equals the size of a maximum antichain.
+یک \key{پادزنجیر} مجموعه‌ای از راس‌های گراف است
+به‌طوری که هیچ مسیری بین هیچ دو راسی
+با استفاده از یال‌های گراف وجود نداشته باشد.
+\key{قضیه دیلوورث} بیان می‌کند
+در یک گراف جهت‌دار بدون دور، اندازه
+حداقل پوشش مسیری عمومی
+برابر اندازه حداکثر پادزنجیر است.
 
-For example, nodes 3 and 7 form an antichain
-in the following graph:
+برای نمونه، راس‌های ۳ و ۷ یک پادزنجیر
+در گراف زیر تشکیل می‌دهند:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
@@ -1435,7 +1381,4 @@ in the following graph:
 \end{tikzpicture}
 \end{center}
 
-This is a maximum antichain, because it is not possible
-to construct any antichain that would contain three nodes.
-We have seen before that the size of a minimum
-general path cover of this graph consists of two paths.
+این یک پادزنجیر بیشینه است، زیرا ساخت هیچ پادزنجیری شامل سه رأس ممکن نیست. پیش‌تر دیدیم که اندازه یک پوشش مسیری عمومی کمینه برای این گراف برابر با دو مسیر است.
