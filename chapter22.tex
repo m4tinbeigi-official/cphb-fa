@@ -1,18 +1,14 @@
-\chapter{Combinatorics}
+\chapter{ترکیبیات}
 
-\index{combinatorics}
+\index{ترکیبیات}
 
-\key{Combinatorics} studies methods for counting
-combinations of objects.
-Usually, the goal is to find a way to
-count the combinations efficiently
-without generating each combination separately.
+\key{ترکیبیات} روش‌های شمارش ترکیب‌های اشیاء را بررسی می‌کند.
+معمولاً هدف یافتن روشی برای شمارش کارآمد ترکیب‌ها
+بدون تولید مجزای هر ترکیب است.
 
-As an example, consider the problem
-of counting the number of ways to
-represent an integer $n$ as a sum of positive integers.
-For example, there are 8 representations
-for $4$:
+به عنوان مثال، مسئله شمارش تعداد روش‌های نمایش
+یک عدد صحیح $n$ به صورت مجموعی از اعداد صحیح مثبت را در نظر بگیرید.
+به عنوان مثال، ۸ روش نمایش برای عدد $4$ وجود دارد:
 \begin{multicols}{2}
 \begin{itemize}
 \item $1+1+1+1$
@@ -26,30 +22,25 @@ for $4$:
 \end{itemize}
 \end{multicols}
 
-A combinatorial problem can often be solved
-using a recursive function.
-In this problem, we can define a function $f(n)$
-that gives the number of representations for $n$.
-For example, $f(4)=8$ according to the above example.
-The values of the function
-can be recursively calculated as follows:
+یک مسئله ترکیبیاتی اغلب می‌تواند با استفاده از یک تابع بازگشتی حل شود.
+در این مسئله، می‌توانیم تابع $f(n)$ را تعریف کنیم
+که تعداد روش‌های نمایش $n$ را به دست می‌دهد.
+به عنوان مثال، مطابق با مثال بالا $f(4)=8$ است.
+مقادیر این تابع را می‌توان به صورت بازگشتی به روش زیر محاسبه کرد:
 \begin{equation*}
     f(n) = \begin{cases}
                1               & n = 0\\
                f(0)+f(1)+\cdots+f(n-1) & n > 0\\
            \end{cases}
 \end{equation*}
-The base case is $f(0)=1$,
-because the empty sum represents the number 0.
-Then, if $n>0$, we consider all ways to
-choose the first number of the sum.
-If the first number is $k$,
-there are $f(n-k)$ representations
-for the remaining part of the sum.
-Thus, we calculate the sum of all values
-of the form $f(n-k)$ where $k<n$.
+حالت پایه $f(0)=1$ است،
+زیرا مجموع تهی بیانگر عدد 0 است.
+سپس، اگر $n>0$ باشد، تمام روش‌های انتخاب عدد اول مجموع را در نظر می‌گیریم.
+اگر عدد اول $k$ باشد،
+$f(n-k)$ روش نمایش برای بخش باقیمانده مجموع وجود دارد.
+بنابراین، مجموع تمام مقادیر به فرم $f(n-k)$ را محاسبه می‌کنیم که در آن $k<n$ است.
 
-The first values for the function are:
+نخستین مقادیر این تابع عبارتند از:
 \[
 \begin{array}{lcl}
 f(0) & = & 1 \\
@@ -60,86 +51,78 @@ f(4) & = & 8 \\
 \end{array}
 \]
 
-Sometimes, a recursive formula can be replaced
-with a closed-form formula.
-In this problem,
+گاهی می‌توان فرمول بازگشتی را با یک فرمول بسته جایگزین کرد.
+در این مسئله،
 \[
 f(n)=2^{n-1},
 \]
-which is based on the fact that there are $n-1$
-possible positions for +-signs in the sum
-and we can choose any subset of them.
+که بر اساس این واقعیت است که $n-1$ موقعیت ممکن برای علامت‌های + در مجموع وجود دارد
+و ما می‌توانیم هر زیرمجموعه‌ای از آن‌ها را انتخاب کنیم.
 
-\section{Binomial coefficients}
+\section{ضرایب دوجمله‌ای}
 
-\index{binomial coefficient}
+\index{ضریب دوجمله‌ای}
 
-The \key{binomial coefficient} ${n \choose k}$
-equals the number of ways we can choose a subset
-of $k$ elements from a set of $n$ elements.
-For example, ${5 \choose 3}=10$,
-because the set $\{1,2,3,4,5\}$
-has 10 subsets of 3 elements:
+\key{ضریب دوجمله‌ای} ${n \choose k}$ برابر با تعداد روش‌هایی است
+که می‌توان یک زیرمجموعه $k$ عضوی را از یک مجموعه $n$ عضوی انتخاب کرد.
+برای مثال، ${5 \choose 3}=10$،
+زیرا مجموعه $\{1,2,3,4,5\}$
+دارای ۱۰ زیرمجموعه ۳ عضوی است:
 \[ \{1,2,3\}, \{1,2,4\}, \{1,2,5\}, \{1,3,4\}, \{1,3,5\}, 
 \{1,4,5\}, \{2,3,4\}, \{2,3,5\}, \{2,4,5\}, \{3,4,5\} \]
 
-\subsubsection{Formula 1}
+\subsubsection{فرمول ۱}
 
-Binomial coefficients can be
-recursively calculated as follows:
+ضرایب دوجمله‌ای را می‌توان به صورت بازگشتی به صورت زیر محاسبه کرد:
 
 \[
 {n \choose k}  =  {n-1 \choose k-1} + {n-1 \choose k}
 \]
 
-The idea is to fix an element $x$ in the set.
-If $x$ is included in the subset,
-we have to choose $k-1$
-elements from $n-1$ elements,
-and if $x$ is not included in the subset,
-we have to choose $k$ elements from $n-1$ elements.
+ایده این است که یک عنصر $x$ را در مجموعه تثبیت کنیم.
+اگر $x$ در زیرمجموعه گنجانده شود،
+باید $k-1$ عنصر را از $n-1$ عنصر انتخاب کنیم،
+و اگر $x$ در زیرمجموعه گنجانده نشود،
+باید $k$ عنصر را از $n-1$ عنصر انتخاب کنیم.
 
-The base cases for the recursion are
+حالت‌های پایه برای بازگشت عبارتند از:
 \[
 {n \choose 0}  =  {n \choose n} = 1,
 \]
-because there is always exactly
-one way to construct an empty subset
-and a subset that contains all the elements.
+زیرا همواره دقیقاً یک روش برای ساخت زیرمجموعه تهی
+و یک زیرمجموعه شامل تمام عناصر وجود دارد.
 
-\subsubsection{Formula 2}
+\subsubsection{فرمول ۲}
 
-Another way to calculate binomial coefficients is as follows:
+روش دیگر برای محاسبه ضرایب دوجمله‌ای به صورت زیر است:
 \[
 {n \choose k}  =  \frac{n!}{k!(n-k)!}.
 \]
 
-There are $n!$ permutations of $n$ elements.
-We go through all permutations and always
-include the first $k$ elements of the permutation
-in the subset.
-Since the order of the elements in the subset
-and outside the subset does not matter,
-the result is divided by $k!$ and $(n-k)!$
+$n!$ جایگشت برای $n$ عنصر وجود دارد.
+تمام جایگشت‌ها را بررسی می‌کنیم و همواره
+$k$ عنصر اول جایگشت را در زیرمجموعه قرار می‌دهیم.
+از آنجا که ترتیب عناصر در داخل زیرمجموعه
+و خارج از آن اهمیتی ندارد،
+نتیجه بر $k!$ و $(n-k)!$ تقسیم می‌شود.
 
-\subsubsection{Properties}
+\subsubsection{ویژگی‌ها}
 
-For binomial coefficients,
+برای ضرایب دوجمله‌ای،
 \[
 {n \choose k}  =  {n \choose n-k},
 \]
-because we actually divide a set of $n$ elements into
-two subsets: the first contains $k$ elements
-and the second contains $n-k$ elements.
+چرا که در واقع یک مجموعه از $n$ عنصر را به
+دو زیرمجموعه تقسیم می‌کنیم: اولی شامل $k$ عنصر
+و دومی شامل $n-k$ عنصر است.
 
-The sum of binomial coefficients is
+مجموع ضرایب دوجمله‌ای برابر است با:
 \[
 {n \choose 0}+{n \choose 1}+{n \choose 2}+\ldots+{n \choose n}=2^n.
 \]
 
-The reason for the name ''binomial coefficient''
-can be seen when the binomial $(a+b)$ is raised to
-the $n$th power:
+علت نام‌گذاری «ضریب دوجمله‌ای»
+هنگام به توان $n$ رساندن دوجمله‌ای $(a+b)$ مشخص می‌شود:
 
 \[ (a+b)^n =
 {n \choose 0} a^n b^0 + 
@@ -148,12 +131,11 @@ the $n$th power:
 {n \choose n-1} a^1 b^{n-1} +
 {n \choose n} a^0 b^n. \]
 
-\index{Pascal's triangle}
+\index{مثلث پاسکال}
 
-Binomial coefficients also appear in
-\key{Pascal's triangle}
-where each value equals the sum of two
-above values:
+ضرایب دوجمله‌ای در \key{مثلث پاسکال} نیز ظاهر می‌شوند،
+جایی که هر مقدار برابر با مجموع دو مقدار
+بالای خود است:
 \begin{center}
 \begin{tikzpicture}{0.9}
 \node at (0,0) {1};
@@ -179,17 +161,17 @@ above values:
 \end{tikzpicture}
 \end{center}
 
-\subsubsection{Boxes and balls}
+\subsubsection{جعبه‌ها و توپ‌ها}
 
-''Boxes and balls'' is a useful model,
-where we count the ways to
-place $k$ balls in $n$ boxes.
-Let us consider three scenarios:
+«جعبه‌ها و توپ‌ها» یک مدل کاربردی است
+که در آن تعداد روش‌های قرار دادن
+$k$ توپ در $n$ جعبه را می‌شماریم.
+سه حالت را در نظر می‌گیریم:
 
-\textit{Scenario 1}: Each box can contain
-at most one ball.
-For example, when $n=5$ and $k=2$,
-there are 10 solutions:
+\textit{حالت ۱}: هر جعبه می‌تواند حداکثر
+شامل یک توپ باشد.
+به عنوان مثال، وقتی $n=5$ و $k=2$ باشد،
+۱۰ روش وجود دارد:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.5]
@@ -222,12 +204,12 @@ there are 10 solutions:
 \end{tikzpicture}
 \end{center}
 
-In this scenario, the answer is directly the
-binomial coefficient ${n \choose k}$.
+در این حالت، پاسخ مستقیماً ضریب
+دوجمله‌ای ${n \choose k}$ است.
 
-\textit{Scenario 2}: A box can contain multiple balls.
-For example, when $n=5$ and $k=2$,
-there are 15 solutions:
+\textit{حالت ۲}: یک جعبه می‌تواند شامل چند توپ باشد.
+به عنوان مثال، وقتی $n=5$ و $k=2$ باشد،
+۱۵ روش وجود دارد:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.5]
@@ -265,30 +247,12 @@ there are 15 solutions:
 \end{tikzpicture}
 \end{center}
 
-The process of placing the balls in the boxes
-can be represented as a string
-that consists of symbols
-''o'' and ''$\rightarrow$''.
-Initially, assume that we are standing at the leftmost box.
-The symbol ''o'' means that we place a ball
-in the current box, and the symbol
-''$\rightarrow$'' means that we move to
-the next box to the right.
+فرایند قرار دادن توپ‌ها در جعبه‌ها را می‌توان با رشته‌ای شامل نمادهای «o» و «$\rightarrow$» نمایش داد. ابتدا فرض کنید در چپ‌ترین جعبه ایستاده‌ایم. نماد «o» یعنی یک توپ در جعبه فعلی بگذار، و نماد «$\rightarrow$» یعنی به جعبه بعدی در سمت راست برو.
 
-Using this notation, each solution is a string
-that contains $k$ times the symbol ''o'' and
-$n-1$ times the symbol ''$\rightarrow$''.
-For example, the upper-right solution
-in the above picture corresponds to the string
-''$\rightarrow$ $\rightarrow$ o $\rightarrow$ o $\rightarrow$''.
-Thus, the number of solutions is
+با این نمایش، هر جواب رشته‌ای است شامل $k$ بار نماد «o» و $n-1$ بار نماد «$\rightarrow$». برای نمونه، جواب بالا-راست در تصویر بالا معادل رشته «$\rightarrow$ $\rightarrow$ o $\rightarrow$ o $\rightarrow$» است. بنابراین، تعداد جواب‌ها برابر است با:
 ${k+n-1 \choose k}$.
 
-\textit{Scenario 3}: Each box may contain at most one ball,
-and in addition, no two adjacent boxes may both contain a ball.
-For example, when $n=5$ and $k=2$,
-there are 6 solutions:
-
+\textit{سناریوی ۳}: هر جعبه حداکثر یک توپ دارد، بعلاوه هیچ دو جعبه مجاوری نباید همزمان توپ داشته باشند. برای نمونه، به ازای $n=5$ و $k=2$، تعداد ۶ جواب وجود دارد:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.5]
@@ -316,48 +280,37 @@ there are 6 solutions:
 \end{tikzpicture}
 \end{center}
 
-In this scenario, we can assume that
-$k$ balls are initially placed in boxes
-and there is an empty box between each
-two adjacent boxes.
-The remaining task is to choose the
-positions for the remaining empty boxes.
-There are $n-2k+1$ such boxes and
-$k+1$ positions for them.
-Thus, using the formula of scenario 2,
-the number of solutions is
+در این سناریو فرض کنید $k$ توپ ابتدا درون جعبه‌ها قرار دارند و بین هر دو جعبه مجاور یک جعبه خالی قرار گرفته است. کار باقی‌مانده انتخاب جایگاه برای جعبه‌های خالی باقی‌مانده است. تعداد $n-2k+1$ جعبه خالی و $k+1$ موقعیت ممکن برای قرار دادن آن‌ها داریم. بنابراین با فرمول سناریوی ۲، تعداد جواب‌ها برابر است با:
 ${n-k+1 \choose n-2k+1}$.
 
-\subsubsection{Multinomial coefficients}
+\subsubsection{ضرایب چندجمله‌ای}
 
-\index{multinomial coefficient}
+\index{ضریب چندجمله‌ای}
 
-The \key{multinomial coefficient}
+\key{ضریب چندجمله‌ای}
 \[ {n \choose k_1,k_2,\ldots,k_m} = \frac{n!}{k_1! k_2! \cdots k_m!}, \]
-equals the number of ways
-we can divide $n$ elements into subsets
-of sizes $k_1,k_2,\ldots,k_m$,
-where $k_1+k_2+\cdots+k_m=n$.
-Multinomial coefficients can be seen as a
-generalization of binomial cofficients;
-if $m=2$, the above formula
-corresponds to the binomial coefficient formula.
+برابر با تعداد روش‌هایی است که
+می‌توان $n$ عنصر را به زیرمجموعه‌هایی
+با اندازه‌های $k_1,k_2,\ldots,k_m$ تقسیم کرد،
+به طوری که $k_1+k_2+\cdots+k_m=n$ باشد.
+ضرایب چندجمله‌ای را می‌توان تعمیم
+ضرایب دوجمله‌ای دانست؛
+اگر $m=2$ باشد، فرمول بالا
+با فرمول ضریب دوجمله‌ای مطابقت دارد.
 
-\section{Catalan numbers}
+\section{اعداد کاتالان}
 
-\index{Catalan number}
+\index{عدد کاتالان}
 
-The \key{Catalan number}
+\key{عدد کاتالان}
 %\footnote{E. C. Catalan (1814--1894) was a Belgian mathematician.}
-$C_n$ equals the
-number of valid
-parenthesis expressions that consist of
-$n$ left parentheses and $n$ right parentheses.
+$C_n$ برابر با
+تعداد عبارت‌های پرانتزگذاری معتبری است که از
+$n$ پرانتز باز و $n$ پرانتز بسته تشکیل شده‌اند.
 
-For example, $C_3=5$, because
-we can construct the following parenthesis
-expressions using three
-left and right parentheses:
+به عنوان مثال، $C_3=5$ است، زیرا
+می‌توان عبارت‌های پرانتزی زیر را با استفاده از سه
+پرانتز باز و بسته ساخت:
 
 \begin{itemize}[noitemsep]
 \item \texttt{()()()}
@@ -367,102 +320,98 @@ left and right parentheses:
 \item \texttt{(()())}
 \end{itemize}
 
-\subsubsection{Parenthesis expressions}
+\subsubsection{عبارت‌های پرانتزی}
 
-\index{parenthesis expression}
+\index{عبارت پرانتزی}
 
-What is exactly a \emph{valid parenthesis expression}?
-The following rules precisely define all
-valid parenthesis expressions:
+یک \emph{عبارت پرانتزی معتبر} دقیقا چیست؟
+قوانین زیر تمام
+عبارت‌های پرانتزی معتبر را به‌طور دقیق تعریف می‌کنند:
 
 \begin{itemize}
-\item An empty parenthesis expression is valid.
-\item If an expression $A$ is valid,
-then also the expression
-\texttt{(}$A$\texttt{)} is valid.
-\item If expressions $A$ and $B$ are valid,
-then also the expression $AB$ is valid.
+\item یک عبارت پرانتزی خالی معتبر است.
+\item اگر عبارت $A$ معتبر باشد،
+آنگاه عبارت
+\texttt{(}$A$\texttt{)} نیز معتبر است.
+\item اگر عبارت‌های $A$ و $B$ معتبر باشند،
+آنگاه عبارت $AB$ نیز معتبر است.
 \end{itemize}
 
-Another way to characterize valid 
-parenthesis expressions is that if
-we choose any prefix of such an expression,
-it has to contain at least as many left
-parentheses as right parentheses.
-In addition, the complete expression has to
-contain an equal number of left and right
-parentheses.
+روش دیگر برای توصیف عبارت‌های پرانتزی
+معتبر این است که اگر
+هر پیشوندی از چنین عبارتی را انتخاب کنیم،
+باید حداقل به تعداد پرانتزهای بسته، پرانتز باز
+داشته باشد.
+علاوه بر این، کل عبارت باید
+دارای تعداد برابری از پرانتزهای باز و بسته
+باشد.
 
-\subsubsection{Formula 1}
+\subsubsection{فرمول ۱}
 
-Catalan numbers can be calculated using the formula
+اعداد کاتالان را می‌توان با استفاده از این فرمول محاسبه کرد:
 \[ C_n = \sum_{i=0}^{n-1} C_{i} C_{n-i-1}.\]
 
-The sum goes through the ways to divide the
-expression into two parts
-such that both parts are valid
-expressions and the first part is as short as possible
-but not empty.
-For any $i$, the first part contains $i+1$ pairs
-of parentheses and the number of expressions
-is the product of the following values:
+این مجموع، حالات تقسیم
+عبارت به دو بخش را بررسی می‌کند
+به طوری که هر دو بخش، عبارت‌های
+معتبری باشند و بخش اول تا حد امکان کوتاه
+اما غیرخالی باشد.
+به ازای هر $i$، بخش اول شامل $i+1$ جفت
+پرانتز است و تعداد عبارت‌ها
+حاصل‌ضرب مقادیر زیر است:
 
 \begin{itemize}
-\item $C_{i}$: the number of ways to construct an expression
-using the parentheses of the first part,
-not counting the outermost parentheses
-\item $C_{n-i-1}$: the number of ways to construct an
-expression using the parentheses of the second part
+\item $C_{i}$: تعداد روش‌های ساخت یک عبارت
+با استفاده از پرانتزهای بخش اول،
+بدون در نظر گرفتن بیرونی‌ترین پرانتزها
+\item $C_{n-i-1}$: تعداد روش‌های ساخت یک
+عبارت با استفاده از پرانتزهای بخش دوم
 \end{itemize}
 
-The base case is $C_0=1$,
-because we can construct an empty parenthesis
-expression using zero pairs of parentheses.
+حالت پایه $C_0=1$ است،
+زیرا می‌توان با استفاده از صفر جفت پرانتز، یک عبارت پرانتزی
+خالی ساخت.
 
-\subsubsection{Formula 2}
+\subsubsection{فرمول ۲}
 
-Catalan numbers can also be calculated
-using binomial coefficients:
+اعداد کاتالان را می‌توان
+با استفاده از ضرایب دوجمله‌ای نیز محاسبه کرد:
 \[ C_n = \frac{1}{n+1} {2n \choose n}\]
-The formula can be explained as follows:
+این فرمول را می‌توان به صورت زیر توضیح داد:
 
-There are a total of ${2n \choose n}$ ways
-to construct a (not necessarily valid)
-parenthesis expression that contains $n$ left
-parentheses and $n$ right parentheses.
-Let us calculate the number of such
-expressions that are \emph{not} valid.
+در مجموع ${2n \choose n}$ روش
+برای ساخت یک عبارت پرانتزی (نه لزوماً معتبر)
+شامل $n$ پرانتز باز و $n$ پرانتز بسته وجود دارد.
+بیایید تعداد عباراتی از این دست را که معتبر \emph{نیستند}
+محاسبه کنیم.
 
-If a parenthesis expression is not valid,
-it has to contain a prefix where the
-number of right parentheses exceeds the
-number of left parentheses.
-The idea is to reverse each parenthesis
-that belongs to such a prefix.
-For example, the expression
-\texttt{())()(} contains a prefix \texttt{())},
-and after reversing the prefix,
-the expression becomes \texttt{)((()(}.
+اگر یک عبارت پرانتزی معتبر نباشد،
+باید دارای پیشوندی باشد که در آن
+تعداد پرانتزهای بسته از تعداد پرانتزهای باز بیشتر شود.
+ایده این است که جهت هر پرانتز متعلق به چنین پیشوندی را معکوس کنیم.
+برای نمونه، عبارت
+\texttt{())()(} شامل پیشوند \texttt{())} است،
+و پس از معکوس کردن این پیشوند،
+عبارت به شکل \texttt{)((()(} درمی‌آید.
 
-The resulting expression consists of $n+1$
-left parentheses and $n-1$ right parentheses.
-The number of such expressions is ${2n \choose n+1}$,
-which equals the number of non-valid
-parenthesis expressions.
-Thus, the number of valid parenthesis
-expressions can be calculated using the formula
+عبارت حاصل از $n+1$
+پرانتز باز و $n-1$ پرانتز بسته تشکیل شده است.
+تعداد چنین عباراتی برابر با ${2n \choose n+1}$ است،
+که معادل تعداد عبارات پرانتزی نامعتبر می‌باشد.
+بنابراین، تعداد عبارات پرانتزی معتبر
+را می‌توان با فرمول زیر محاسبه کرد:
 \[{2n \choose n}-{2n \choose n+1} = {2n \choose n} - \frac{n}{n+1} {2n \choose n} = \frac{1}{n+1} {2n \choose n}.\]
 
-\subsubsection{Counting trees}
+\subsubsection{شمارش درخت‌ها}
 
-Catalan numbers are also related to trees:
+اعداد کاتالان با درخت‌ها نیز مرتبط هستند:
 
 \begin{itemize}
-\item there are $C_n$ binary trees of $n$ nodes
-\item there are $C_{n-1}$ rooted trees of $n$ nodes
+\item $C_n$ درخت دودویی با $n$ رأس وجود دارد
+\item $C_{n-1}$ درخت ریشه‌دار با $n$ رأس وجود دارد
 \end{itemize}
 \noindent
-For example, for $C_3=5$, the binary trees are
+به عنوان مثال، برای $C_3=5$، درخت‌های دودویی عبارتند از:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
@@ -493,7 +442,7 @@ For example, for $C_3=5$, the binary trees are
 \draw[fill=white] (11.5+1.5,-2) circle (0.3);
 \end{tikzpicture}
 \end{center}
-and the rooted trees are
+و درخت‌های ریشه‌دار عبارتند از:
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \path[draw,thick,-] (0,0) -- (-1,-1);
@@ -534,19 +483,18 @@ and the rooted trees are
 \end{tikzpicture}
 \end{center}
 
-\section{Inclusion-exclusion}
+\section{اصل شمول و عدم شمول}
 
-\index{inclusion-exclusion}
+\index{شمول و عدم شمول}
 
-\key{Inclusion-exclusion} is a technique
-that can be used for counting the size
-of a union of sets when the sizes of
-the intersections are known, and vice versa.
-A simple example of the technique is the formula
+\key{اصل شمول و عدم شمول} روشی برای
+شمارش اندازه اجتماع مجموعه‌هاست،
+وقتی اندازه اشتراک‌ها معلوم باشد (و برعکس).
+نمونه ساده فرمول:
 \[ |A \cup B| = |A| + |B| - |A \cap B|,\]
-where $A$ and $B$ are sets and $|X|$
-denotes the size of $X$.
-The formula can be illustrated as follows:
+که $A$ و $B$ مجموعه هستند و $|X|$
+اندازه $X$ را نشان می‌دهد.
+نمایش فرمول:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.8]
@@ -561,20 +509,16 @@ The formula can be illustrated as follows:
 \end{tikzpicture}
 \end{center}
 
-Our goal is to calculate
-the size of the union $A \cup B$
-that corresponds to the area of the region
-that belongs to at least one circle.
-The picture shows that we can calculate
-the area of $A \cup B$ by first summing the
-areas of $A$ and $B$ and then subtracting
-the area of $A \cap B$.
+هدف: محاسبه اندازه اجتماع $A \cup B$؛
+هم‌ارز مساحت ناحیه درون حداقل یک دایره.
+تصویر نشان می‌دهد: مساحت $A \cup B$ برابر
+مجموع مساحت‌های $A$ و $B$ منهای
+مساحت $A \cap B$.
 
-The same idea can be applied when the number
-of sets is larger.
-When there are three sets, the inclusion-exclusion formula is
+ایده برای تعداد بیشتر مجموعه‌ها هم کار می‌کند.
+برای سه مجموعه، فرمول شمول و عدم شمول:
 \[ |A \cup B \cup C| = |A| + |B| + |C| - |A \cap B|  - |A \cap C|  - |B \cap C| + |A \cap B \cap C| \]
-and the corresponding picture is
+تصویر متناظر:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.8]
@@ -594,37 +538,29 @@ and the corresponding picture is
 \end{tikzpicture}
 \end{center}
 
-In the general case, the size of the 
-union $X_1 \cup X_2 \cup \cdots \cup X_n$
-can be calculated by going through all possible
-intersections that contain some of the sets $X_1,X_2,\ldots,X_n$.
-If the intersection contains an odd number of sets,
-its size is added to the answer,
-and otherwise its size is subtracted from the answer.
+حالت کلی: محاسبه اندازه اجتماع
+$X_1 \cup X_2 \cup \cdots \cup X_n$
+با پیمایش تمام اشتراک‌های ممکن از زیرمجموعه‌های
+$X_1,X_2,\ldots,X_n$.
+اگر اشتراک شامل تعداد فردی مجموعه باشد،
+اندازه‌اش به جواب اضافه می‌شود؛
+در غیر این صورت، از جواب کم می‌شود.
 
-Note that there are similar formulas
-for calculating
-the size of an intersection from the sizes of
-unions. For example,
+توجه کنید که فرمول‌های مشابهی نیز برای محاسبه اندازه اشتراک بر اساس اندازه اجتماع‌ها وجود دارد. به عنوان مثال،
 \[ |A \cap B| = |A| + |B| - |A \cup B|\]
-and
+و
 \[ |A \cap B \cap C| = |A| + |B| + |C| - |A \cup B|  - |A \cup C|  - |B \cup C| + |A \cup B \cup C| .\]
 
-\subsubsection{Derangements}
+\subsubsection{پریش‌ها}
 
-\index{derangement}
+\index{پریش}
 
-As an example, let us count the number of \key{derangements}
-of elements $\{1,2,\ldots,n\}$, i.e., permutations
-where no element remains in its original place.
-For example, when $n=3$, there are
-two derangements: $(2,3,1)$ and $(3,1,2)$.
+به عنوان مثال، بیایید تعداد \key{پریش‌های} (derangements) اعضای مجموعه $\{1,2,\ldots,n\}$ را بشماریم؛ یعنی جایگشت‌هایی که در آن‌ها هیچ عنصری در جایگاه اصلی خود باقی نمی‌ماند.
+برای نمونه، وقتی $n=3$ باشد، دو پریش وجود دارد: $(2,3,1)$ و $(3,1,2)$.
 
-One approach for solving the problem is to use
-inclusion-exclusion.
-Let $X_k$ be the set of permutations
-that contain the element $k$ at position $k$.
-For example, when $n=3$, the sets are as follows:
+یک روش برای حل مسئله، استفاده از اصل شمول و عدم شمول است.
+فرض کنید $X_k$ مجموعه جایگشت‌هایی باشد که عنصر $k$ در موقعیت $k$ قرار دارد.
+برای مثال، وقتی $n=3$ باشد، این مجموعه‌ها به صورت زیر هستند:
 \[
 \begin{array}{lcl}
 X_1 & = & \{(1,2,3),(1,3,2)\} \\
@@ -632,14 +568,11 @@ X_2 & = & \{(1,2,3),(3,2,1)\} \\
 X_3 & = & \{(1,2,3),(2,1,3)\} \\
 \end{array}
 \]
-Using these sets, the number of derangements equals
+با استفاده از این مجموعه‌ها، تعداد پریش‌ها برابر است با
 \[ n! - |X_1 \cup X_2 \cup \cdots \cup X_n|, \]
-so it suffices to calculate the size of the union.
-Using inclusion-exclusion, this reduces to
-calculating sizes of intersections which can be
-done efficiently.
-For example, when $n=3$, the size of
-$|X_1 \cup X_2 \cup X_3|$ is
+بنابراین کافی است اندازه اجتماع محاسبه شود.
+با استفاده از اصل شمول و عدم شمول، مسئله به محاسبه اندازه اشتراک‌ها تبدیل می‌شود که به صورت کارآمد قابل انجام است.
+برای نمونه، زمانی که $n=3$ باشد، اندازه $|X_1 \cup X_2 \cup X_3|$ برابر است با
 \[
 \begin{array}{lcl}
  & & |X_1| + |X_2| + |X_3| - |X_1 \cap X_2|  - |X_1 \cap X_3|  - |X_2 \cap X_3| + |X_1 \cap X_2 \cap X_3| \\
@@ -647,13 +580,10 @@ $|X_1 \cup X_2 \cup X_3|$ is
  & = & 4, \\
 \end{array}
 \]
-so the number of solutions is $3!-4=2$.
+بنابراین تعداد جواب‌ها $3!-4=2$ است.
 
-It turns out that the problem can also be solved
-without using inclusion-exclusion.
-Let $f(n)$ denote the number of derangements
-for $\{1,2,\ldots,n\}$. We can use the following
-recursive formula:
+مشخص می‌شود که این مسئله را می‌توان بدون استفاده از اصل شمول و عدم شمول نیز حل کرد.
+فرض کنید $f(n)$ نشان‌دهنده تعداد پریش‌ها برای $\{1,2,\ldots,n\}$ باشد. می‌توان از رابطه بازگشتی زیر استفاده کرد:
 
 \begin{equation*}
     f(n) = \begin{cases}
@@ -663,49 +593,29 @@ recursive formula:
            \end{cases}
 \end{equation*}
 
-The formula can be derived by considering
-the possibilities how the element 1 changes
-in the derangement.
-There are $n-1$ ways to choose an element $x$
-that replaces the element 1.
-In each such choice, there are two options:
+این رابطه را می‌توان با بررسی حالت‌های ممکن برای تغییر جایگاه عنصر ۱ به دست آورد.
+تعداد $n-1$ روش برای انتخاب عنصر $x$ که جایگزین عنصر ۱ می‌شود وجود دارد.
+در هر یک از این انتخاب‌ها، دو حالت ممکن است رخ دهد:
 
-\textit{Option 1:} We also replace the element $x$
-with the element 1.
-After this, the remaining task is to construct
-a derangement of $n-2$ elements.
+\textit{حالت ۱:} عنصر $x$ نیز با عنصر ۱ جایگزین شود.
+پس از این، وظیفه باقی‌مانده ساخت یک پریش از $n-2$ عنصر است.
 
-\textit{Option 2:} We replace the element $x$
-with some other element than 1.
-Now we have to construct a derangement
-of $n-1$ element, because we cannot replace
-the element $x$ with the element $1$, and all other
-elements must be changed.
+\textit{حالت ۲:} عنصر $x$ با عنصری غیر از ۱ جایگزین شود.
+اکنون باید یک پریش از $n-1$ عنصر بسازیم، زیرا نمی‌توانیم عنصر $x$ را با عنصر ۱ جایگزین کنیم، و تمام عناصر دیگر نیز باید تغییر موقعیت دهند.
 
-\section{Burnside's lemma}
+\section{لم برنساید}
 
-\index{Burnside's lemma}
+\index{لم برنساید}
 
-\key{Burnside's lemma}
-%\footnote{Actually, Burnside did not discover this lemma; he only mentioned it in his book \cite{bur97}.}
-can be used to count
-the number of combinations so that
-only one representative is counted
-for each group of symmetric combinations.
-Burnside's lemma states that the number of
-combinations is
+\key{لم برنساید}
+%\footnote{در واقع برنساید این لم را کشف نکرد؛ او صرفاً آن را در کتاب خود \cite{bur97} ذکر کرد.}
+می‌تواند برای شمارش تعداد ترکیب‌ها به کار رود، به‌گونه‌ای که برای هر گروه از ترکیب‌های متقارن فقط یک نماینده شمرده شود.
+لم برنساید بیان می‌کند که تعداد ترکیب‌ها برابر است با:
 \[\sum_{k=1}^n \frac{c(k)}{n},\]
-where there are $n$ ways to change the
-position of a combination,
-and there are $c(k)$ combinations that
-remain unchanged when the $k$th way is applied.
+که در آن $n$ روش برای تغییر وضعیت یک ترکیب وجود دارد، و $c(k)$ تعداد ترکیب‌هایی است که با اعمال روش $k$ام بدون تغییر باقی می‌مانند.
 
-As an example, let us calculate the number of
-necklaces of $n$ pearls,
-where each pearl has $m$ possible colors.
-Two necklaces are symmetric if they are
-similar after rotating them.
-For example, the necklace
+به عنوان مثال، تعداد گردنبندهای با $n$ مروارید را محاسبه می‌کنیم، که در آن هر مروارید $m$ رنگ ممکن دارد. دو گردنبند متقارن‌اند اگر با دوران مشابه یکدیگر شوند.
+برای مثال، گردنبند
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \draw[fill=white] (0,0) circle (1);
@@ -715,7 +625,7 @@ For example, the necklace
 \draw[fill=green] (-1,0) circle (0.3);
 \end{tikzpicture}
 \end{center}
-has the following symmetric necklaces:
+گردنبندهای متقارن زیر را دارد:
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \draw[fill=white] (0,0) circle (1);
@@ -743,50 +653,36 @@ has the following symmetric necklaces:
 \draw[fill=red] (12+-1,0) circle (0.3);
 \end{tikzpicture}
 \end{center}
-There are $n$ ways to change the position
-of a necklace,
-because we can rotate it
-$0,1,\ldots,n-1$ steps clockwise.
-If the number of steps is 0,
-all $m^n$ necklaces remain the same,
-and if the number of steps is 1,
-only the $m$ necklaces where each
-pearl has the same color remain the same.
+$n$ روش برای تغییر وضعیت گردنبند وجود دارد، زیرا می‌توان آن را $0,1,\ldots,n-1$ گام در جهت عقربه‌های ساعت چرخاند.
+اگر تعداد گام‌ها 0 باشد، همه $m^n$ گردنبند یکسان می‌مانند، و اگر تعداد گام‌ها 1 باشد، تنها $m$ گردنبندی که در آن‌ها همه مرواریدها یک‌رنگ هستند بدون تغییر باقی می‌مانند.
 
-More generally, when the number of steps is $k$,
-a total of
+به طور کلی‌تر، وقتی تعداد گام‌ها $k$ است، در مجموع
 \[m^{\textrm{gcd}(k,n)}\]
-necklaces remain the same,
-where $\textrm{gcd}(k,n)$ is the greatest common
-divisor of $k$ and $n$.
-The reason for this is that blocks
-of pearls of size $\textrm{gcd}(k,n)$
-will replace each other.
-Thus, according to Burnside's lemma,
-the number of necklaces is
+گردنبند بدون تغییر باقی می‌مانند، که $\textrm{gcd}(k,n)$ ب.م.م $k$ و $n$ است.
+دلیل این است که بلوک‌هایی از مرواریدها با اندازه $\textrm{gcd}(k,n)$ جایگزین یکدیگر می‌شوند.
+بنابراین، بر طبق لم برنساید، تعداد گردنبندها برابر است با:
 \[\sum_{i=0}^{n-1} \frac{m^{\textrm{gcd}(i,n)}}{n}. \]
-For example, the number of necklaces of length 4
-with 3 colors is
+برای مثال، تعداد گردنبندهای به طول 4 با 3 رنگ برابر است با:
 \[\frac{3^4+3+3^2+3}{4} = 24. \]
 
-\section{Cayley's formula}
+\section{فرمول کیلی}
 
-\index{Cayley's formula}
+\index{فرمول کیلی}
 
-\key{Cayley's formula}
+\key{فرمول کیلی}
 % \footnote{While the formula is named after A. Cayley,
 % who studied it in 1889, it was discovered earlier by C. W. Borchardt in 1860.}
-states that
-there are $n^{n-2}$ labeled trees
-that contain $n$ nodes.
-The nodes are labeled $1,2,\ldots,n$,
-and two trees are different
-if either their structure or
-labeling is different.
+بیان می‌کند که
+$n^{n-2}$ درخت برچسب‌دار
+شامل $n$ رأس وجود دارد.
+رأس‌ها با $1,2,\ldots,n$ برچسب‌گذاری شده‌اند،
+و دو درخت متفاوت در نظر گرفته می‌شوند
+اگر ساختار یا
+برچسب‌گذاری آن‌ها متفاوت باشد.
 
 \begin{samepage}
-For example, when $n=4$, the number of labeled
-trees is $4^{4-2}=16$:
+برای مثال، وقتی $n=4$ باشد، تعداد درخت‌های برچسب‌دار
+برابر $4^{4-2}=16$ است:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.8]
@@ -832,24 +728,24 @@ trees is $4^{4-2}=16$:
 \end{center}
 \end{samepage}
 
-Next we will see how Cayley's formula can
-be derived using Prüfer codes.
+در ادامه بررسی می‌شود چگونه فرمول کیلی
+با استفاده از کدهای پروفر اثبات می‌شود.
 
-\subsubsection{Prüfer code}
+\subsubsection{کد پروفر}
 
-\index{Prüfer code}
+\index{کد پروفر}
 
-A \key{Prüfer code}
+یک \key{کد پروفر}
 %\footnote{In 1918, H. Prüfer proved Cayley's theorem using Prüfer codes \cite{pru18}.}
-is a sequence of
-$n-2$ numbers that describes a labeled tree.
-The code is constructed by following a process
-that removes $n-2$ leaves from the tree.
-At each step, the leaf with the smallest label is removed,
-and the label of its only neighbor is added to the code.
+دنباله‌ای از
+$n-2$ عدد است که یک درخت برچسب‌دار را توصیف می‌کند.
+این کد طی فرایندی ساخته می‌شود
+که در آن $n-2$ برگ از درخت حذف می‌شوند.
+در هر مرحله، برگ با کوچک‌ترین برچسب حذف می‌شود،
+و برچسب تنها همسایه آن به کد اضافه می‌گردد.
 
-For example, let us calculate the Prüfer code
-of the following graph:
+برای مثال، کد پروفر
+گراف زیر محاسبه می‌شود:
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
 \node[draw, circle] (1) at (2,3) {$1$};
@@ -865,7 +761,7 @@ of the following graph:
 \end{tikzpicture}
 \end{center}
 
-First we remove node 1 and add node 4 to the code:
+ابتدا رأس 1 حذف شده و رأس 4 به کد اضافه می‌شود:
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
 %\node[draw, circle] (1) at (2,3) {$1$};
@@ -881,7 +777,7 @@ First we remove node 1 and add node 4 to the code:
 \end{tikzpicture}
 \end{center}
 
-Then we remove node 3 and add node 4 to the code:
+سپس رأس ۳ را حذف و رأس ۴ را به کد اضافه می‌کنیم:
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
 %\node[draw, circle] (1) at (2,3) {$1$};
@@ -897,7 +793,7 @@ Then we remove node 3 and add node 4 to the code:
 \end{tikzpicture}
 \end{center}
 
-Finally we remove node 4 and add node 2 to the code:
+در نهایت رأس ۴ را حذف و رأس ۲ را به کد اضافه می‌کنیم:
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
 %\node[draw, circle] (1) at (2,3) {$1$};
@@ -913,13 +809,13 @@ Finally we remove node 4 and add node 2 to the code:
 \end{tikzpicture}
 \end{center}
 
-Thus, the Prüfer code of the graph is $[4,4,2]$.
+بنابراین، کد پروفر گراف برابر $[4,4,2]$ است.
 
-We can construct a Prüfer code for any tree,
-and more importantly,
-the original tree can be reconstructed
-from a Prüfer code.
-Hence, the number of labeled trees
-of $n$ nodes equals
-$n^{n-2}$, the number of Prüfer codes
-of size $n$.
+برای هر درخت می‌توان یک کد پروفر ساخت
+و مهم‌تر آنکه،
+درخت اصلی را می‌توان
+از روی کد پروفر بازسازی کرد.
+از این رو، تعداد درخت‌های برچسب‌دار
+با $n$ رأس برابر است با
+$n^{n-2}$، یعنی تعداد کدهای پروفر
+به طول $n-2$ برای $n$ رأس.
