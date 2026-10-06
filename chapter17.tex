@@ -1,21 +1,19 @@
-\chapter{Strong connectivity}
+\chapter{همبندی قوی}
 
-\index{strongly connected graph}
+\index{گراف قویاً همبند}
 
-In a directed graph,
-the edges can be traversed in one direction only,
-so even if the graph is connected,
-this does not guarantee that there would be
-a path from a node to another node.
-For this reason, it is meaningful to define a new concept
-that requires more than connectivity.
+در گراف جهت‌دار،
+یال‌ها فقط در یک جهت پیمایش می‌شوند؛
+بنابراین حتی اگر گراف همبند باشد،
+وجود مسیر بین هر دو گره تضمین نمی‌شود.
+به همین دلیل، تعریف مفهومی قوی‌تر از همبندی نیاز است.
 
-A graph is \key{strongly connected}
-if there is a path from any node to all
-other nodes in the graph.
-For example, in the following picture,
-the left graph is strongly connected
-while the right graph is not.
+گراف \key{قویاً همبند} است
+اگر بین هر گره و تمام گره‌های دیگر
+مسیر وجود داشته باشد.
+برای نمونه، در تصویر زیر،
+گراف سمت چپ قویاً همبند است
+ولی گراف سمت راست نیست.
 
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
@@ -41,21 +39,20 @@ while the right graph is not.
 \end{tikzpicture}
 \end{center}
 
-The right graph is not strongly connected
-because, for example, there is no path
-from node 2 to node 1.
+گراف سمت راست قویاً همبند نیست
+چون مثلاً مسیری
+از گره 2 به گره 1 وجود ندارد.
 
-\index{strongly connected component}
-\index{component graph}
+\index{مؤلفه قویاً همبند}
+\index{گراف مؤلفه‌ها}
 
-The \key{strongly connected components}
-of a graph divide the graph into strongly connected
-parts that are as large as possible.
-The strongly connected components form an
-acyclic \key{component graph} that represents
-the deep structure of the original graph.
+\key{مؤلفه‌های قویاً همبند}
+یک گراف، آن را به بزرگ‌ترین بخش‌های قویاً همبند
+افراز می‌کنند.
+این مؤلفه‌ها یک \key{گراف مؤلفه‌ها}ی بدون دور تشکیل می‌دهند
+که ساختار عمیق گراف اصلی را نشان می‌دهد.
 
-For example, for the graph
+برای نمونه، در گراف
 \begin{center}
 \begin{tikzpicture}[scale=0.9,label distance=-2mm]
 \node[draw, circle] (1) at (-1,1) {$7$};
@@ -78,7 +75,7 @@ For example, for the graph
 \path[draw,thick,->] (6) -- (7);
 \end{tikzpicture}
 \end{center}
-the strongly connected components are as follows:
+مؤلفه‌های قویاً همبند این‌گونه هستند:
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
 \node[draw, circle] (1) at (-1,1) {$7$};
@@ -106,7 +103,7 @@ the strongly connected components are as follows:
 \draw [red,thick,dashed,line width=2pt] (-6.5,0.5) rectangle (-7.5,-0.5);
 \end{tikzpicture}
 \end{center}
-The corresponding component graph is as follows:
+گراف مؤلفه‌ای متناظر به صورت زیر است:
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
 \node[draw, circle] (1) at (-3,1) {$B$};
@@ -121,44 +118,41 @@ The corresponding component graph is as follows:
 \path[draw,thick,->] (3) -- (4);
 \end{tikzpicture}
 \end{center}
-The components are $A=\{1,2\}$,
-$B=\{3,6,7\}$, $C=\{4\}$ and $D=\{5\}$.
+مؤلفه‌ها عبارتند از $A=\{1,2\}$،
+$B=\{3,6,7\}$، $C=\{4\}$ و $D=\{5\}$.
 
-A component graph is an acyclic, directed graph,
-so it is easier to process than the original graph.
-Since the graph does not contain cycles,
-we can always construct a topological sort and
-use dynamic programming techniques like those
-presented in Chapter 16.
+یک گراف مؤلفه‌ای، گرافی جهت‌دار و بدون دور است،
+بنابراین پردازش آن نسبت به گراف اصلی آسان‌تر است.
+از آنجا که گراف فاقد دور است،
+همواره می‌توان یک مرتب‌سازی توپولوژیکی ایجاد کرد و
+روش‌های برنامه‌نویسی پویا مانند روش‌های
+ارائه‌شده در فصل ۱۶ را به کار برد.
 
-\section{Kosaraju's algorithm}
+\section{الگوریتم کوساراجو}
 
-\index{Kosaraju's algorithm}
+\index{الگوریتم کوساراجو}
 
-\key{Kosaraju's algorithm}\footnote{According to \cite{aho83},
-S. R. Kosaraju invented this algorithm in 1978
-but did not publish it. In 1981, the same algorithm was rediscovered
-and published by M. Sharir \cite{sha81}.} is an efficient
-method for finding the strongly connected components
-of a directed graph.
-The algorithm performs two depth-first searches:
-the first search constructs a list of nodes
-according to the structure of the graph,
-and the second search forms the strongly connected components.
+\key{الگوریتم کوساراجو}\footnote{طبق \cite{aho83}،
+اس. آر. کوساراجو این الگوریتم را در سال ۱۹۷۸ ابداع کرد
+ولی آن را منتشر نکرد. در سال ۱۹۸۱، همین الگوریتم مجدداً
+توسط ام. شریر کشف و منتشر شد \cite{sha81}.} روشی کارآمد
+برای یافتن مؤلفه‌های قویاً همبند
+یک گراف جهت‌دار است.
+الگوریتم دو جستجوی اول‌سطح‌عمق انجام می‌دهد:
+جستجوی اول فهرستی از گره‌ها را با توجه به ساختار گراف می‌سازد،
+و جستجوی دوم مؤلفه‌های قویاً همبند را تشکیل می‌دهد.
 
-\subsubsection{Search 1}
+\subsubsection{جستجوی ۱}
 
-The first phase of Kosaraju's algorithm constructs
-a list of nodes in the order in which a
-depth-first search processes them.
-The algorithm goes through the nodes,
-and begins a depth-first search at each 
-unprocessed node.
-Each node will be added to the list
-after it has been processed.
+مرحله اول الگوریتم کوساراجو،
+فهرستی از گره‌ها را به ترتیبی که جستجوی اول‌سطح‌عمق آن‌ها را پردازش می‌کند، می‌سازد.
+الگوریتم روی گره‌ها پیمایش می‌کند،
+و در هر گره پردازش‌نشده یک جستجوی اول‌سطح‌عمق را آغاز می‌کند.
+هر گره پس از پردازش،
+به فهرست اضافه می‌شود.
 
-In the example graph, the nodes are processed
-in the following order:
+در گراف نمونه، گره‌ها
+به ترتیب زیر پردازش می‌شوند:
 \begin{center}
 \begin{tikzpicture}[scale=0.9,label distance=-2mm]
 \node[draw, circle] (1) at (-1,1) {$7$};
@@ -190,14 +184,14 @@ in the following order:
 \end{tikzpicture}
 \end{center}
 
-The notation $x/y$ means that
-processing the node started
-at time $x$ and finished at time $y$.
-Thus, the corresponding list is as follows:
+نمادگذاری $x/y$ یعنی
+پردازش رأس در زمان $x$ شروع
+و در زمان $y$ پایان یافت.
+بنابراین لیست متناظر بدین صورت است:
 
 \begin{tabular}{ll}
 \\
-node & processing time \\
+رأس & زمان پردازش \\
 \hline
 4 & 5 \\
 5 & 6 \\
@@ -213,19 +207,16 @@ node & processing time \\
 % the nodes will be processed
 % in reverse order: $[3,7,6,1,2,5,4]$.
 
-\subsubsection{Search 2}
+\subsubsection{جستجوی ۲}
 
-The second phase of the algorithm
-forms the strongly connected components
-of the graph.
-First, the algorithm reverses every
-edge in the graph.
-This guarantees that during the second search,
-we will always find strongly connected
-components that do not have extra nodes.
+مرحله دوم الگوریتم،
+مؤلفه‌های قویاً همبند گراف را تشکیل می‌دهد.
+ابتدا الگوریتم تمام یال‌های گراف را معکوس می‌کند.
+این کار تضمین می‌کند که طی جستجوی دوم،
+همواره مؤلفه‌های قویاً همبندی بدون رأس‌های اضافه پیدا کنیم.
 
-After reversing the edges,
-the example graph is as follows:
+پس از معکوس کردن یال‌ها،
+گراف نمونه بدین صورت درمی‌آید:
 \begin{center}
 \begin{tikzpicture}[scale=0.9,label distance=-2mm]
 \node[draw, circle] (1) at (-1,1) {$7$};
@@ -249,17 +240,16 @@ the example graph is as follows:
 \end{tikzpicture}
 \end{center}
 
-After this, the algorithm goes through
-the list of nodes created by the first search,
-in \emph{reverse} order.
-If a node does not belong to a component,
-the algorithm creates a new component
-and starts a depth-first search
-that adds all new nodes found during the search
-to the new component.
+سپس الگوریتم لیست رأس‌های حاصل از جستجوی اول را
+به ترتیب \emph{معکوس} پیمایش می‌کند.
+اگر رأسی متعلق به مؤلفه‌ای نباشد،
+الگوریتم مؤلفه جدیدی ایجاد می‌کند
+و یک جستجوی اول‌سطح‌عمق آغاز می‌کند
+که تمام رأس‌های جدید یافته‌شده طی جستجو را
+به مؤلفه جدید اضافه می‌کند.
 
-In the example graph, the first component
-begins at node 3:
+در گراف نمونه، مؤلفه نخست
+از رأس ۳ آغاز می‌شود:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.9,label distance=-2mm]
@@ -286,13 +276,13 @@ begins at node 3:
 \end{tikzpicture}
 \end{center}
 
-Note that since all edges are reversed,
-the component does not ''leak'' to other parts in the graph.
+توجه کنید چون تمام یال‌ها معکوس شده‌اند،
+مؤلفه به بخش‌های دیگر گراف نشت نمی‌کند.
 
 \begin{samepage}
-The next nodes in the list are nodes 7 and 6,
-but they already belong to a component,
-so the next new component begins at node 1:
+راس‌های بعدی در لیست راس‌های 7 و 6 هستند،
+اما این راس‌ها از قبل به یک مؤلفه تعلق دارند،
+بنابراین مؤلفه جدید بعدی از راس 1 آغاز می‌شود:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.9,label distance=-2mm]
@@ -324,8 +314,8 @@ so the next new component begins at node 1:
 \end{samepage}
 
 \begin{samepage}
-Finally, the algorithm processes nodes 5 and 4
-that create the remaining strongly connected components:
+در نهایت، الگوریتم راس‌های 5 و 4 را پردازش می‌کند
+که مؤلفه‌های قویا همبند باقی‌مانده را تشکیل می‌دهند:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.9,label distance=-2mm]
@@ -356,34 +346,24 @@ that create the remaining strongly connected components:
 \end{center}
 \end{samepage}
 
-The time complexity of the algorithm is $O(n+m)$,
-because the algorithm
-performs two depth-first searches.
+پیچیدگی زمانی الگوریتم $O(n+m)$ است،
+چرا که الگوریتم
+دو جستجوی اول عمق انجام می‌دهد.
 
-\section{2SAT problem}
+\section{مسئله 2SAT}
 
-\index{2SAT problem}
+\index{مسئله 2SAT}
 
-Strong connectivity is also linked with the
-\key{2SAT problem}\footnote{The algorithm presented here was
-introduced in \cite{asp79}.
-There is also another well-known linear-time algorithm \cite{eve75}
-that is based on backtracking.}.
-In this problem, we are given a logical formula
+همبندی قوی با \key{مسئله 2SAT}\footnote{الگوریتم ارائه‌شده در اینجا در \cite{asp79} معرفی شد. الگوریتم زمان‌خطی شناخته‌شده دیگری نیز بر پایه عقب‌گرد (backtracking) وجود دارد \cite{eve75}.} مرتبط است.
+در این مسئله، فرمول منطقی زیر داده می‌شود:
 \[
 (a_1 \lor b_1) \land (a_2 \lor b_2) \land \cdots \land (a_m \lor b_m),
 \]
-where each $a_i$ and $b_i$ is either a logical variable
-($x_1,x_2,\ldots,x_n$)
-or a negation of a logical variable
-($\lnot x_1, \lnot x_2, \ldots, \lnot x_n$).
-The symbols ''$\land$'' and ''$\lor$'' denote
-logical operators ''and'' and ''or''.
-Our task is to assign each variable a value
-so that the formula is true, or state
-that this is not possible.
+که هر $a_i$ و $b_i$ متغیر منطقی ($x_1,x_2,\ldots,x_n$) یا نقیض متغیر منطقی ($\lnot x_1, \lnot x_2, \ldots, \lnot x_n$) است.
+نمادهای ''$\land$'' و ''$\lor$'' نشان‌دهنده عملگرهای منطقی «و» و «یا» هستند.
+هدف، مقداردهی به متغیرها برای صدق فرمول، یا اعلام عدم امکان آن است.
 
-For example, the formula
+مثال: فرمول
 \[
 L_1 = (x_2 \lor \lnot x_1) \land
       (\lnot x_1 \lor \lnot x_2) \land
@@ -391,7 +371,7 @@ L_1 = (x_2 \lor \lnot x_1) \land
       (\lnot x_2 \lor \lnot x_3) \land
       (x_1 \lor x_4)
 \]
-is true when the variables are assigned as follows:
+با مقداردهی زیر درست است:
 
 \[
 \begin{cases}
@@ -402,34 +382,24 @@ x_4 = \textrm{true} \\
 \end{cases}
 \]
 
-However, the formula
+اما فرمول
 \[
 L_2 = (x_1 \lor x_2) \land
       (x_1 \lor \lnot x_2) \land
       (\lnot x_1 \lor x_3) \land
       (\lnot x_1 \lor \lnot x_3)
 \]
-is always false, regardless of how we
-assign the values.
-The reason for this is that we cannot
-choose a value for $x_1$
-without creating a contradiction.
-If $x_1$ is false, both $x_2$ and $\lnot x_2$
-should be true which is impossible,
-and if $x_1$ is true, both $x_3$ and $\lnot x_3$
-should be true which is also impossible.
+با هر مقداردهی نادرست است.
+دلیل: انتخاب مقدار برای $x_1$ بدون تناقض ممکن نیست.
+اگر $x_1$ نادرست باشد، هر دو $x_2$ و $\lnot x_2$ باید درست باشند که ناممکن است.
+اگر $x_1$ درست باشد، هر دو $x_3$ و $\lnot x_3$ باید درست باشند که این نیز ناممکن است.
 
-The 2SAT problem can be represented as a graph
-whose nodes correspond to
-variables $x_i$ and negations $\lnot x_i$,
-and edges determine the connections
-between the variables.
-Each pair $(a_i \lor b_i)$ generates two edges:
-$\lnot a_i \to b_i$ and $\lnot b_i \to a_i$.
-This means that if $a_i$ does not hold,
-$b_i$ must hold, and vice versa.
+مسئله 2SAT با گرافی مدل می‌شود که رأس‌های آن متغیرهای $x_i$ و نقیض‌هایشان $\lnot x_i$ هستند، و یال‌ها روابط بین متغیرها را تعیین می‌کنند.
+هر مؤلفه $(a_i \lor b_i)$ دو یال ایجاد می‌کند:
+$\lnot a_i \to b_i$ و $\lnot b_i \to a_i$.
+یعنی اگر $a_i$ برقرار نباشد، $b_i$ باید برقرار باشد، و برعکس.
 
-The graph for the formula $L_1$ is:
+گراف فرمول $L_1$:
 \\
 \begin{center}
 \begin{tikzpicture}[scale=1.0,minimum size=2pt]
@@ -454,7 +424,7 @@ The graph for the formula $L_1$ is:
 \path[draw,thick,->] (7) -- (5);
 \end{tikzpicture}
 \end{center}
-And the graph for the formula $L_2$ is:
+گراف فرمول $L_2$:
 \\
 \begin{center}
 \begin{tikzpicture}[scale=1.0,minimum size=2pt]
@@ -476,47 +446,19 @@ And the graph for the formula $L_2$ is:
 \end{tikzpicture}
 \end{center}
 
-The structure of the graph tells us whether
-it is possible to assign the values
-of the variables so
-that the formula is true.
-It turns out that this can be done
-exactly when there are no nodes
-$x_i$ and $\lnot x_i$ such that
-both nodes belong to the
-same strongly connected component.
-If there are such nodes,
-the graph contains
-a path from $x_i$ to $\lnot x_i$
-and also a path from $\lnot x_i$ to $x_i$,
-so both $x_i$ and $\lnot x_i$ should be true
-which is not possible.
+ساختار گراف امکان مقداردهی درست به متغیرها را مشخص می‌کند.
+شرط لازم و کافی: هیچ دو گره $x_i$ و $\lnot x_i$ داخل یک مولفه قویا همبند مشترک نباشند.
+اگر باشند، مسیر بین $x_i$ به $\lnot x_i$ و برعکس هست؛ یعنی هر دو باید درست باشند، که تناقض است.
 
-In the graph of the formula $L_1$
-there are no nodes $x_i$ and $\lnot x_i$
-such that both nodes 
-belong to the same strongly connected component,
-so a solution exists.
-In the graph of the formula $L_2$
-all nodes belong to the same strongly connected component,
-so a solution does not exist.
+گراف $L_1$: هیچ $x_i$ و $\lnot x_i$ در یک مولفه قویا همبند نیستند؛ جواب دارد.
+گراف $L_2$: همه گره‌ها در یک مولفه قویا همبند مشترک هستند؛ جواب ندارد.
 
-If a solution exists, the values for the variables
-can be found by going through the nodes of the
-component graph in a reverse topological sort order.
-At each step, we process a component 
-that does not contain edges that lead to an
-unprocessed component.
-If the variables in the component
-have not been assigned values,
-their values will be determined
-according to the values in the component,
-and if they already have values,
-they remain unchanged.
-The process continues until each variable
-has been assigned a value.
+یافتن مقادیر متغیرها در صورت وجود جواب: پیمایش گره‌های گراف مولفه‌ها با مرتب‌سازی توپولوژیکی معکوس.
+هر مرحله: پردازش مولفه‌ای بدون یال خروجی به مولفه پردازش‌نشده.
+متغیرهای مولفه اگر بیست‌مقدار باشند، طبق مولفه مقدار می‌گیرند. اگر مقدار دارند، بدون تغییر می‌مانند.
+تکرار تا مقداردهی به همه متغیرها.
 
-The component graph for the formula $L_1$ is as follows:
+گراف مؤلفه‌ها برای فرمول $L_1$ بدین صورت است:
 \begin{center}
 \begin{tikzpicture}[scale=1.0]
 \node[draw, circle] (1) at (0,0) {$A$};
@@ -530,34 +472,34 @@ The component graph for the formula $L_1$ is as follows:
 \end{tikzpicture}
 \end{center}
 
-The components are
-$A = \{\lnot x_4\}$,
-$B = \{x_1, x_2, \lnot x_3\}$,
-$C = \{\lnot x_1, \lnot x_2, x_3\}$ and
+مؤلفه‌ها عبارتند از:
+$A = \{\lnot x_4\}$،
+$B = \{x_1, x_2, \lnot x_3\}$،
+$C = \{\lnot x_1, \lnot x_2, x_3\}$ و
 $D = \{x_4\}$.
-When constructing the solution,
-we first process the component $D$
-where $x_4$ becomes true.
-After this, we process the component $C$
-where $x_1$ and $x_2$ become false
-and $x_3$ becomes true.
-All variables have been assigned values,
-so the remaining components $A$ and $B$
-do not change the variables.
+هنگام ساخت پاسخ،
+ابتدا مؤلفه $D$ پردازش می‌شود
+که در آن $x_4$ مقدار درست (true) می‌گیرد.
+سپس مؤلفه $C$ پردازش می‌شود
+که در آن $x_1$ و $x_2$ نادرست (false)
+و $x_3$ درست می‌شوند.
+تمام متغیرها مقداردهی شده‌اند،
+بنابراین مؤلفه‌های باقی‌مانده $A$ و $B$
+مقدار متغیرها را تغییر نمی‌دهند.
 
-Note that this method works, because the
-graph has a special structure:
-if there are paths from node $x_i$ to node $x_j$
-and from node $x_j$ to node $\lnot x_j$,
-then node $x_i$ never becomes true.
-The reason for this is that there is also
-a path from node $\lnot x_j$ to node $\lnot x_i$,
-and both $x_i$ and $x_j$ become false.
+توجه شود این روش کار می‌کند، زیرا
+گراف ساختار ویژه‌ای دارد:
+اگر مسیرهایی از گره $x_i$ به گره $x_j$
+و از گره $x_j$ به گره $\lnot x_j$ وجود داشته باشد،
+گره $x_i$ هرگز درست نمی‌شود.
+دلیل این است که مسیری نیز از گره $\lnot x_j$ به گره $\lnot x_i$ وجود دارد،
+و هر دو متغیر $x_i$ و $x_j$ نادرست می‌شوند.
 
-\index{3SAT problem}
+\index{مسئله 3SAT@مسئله 3SAT}
 
-A more difficult problem is the \key{3SAT problem},
-where each part of the formula is of the form
-$(a_i \lor b_i \lor c_i)$.
-This problem is NP-hard, so no efficient algorithm
-for solving the problem is known.
+مسئله دشوارتر \key{مسئله 3SAT} است،
+که در آن هر بخش فرمول به شکل
+$(a_i \lor b_i \lor c_i)$
+است.
+این مسئله NP-hard است، بنابراین الگوریتم کارآمدی
+برای حل آن شناخته نشده است.
