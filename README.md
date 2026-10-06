@@ -4,6 +4,13 @@
 
 این مخزن نسخه ترجمه‌شده فارسی این کتاب است.
 
+## دانلود کتاب به زبان فارسی (PDF)
+
+نسخه کامل PDF کتاب (۳۰۱ صفحه با فونت وزیرمتن و فرمول‌ها و کدهای کامل C++) از طریق لینک‌های زیر قابل دریافت است:
+
+- **[دانلود مستقیم فایل کتاب (book-fa.pdf)](https://github.com/m4tinbeigi-official/cphb-fa/releases/download/latest/book-fa.pdf)**
+- **[صفحه آخرین انتشار (Latest Release)](https://github.com/m4tinbeigi-official/cphb-fa/releases/tag/latest)**
+
 ## مجموعه مسائل CSES
 
 مجموعه مسائل CSES شامل مسائل استاندارد برنامه‌نویسی رقابتی برای تمرین تکنیک‌های ارائه شده در این کتاب است:
