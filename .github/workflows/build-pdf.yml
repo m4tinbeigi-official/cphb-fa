@@ -40,7 +40,9 @@ jobs:
       run: |
         xelatex -interaction=nonstopmode -output-driver="xdvipdfmx -V 5" -jobname=book-fa book.tex || true
         makeindex book-fa.idx || true
-        xelatex -interaction=nonstopmode -output-driver="xdvipdfmx -V 5" -jobname=book-fa book.tex
+        xelatex -interaction=nonstopmode -output-driver="xdvipdfmx -V 5" -jobname=book-fa book.tex || true
+        ls -lh book-fa.pdf
+        test -f book-fa.pdf
 
     - name: Upload PDF Artifact
       uses: actions/upload-artifact@v4
