@@ -22,8 +22,11 @@ jobs:
           texlive-xetex \
           texlive-lang-arabic \
           texlive-fonts-recommended \
+          texlive-fonts-extra \
           texlive-latex-extra \
+          texlive-latex-recommended \
           texlive-science \
+          texlive-games \
           fonts-freefont-ttf \
           fonts-dejavu
 
@@ -35,15 +38,15 @@ jobs:
 
     - name: Compile Book with XeLaTeX
       run: |
-        xelatex -interaction=nonstopmode book.tex || true
-        makeindex book.idx || true
-        xelatex -interaction=nonstopmode book.tex || true
+        xelatex -interaction=nonstopmode -output-driver="xdvipdfmx -V 5" -jobname=book-fa book.tex || true
+        makeindex book-fa.idx || true
+        xelatex -interaction=nonstopmode -output-driver="xdvipdfmx -V 5" -jobname=book-fa book.tex
 
     - name: Upload PDF Artifact
       uses: actions/upload-artifact@v4
       with:
         name: book-persian
-        path: book.pdf
+        path: book-fa.pdf
 
     - name: Release PDF
       uses: softprops/action-gh-release@v2
@@ -52,6 +55,6 @@ jobs:
         tag_name: latest
         name: Persian Competitive Programmer's Handbook PDF
         body: "نسخه کامل ترجمه فارسی کتاب راهنمای برنامه‌نویس رقابتی (Competitive Programmer's Handbook)"
-        files: book.pdf
+        files: book-fa.pdf
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
