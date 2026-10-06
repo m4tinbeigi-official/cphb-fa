@@ -1,132 +1,119 @@
-\chapter{Greedy algorithms}
+\chapter{الگوریتم‌های حریصانه}
 
-\index{greedy algorithm}
+\index{الگوریتم حریصانه}
 
-A \key{greedy algorithm}
-constructs a solution to the problem
-by always making a choice that looks
-the best at the moment.
-A greedy algorithm never takes back
-its choices, but directly constructs
-the final solution.
-For this reason, greedy algorithms
-are usually very efficient.
+یک \key{الگوریتم حریصانه}
+با انجام انتخابی که در لحظه بهترین به نظر می‌رسد،
+راه‌حلی برای مسئله می‌سازد.
+الگوریتم حریصانه هرگز از انتخاب‌های خود عقب‌نشینی نمی‌کند،
+بلکه مستقیماً راه‌حل نهایی را می‌سازد.
+به همین دلیل، الگوریتم‌های حریصانه
+معمولاً بسیار کارآمد هستند.
 
-The difficulty in designing greedy algorithms
-is to find a greedy strategy
-that always produces an optimal solution
-to the problem.
-The locally optimal choices in a greedy
-algorithm should also be globally optimal.
-It is often difficult to argue that
-a greedy algorithm works.
+دشواری در طراحی الگوریتم‌های حریصانه،
+یافتن راهبردی حریصانه است
+که همیشه راه‌حل بهینه مسئله را تولید کند.
+انتخاب‌های بهینه محلی در یک الگوریتم حریصانه
+باید از نظر سراسری نیز بهینه باشند.
+اثبات درستی عملکرد یک الگوریتم حریصانه اغلب دشوار است.
 
-\section{Coin problem}
+\section{مسئله سکه}
 
-As a first example, we consider a problem
-where we are given a set of coins
-and our task is to form a sum of money $n$
-using the coins.
-The values of the coins are
-$\texttt{coins}=\{c_1,c_2,\ldots,c_k\}$,
-and each coin can be used as many times we want.
-What is the minimum number of coins needed?
+به عنوان نخستین مثال، مسئله‌ای را بررسی می‌کنیم
+که در آن مجموعه‌ای از سکه‌ها داده شده است
+و هدف، ساختن مبلغ $n$ با استفاده از این سکه‌ها است.
+ارزش سکه‌ها برابر با
+$\texttt{coins}=\{c_1,c_2,\ldots,c_k\}$
+است و از هر سکه می‌توان به تعداد دلخواه استفاده کرد.
+حداقل تعداد سکه‌های مورد نیاز چقدر است؟
 
-For example, if the coins are the euro coins (in cents)
+برای نمونه، اگر سکه‌ها سکه‌های یورو (به سنت) باشند:
 \[\{1,2,5,10,20,50,100,200\}\]
-and $n=520$,
-we need at least four coins.
-The optimal solution is to select coins
-$200+200+100+20$ whose sum is 520.
+و $n=520$ باشد،
+حداقل به چهار سکه نیاز داریم.
+راه‌حل بهینه، انتخاب سکه‌های
+$200+200+100+20$ است که مجموع آن‌ها ۵۲۰ می‌شود.
 
-\subsubsection{Greedy algorithm}
+\subsubsection{الگوریتم حریصانه}
 
-A simple greedy algorithm to the problem
-always selects the largest possible coin,
-until the required sum of money has been constructed.
-This algorithm works in the example case,
-because we first select two 200 cent coins,
-then one 100 cent coin and finally one 20 cent coin.
-But does this algorithm always work?
+یک الگوریتم حریصانه ساده برای این مسئله،
+همواره بزرگ‌ترین سکه ممکن را برمی‌گزیند
+تا زمانی که مبلغ مورد نظر ساخته شود.
+این الگوریتم در مثال بالا کار می‌کند،
+زیرا ابتدا دو سکه ۲۰۰ سنتی،
+سپس یک سکه ۱۰۰ سنتی و در پایان یک سکه ۲۰ سنتی انتخاب می‌کنیم.
+اما آیا این الگوریتم همواره کار می‌کند؟
 
-It turns out that if the coins are the euro coins,
-the greedy algorithm \emph{always} works, i.e.,
-it always produces a solution with the fewest
-possible number of coins.
-The correctness of the algorithm can be
-shown as follows:
+مشخص می‌شود که اگر سکه‌ها از نوع یورو باشند،
+الگوریتم حریصانه \emph{همیشه} کار می‌کند؛ یعنی
+همواره راه‌حلی با کمترین تعداد سکه ممکن به دست می‌دهد.
+درستی این الگوریتم را می‌توان به صورت زیر نشان داد:
 
-First, each coin 1, 5, 10, 50 and 100 appears
-at most once in an optimal solution,
-because if the
-solution would contain two such coins,
-we could replace them by one coin and
-obtain a better solution.
-For example, if the solution would contain
-coins $5+5$, we could replace them by coin $10$.
+نخست، هر یک از سکه‌های ۱، ۵، ۱۰، ۵۰ و ۱۰۰
+حداکثر یک بار در یک راه‌حل بهینه ظاهر می‌شوند،
+زیرا اگر راه‌حل شامل دو عدد از این سکه‌ها باشد،
+می‌توان آن‌ها را با یک سکه جایگزین کرد و
+راه‌حل بهتری به دست آورد.
+برای نمونه، اگر راه‌حل شامل سکه‌های $5+5$ باشد،
+می‌توان آن‌ها را با سکه $10$ جایگزین کرد.
 
-In the same way, coins 2 and 20 appear
-at most twice in an optimal solution,
-because we could replace
-coins $2+2+2$ by coins $5+1$ and
-coins $20+20+20$ by coins $50+10$.
-Moreover, an optimal solution cannot contain
-coins $2+2+1$ or $20+20+10$,
-because we could replace them by coins $5$ and $50$.
+به همین ترتیب، سکه‌های ۲ و ۲۰
+حداکثر دو بار در یک راه‌حل بهینه ظاهر می‌شوند،
+زیرا می‌توان سکه‌های $2+2+2$ را با سکه‌های $5+1$ و
+سکه‌های $20+20+20$ را با سکه‌های $50+10$ جایگزین کرد.
+علاوه بر این، یک راه‌حل بهینه نمی‌تواند شامل
+سکه‌های $2+2+1$ یا $20+20+10$ باشد،
+زیرا می‌توان آن‌ها را با سکه‌های $5$ و $50$ جایگزین کرد.
 
-Using these observations,
-we can show for each coin $x$ that
-it is not possible to optimally construct
-a sum $x$ or any larger sum by only using coins
-that are smaller than $x$.
-For example, if $x=100$, the largest optimal
-sum using the smaller coins is  $50+20+20+5+2+2=99$.
-Thus, the greedy algorithm that always selects
-the largest coin produces the optimal solution.
+با استفاده از این مشاهدات،
+می‌توان برای هر سکه $x$ نشان داد که
+ساختن بهینه مجموع $x$ یا هر مبلغ بزرگ‌تر از آن،
+تنها با استفاده از سکه‌های کوچک‌تر از $x$ غیرممکن است.
+برای نمونه، اگر $x=100$ باشد، بزرگ‌ترین مجموع بهینه
+با استفاده از سکه‌های کوچک‌تر برابر است با: $50+20+20+5+2+2=99$.
+بنابراین، الگوریتم حریصانه‌ای که همیشه بزرگ‌ترین سکه را انتخاب می‌کند،
+راه‌حل بهینه را به دست می‌دهد.
 
-This example shows that it can be difficult
-to argue that a greedy algorithm works,
-even if the algorithm itself is simple.
+این مثال نشان می‌دهد که اثبات درستی یک الگوریتم حریصانه
+می‌تواند دشوار باشد، حتی اگر خود الگوریتم ساده باشد.
 
-\subsubsection{General case}
+\subsubsection{حالت کلی}
 
-In the general case, the coin set can contain any coins
-and the greedy algorithm \emph{does not} necessarily produce
-an optimal solution.
+در حالت کلی، مجموعه سکه‌ها می‌تواند شامل هر مقداری باشد
+و الگوریتم حریصانه \emph{لزوماً} راه‌حل بهینه را تولید نمی‌کند.
 
-We can prove that a greedy algorithm does not work
-by showing a counterexample
-where the algorithm gives a wrong answer.
-In this problem we can easily find a counterexample:
-if the coins are $\{1,3,4\}$ and the target sum
-is 6, the greedy algorithm produces the solution
-$4+1+1$ while the optimal solution is $3+3$.
+می‌توان اثبات کرد که یک الگوریتم حریصانه کار نمی‌کند
+با نشان دادن یک مثال نقض
+که در آن الگوریتم پاسخ نادرست می‌دهد.
+در این مسئله می‌توان به سادگی یک مثال نقض پیدا کرد:
+اگر سکه‌ها $\{1,3,4\}$ باشند و مجموع هدف
+برابر ۶ باشد، الگوریتم حریصانه پاسخ
+$4+1+1$ را تولید می‌کند در حالی که پاسخ بهینه $3+3$ است.
 
-It is not known if the general coin problem
-can be solved using any greedy algorithm\footnote{However, it is possible
-to \emph{check} in polynomial time
-if the greedy algorithm presented in this chapter works for
-a given set of coins \cite{pea05}.}.
-However, as we will see in Chapter 7,
-in some cases,
-the general problem can be efficiently
-solved using a dynamic
-programming algorithm that always gives the
-correct answer.
+مشخص نیست که آیا مسئله سکه عمومی
+با هیچ الگوریتم حریصانه‌ای قابل حل است یا خیر\footnote{با این حال، ممکن است
+در زمان چندجمله‌ای \emph{بررسی} کرد
+که آیا الگوریتم حریصانه ارائه شده در این فصل برای
+مجموعه مشخصی از سکه‌ها کار می‌کند یا خیر \cite{pea05}.}.
+اما همان‌طور که در فصل ۷ خواهیم دید،
+در برخی موارد،
+مسئله عمومی را می‌توان به طور کارآمد
+با استفاده از یک الگوریتم برنامه‌نویسی پویا
+که همیشه پاسخ درست می‌دهد حل کرد.
 
-\section{Scheduling}
+\section{زمان‌بندی}
 
-Many scheduling problems can be solved
-using greedy algorithms.
-A classic problem is as follows:
-Given $n$ events with their starting and ending
-times, find a schedule
-that includes as many events as possible.
-It is not possible to select an event partially.
-For example, consider the following events:
+بسیاری از مسائل زمان‌بندی را می‌توان
+با استفاده از الگوریتم‌های حریصانه حل کرد.
+یک مسئله کلاسیک به شرح زیر است:
+با فرض $n$ رویداد همراه با زمان‌های شروع و پایان
+آن‌ها، برنامه‌ای پیدا کنید
+که شامل بیشترین تعداد رویداد ممکن باشد.
+انتخاب بخشی از یک رویداد امکان‌پذیر نیست.
+برای مثال، رویدادهای زیر را در نظر بگیرید:
 \begin{center}
 \begin{tabular}{lll}
-event & starting time & ending time \\
+رویداد & زمان شروع & زمان پایان \\
 \hline
 $A$ & 1 & 3 \\
 $B$ & 2 & 5 \\
@@ -134,9 +121,9 @@ $C$ & 3 & 9 \\
 $D$ & 6 & 8 \\
 \end{tabular}
 \end{center}
-In this case the maximum number of events is two.
-For example, we can select events $B$ and $D$
-as follows:
+در این حالت بیشترین تعداد رویدادها دو است.
+برای مثال، می‌توانیم رویدادهای $B$ و $D$ را
+به صورت زیر انتخاب کنیم:
 \begin{center}
 \begin{tikzpicture}[scale=.4]
   \begin{scope}
@@ -152,15 +139,15 @@ as follows:
 \end{tikzpicture}
 \end{center}
 
-It is possible to invent several greedy algorithms
-for the problem, but which of them works in every case?
+می‌توان چندین الگوریتم حریصانه برای
+مسئله ابداع کرد، اما کدام‌یک در هر حالتی درست کار می‌کند؟
 
-\subsubsection*{Algorithm 1}
+\subsubsection*{الگوریتم ۱}
 
-The first idea is to select as \emph{short}
-events as possible.
-In the example case this algorithm
-selects the following events:
+ایده اول انتخاب رویدادهایی است که تا حد امکان \emph{کوتاه}
+باشند.
+در مثال نمونه، این الگوریتم
+رویدادهای زیر را انتخاب می‌کند:
 \begin{center}
 \begin{tikzpicture}[scale=.4]
   \begin{scope}
@@ -176,9 +163,9 @@ selects the following events:
 \end{tikzpicture}
 \end{center}
 
-However, selecting short events is not always
-a correct strategy. For example, the algorithm fails
-in the following case:
+اما انتخاب رویدادهای کوتاه همیشه
+استراتژی درستی نیست. برای مثال، الگوریتم در
+حالت زیر شکست می‌خورد:
 \begin{center}
 \begin{tikzpicture}[scale=.4]
   \begin{scope}
@@ -188,14 +175,13 @@ in the following case:
   \end{scope}
 \end{tikzpicture}
 \end{center}
-If we select the short event, we can only select one event.
-However, it would be possible to select both long events.
+اگر رویداد کوتاه را انتخاب کنیم، فقط می‌توانیم یک رویداد را انتخاب کنیم.
+با این حال، امکان انتخاب هر دو رویداد بلند وجود داشت.
 
-\subsubsection*{Algorithm 2}
+\subsubsection*{الگوریتم ۲}
 
-Another idea is to always select the next possible
-event that \emph{begins} as \emph{early} as possible.
-This algorithm selects the following events:
+ایدهٔ دیگر این است که همیشه رویداد ممکن بعدی را انتخاب کنیم که تا حد امکان \emph{زودتر} \emph{شروع} می‌شود.
+این الگوریتم رویدادهای زیر را انتخاب می‌کند:
 \begin{center}
 \begin{tikzpicture}[scale=.4]
   \begin{scope}
@@ -211,10 +197,9 @@ This algorithm selects the following events:
 \end{tikzpicture}
 \end{center}
 
-However, we can find a counterexample
-also for this algorithm.
-For example, in the following case,
-the algorithm only selects one event:
+با این حال، می‌توانیم برای این الگوریتم نیز یک مثال نقض پیدا کنیم.
+به عنوان مثال، در حالت زیر،
+الگوریتم فقط یک رویداد را انتخاب می‌کند:
 \begin{center}
 \begin{tikzpicture}[scale=.4]
   \begin{scope}
@@ -224,16 +209,13 @@ the algorithm only selects one event:
   \end{scope}
 \end{tikzpicture}
 \end{center}
-If we select the first event, it is not possible
-to select any other events.
-However, it would be possible to select the
-other two events.
+اگر رویداد اول را انتخاب کنیم، انتخاب هیچ رویداد دیگری ممکن نخواهد بود.
+در حالی که انتخاب دو رویداد دیگر ممکن بود.
 
-\subsubsection*{Algorithm 3}
+\subsubsection*{الگوریتم ۳}
 
-The third idea is to always select the next
-possible event that \emph{ends} as \emph{early} as possible.
-This algorithm selects the following events: 
+ایدهٔ سوم این است که همیشه رویداد ممکن بعدی را انتخاب کنیم که تا حد امکان \emph{زودتر} \emph{پایان} می‌یابد.
+این الگوریتم رویدادهای زیر را انتخاب می‌کند: 
 \begin{center}
 \begin{tikzpicture}[scale=.4]
   \begin{scope}
@@ -249,42 +231,32 @@ This algorithm selects the following events:
 \end{tikzpicture}
 \end{center}
 
-It turns out that this algorithm
-\emph{always} produces an optimal solution.
-The reason for this is that it is always an optimal choice
-to first select an event that ends
-as early as possible.
-After this, it is an optimal choice
-to select the next event
-using the same strategy, etc.,
-until we cannot select any more events.
+مشخص می‌شود که این الگوریتم \emph{همیشه} یک پاسخ بهینه تولید می‌کند.
+دلیل این امر آن است که انتخاب رویدادی که در زودترین زمان ممکن پایان می‌یابد، در گام اول همواره یک انتخاب بهینه است.
+پس از آن نیز انتخاب رویداد بعدی با استفاده از همین استراتژی انتخابی بهینه خواهد بود، و به همین ترتیب،
+تا زمانی که دیگر نتوان رویدادی را انتخاب کرد.
 
-One way to argue that the algorithm works
-is to consider
-what happens if we first select an event
-that ends later than the event that ends
-as early as possible.
-Now, we will have at most an equal number of
-choices how we can select the next event.
-Hence, selecting an event that ends later
-can never yield a better solution,
-and the greedy algorithm is correct.
+یک روش برای اثبات درستی الگوریتم این است که بررسی کنیم
+چه اتفاقی می‌افتد اگر ابتدا رویدادی را انتخاب کنیم
+که دیرتر از رویداد با زودترین زمان پایان، تمام می‌شود.
+در این وضعیت، برای انتخاب رویداد بعدی حداکثر به همان اندازه (یا کمتر) انتخاب خواهیم داشت.
+بنابراین، انتخاب رویدادی که دیرتر تمام می‌شود هرگز نمی‌تواند پاسخ بهتری ایجاد کند،
+و الگوریتم حریصانه درست است.
 
-\section{Tasks and deadlines}
+\section{وظایف و مهلت‌ها}
 
-Let us now consider a problem where
-we are given $n$ tasks with durations and deadlines
-and our task is to choose an order to perform the tasks.
-For each task, we earn $d-x$ points
-where $d$ is the task's deadline
-and $x$ is the moment when we finish the task.
-What is the largest possible total score
-we can obtain?
+اکنون مسئله‌ای را در نظر بگیرید که در آن
+$n$ وظیفه با مدت‌زمان و مهلت معین داده شده‌اند
+و هدف ما انتخاب ترتیبی برای انجام این وظایف است.
+به ازای هر وظیفه، $d-x$ امتیاز کسب می‌کنیم
+که در آن $d$ مهلت انجام وظیفه
+و $x$ زمانی است که وظیفه را به پایان می‌رسانیم.
+بیشترین مجموع امتیاز ممکن که می‌توانیم به دست آوریم چقدر است؟
 
-For example, suppose that the tasks are as follows:
+برای مثال، فرض کنید کارها به صورت زیر باشند:
 \begin{center}
 \begin{tabular}{lll}
-task & duration & deadline \\
+کار & مدت زمان & مهلت زمانی \\
 \hline
 $A$ & 4 & 2 \\
 $B$ & 3 & 5 \\
@@ -292,8 +264,7 @@ $C$ & 2 & 7 \\
 $D$ & 4 & 5 \\
 \end{tabular}
 \end{center}
-In this case, an optimal schedule for the tasks
-is as follows:
+در این حالت، یک زمان‌بندی بهینه برای کارها به صورت زیر است:
 \begin{center}
 \begin{tikzpicture}[scale=.4]
   \begin{scope}
@@ -319,21 +290,11 @@ is as follows:
   \end{scope}
 \end{tikzpicture}
 \end{center}
-In this solution, $C$ yields 5 points,
-$B$ yields 0 points, $A$ yields $-7$ points
-and $D$ yields $-8$ points,
-so the total score is $-10$.
+در این راه‌حل، $C$ به میزان 5 امتیاز، $B$ به میزان 0 امتیاز، $A$ به میزان $-7$ امتیاز و $D$ به میزان $-8$ امتیاز به همراه دارند، بنابراین مجموع امتیازات $-10$ است.
 
-Surprisingly, the optimal solution to the problem
-does not depend on the deadlines at all,
-but a correct greedy strategy is to simply
-perform the tasks \emph{sorted by their durations}
-in increasing order.
-The reason for this is that if we ever perform
-two tasks one after another such that the first task
-takes longer than the second task,
-we can obtain a better solution if we swap the tasks.
-For example, consider the following schedule:
+به‌طور شگفت‌آوری، راه‌حل بهینه این مسئله اصلاً به مهلت‌های زمانی بستگی ندارد؛ یک راهبرد حریصانه صحیح آن است که کارها صرفاً \emph{بر اساس مدت زمان آن‌ها به‌صورت صعودی مرتب‌سازی شوند} و سپس انجام گیرند.
+دلیل این موضوع آن است که اگر هر بار دو کار را پشت سر هم انجام دهیم طوری که انجام کار اول طولانی‌تر از کار دوم باشد، با جابه‌جا کردن این دو کار می‌توان به راه‌حل بهتری دست یافت.
+برای مثال، زمان‌بندی زیر را در نظر بگیرید:
 \begin{center}
 \begin{tikzpicture}[scale=.4]
   \begin{scope}
@@ -352,7 +313,7 @@ For example, consider the following schedule:
   \end{scope}
 \end{tikzpicture}
 \end{center}
-Here $a>b$, so we should swap the tasks:
+در اینجا $a>b$ است، بنابراین باید کارها را جابه‌جا کنیم:
 \begin{center}
 \begin{tikzpicture}[scale=.4]
   \begin{scope}
@@ -371,97 +332,88 @@ Here $a>b$, so we should swap the tasks:
   \end{scope}
 \end{tikzpicture}
 \end{center}
-Now $X$ gives $b$ points less and $Y$ gives $a$ points more,
-so the total score increases by $a-b > 0$.
-In an optimal solution,
-for any two consecutive tasks,
-it must hold that the shorter task comes
-before the longer task.
-Thus, the tasks must be performed
-sorted by their durations.
+اکنون $X$ به میزان $b$ امتیاز کمتر و $Y$ به میزان $a$ امتیاز بیشتر کسب می‌کند، در نتیجه امتیاز کل به اندازه $a-b > 0$ افزایش می‌یابد.
+در یک راه‌حل بهینه، برای هر دو کار متوالی باید این شرط برقرار باشد که کار کوتاه‌تر قبل از کار طولانی‌تر بیاید.
+بنابراین، کارها باید با مرتب‌سازی بر اساس مدت زمانشان انجام شوند.
 
-\section{Minimizing sums}
+\section{کمینه‌سازی مجموع‌ها}
 
-We next consider a problem where
-we are given $n$ numbers $a_1,a_2,\ldots,a_n$
-and our task is to find a value $x$
-that minimizes the sum
+در ادامه مسئله‌ای را بررسی می‌کنیم که در آن $n$ عدد $a_1,a_2,\ldots,a_n$ داده شده است و هدف یافتن مقداری برای $x$ است که مجموع زیر را کمینه کند:
 \[|a_1-x|^c+|a_2-x|^c+\cdots+|a_n-x|^c.\]
-We focus on the cases $c=1$ and $c=2$.
+تمرکز ما بر روی حالت‌های $c=1$ و $c=2$ است.
 
-\subsubsection{Case $c=1$}
+\subsubsection{حالت $c=1$}
 
-In this case, we should minimize the sum
+در این حالت، باید مجموع زیر را کمینه کنیم:
 \[|a_1-x|+|a_2-x|+\cdots+|a_n-x|.\]
-For example, if the numbers are $[1,2,9,2,6]$,
-the best solution is to select $x=2$
-which produces the sum
+به عنوان مثال، اگر اعداد $[1,2,9,2,6]$ باشند،
+بهترین راه‌حل انتخاب $x=2$ است
+که مجموع زیر را تولید می‌کند:
 \[
 |1-2|+|2-2|+|9-2|+|2-2|+|6-2|=12.
 \]
-In the general case, the best choice for $x$
-is the \textit{median} of the numbers,
-i.e., the middle number after sorting.
-For example, the list $[1,2,9,2,6]$
-becomes $[1,2,2,6,9]$ after sorting,
-so the median is 2.
+در حالت کلی، بهترین انتخاب برای $x$
+\textit{میانه} اعداد است،
+یعنی عدد وسط پس از مرتب‌سازی.
+به عنوان مثال، لیست $[1,2,9,2,6]$
+پس از مرتب‌سازی به $[1,2,2,6,9]$ تبدیل می‌شود،
+بنابراین میانه ۲ است.
 
-The median is an optimal choice,
-because if $x$ is smaller than the median,
-the sum becomes smaller by increasing $x$,
-and if $x$ is larger then the median,
-the sum becomes smaller by decreasing $x$.
-Hence, the optimal solution is that $x$
-is the median.
-If $n$ is even and there are two medians,
-both medians and all values between them
-are optimal choices.
+میانه انتخابی بهینه است،
+زیرا اگر $x$ کوچک‌تر از میانه باشد،
+مجموع با افزایش $x$ کمتر می‌شود،
+و اگر $x$ بزرگ‌تر از میانه باشد،
+مجموع با کاهش $x$ کمتر می‌شود.
+از این رو، راه‌حل بهینه این است که $x$
+میانه باشد.
+اگر $n$ زوج باشد و دو میانه وجود داشته باشد،
+هر دو میانه و تمام مقادیر بین آن‌ها
+انتخاب‌های بهینه‌ای هستند.
 
-\subsubsection{Case $c=2$}
+\subsubsection{حالت $c=2$}
 
-In this case, we should minimize the sum
+در این حالت، باید مجموع زیر را کمینه کنیم:
 \[(a_1-x)^2+(a_2-x)^2+\cdots+(a_n-x)^2.\]
-For example, if the numbers are $[1,2,9,2,6]$,
-the best solution is to select $x=4$
-which produces the sum
+به عنوان مثال، اگر اعداد $[1,2,9,2,6]$ باشند،
+بهترین راه‌حل انتخاب $x=4$ است
+که مجموع زیر را تولید می‌کند:
 \[
 (1-4)^2+(2-4)^2+(9-4)^2+(2-4)^2+(6-4)^2=46.
 \]
-In the general case, the best choice for $x$
-is the \emph{average} of the numbers.
-In the example the average is $(1+2+9+2+6)/5=4$.
-This result can be derived by presenting
-the sum as follows:
+در حالت کلی، بهترین انتخاب برای $x$
+\emph{میانگین} اعداد است.
+در این مثال، میانگین برابر است با $(1+2+9+2+6)/5=4$.
+این نتیجه را می‌توان با نمایش مجموع
+به شکل زیر به دست آورد:
 \[
 nx^2 - 2x(a_1+a_2+\cdots+a_n) + (a_1^2+a_2^2+\cdots+a_n^2)
 \]
-The last part does not depend on $x$,
-so we can ignore it.
-The remaining parts form a function
-$nx^2-2xs$ where $s=a_1+a_2+\cdots+a_n$.
-This is a parabola opening upwards
-with roots $x=0$ and $x=2s/n$,
-and the minimum value is the average
-of the roots $x=s/n$, i.e.,
-the average of the numbers $a_1,a_2,\ldots,a_n$.
+بخش آخر به $x$ وابسته نیست،
+بنابراین می‌توانیم از آن صرف‌نظر کنیم.
+بخش‌های باقیمانده تابع
+$nx^2-2xs$ را تشکیل می‌دهند که در آن $s=a_1+a_2+\cdots+a_n$ است.
+این یک سهمی رو به بالا
+با ریشه‌های $x=0$ و $x=2s/n$ است،
+و مقدار کمینه آن، میانگین ریشه‌ها
+یعنی $x=s/n$ است؛ یعنی
+میانگین اعداد $a_1,a_2,\ldots,a_n$.
 
-\section{Data compression}
+\section{فشرده‌سازی داده‌ها}
 
-\index{data compression}
-\index{binary code}
-\index{codeword}
+\index{data compression@فشرده‌سازی داده‌ها}
+\index{binary code@کد دودویی}
+\index{codeword@کلمه‌کد}
 
-A \key{binary code} assigns for each character
-of a string a \key{codeword} that consists of bits.
-We can \emph{compress} the string using the binary code
-by replacing each character by the
-corresponding codeword.
-For example, the following binary code
-assigns codewords for characters
-\texttt{A}–\texttt{D}:
+یک \key{کد دودویی} برای هر نویسه
+از یک رشته، یک \key{کلمه‌کد} متشکل از بیت‌ها تعیین می‌کند.
+می‌توانیم با جایگزینی هر نویسه با کلمه‌کد متناظر،
+رشته را \emph{فشرده‌سازی} کنیم.
+به‌عنوان مثال، کد دودویی زیر
+کلمه‌کدهایی را برای نویسه‌های
+\texttt{A} تا \texttt{D} تعیین می‌کند:
 \begin{center}
 \begin{tabular}{rr}
-character & codeword \\
+نویسه & کلمه‌کد \\
 \hline
 \texttt{A} & 00 \\
 \texttt{B} & 01 \\
@@ -469,26 +421,25 @@ character & codeword \\
 \texttt{D} & 11 \\
 \end{tabular}
 \end{center}
-This is a \key{constant-length} code
-which means that the length of each
-codeword is the same.
-For example, we can compress the string
-\texttt{AABACDACA} as follows:
+این یک کد با \key{طول ثابت} است
+به این معنی که طول هر کلمه‌کد یکسان است.
+برای مثال، می‌توانیم رشته‌ی
+\texttt{AABACDACA} را به صورت زیر فشرده کنیم:
 \[00\,00\,01\,00\,10\,11\,00\,10\,00\]
-Using this code, the length of the compressed
-string is 18 bits.
-However, we can compress the string better
-if we use a \key{variable-length} code
-where codewords may have different lengths.
-Then we can give short codewords for
-characters that appear often
-and long codewords for characters
-that appear rarely.
-It turns out that an \key{optimal} code
-for the above string is as follows:
+با استفاده از این کد، طول رشته‌ی فشرده‌شده
+18 بیت است.
+اما می‌توانیم رشته را بهتر فشرده کنیم
+اگر از یک کد با \key{طول متغیر} استفاده کنیم
+که در آن کلمه‌کدها می‌توانند طول‌های متفاوتی داشته باشند.
+آنگاه می‌توانیم کلمه‌کدهای کوتاه را به نویسه‌هایی اختصاص دهیم
+که تکرار بالایی دارند
+و کلمه‌کدهای بلند را به نویسه‌هایی
+که به‌ندرت ظاهر می‌شوند اختصاص دهیم.
+مشخص می‌شود که یک کد \key{بهینه}
+برای رشته‌ی فوق به صورت زیر است:
 \begin{center}
 \begin{tabular}{rr}
-character & codeword \\
+نویسه & کلمه‌کد \\
 \hline
 \texttt{A} & 0 \\
 \texttt{B} & 110 \\
@@ -496,29 +447,29 @@ character & codeword \\
 \texttt{D} & 111 \\
 \end{tabular}
 \end{center}
-An optimal code produces a compressed string
-that is as short as possible.
-In this case, the compressed string using
-the optimal code is
+یک کد بهینه، رشته‌ی فشرده‌شده‌ای با
+کوتاه‌ترین طول ممکن تولید می‌کند.
+در این حالت، رشته‌ی فشرده‌شده با استفاده از
+کد بهینه عبارت است از:
 \[0\,0\,110\,0\,10\,111\,0\,10\,0,\]
-so only 15 bits are needed instead of 18 bits.
-Thus, thanks to a better code it was possible to
-save 3 bits in the compressed string.
+بنابراین به جای 18 بیت، تنها به 15 بیت نیاز است.
+بدین ترتیب، به لطف یک کد بهتر، امکان
+صرفه‌جویی 3 بیت در رشته‌ی فشرده‌شده فراهم شد.
 
-We require that no codeword
-is a prefix of another codeword.
-For example, it is not allowed that a code
-would contain both codewords 10
-and 1011.
-The reason for this is that we want
-to be able to generate the original string
-from the compressed string.
-If a codeword could be a prefix of another codeword,
-this would not always be possible.
-For example, the following code is \emph{not} valid:
+شرط لازم این است که هیچ کلمه‌کدی
+پیشوند کلمه‌کد دیگری نباشد.
+به عنوان مثال، مجاز نیست که یک کد
+شامل هر دو کلمه‌کد 10
+و 1011 باشد.
+دلیل این موضوع این است که می‌خواهیم
+امکان بازسازی رشته‌ی اصلی
+از رشته‌ی فشرده‌شده وجود داشته باشد.
+اگر یک کلمه‌کد می‌توانست پیشوند کلمه‌کد دیگری باشد،
+این کار همیشه امکان‌پذیر نبود.
+به عنوان مثال، کد زیر معتبر \emph{نیست}:
 \begin{center}
 \begin{tabular}{rr}
-character & codeword \\
+نویسه & کلمه‌کد \\
 \hline
 \texttt{A} & 10 \\
 \texttt{B} & 11 \\
@@ -526,42 +477,36 @@ character & codeword \\
 \texttt{D} & 111 \\
 \end{tabular}
 \end{center}
-Using this code, it would not be possible to know
-if the compressed string 1011 corresponds to
-the string \texttt{AB} or the string \texttt{C}.
+با استفاده از این کد، تشخیص این‌که
+آیا رشته‌ی فشرده‌شده‌ی 1011 متناظر با
+رشته‌ی \texttt{AB} است یا رشته‌ی \texttt{C}، ممکن نخواهد بود.
 
-\index{Huffman coding}
+\index{کدگذاری هافمن}
 
-\subsubsection{Huffman coding}
+\subsubsection{کدگذاری هافمن}
 
-\key{Huffman coding}\footnote{D. A. Huffman discovered this method
-when solving a university course assignment
-and published the algorithm in 1952 \cite{huf52}.} is a greedy algorithm
-that constructs an optimal code for
-compressing a given string.
-The algorithm builds a binary tree
-based on the frequencies of the characters
-in the string,
-and each character's codeword can be read
-by following a path from the root to
-the corresponding node.
-A move to the left corresponds to bit 0,
-and a move to the right corresponds to bit 1.
+\key{کدگذاری هافمن}\footnote{دیوید هافمن این روش را
+هنگام حل یک تمرین درسی دانشگاهی کشف کرد
+و الگوریتم را در سال 1952 منتشر نمود \cite{huf52}.} یک الگوریتم حریصانه است
+که یک کد بهینه برای
+فشرده‌سازی یک رشته‌ی مشخص می‌سازد.
+این الگوریتم یک درخت دودویی
+بر اساس بسامد نویسه‌ها
+در رشته بنا می‌کند،
+و کلمه‌کد هر نویسه را می‌توان
+با دنبال کردن یک مسیر از ریشه تا
+گره متناظر خواند.
+حرکت به چپ متناظر با بیت 0،
+و حرکت به راست متناظر با بیت 1 است.
 
-Initially, each character of the string is
-represented by a node whose weight is the
-number of times the character occurs in the string.
-Then at each step two nodes with minimum weights
-are combined by creating
-a new node whose weight is the sum of the weights
-of the original nodes.
-The process continues until all nodes have been combined.
+در ابتدا، هر نویسه از رشته با گرهی نمایش داده می‌شود که وزنش برابر با تعداد دفعات تکرار آن نویسه در رشته است.
+سپس در هر مرحله، دو گره با کمترین وزن با ایجاد یک گره جدید ترکیب می‌شوند که وزنش برابر با مجموع وزن‌های گره‌های اولیه است.
+این فرایند تا زمانی که تمام گره‌ها ترکیب شوند ادامه می‌یابد.
 
-Next we will see how Huffman coding creates
-the optimal code for the string
-\texttt{AABACDACA}.
-Initially, there are four nodes that correspond
-to the characters of the string:
+در ادامه خواهیم دید چگونه کدگذاری هافمن کد بهینه را برای رشته
+\texttt{AABACDACA}
+ایجاد می‌کند.
+در ابتدا، چهار گره متناظر با نویسه‌های رشته وجود دارد:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
@@ -578,16 +523,11 @@ to the characters of the string:
 %\path[draw,thick,-] (4) -- (5);
 \end{tikzpicture}
 \end{center}
-The node that represents character \texttt{A}
-has weight 5 because character \texttt{A}
-appears 5 times in the string.
-The other weights have been calculated
-in the same way.
+گرهی که نویسه \texttt{A} را نشان می‌دهد دارای وزن ۵ است زیرا نویسه \texttt{A} ۵ بار در رشته آمده است.
+سایر وزن‌ها نیز به همین ترتیب محاسبه شده‌اند.
 
-The first step is to combine the nodes that
-correspond to characters \texttt{B} and \texttt{D},
-both with weight 1.
-The result is:
+مرحله نخست، ترکیب گره‌های متناظر با نویسه‌های \texttt{B} و \texttt{D} است که هر دو وزن ۱ دارند.
+نتیجه به این صورت است:
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
 \node[draw, circle] (1) at (0,0) {$5$};
@@ -608,7 +548,7 @@ The result is:
 \path[draw,thick,-] (4) -- (5);
 \end{tikzpicture}
 \end{center}
-After this, the nodes with weight 2 are combined:
+پس از این، گره‌های با وزن ۲ ترکیب می‌شوند:
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
 \node[draw, circle] (1) at (1,0) {$5$};
@@ -634,7 +574,7 @@ After this, the nodes with weight 2 are combined:
 \path[draw,thick,-] (5) -- (6);
 \end{tikzpicture}
 \end{center}
-Finally, the two remaining nodes are combined:
+در نهایت، دو گره باقی‌مانده ترکیب می‌شوند:
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
 \node[draw, circle] (1) at (2,2) {$5$};
@@ -666,11 +606,11 @@ Finally, the two remaining nodes are combined:
 \end{tikzpicture}
 \end{center}
 
-Now all nodes are in the tree, so the code is ready.
-The following codewords can be read from the tree:
+اکنون همه گره‌ها در درخت هستند، بنابراین کد آماده است.
+کلمه‌کدهای زیر از درخت قابل خواندن هستند:
 \begin{center}
 \begin{tabular}{rr}
-character & codeword \\
+نویسه & کلمه‌کد \\
 \hline
 \texttt{A} & 0 \\
 \texttt{B} & 110 \\
