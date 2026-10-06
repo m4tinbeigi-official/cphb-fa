@@ -1,79 +1,72 @@
-\chapter{Game theory}
+\chapter{نظریه بازی‌ها}
 
-In this chapter, we will focus on two-player
-games that do not contain random elements.
-Our goal is to find a strategy that we can
-follow to win the game
-no matter what the opponent does,
-if such a strategy exists.
+در این فصل، روی بازی‌های دو نفره بدون عامل شانس تمرکز می‌کنیم.
+هدف یافتن راهبردی است که در صورت وجود،
+پیروزی ما را مستقل از حرکت‌های حریف
+تضمین کند.
 
-It turns out that there is a general strategy
-for such games,
-and we can analyze the games using the \key{nim theory}.
-First, we will analyze simple games where
-players remove sticks from heaps,
-and after this, we will generalize the strategy
-used in those games to other games.
+یک راهبرد کلی برای چنین بازی‌هایی وجود دارد
+و تحلیل آن‌ها با استفاده از \key{نظریه نیم} (nim theory) امکان‌پذیر است.
+ابتدا بازی‌های ساده‌ای بررسی می‌شوند که در آن‌ها
+بازیکنان چوب‌ها را از کپه‌ها برمی‌دارند؛
+سپس این راهبرد به بازی‌های دیگر تعمیم داده می‌شود.
 
-\section{Game states}
+\section{وضعیت‌های بازی}
 
-Let us consider a game where there is initially
-a heap of $n$ sticks.
-Players $A$ and $B$ move alternately,
-and player $A$ begins.
-On each move, the player has to remove
-1, 2 or 3 sticks from the heap,
-and the player who removes the last stick wins the game.
+بازی با یک کپه شامل $n$ چوب را در نظر بگیرید.
+بازیکنان $A$ و $B$ به نوبت بازی می‌کنند
+و شروع با بازیکن $A$ است.
+در هر نوبت، بازیکن باید
+۱، ۲ یا ۳ چوب از کپه بردارد.
+بازیکنی که آخرین چوب را بردارد برنده است.
 
-For example, if $n=10$, the game may proceed as follows:
+به عنوان مثال، اگر $n=10$ باشد، روند بازی می‌تواند چنین باشد:
 \begin{itemize}[noitemsep]
-\item Player $A$ removes 2 sticks (8 sticks left).
-\item Player $B$ removes 3 sticks (5 sticks left).
-\item Player $A$ removes 1 stick (4 sticks left).
-\item Player $B$ removes 2 sticks (2 sticks left).
-\item Player $A$ removes 2 sticks and wins.
+\item بازیکن $A$ تعداد ۲ چوب برمی‌دارد (۸ چوب باقی می‌ماند).
+\item بازیکن $B$ تعداد ۳ چوب برمی‌دارد (۵ چوب باقی می‌ماند).
+\item بازیکن $A$ تعداد ۱ چوب برمی‌دارد (۴ چوب باقی می‌ماند).
+\item بازیکن $B$ تعداد ۲ چوب برمی‌دارد (۲ چوب باقی می‌ماند).
+\item بازیکن $A$ تعداد ۲ چوب برمی‌دارد و برنده می‌شود.
 \end{itemize}
 
-This game consists of states $0,1,2,\ldots,n$,
-where the number of the state corresponds to
-the number of sticks left.
+این بازی از وضعیت‌های $0,1,2,\ldots,n$ تشکیل شده است،
+که در آن شماره وضعیت نشان‌دهنده
+تعداد چوب‌های باقی‌مانده است.
 
-\subsubsection{Winning and losing states}
+\subsubsection{وضعیت‌های برنده و بازنده}
 
-\index{winning state}
-\index{losing state}
+\index{وضعیت برنده}
+\index{وضعیت بازنده}
 
-A \key{winning state} is a state where
-the player will win the game if they
-play optimally,
-and a \key{losing state} is a state
-where the player will lose the game if the
-opponent plays optimally.
-It turns out that we can classify all states
-of a game so that each state is either
-a winning state or a losing state.
+یک \key{وضعیت برنده} وضعیتی است که
+اگر بازیکن بهینه بازی کند،
+برنده خواهد شد.
+یک \key{وضعیت بازنده} وضعیتی است
+که در صورت بازی بهینه حریف،
+بازیکن بازنده خواهد شد.
+می‌توان تمام وضعیت‌های بازی را به‌گونه‌ای دسته‌بندی کرد
+که هر وضعیت یا برنده باشد یا بازنده.
 
-In the above game, state 0 is clearly a
-losing state, because the player cannot make
-any moves.
-States 1, 2 and 3 are winning states,
-because we can remove 1, 2 or 3 sticks
-and win the game.
-State 4, in turn, is a losing state,
-because any move leads to a state that
-is a winning state for the opponent.
+در بازی بالا، وضعیت ۰ مشخصاً یک
+وضعیت بازنده است، چون بازیکن نمی‌تواند
+حرکتی انجام دهد.
+وضعیت‌های ۱، ۲ و ۳ وضعیت‌های برنده هستند،
+زیرا می‌توان ۱، ۲ یا ۳ چوب برداشت
+و بازی را برد.
+وضعیت ۴ به نوبه خود یک وضعیت بازنده است،
+زیرا هر حرکتی به وضعیتی منجر می‌شود که
+برای حریف یک وضعیت برنده است.
 
-More generally, if there is a move that leads
-from the current state to a losing state,
-the current state is a winning state,
-and otherwise the current state is a losing state.
-Using this observation, we can classify all states
-of a game starting with losing states where
-there are no possible moves.
+به‌طور کلی، اگر حرکتی از وضعیت فعلی
+به یک وضعیت بازنده وجود داشته باشد،
+وضعیت فعلی برنده است؛
+در غیر این صورت، وضعیت فعلی بازنده است.
+با استفاده از این قاعده، می‌توان تمام وضعیت‌های یک بازی را
+با شروع از وضعیت‌های بازنده‌ای که حرکتی در آن‌ها ممکن نیست دسته‌بندی کرد.
 
-The states $0 \ldots 15$ of the above game
-can be classified as follows
-($W$ denotes a winning state and $L$ denotes a losing state):
+وضعیت‌های $0 \ldots 15$ بازی بالا
+را می‌توان به شکل زیر دسته‌بندی کرد
+($W$ نشان‌دهنده وضعیت برنده و $L$ نشان‌دهنده وضعیت بازنده است):
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \draw (0,0) grid (16,1);
@@ -115,37 +108,37 @@ can be classified as follows
 \end{tikzpicture}
 \end{center}
 
-It is easy to analyze this game:
-a state $k$ is a losing state if $k$ is
-divisible by 4, and otherwise it
-is a winning state.
-An optimal way to play the game is
-to always choose a move after which
-the number of sticks in the heap
-is divisible by 4.
-Finally, there are no sticks left and
-the opponent has lost.
+تحلیل این بازی ساده است:
+یک وضعیت $k$ وضعیت بازنده است اگر $k$ بر
+۴ بخش‌پذیر باشد، وگرنه یک وضعیت
+برنده است.
+روش بهینه بازی کردن این است که
+همواره حرکتی انتخاب شود که پس از آن
+تعداد چوب‌ها در دسته
+بر ۴ بخش‌پذیر باشد.
+در نهایت، هیچ چوبی باقی نمی‌ماند و
+حریف باخته است.
 
-Of course, this strategy requires that
-the number of sticks is \emph{not} divisible by 4
-when it is our move.
-If it is, there is nothing we can do,
-and the opponent will win the game if
-they play optimally.
+البته این راهبرد نیازمند آن است که
+هنگام نوبت ما، تعداد چوب‌ها بر ۴ بخش‌پذیر
+\emph{نباشد}.
+اگر باشد، کاری از دست ما برنمی‌آید،
+و در صورت بازی بهینه حریف، او
+برنده خواهد شد.
 
-\subsubsection{State graph}
+\subsubsection{گراف وضعیت}
 
-Let us now consider another stick game,
-where in each state $k$, it is allowed to remove
-any number $x$ of sticks such that $x$
-is smaller than $k$ and divides $k$.
-For example, in state 8 we may remove
-1, 2 or 4 sticks, but in state 7 the only
-allowed move is to remove 1 stick.
+حال بازی چوب دیگری را بررسی می‌کنیم،
+که در آن در هر وضعیت $k$، مجاز به حذف
+هر تعداد $x$ چوب هستیم به طوری که $x$
+کوچک‌تر از $k$ بوده و $k$ را عاد کند (بر آن بخش‌پذیر باشد).
+برای مثال، در وضعیت ۸ می‌توانیم
+۱، ۲ یا ۴ چوب حذف کنیم، اما در وضعیت ۷ تنها
+حرکت مجاز حذف ۱ چوب است.
 
-The following picture shows the states
-$1 \ldots 9$ of the game as a \key{state graph},
-whose nodes are the states and edges are the moves between them:
+تصویر زیر وضعیت‌های
+$1 \ldots 9$ بازی را به عنوان یک \key{گراف وضعیت} نشان می‌دهد،
+که گره‌های آن وضعیت‌ها و یال‌ها حرکات بین آن‌ها هستند:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
@@ -176,11 +169,11 @@ whose nodes are the states and edges are the moves between them:
 \end{tikzpicture}
 \end{center}
 
-The final state in this game is always state 1,
-which is a losing state, because there are no
-valid moves.
-The classification of states $1 \ldots 9$
-is as follows:
+وضعیت پایانی در این بازی همواره وضعیت ۱ است،
+که وضعیتی بازنده است، زیرا هیچ
+حرکت معتبری وجود ندارد.
+دسته‌بندی وضعیت‌های $1 \ldots 9$
+به صورت زیر است:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
@@ -209,83 +202,83 @@ is as follows:
 \end{tikzpicture}
 \end{center}
 
-Surprisingly, in this game,
-all even-numbered states are winning states,
-and all odd-numbered states are losing states.
+جالب توجه است که در این بازی،
+تمام وضعیت‌های زوج وضعیت‌های برد
+و تمام وضعیت‌های فرد وضعیت‌های باخت هستند.
 
-\section{Nim game}
+\section{بازی نیم}
 
-\index{nim game}
+\index{بازی نیم}
 
-The \key{nim game} is a simple game that
-has an important role in game theory,
-because many other games can be played using
-the same strategy.
-First, we focus on nim,
-and then we generalize the strategy
-to other games.
+\key{بازی نیم} (nim game) بازی ساده‌ای است که
+نقش مهمی در نظریه بازی‌ها دارد،
+زیرا بازی‌های بسیار دیگری را می‌توان با استفاده از
+همین راهبرد انجام داد.
+ابتدا روی نیم تمرکز می‌کنیم
+و سپس این راهبرد را به بازی‌های دیگر
+تعمیم می‌دهیم.
 
-There are $n$ heaps in nim,
-and each heap contains some number of sticks.
-The players move alternately,
-and on each turn, the player chooses
-a heap that still contains sticks
-and removes any number of sticks from it.
-The winner is the player who removes the last stick.
+در نیم $n$ دسته وجود دارد
+و هر دسته شامل تعدادی چوب است.
+بازیکنان به نوبت حرکت می‌کنند
+و در هر نوبت، بازیکن دسته‌ای را انتخاب می‌کند
+که هنوز چوب دارد
+و هر تعداد چوب دلخواه از آن برمی‌دارد.
+برنده بازیکنی است که آخرین چوب را بردارد.
 
-The states in nim are of the form
-$[x_1,x_2,\ldots,x_n]$,
-where $x_k$ denotes the number of sticks in heap $k$.
-For example, $[10,12,5]$ is a game where
-there are three heaps with 10, 12 and 5 sticks.
-The state $[0,0,\ldots,0]$ is a losing state,
-because it is not possible to remove any sticks,
-and this is always the final state.
+وضعیت‌ها در نیم به شکل
+$[x_1,x_2,\ldots,x_n]$ هستند
+که در آن $x_k$ نشان‌دهنده تعداد چوب‌های دسته $k$ است.
+برای نمونه، $[10,12,5]$ یک بازی است که
+در آن سه دسته با ۱۰، ۱۲ و ۵ چوب وجود دارد.
+وضعیت $[0,0,\ldots,0]$ یک وضعیت باخت است،
+زیرا امکان برداشتن هیچ چوبی وجود ندارد،
+و این همواره وضعیت پایانی است.
 
-\subsubsection{Analysis}
-\index{nim sum}
+\subsubsection{تحلیل}
+\index{مجموع نیم}
 
-It turns out that we can easily classify
-any nim state by calculating
-the \key{nim sum} $s = x_1 \oplus x_2 \oplus \cdots \oplus x_n$,
-where $\oplus$ is the xor operation\footnote{The optimal strategy
-for nim was published in 1901 by C. L. Bouton \cite{bou01}.}.
-The states whose nim sum is 0 are losing states,
-and all other states are winning states.
-For example, the nim sum of
-$[10,12,5]$ is $10 \oplus 12 \oplus 5 = 3$,
-so the state is a winning state.
+مشخص می‌شود که می‌توانیم به‌سادگی
+هر وضعیت نیم را با محاسبه
+\key{مجموع نیم} $s = x_1 \oplus x_2 \oplus \cdots \oplus x_n$
+دسته‌بندی کنیم،
+که در آن $\oplus$ عملیات xor است\footnote{راهبرد بهینه
+برای نیم در سال ۱۹۰۱ توسط C. L. Bouton منتشر شد \cite{bou01}.}.
+وضعیت‌هایی که مجموع نیم آن‌ها برابر ۰ است وضعیت باخت
+و بقیه وضعیت‌ها وضعیت برد هستند.
+برای نمونه، مجموع نیم
+$[10,12,5]$ برابر $10 \oplus 12 \oplus 5 = 3$ است،
+بنابراین این وضعیت یک وضعیت برد است.
 
-But how is the nim sum related to the nim game?
-We can explain this by looking at how the nim
-sum changes when the nim state changes.
+اما مجموع نیم چه ارتباطی با بازی نیم دارد؟
+می‌توانیم این موضوع را با بررسی چگونگی تغییر
+مجموع نیم هنگام تغییر وضعیت نیم توضیح دهیم.
 
-\textit{Losing states:}
-The final state $[0,0,\ldots,0]$ is a losing state,
-and its nim sum is 0, as expected.
-In other losing states, any move leads to
-a winning state, because when a single value $x_k$ changes,
-the nim sum also changes, so the nim sum
-is different from 0 after the move.
+\textit{وضعیت‌های باخت:}
+وضعیت پایانی $[0,0,\ldots,0]$ یک وضعیت باخت است
+و مجموع نیم آن برابر ۰ است، همان‌طور که انتظار می‌رفت.
+در دیگر وضعیت‌های باخت، هر حرکتی به
+یک وضعیت برد می‌انجامد، زیرا با تغییر یک مقدار $x_k$،
+مجموع نیم نیز تغییر می‌کند، بنابراین مجموع نیم
+پس از حرکت با ۰ متفاوت خواهد بود.
 
-\textit{Winning states:}
-We can move to a losing state if
-there is any heap $k$ for which $x_k \oplus s < x_k$.
-In this case, we can remove sticks from
-heap $k$ so that it will contain $x_k \oplus s$ sticks,
-which will lead to a losing state.
-There is always such a heap, where $x_k$
-has a one bit at the position of the leftmost
-one bit of $s$.
+\textit{وضعیت‌های برد:}
+می‌توانیم به یک وضعیت باخت حرکت کنیم اگر
+دسته‌ای مانند $k$ وجود داشته باشد که $x_k \oplus s < x_k$ باشد.
+در این حالت، می‌توانیم چوب‌هایی از
+دسته $k$ برداریم به طوری که شامل $x_k \oplus s$ چوب شود،
+که این به یک وضعیت باخت می‌انجامد.
+همواره چنین دسته‌ای وجود دارد؛ جایی که $x_k$
+در موقعیت چپ‌ترین بیت یکِ $s$، دارای بیت یک باشد.
 
-As an example, consider the state $[10,12,5]$.
-This state is a winning state,
-because its nim sum is 3.
-Thus, there has to be a move which
-leads to a losing state.
-Next we will find out such a move.
+به عنوان نمونه، وضعیت $[10,12,5]$ را در نظر بگیرید.
+این وضعیت یک وضعیت برد است،
+زیرا مجموع نیم آن برابر ۳ است.
+بنابراین، باید حرکتی وجود داشته باشد که
+به یک وضعیت باخت منتهی شود.
+در ادامه چنین حرکتی را پیدا خواهیم کرد.
 
-The nim sum of the state is as follows:
+مجموع نیم (nim sum) این وضعیت بدین صورت است:
 
 \begin{center}
 \begin{tabular}{r|r}
@@ -297,10 +290,7 @@ The nim sum of the state is as follows:
 \end{tabular}
 \end{center}
 
-In this case, the heap with 10 sticks
-is the only heap that has a one bit
-at the position of the leftmost
-one bit of the nim sum:
+در این حالت، کپه با ۱۰ چوب تنها کپه‌ای است که در جایگاه چپ‌ترین بیت یک در مجموع نیم، بیت یک دارد:
 
 \begin{center}
 \begin{tabular}{r|r}
@@ -312,11 +302,7 @@ one bit of the nim sum:
 \end{tabular}
 \end{center}
 
-The new size of the heap has to be
-$10 \oplus 3 = 9$,
-so we will remove just one stick.
-After this, the state will be $[9,12,5]$,
-which is a losing state:
+اندازه جدید کپه باید $10 \oplus 3 = 9$ باشد، بنابراین فقط یک چوب حذف می‌کنیم. پس از این، وضعیت به $[9,12,5]$ تبدیل می‌شود که وضعیتی بازنده است:
 
 \begin{center}
 \begin{tabular}{r|r}
@@ -328,76 +314,50 @@ which is a losing state:
 \end{tabular}
 \end{center}
 
-\subsubsection{Misère game}
+\subsubsection{بازی مزیر (Misère game)}
 
 \index{misère game}
 
-In a \key{misère game}, the goal of the game
-is opposite,
-so the player who removes the last stick
-loses the game.
-It turns out that the misère nim game can be
-optimally played almost like the standard nim game.
+در یک \key{بازی مزیر}، هدف بازی برعکس است؛ یعنی بازیکنی که آخرین چوب را بردارد، بازی را می‌بازد. مشخص شده که بازی نیم مزیر را می‌توان به صورت بهینه تقریباً مشابه بازی استاندارد نیم انجام داد.
 
-The idea is to first play the misère game
-like the standard game, but change the strategy
-at the end of the game.
-The new strategy will be introduced in a situation
-where each heap would contain at most one stick
-after the next move.
+ایده این است که ابتدا بازی مزیر مانند بازی استاندارد انجام شود، اما در انتهای بازی راهبرد تغییر کند. راهبرد جدید در موقعیتی اعمال می‌شود که پس از حرکت بعدی، هر کپه حداکثر شامل یک چوب باشد.
 
-In the standard game, we should choose a move
-after which there is an even number of heaps with one stick.
-However, in the misère game, we choose a move so that
-there is an odd number of heaps with one stick.
+در بازی استاندارد، باید حرکتی انتخاب شود که پس از آن تعداد زوجی از کپه‌های تک‌چوبی باقی بماند. اما در بازی مزیر، حرکتی انتخاب می‌شود که تعداد فردی از کپه‌های تک‌چوبی بر جای بماند.
 
-This strategy works because a state where the
-strategy changes always appears in the game,
-and this state is a winning state, because
-it contains exactly one heap that has more than one stick
-so the nim sum is not 0.
+این راهبرد کار می‌کند زیرا وضعیتی که راهبرد در آن تغییر می‌کند همواره در بازی رخ می‌دهد، و این وضعیت یک وضعیت برنده است، زیرا دقیقاً یک کپه دارد که بیش از یک چوب دارد، پس مجموع نیم آن صفر نیست.
 
-\section{Sprague–Grundy theorem}
+\section{قضیه اسپرگ–گراندی (Sprague–Grundy theorem)}
 
 \index{Sprague–Grundy theorem}
 
-The \key{Sprague–Grundy theorem}\footnote{The theorem was
-independently discovered by R. Sprague \cite{spr35} and P. M. Grundy \cite{gru39}.} generalizes the
-strategy used in nim to all games that fulfil
-the following requirements:
+\key{قضیه اسپرگ–گراندی}\footnote{این قضیه به طور مستقل توسط آر. اسپرگ \cite{spr35} و پی. ام. گراندی \cite{gru39} کشف شد.} راهبرد استفاده‌شده در بازی نیم را برای تمام بازی‌هایی که شرایط زیر را برآورده کنند، تعمیم می‌دهد:
 
 \begin{itemize}[noitemsep]
-\item There are two players who move alternately.
-\item The game consists of states, and the possible moves
-in a state do not depend on whose turn it is.
-\item The game ends when a player cannot make a move.
-\item The game surely ends sooner or later.
-\item The players have complete information about
-the states and allowed moves, and there is no randomness in the game.
+\item دو بازیکن به نوبت حرکت می‌کنند.
+\item بازی شامل وضعیت‌ها است و حرکات ممکن در هر وضعیت به این که نوبت چه کسی است بستگی ندارد.
+\item بازی زمانی پایان می‌یابد که یک بازیکن نتواند حرکتی انجام دهد.
+\item بازی قطعاً دیر یا زود پایان می‌یابد.
+\item بازیکنان اطلاعات کامل درباره وضعیت‌ها و حرکات مجاز دارند و هیچ تصادفی در بازی وجود ندارد.
 \end{itemize}
-The idea is to calculate for each game state
-a Grundy number that corresponds to the number of
-sticks in a nim heap.
-When we know the Grundy numbers of all states,
-we can play the game like the nim game.
+ایده این است که برای هر وضعیت بازی یک عدد گراندی محاسبه شود که متناظر با تعداد چوب‌ها در یک کپه بازی نیم باشد. وقتی اعداد گراندی تمام وضعیت‌ها را بدانیم، می‌توانیم بازی را مانند بازی نیم انجام دهیم.
 
-\subsubsection{Grundy numbers}
+\subsubsection{اعداد گراندی}
 
 \index{Grundy number}
 \index{mex function}
 
-The \key{Grundy number} of a game state is
+\key{عدد گراندی} یک وضعیت بازی برابر است با
 \[\textrm{mex}(\{g_1,g_2,\ldots,g_n\}),\]
-where $g_1,g_2,\ldots,g_n$ are the Grundy numbers of the
-states to which we can move,
-and the mex function gives the smallest
-nonnegative number that is not in the set.
-For example, $\textrm{mex}(\{0,1,3\})=2$.
-If there are no possible moves in a state,
-its Grundy number is 0, because
+که در آن $g_1,g_2,\ldots,g_n$ اعداد گراندی
+وضعیت‌هایی هستند که می‌توان به آن‌ها حرکت کرد،
+و تابع mex کوچک‌ترین عدد نامنفی را می‌دهد
+که در مجموعه وجود ندارد.
+به عنوان مثال، $\textrm{mex}(\{0,1,3\})=2$.
+اگر حرکتی از یک وضعیت امکان‌پذیر نباشد،
+عدد گراندی آن 0 است، زیرا
 $\textrm{mex}(\emptyset)=0$.
 
-For example, in the state graph
+برای نمونه، در گراف وضعیت
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
 \node[draw, circle] (1) at (0,0) {\phantom{0}};
@@ -417,7 +377,7 @@ For example, in the state graph
 \path[draw,thick,->,>=latex] (6) -- (2);
 \end{tikzpicture}
 \end{center}
-the Grundy numbers are as follows:
+اعداد گراندی به صورت زیر هستند:
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
 \node[draw, circle] (1) at (0,0) {0};
@@ -437,30 +397,29 @@ the Grundy numbers are as follows:
 \path[draw,thick,->,>=latex] (6) -- (2);
 \end{tikzpicture}
 \end{center}
-The Grundy number of a losing state is 0,
-and the Grundy number of a winning state is
-a positive number.
+عدد گراندی یک وضعیت بازنده برابر 0 است،
+و عدد گراندی یک وضعیت برنده
+عددی مثبت است.
 
-The Grundy number of a state corresponds to
-the number of sticks in a nim heap.
-If the Grundy number is 0, we can only move to
-states whose Grundy numbers are positive,
-and if the Grundy number is $x>0$, we can move
-to states whose Grundy numbers include all numbers
-$0,1,\ldots,x-1$.
+عدد گراندی یک وضعیت متناظر است با
+تعداد چوب‌ها در یک دسته نیم.
+اگر عدد گراندی 0 باشد، فقط می‌توان به
+وضعیت‌هایی رفت که عدد گراندی آن‌ها مثبت است،
+و اگر عدد گراندی $x>0$ باشد، می‌توان به
+وضعیت‌هایی رفت که اعداد گراندی آن‌ها شامل همه اعداد
+$0,1,\ldots,x-1$ است.
 
-As an example, consider a game where
-the players move a figure in a maze.
-Each square in the maze is either floor or wall.
-On each turn, the player has to move
-the figure some number
-of steps left or up.
-The winner of the game is the player who
-makes the last move.
+به عنوان مثال، بازی‌ای را در نظر بگیرید که در آن
+بازیکنان مهره‌ای را درون یک ماز حرکت می‌دهند.
+هر خانه ماز یا کف است یا دیوار.
+در هر نوبت، بازیکن باید مهره را
+تعدادی گام به چپ یا بالا حرکت دهد.
+برنده بازی بازیکنی است که
+آخرین حرکت را انجام دهد.
 
-The following picture shows a possible initial state
-of the game, where @ denotes the figure and *
-denotes a square where it can move.
+تصویر زیر یک وضعیت آغازین ممکن از بازی
+را نشان می‌دهد، که در آن @ مهره را مشخص می‌کند و *
+خانه‌ای را نشان می‌دهد که مهره می‌تواند به آن حرکت کند.
 
 \begin{center}
 \begin{tikzpicture}[scale=.65]
@@ -485,10 +444,10 @@ denotes a square where it can move.
 \end{tikzpicture}
 \end{center}
 
-The states of the game are all floor squares
-of the maze.
-In the above maze, the Grundy numbers
-are as follows:
+وضعیت‌های بازی، تمام خانه‌های خالی
+مارپیچ هستند.
+در مارپیچ بالا، اعداد گراندی
+به این صورت است:
 
 \begin{center}
 \begin{tikzpicture}[scale=.65]
@@ -534,42 +493,35 @@ are as follows:
 \end{tikzpicture}
 \end{center}
 
-Thus, each state of the maze game
-corresponds to a heap in the nim game.
-For example, the Grundy number for
-the lower-right square is 2,
-so it is a winning state.
-We can reach a losing state and
-win the game by moving
-either four steps left or
-two steps up.
+بنابراین، هر وضعیت بازی مارپیچ
+معادل یک دسته در بازی نیم است.
+برای نمونه، عدد گراندی خانه گوشه پایین‌راست برابر ۲ است،
+پس وضعیتی برنده است.
+با چهار گام حرکت به چپ یا
+دو گام به بالا،
+می‌توان به یک وضعیت بازنده رسید و بازی را برد.
 
-Note that unlike in the original nim game,
-it may be possible to move to a state whose
-Grundy number is larger than the Grundy number
-of the current state.
-However, the opponent can always choose a move
-that cancels such a move, so it is not possible
-to escape from a losing state.
+برخلاف بازی نیم اصلی،
+امکان رفتن به وضعیتی با عدد گراندی
+بزرگ‌تر از وضعیت فعلی وجود دارد.
+اما حریف همیشه حرکتی برای خنثی‌سازی دارد،
+پس فرار از وضعیت بازنده ناممکن است.
 
-\subsubsection{Subgames}
+\subsubsection{زیربازی‌ها}
 
-Next we will assume that our game consists
-of subgames, and on each turn, the player
-first chooses a subgame and then a move in the subgame.
-The game ends when it is not possible to make any move
-in any subgame.
+فرض بازی شامل چند زیربازی است؛
+در هر نوبت، بازیکن نخست یک زیربازی، سپس حرکتی در آن انتخاب می‌کند.
+پایان بازی زمانی است که هیچ حرکتی در هیچ زیربازی ممکن نباشد.
 
-In this case, the Grundy number of a game
-is the nim sum of the Grundy numbers of the subgames.
-The game can be played like a nim game by calculating
-all Grundy numbers for subgames and then their nim sum.
+در این حالت، عدد گراندی کل بازی،
+حاصل‌جمع نیم اعداد گراندی زیربازی‌ها است.
+بازی با محاسبه اعداد گراندی زیربازی‌ها و جمع نیم آن‌ها،
+مانند بازی نیم اجرا می‌شود.
 
-As an example, consider a game that consists
-of three mazes.
-In this game, on each turn, the player chooses one
-of the mazes and then moves the figure in the maze.
-Assume that the initial state of the game is as follows:
+برای مثال، یک بازی با سه مارپیچ را در نظر بگیرید.
+در هر نوبت، بازیکن یک مارپیچ را انتخاب کرده
+و مهره را در آن جابه‌جا می‌کند.
+فرض وضعیت اولیه بازی چنین است:
 
 \begin{center}
 \begin{tabular}{ccc}
@@ -613,7 +565,7 @@ Assume that the initial state of the game is as follows:
 \end{tabular}
 \end{center}
 
-The Grundy numbers for the mazes are as follows:
+اعداد گراندی برای مازها به صورت زیر هستند:
 
 \begin{center}
 \begin{tabular}{ccc}
@@ -739,49 +691,25 @@ The Grundy numbers for the mazes are as follows:
 \end{tabular}
 \end{center}
 
-In the initial state, the nim sum of the Grundy numbers
-is $2 \oplus 3 \oplus 3 = 2$, so
-the first player can win the game.
-One optimal move is to move two steps up
-in the first maze, which produces the nim sum
-$0 \oplus 3 \oplus 3 = 0$.
+در وضعیت اولیه، مجموع نیم اعداد گراندی برابر $2 \oplus 3 \oplus 3 = 2$ است، بنابراین بازیکن اول می‌تواند بازی را ببرد. یک حرکت بهینه، دو گام حرکت به سمت بالا در هزارتوی اول است که مجموع نیم $0 \oplus 3 \oplus 3 = 0$ را تولید می‌کند.
 
-\subsubsection{Grundy's game}
+\subsubsection{بازی گراندی}
 
-Sometimes a move in a game divides the game
-into subgames that are independent of each other.
-In this case, the Grundy number of the game is
+گاهی یک حرکت در بازی، آن را به زیربازی‌های مستقل از یکدیگر تقسیم می‌کند. در این حالت، عدد گراندی بازی برابر است با:
 
 \[\textrm{mex}(\{g_1, g_2, \ldots, g_n \}),\]
-where $n$ is the number of possible moves and
+که $n$ تعداد حرکت‌های ممکن است و
 \[g_k = a_{k,1} \oplus a_{k,2} \oplus \ldots \oplus a_{k,m},\]
-where move $k$ generates subgames with
-Grundy numbers $a_{k,1},a_{k,2},\ldots,a_{k,m}$.
+به طوری که حرکت $k$ زیربازی‌هایی با اعداد گراندی $a_{k,1},a_{k,2},\ldots,a_{k,m}$ ایجاد می‌کند.
 
 \index{Grundy's game}
 
-An example of such a game is \key{Grundy's game}.
-Initially, there is a single heap that contains $n$ sticks.
-On each turn, the player chooses a heap and divides
-it into two nonempty heaps such that the heaps
-are of different size.
-The player who makes the last move wins the game.
+نمونه‌ای از چنین بازی‌هایی، \key{بازی گراندی} است. در ابتدا، یک دسته شامل $n$ چوب وجود دارد. در هر نوبت، بازیکن یک دسته را انتخاب کرده و آن را به دو دسته ناتهی با اندازه‌های متفاوت تقسیم می‌کند. بازیکنی که آخرین حرکت را انجام دهد برنده بازی است.
 
-Let $f(n)$ be the Grundy number of a heap
-that contains $n$ sticks.
-The Grundy number can be calculated by going
-through all ways to divide the heap into
-two heaps.
-For example, when $n=8$, the possibilities
-are $1+7$, $2+6$ and $3+5$, so
+فرض کنید $f(n)$ عدد گراندی دسته‌ای با $n$ چوب باشد. عدد گراندی با بررسی تمام روش‌های تقسیم دسته به دو دسته محاسبه می‌شود. برای مثال، وقتی $n=8$ است، حالت‌های ممکن $1+7$، $2+6$ و $3+5$ هستند، پس:
 \[f(8)=\textrm{mex}(\{f(1) \oplus f(7), f(2) \oplus f(6), f(3) \oplus f(5)\}).\]
 
-In this game, the value of $f(n)$ is based on the values
-of $f(1),\ldots,f(n-1)$.
-The base cases are $f(1)=f(2)=0$,
-because it is not possible to divide the heaps
-of 1 and 2 sticks.
-The first Grundy numbers are:
+در این بازی، مقدار $f(n)$ بر اساس مقادیر $f(1),\ldots,f(n-1)$ به دست می‌آید. حالت‌های پایه $f(1)=f(2)=0$ هستند، زیرا تقسیم دسته‌های ۱ و ۲ چوبی ممکن نیست. نخستین اعداد گراندی عبارتند از:
 \[
 \begin{array}{lcl}
 f(1) & = & 0 \\
@@ -794,8 +722,4 @@ f(7) & = & 0 \\
 f(8) & = & 2 \\
 \end{array}
 \]
-The Grundy number for $n=8$ is 2,
-so it is possible to win the game.
-The winning move is to create heaps
-$1+7$, because $f(1) \oplus f(7) = 0$.
-
+عدد گراندی برای $n=8$ برابر ۲ است، بنابراین بردن بازی ممکن است. حرکت برنده، ساخت دسته‌های $1+7$ است، زیرا $f(1) \oplus f(7) = 0$.
