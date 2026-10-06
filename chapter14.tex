@@ -1,16 +1,16 @@
-\chapter{Tree algorithms}
+\chapter{الگوریتم‌های درخت}
 
-\index{tree}
+\index{درخت}
 
-A \key{tree} is a connected, acyclic graph
-that consists of $n$ nodes and $n-1$ edges.
-Removing any edge from a tree divides it
-into two components,
-and adding any edge to a tree creates a cycle.
-Moreover, there is always a unique path between any
-two nodes of a tree.
+یک \key{درخت} گرافی همبند و بدون دور است
+که شامل $n$ رأس و $n-1$ یال می‌باشد.
+حذف هر یال از یک درخت، آن را
+به دو مؤلفه تقسیم می‌کند،
+و اضافه کردن هر یال به درخت، یک دور ایجاد می‌نماید.
+علاوه بر این، همواره یک مسیر یکتا بین هر
+دو رأس از درخت وجود دارد.
 
-For example, the following tree consists of 8 nodes and 7 edges:
+برای مثال، درخت زیر از ۸ رأس و ۷ یال تشکیل شده است:
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
 \node[draw, circle] (1) at (0,3) {$1$};
@@ -31,22 +31,22 @@ For example, the following tree consists of 8 nodes and 7 edges:
 \end{tikzpicture}
 \end{center}
 
-\index{leaf}
+\index{برگ}
 
-The \key{leaves} of a tree are the nodes
-with degree 1, i.e., with only one neighbor.
-For example, the leaves of the above tree
-are nodes 3, 5, 7 and 8.
+\key{برگ‌های} یک درخت، رأس‌هایی
+با درجه‌ی ۱ هستند، یعنی فقط یک همسایه دارند.
+برای مثال، برگ‌های درخت بالا
+رأس‌های ۳، ۵، ۷ و ۸ هستند.
 
-\index{root}
-\index{rooted tree}
+\index{ریشه}
+\index{درخت ریشه‌دار}
 
-In a \key{rooted} tree, one of the nodes
-is appointed the \key{root} of the tree,
-and all other nodes are
-placed underneath the root.
-For example, in the following tree,
-node 1 is the root node.
+در یک درخت \key{ریشه‌دار}، یکی از رأس‌ها
+به عنوان \key{ریشه} درخت تعیین می‌شود،
+و تمام رأس‌های دیگر
+زیر ریشه قرار می‌گیرند.
+برای مثال، در درخت زیر،
+رأس ۱ ریشه است.
 
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
@@ -67,26 +67,26 @@ node 1 is the root node.
 \path[draw,thick,-] (6) -- (8);
 \end{tikzpicture}
 \end{center}
-\index{child}
-\index{parent}
+\index{فرزند}
+\index{والد}
 
-In a rooted tree, the \key{children} of a node
-are its lower neighbors, and the \key{parent} of a node
-is its upper neighbor.
-Each node has exactly one parent,
-except for the root that does not have a parent.
-For example, in the above tree,
-the children of node 2 are nodes 5 and 6,
-and its parent is node 1.
+در یک درخت ریشه‌دار، \key{فرزندان} یک رأس
+همسایه‌های پایینی آن هستند، و \key{والد} یک رأس
+همسایه‌ی بالایی آن است.
+هر رأس دقیقاً یک والد دارد،
+به جز ریشه که والدی ندارد.
+برای مثال، در درخت بالا،
+فرزندان رأس ۲ رأس‌های ۵ و ۶ هستند،
+و والد آن رأس ۱ است.
 
-\index{subtree}
+\index{زیردرخت}
 
-The structure of a rooted tree is \emph{recursive}:
-each node of the tree acts as the root of a \key{subtree}
-that contains the node itself and all nodes
-that are in the subtrees of its children.
-For example, in the above tree, the subtree of node 2
-consists of nodes 2, 5, 6 and 8:
+ساختار درخت ریشه‌دار \emph{بازگشتی} است:
+هر گره درخت، ریشه یک \key{زیردرخت} است
+که شامل خود گره و تمام گره‌های
+موجود در زیردرخت‌های فرزندان آن است.
+به عنوان مثال، در درخت بالا، زیردرخت گره ۲
+شامل گره‌های ۲، ۵، ۶ و ۸ است:
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
 \node[draw, circle] (2) at (-2,1) {$2$};
@@ -99,61 +99,61 @@ consists of nodes 2, 5, 6 and 8:
 \end{tikzpicture}
 \end{center}
 
-\section{Tree traversal}
+\section{پیمایش درخت}
 
-General graph traversal algorithms
-can be used to traverse the nodes of a tree.
-However, the traversal of a tree is easier to implement than
-that of a general graph, because
-there are no cycles in the tree and it is not
-possible to reach a node from multiple directions.
+الگوریتم‌های عمومی پیمایش گراف
+می‌توانند برای پیمایش گره‌های یک درخت استفاده شوند.
+با این حال، پیاده‌سازی پیمایش درخت ساده‌تر از
+گراف عمومی است، زیرا
+هیچ دوری در درخت وجود ندارد و رسیدن
+به یک گره از چندین جهت ممکن نیست.
 
-The typical way to traverse a tree is to start
-a depth-first search at an arbitrary node.
-The following recursive function can be used:
+روش معمول پیمایش درخت، شروع
+جستجوی اول-عمق از یک گره دلخواه است.
+تابع بازگشتی زیر می‌تواند استفاده شود:
 
 \begin{lstlisting}
 void dfs(int s, int e) {
-    // process node s
+    // پردازش گره s
     for (auto u : adj[s]) {
         if (u != e) dfs(u, s);
     }
 }
 \end{lstlisting}
 
-The function is given two parameters: the current node $s$
-and the previous node $e$.
-The purpose of the parameter $e$ is to make sure
-that the search only moves to nodes
-that have not been visited yet.
+تابع دو پارامتر می‌گیرد: گره فعلی $s$
+و گره قبلی $e$.
+هدف پارامتر $e$ اطمینان از این است
+که جستجو فقط به گره‌هایی حرکت کند
+که هنوز بازدید نشده‌اند.
 
-The following function call starts the search
-at node $x$:
+فراخوانی زیر جستجو را
+از گره $x$ آغاز می‌کند:
 
 \begin{lstlisting}
 dfs(x, 0);
 \end{lstlisting}
 
-In the first call $e=0$, because there is no
-previous node, and it is allowed
-to proceed to any direction in the tree.
+در فراخوانی اول $e=0$ است، زیرا هیچ
+گره قبلی وجود ندارد و حرکت
+به هر جهتی در درخت مجاز است.
 
-\subsubsection{Dynamic programming}
+\subsubsection{برنامه‌نویسی پویا}
 
-Dynamic programming can be used to calculate
-some information during a tree traversal.
-Using dynamic programming, we can, for example,
-calculate in $O(n)$ time for each node of a rooted tree the
-number of nodes in its subtree
-or the length of the longest path from the node
-to a leaf.
+برنامه‌نویسی پویا می‌تواند برای محاسبه
+اطلاعات حین پیمایش درخت استفاده شود.
+با استفاده از برنامه‌نویسی پویا می‌توان، برای مثال،
+در زمان $O(n)$ برای هر گره درخت ریشه‌دار، تعداد
+گره‌های زیردرخت آن
+یا طول طولانی‌ترین مسیر از آن گره
+تا یک برگ را محاسبه کرد.
 
-As an example, let us calculate for each node $s$
-a value $\texttt{count}[s]$: the number of nodes in its subtree.
-The subtree contains the node itself and
-all nodes in the subtrees of its children,
-so we can calculate the number of nodes
-recursively using the following code:
+به عنوان مثال، برای هر گره $s$
+مقدار $\texttt{count}[s]$ را محاسبه می‌کنیم: تعداد گره‌های زیردرخت آن.
+زیردرخت شامل خود گره و
+تمام گره‌های زیردرخت‌های فرزندان آن است،
+بنابراین می‌توان تعداد گره‌ها را
+به صورت بازگشتی با کد زیر محاسبه کرد:
 
 \begin{lstlisting}
 void dfs(int s, int e) {
@@ -166,13 +166,13 @@ void dfs(int s, int e) {
 }
 \end{lstlisting}
 
-\section{Diameter}
+\section{قطر}
 
-\index{diameter}
+\index{قطر}
 
-The \key{diameter} of a tree
-is the maximum length of a path between two nodes.
-For example, consider the following tree:
+\key{قطر} یک درخت
+بیشینه طول یک مسیر بین دو رأس است.
+برای مثال، درخت زیر را در نظر بگیرید:
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
 \node[draw, circle] (1) at (0,3) {$1$};
@@ -190,8 +190,8 @@ For example, consider the following tree:
 \path[draw,thick,-] (3) -- (7);
 \end{tikzpicture}
 \end{center}
-The diameter of this tree is 4,
-which corresponds to the following path:
+قطر این درخت برابر ۴ است
+که متناظر با مسیر زیر است:
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
 \node[draw, circle] (1) at (0,3) {$1$};
@@ -214,34 +214,34 @@ which corresponds to the following path:
 \path[draw,thick,-,color=red,line width=2pt] (2) -- (5);
 \end{tikzpicture}
 \end{center}
-Note that there may be several maximum-length paths.
-In the above path, we could replace node 6 with node 5
-to obtain another path with length 4.
+توجه کنید ممکن است چندین مسیر با بیشینه طول وجود داشته باشد.
+در مسیر بالا، می‌توان رأس ۶ را با رأس ۵ جایگزین کرد
+تا مسیر دیگری با طول ۴ به دست آید.
 
-Next we will discuss two $O(n)$ time algorithms
-for calculating the diameter of a tree.
-The first algorithm is based on dynamic programming,
-and the second algorithm uses two depth-first searches.
+در ادامه دو الگوریتم با زمان اجرای $O(n)$
+برای محاسبه قطر درخت بررسی می‌شود.
+الگوریتم نخست بر پایه برنامه‌نویسی پویا است
+و الگوریتم دوم از دو پیمایش اول-عمق استفاده می‌کند.
 
-\subsubsection{Algorithm 1}
+\subsubsection{الگوریتم ۱}
 
-A general way to approach many tree problems
-is to first root the tree arbitrarily.
-After this, we can try to solve the problem
-separately for each subtree.
-Our first algorithm for calculating the diameter
-is based on this idea.
+یک روش کلی برای حل مسائل درخت
+این است که ابتدا درخت را دلخواه ریشه‌دار کنیم.
+پس از آن، می‌توان مسئله را
+به‌طور جداگانه برای هر زیردرخت حل کرد.
+الگوریتم نخست برای محاسبه قطر
+بر پایه همین ایده است.
 
-An important observation is that every path
-in a rooted tree has a \emph{highest point}:
-the highest node that belongs to the path.
-Thus, we can calculate for each node the length
-of the longest path whose highest point is the node.
-One of those paths corresponds to the diameter of the tree.
+مشاهده مهم این است که هر مسیر
+در یک درخت ریشه‌دار، یک \emph{بالاترین نقطه} دارد:
+بالاترین رأسی که متعلق به مسیر است.
+بنابراین، می‌توان برای هر رأس، طول
+طولانی‌ترین مسیری را که بالاترین نقطه‌اش آن رأس است محاسبه کرد.
+یکی از این مسیرها متناظر با قطر درخت خواهد بود.
 
-For example, in the following tree,
-node 1 is the highest point on the path
-that corresponds to the diameter:
+برای مثال، در درخت زیر،
+گره ۱ بالاترین نقطه در مسیری است
+که متناظر با قطر است:
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
 \node[draw, circle] (1) at (0,3) {$1$};
@@ -265,41 +265,41 @@ that corresponds to the diameter:
 \end{tikzpicture}
 \end{center}
 
-We calculate for each node $x$ two values:
+برای هر گره $x$ دو مقدار محاسبه می‌کنیم:
 \begin{itemize}
-\item $\texttt{toLeaf}(x)$: the maximum length of a path from $x$ to any leaf
-\item $\texttt{maxLength}(x)$: the maximum length of a path
-whose highest point is $x$
+\item $\texttt{toLeaf}(x)$: بیشینه طول مسیر از $x$ به هر برگ
+\item $\texttt{maxLength}(x)$: بیشینه طول مسیری
+که بالاترین نقطه آن $x$ است
 \end{itemize}
-For example, in the above tree,
-$\texttt{toLeaf}(1)=2$, because there is a path
-$1 \rightarrow 2 \rightarrow 6$,
-and $\texttt{maxLength}(1)=4$,
-because there is a path
-$6 \rightarrow 2 \rightarrow 1 \rightarrow 4 \rightarrow 7$.
-In this case, $\texttt{maxLength}(1)$ equals the diameter.
+برای مثال، در درخت بالا،
+$\texttt{toLeaf}(1)=2$، زیرا مسیر
+$1 \rightarrow 2 \rightarrow 6$ وجود دارد،
+و $\texttt{maxLength}(1)=4$،
+زیرا مسیر
+$6 \rightarrow 2 \rightarrow 1 \rightarrow 4 \rightarrow 7$ وجود دارد.
+در این حالت، $\texttt{maxLength}(1)$ برابر با قطر است.
 
-Dynamic programming can be used to calculate the above
-values for all nodes in $O(n)$ time.
-First, to calculate $\texttt{toLeaf}(x)$,
-we go through the children of $x$,
-choose a child $c$ with maximum $\texttt{toLeaf}(c)$
-and add one to this value.
-Then, to calculate $\texttt{maxLength}(x)$,
-we choose two distinct children $a$ and $b$
-such that the sum $\texttt{toLeaf}(a)+\texttt{toLeaf}(b)$
-is maximum and add two to this sum.
+می‌توان از برنامه‌نویسی پویا برای محاسبه مقادیر بالا
+برای همه گره‌ها در زمان $O(n)$ استفاده کرد.
+ابتدا برای محاسبه $\texttt{toLeaf}(x)$،
+فرزندان $x$ را بررسی می‌کنیم،
+فرزند $c$ با بیشینه $\texttt{toLeaf}(c)$ را انتخاب کرده
+و یک واحد به این مقدار اضافه می‌کنیم.
+سپس برای محاسبه $\texttt{maxLength}(x)$،
+دو فرزند متمایز $a$ و $b$ را طوری انتخاب می‌کنیم
+که مجموع $\texttt{toLeaf}(a)+\texttt{toLeaf}(b)$
+بیشینه باشد و دو واحد به این مجموع اضافه می‌کنیم.
 
-\subsubsection{Algorithm 2}
+\subsubsection{الگوریتم ۲}
 
-Another efficient way to calculate the diameter
-of a tree is based on two depth-first searches.
-First, we choose an arbitrary node $a$ in the tree
-and find the farthest node $b$ from $a$.
-Then, we find the farthest node $c$ from $b$.
-The diameter of the tree is the distance between $b$ and $c$.
+روش کارآمد دیگر برای محاسبه قطر
+درخت مبتنی بر دو بار جستجوی اول عمق است.
+ابتدا یک گره دلخواه $a$ در درخت انتخاب می‌کنیم
+و دورترین گره $b$ از $a$ را می‌یابیم.
+سپس دورترین گره $c$ از $b$ را پیدا می‌کنیم.
+قطر درخت فاصله بین $b$ و $c$ است.
 
-In the following graph, $a$, $b$ and $c$ could be:
+در گراف زیر، $a$، $b$ و $c$ می‌توانند به این صورت باشند:
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
 \node[draw, circle] (1) at (0,3) {$1$};
@@ -318,6 +318,8 @@ In the following graph, $a$, $b$ and $c$ could be:
 \node[color=red] at (2,1.6) {$a$};
 \node[color=red] at (-2,1.6) {$b$};
 \node[color=red] at (4,1.6) {$c$};
+\end{tikzpicture}
+\end{center}
 
 \path[draw,thick,-,color=red,line width=2pt] (7) -- (3);
 \path[draw,thick,-,color=red,line width=2pt] (3) -- (1);
@@ -326,12 +328,9 @@ In the following graph, $a$, $b$ and $c$ could be:
 \end{tikzpicture}
 \end{center}
 
-This is an elegant method, but why does it work?
+روش هوشمندانه است، اما چرا کار می‌کند؟
 
-It helps to draw the tree differently so that
-the path that corresponds to the diameter
-is horizontal, and all other
-nodes hang from it:
+رسم متفاوت درخت فهم را ساده می‌کند؛ طوری که مسیر متناظر با قطر، افقی باشد و باقی رأس‌ها از آن آویزان شوند:
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
 \node[draw, circle] (1) at (2,1) {$1$};
@@ -359,26 +358,17 @@ nodes hang from it:
 \end{tikzpicture}
 \end{center}
 
-Node $x$ indicates the place where the path
-from node $a$ joins the path that corresponds
-to the diameter.
-The farthest node from $a$
-is node $b$, node $c$ or some other node
-that is at least as far from node $x$.
-Thus, this node is always a valid choice for
-an endpoint of a path that corresponds to the diameter.
+رأس $x$ محل اتصال مسیر مبدأ $a$ به مسیر قطر است.
+دورترین رأس از $a$، رأس $b$، رأس $c$ یا رأسی دیگر با دست‌کم همین فاصله از $x$ است.
+بنابراین، این رأس همیشه انتخابی معتبر برای یک سر مسیر قطر است.
 
-\section{All longest paths}
+\section{همه طولانی‌ترین مسیرها}
 
-Our next problem is to calculate for every node
-in the tree the maximum length of a path
-that begins at the node.
-This can be seen as a generalization of the
-tree diameter problem, because the largest of those
-lengths equals the diameter of the tree.
-Also this problem can be solved in $O(n)$ time.
+مسئله بعدی: محاسبه بیشینه طول مسیر شروع‌شده از هر رأس درخت.
+این تعمیم مسئله قطر درخت است، چون بیشینه این مقادیر برابر قطر درخت است.
+حل در زمان $O(n)$ ممکن است.
 
-As an example, consider the following tree:
+مثال، درخت زیر:
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
 \node[draw, circle] (1) at (0,0) {$1$};
@@ -395,21 +385,17 @@ As an example, consider the following tree:
 \end{tikzpicture}
 \end{center}
 
-Let $\texttt{maxLength}(x)$ denote the maximum length
-of a path that begins at node $x$.
-For example, in the above tree,
-$\texttt{maxLength}(4)=3$, because there
-is a path $4 \rightarrow 1 \rightarrow 2 \rightarrow 6$.
-Here is a complete table of the values:
+فرض کنید $\texttt{maxLength}(x)$ بیشینه طول مسیر با شروع از رأس $x$ باشد.
+در درخت بالا، $\texttt{maxLength}(4)=3$ است، چون مسیر $4 \rightarrow 1 \rightarrow 2 \rightarrow 6$ وجود دارد.
+جدول کامل مقادیر:
 \begin{center}
 \begin{tabular}{l|lllllll}
-node $x$ & 1 & 2 & 3 & 4 & 5 & 6 \\
+رأس $x$ & 1 & 2 & 3 & 4 & 5 & 6 \\
 $\texttt{maxLength}(x)$ & 2 & 2 & 3 & 3 & 3 & 3 \\
 \end{tabular}
 \end{center}
 
-Also in this problem, a good starting point
-for solving the problem is to root the tree arbitrarily:
+همچنین در این مسئله، یک نقطه شروع خوب برای حل، ریشه‌دار کردن دلخواه درخت است:
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
 \node[draw, circle] (1) at (0,3) {$1$};
@@ -426,10 +412,8 @@ for solving the problem is to root the tree arbitrarily:
 \end{tikzpicture}
 \end{center}
 
-The first part of the problem is to calculate for every node $x$
-the maximum length of a path that goes through a child of $x$.
-For example, the longest path from node 1
-goes through its child 2:
+بخش اول مسئله، محاسبه بیشترین طول مسیری است که به ازای هر گره $x$، از یکی از فرزندان $x$ عبور می‌کند.
+برای نمونه، طولانی‌ترین مسیر از گره 1 از فرزند آن، یعنی 2، می‌گذرد:
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
 \node[draw, circle] (1) at (0,3) {$1$};
@@ -448,14 +432,10 @@ goes through its child 2:
 \path[draw,thick,->,color=red,line width=2pt] (3) -- (6);
 \end{tikzpicture}
 \end{center}
-This part is easy to solve in $O(n)$ time, because we can use
-dynamic programming as we have done previously.
+حل این بخش در زمان $O(n)$ ساده است، زیرا می‌توان مانند گذشته از برنامه‌نویسی پویا استفاده کرد.
 
-Then, the second part of the problem is to calculate
-for every node $x$ the maximum length of a path
-through its parent $p$.
-For example, the longest path
-from node 3 goes through its parent 1:
+سپس، بخش دوم مسئله محاسبه بیشترین طول مسیر از طریق والد $p$ به ازای هر گره $x$ است.
+برای نمونه، طولانی‌ترین مسیر از گره 3 از والد آن، یعنی 1، می‌گذرد:
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
 \node[draw, circle] (1) at (0,3) {$1$};
@@ -476,12 +456,12 @@ from node 3 goes through its parent 1:
 \end{tikzpicture}
 \end{center}
 
-At first glance, it seems that we should choose
-the longest path from $p$.
-However, this \emph{does not} always work,
-because the longest path from $p$
-may go through $x$.
-Here is an example of this situation:
+در نگاه اول، به نظر می‌رسد باید
+طولانی‌ترین مسیر از $p$ را انتخاب کنیم.
+اما این روش همیشه کار \emph{نمی‌کند}،
+زیرا ممکن است طولانی‌ترین مسیر از $p$
+از $x$ عبور کند.
+نمونه‌ای از این وضعیت:
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
 \node[draw, circle] (1) at (0,3) {$1$};
@@ -501,42 +481,42 @@ Here is an example of this situation:
 \end{tikzpicture}
 \end{center}
 
-Still, we can solve the second part in
-$O(n)$ time by storing \emph{two} maximum lengths
-for each node $x$:
+با این حال، می‌توان بخش دوم را در
+زمان $O(n)$ با ذخیره \emph{دو} بیشینه طول
+برای هر رأس $x$ حل کرد:
 \begin{itemize}
 \item $\texttt{maxLength}_1(x)$:
-the maximum length of a path from $x$
-\item $\texttt{maxLength}_2(x)$
-the maximum length of a path from $x$
-in another direction than the first path
+بیشینه طول یک مسیر از $x$
+\item $\texttt{maxLength}_2(x)$:
+بیشینه طول یک مسیر از $x$
+در جهتی متفاوت از مسیر اول
 \end{itemize}
-For example, in the above graph,
+به عنوان مثال، در گراف بالا،
 $\texttt{maxLength}_1(1)=2$
-using the path $1 \rightarrow 2 \rightarrow 5$,
-and $\texttt{maxLength}_2(1)=1$
-using the path $1 \rightarrow 3$.
+با استفاده از مسیر $1 \rightarrow 2 \rightarrow 5$،
+و $\texttt{maxLength}_2(1)=1$
+با استفاده از مسیر $1 \rightarrow 3$.
 
-Finally, if the path that corresponds to
-$\texttt{maxLength}_1(p)$ goes through $x$,
-we conclude that the maximum length is
-$\texttt{maxLength}_2(p)+1$,
-and otherwise the maximum length is
+در نهایت، اگر مسیر متناظر با
+$\texttt{maxLength}_1(p)$ از $x$ بگذرد،
+نتیجه می‌گیریم بیشینه طول برابر است با
+$\texttt{maxLength}_2(p)+1$،
+و در غیر این صورت بیشینه طول برابر است با
 $\texttt{maxLength}_1(p)+1$.
 
 
-\section{Binary trees}
+\section{درخت‌های دودویی}
 
-\index{binary tree}
+\index{درخت دودویی}
 
 \begin{samepage}
-A \key{binary tree} is a rooted tree
-where each node has a left and right subtree.
-It is possible that a subtree of a node is empty.
-Thus, every node in a binary tree has
-zero, one or two children.
+یک \key{درخت دودویی} درختی ریشه‌دار است
+که هر رأس آن یک زیردرخت چپ و راست دارد.
+امکان تهی بودن زیردرخت یک رأس وجود دارد.
+بنابراین، هر رأس در درخت دودویی
+صفر، یک یا دو فرزند دارد.
 
-For example, the following tree is a binary tree:
+برای نمونه، درخت زیر یک درخت دودویی است:
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
 \node[draw, circle] (1) at (0,0) {$1$};
@@ -557,42 +537,38 @@ For example, the following tree is a binary tree:
 \end{center}
 \end{samepage}
 
-\index{pre-order}
-\index{in-order}
-\index{post-order}
+\index{پیش‌ترتیب}
+\index{میان‌ترتیب}
+\index{پس‌ترتیب}
 
-The nodes of a binary tree have three natural
-orderings that correspond to different ways to 
-recursively traverse the tree:
+رأس‌های درخت دودویی دارای سه ترتیب طبیعی هستند
+که متناظر با روش‌های مختلف پیمایش بازگشتی
+درخت است:
 
 \begin{itemize}
-\item \key{pre-order}: first process the root,
-then traverse the left subtree, then traverse the right subtree
-\item \key{in-order}: first traverse the left subtree,
-then process the root, then traverse the right subtree
-\item \key{post-order}: first traverse the left subtree,
-then traverse the right subtree, then process the root
+\item \key{پیش‌ترتیب}: ابتدا پردازش ریشه،
+سپس پیمایش زیردرخت چپ، سپس پیمایش زیردرخت راست
+\item \key{میان‌ترتیب}: ابتدا پیمایش زیردرخت چپ،
+سپس پردازش ریشه، سپس پیمایش زیردرخت راست
+\item \key{پس‌ترتیب}: ابتدا پیمایش زیردرخت چپ،
+سپس پیمایش زیردرخت راست، سپس پردازش ریشه
 \end{itemize}
 
-For the above tree, the nodes in
-pre-order are
-$[1,2,4,5,6,3,7]$,
-in in-order $[4,2,6,5,1,3,7]$
-and in post-order $[4,6,5,2,7,3,1]$.
+برای درخت بالا، گره‌ها در
+پیمایش پیش‌ترتیب
+$[1,2,4,5,6,3,7]$،
+در میان‌ترتیب $[4,2,6,5,1,3,7]$
+و در پس‌ترتیب $[4,6,5,2,7,3,1]$ هستند.
 
-If we know the pre-order and in-order
-of a tree, we can reconstruct the exact structure of the tree.
-For example, the above tree is the only possible tree
-with pre-order $[1,2,4,5,6,3,7]$ and
-in-order $[4,2,6,5,1,3,7]$.
-In a similar way, the post-order and in-order
-also determine the structure of a tree.
+اگر پیش‌ترتیب و میان‌ترتیب درختی معلوم باشد، می‌توان ساختار دقیق درخت را بازسازی کرد.
+برای نمونه، درخت بالا تنها درخت ممکن با
+پیش‌ترتیب $[1,2,4,5,6,3,7]$ و
+میان‌ترتیب $[4,2,6,5,1,3,7]$ است.
+به شیوه مشابه، پس‌ترتیب و میان‌ترتیب نیز ساختار درخت را تعیین می‌کنند.
 
-However, the situation is different if we only know
-the pre-order and post-order of a tree.
-In this case, there may be more than one tree
-that match the orderings.
-For example, in both of the trees
+با این حال، اگر تنها پیش‌ترتیب و پس‌ترتیب درخت معلوم باشد، وضعیت متفاوت است.
+در این حالت، ممکن است بیش از یک درخت با این ترتیب‌ها همخوانی داشته باشد.
+برای نمونه، در هر دوی درخت‌های
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
 \node[draw, circle] (1) at (0,0) {$1$};
@@ -604,6 +580,5 @@ For example, in both of the trees
 \path[draw,thick,-] (1b) -- (2b);
 \end{tikzpicture}
 \end{center}
-the pre-order is $[1,2]$ and the post-order is $[2,1]$,
-but the structures of the trees are different.
-
+پیش‌ترتیب $[1,2]$ و پس‌ترتیب $[2,1]$ است،
+اما ساختار درخت‌ها با یکدیگر تفاوت دارد.
