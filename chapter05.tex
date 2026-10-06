@@ -1,45 +1,41 @@
-\chapter{Complete search}
+\chapter{جستجوی کامل}
 
-\key{Complete search}
-is a general method that can be used
-to solve almost any algorithm problem.
-The idea is to generate all possible
-solutions to the problem using brute force,
-and then select the best solution or count the
-number of solutions, depending on the problem.
+\key{جستجوی کامل}
+روشی کلی برای حل تقریباً هر مسئلهٔ الگوریتمی است.
+ایدهٔ اصلی، تولید تمام پاسخ‌های ممکن برای مسئله با استفاده از روش نیروی بی‌رحم (brute force)،
+و سپس انتخاب بهترین پاسخ یا شمارش تعداد پاسخ‌ها، بسته به صورت مسئله است.
 
-Complete search is a good technique
-if there is enough time to go through all the solutions,
-because the search is usually easy to implement
-and it always gives the correct answer.
-If complete search is too slow,
-other techniques, such as greedy algorithms or
-dynamic programming, may be needed.
+اگر زمان کافی برای بررسی همهٔ پاسخ‌ها وجود داشته باشد، جستجوی کامل تکنیک مناسبی است؛
+زیرا پیاده‌سازی این جستجو معمولاً آسان است
+و همیشه پاسخ درست می‌دهد.
+اگر جستجوی کامل بسیار کُند باشد،
+تکنیک‌های دیگر نظیر الگوریتم‌های حریصانه یا
+برنامه‌نویسی پویا ممکن است مورد نیاز باشند.
 
-\section{Generating subsets}
+\section{تولید زیرمجموعه‌ها}
 
-\index{subset}
+\index{زیرمجموعه}
 
-We first consider the problem of generating
-all subsets of a set of $n$ elements.
-For example, the subsets of $\{0,1,2\}$ are
-$\emptyset$, $\{0\}$, $\{1\}$, $\{2\}$, $\{0,1\}$,
-$\{0,2\}$, $\{1,2\}$ and $\{0,1,2\}$.
-There are two common methods to generate subsets:
-we can either perform a recursive search
-or exploit the bit representation of integers.
+ابتدا مسئلهٔ تولید
+تمام زیرمجموعه‌های یک مجموعهٔ $n$ عضوی را بررسی می‌کنیم.
+به عنوان مثال، زیرمجموعه‌های $\{0,1,2\}$ عبارتند از:
+$\emptyset$، $\{0\}$، $\{1\}$، $\{2\}$، $\{0,1\}$،
+$\{0,2\}$، $\{1,2\}$ و $\{0,1,2\}$.
+دو روش رایج برای تولید زیرمجموعه‌ها وجود دارد:
+می‌توان از یک جستجوی بازگشتی استفاده کرد
+یا از نمایش بیتی اعداد صحیح بهره برد.
 
-\subsubsection{Method 1}
+\subsubsection{روش ۱}
 
-An elegant way to go through all subsets
-of a set is to use recursion.
-The following function \texttt{search}
-generates the subsets of the set
-$\{0,1,\ldots,n-1\}$.
-The function maintains a vector \texttt{subset}
-that will contain the elements of each subset.
-The search begins when the function is called
-with parameter 0.
+یک روش هوشمندانه برای پیمایش تمام زیرمجموعه‌های
+یک مجموعه، استفاده از بازگشت است.
+تابع زیر با نام \texttt{search}
+زیرمجموعه‌های مجموعهٔ
+$\{0,1,\ldots,n-1\}$ را تولید می‌کند.
+این تابع یک بردار به نام \texttt{subset} را نگه می‌دارد
+که شامل عناصر هر زیرمجموعه خواهد بود.
+جستجو زمانی آغاز می‌شود که تابع
+با پارامتر 0 فراخوانی شود.
 
 \begin{lstlisting}
 void search(int k) {
@@ -54,20 +50,20 @@ void search(int k) {
 }
 \end{lstlisting}
 
-When the function \texttt{search}
-is called with parameter $k$,
-it decides whether to include the
-element $k$ in the subset or not,
-and in both cases,
-then calls itself with parameter $k+1$
-However, if $k=n$, the function notices that
-all elements have been processed
-and a subset has been generated.
+هنگامی که تابع \texttt{search}
+با پارامتر $k$ فراخوانی می‌شود،
+تصمیم می‌گیرد که آیا عنصر
+$k$ را در زیرمجموعه قرار دهد یا خیر،
+و در هر دو حالت،
+سپس خود را با پارامتر $k+1$ فراخوانی می‌کند.
+با این حال، اگر $k=n$ باشد، تابع متوجه می‌شود که
+همهٔ عناصر پردازش شده‌اند
+و یک زیرمجموعه تولید شده است.
 
-The following tree illustrates the function calls when $n=3$.
-We can always choose either the left branch
-($k$ is not included in the subset) or the right branch
-($k$ is included in the subset).
+درخت زیر فراخوانی‌های تابع را در حالتی که $n=3$ است نشان می‌دهد.
+ما همواره می‌توانیم شاخهٔ چپ
+(عنصر $k$ در زیرمجموعه قرار نمی‌گیرد) یا شاخهٔ راست
+(عنصر $k$ در زیرمجموعه قرار می‌گیرد) را انتخاب کنیم.
 
 \begin{center}
 \begin{tikzpicture}[scale=.45]
@@ -122,37 +118,31 @@ We can always choose either the left branch
 \end{tikzpicture}
 \end{center}
 
-\subsubsection{Method 2}
+\subsubsection{روش ۲}
 
-Another way to generate subsets is based on
-the bit representation of integers.
-Each subset of a set of $n$ elements
-can be represented as a sequence of $n$ bits,
-which corresponds to an integer between $0 \ldots 2^n-1$.
-The ones in the bit sequence indicate
-which elements are included in the subset.
+روش دیگر تولید زیرمجموعه‌ها بر پایه نمایش بیتی اعداد صحیح است.
+هر زیرمجموعه از یک مجموعه $n$ عضوی را می‌توان به شکل دنباله‌ای از $n$ بیت نشان داد،
+که متناظر با یک عدد صحیح بین $0 \ldots 2^n-1$ است.
+یک‌ها در دنباله بیتی مشخص می‌کنند کدام عضوها در زیرمجموعه حضور دارند.
 
-The usual convention is that
-the last bit corresponds to element 0,
-the second last bit corresponds to element 1,
-and so on.
-For example, the bit representation of 25
-is 11001, which corresponds to the subset $\{0,3,4\}$.
+قرارداد معمول این است که
+بیت آخر متناظر با عضو 0،
+بیت ماقبل آخر متناظر با عضو 1،
+و به همین ترتیب باشد.
+برای نمونه، نمایش بیتی عدد 25
+برابر 11001 است که با زیرمجموعه $\{0,3,4\}$ تناظر دارد.
 
-The following code goes through the subsets
-of a set of $n$ elements
+کد زیر تمام زیرمجموعه‌های یک مجموعه $n$ عضوی را پیمایش می‌کند:
 
 \begin{lstlisting}
 for (int b = 0; b < (1<<n); b++) {
-    // process subset
+    // پردازش زیرمجموعه
 }
 \end{lstlisting}
 
-The following code shows how we can find
-the elements of a subset that corresponds to a bit sequence.
-When processing each subset,
-the code builds a vector that contains the
-elements in the subset.
+کد زیر نشان می‌دهد چگونه می‌توان اعضای زیرمجموعه متناظر با یک دنباله بیتی را به دست آورد.
+هنگام پردازش هر زیرمجموعه،
+کد یک بردار شامل اعضای موجود در زیرمجموعه می‌سازد.
 
 \begin{lstlisting}
 for (int b = 0; b < (1<<n); b++) {
@@ -163,29 +153,24 @@ for (int b = 0; b < (1<<n); b++) {
 }
 \end{lstlisting}
 
-\section{Generating permutations}
+\section{تولید جایگشت‌ها}
 
 \index{permutation}
 
-Next we consider the problem of generating
-all permutations of a set of $n$ elements.
-For example, the permutations of $\{0,1,2\}$ are
-$(0,1,2)$, $(0,2,1)$, $(1,0,2)$, $(1,2,0)$,
-$(2,0,1)$ and $(2,1,0)$.
-Again, there are two approaches:
-we can either use recursion or go through the
-permutations iteratively.
+در ادامه مسئله تولید تمام جایگشت‌های یک مجموعه $n$ عضوی بررسی می‌شود.
+برای نمونه، جایگشت‌های $\{0,1,2\}$ عبارتند از
+$(0,1,2)$، $(0,2,1)$، $(1,0,2)$، $(1,2,0)$،
+$(2,0,1)$ و $(2,1,0)$.
+اینجا نیز دو رویکرد وجود دارد:
+می‌توان از بازگشت بهره برد یا جایگشت‌ها را به روش تکراری پیمایش کرد.
 
-\subsubsection{Method 1}
+\subsubsection{روش ۱}
 
-Like subsets, permutations can be generated
-using recursion.
-The following function \texttt{search} goes
-through the permutations of the set $\{0,1,\ldots,n-1\}$.
-The function builds a vector \texttt{permutation}
-that contains the permutation,
-and the search begins when the function is
-called without parameters.
+همانند زیرمجموعه‌ها، جایگشت‌ها را نیز می‌توان با بازگشت تولید کرد.
+تابع \texttt{search} زیر
+جایگشت‌های مجموعه $\{0,1,\ldots,n-1\}$ را پیمایش می‌کند.
+تابع بردار \texttt{permutation} حاوی جایگشت را می‌سازد،
+و جستجو با فراخوانی تابع بدون آرگومان آغاز می‌شود.
 
 \begin{lstlisting}
 void search() {
@@ -204,24 +189,16 @@ void search() {
 }
 \end{lstlisting}
 
-Each function call adds a new element to
-\texttt{permutation}.
-The array \texttt{chosen} indicates which
-elements are already included in the permutation.
-If the size of \texttt{permutation} equals the size of the set,
-a permutation has been generated.
+هر فراخوانی تابع یک عنصر جدید به \texttt{permutation} اضافه می‌کند.
+آرایه \texttt{chosen} مشخص می‌کند کدام عناصر قبلاً در جایگشت قرار گرفته‌اند.
+اگر اندازه \texttt{permutation} برابر با اندازه مجموعه شود، یک جایگشت تولید شده است.
 
-\subsubsection{Method 2}
+\subsubsection{روش ۲}
 
 \index{next\_permutation@\texttt{next\_permutation}}
 
-Another method for generating permutations
-is to begin with the permutation
-$\{0,1,\ldots,n-1\}$ and repeatedly
-use a function that constructs the next permutation
-in increasing order.
-The C++ standard library contains the function
-\texttt{next\_permutation} that can be used for this:
+روش دیگر برای تولید جایگشت‌ها، شروع با جایگشت $\{0,1,\ldots,n-1\}$ و استفاده متوالی از تابعی است که جایگشت بعدی را به ترتیب صعودی می‌سازد.
+کتابخانه استاندارد C++ شامل تابع \texttt{next\_permutation} است که می‌تواند برای این کار استفاده شود:
 
 \begin{lstlisting}
 vector<int> permutation;
@@ -233,26 +210,17 @@ do {
 } while (next_permutation(permutation.begin(),permutation.end()));
 \end{lstlisting}
 
-\section{Backtracking}
+\section{عقب‌گرد}
 
-\index{backtracking}
+\index{backtracking@عقب‌گرد}
 
-A \key{backtracking} algorithm
-begins with an empty solution
-and extends the solution step by step.
-The search recursively
-goes through all different ways how
-a solution can be constructed.
+یک الگوریتم \key{عقب‌گرد} (backtracking) با یک جواب خالی شروع می‌شود و جواب را گام به گام گسترش می‌دهد.
+جستجو به صورت بازگشتی تمام روش‌های مختلف ساخت یک جواب را بررسی می‌کند.
 
-\index{queen problem}
+\index{queen problem@مسئله وزیرها}
 
-As an example, consider the problem of
-calculating the number
-of ways $n$ queens can be placed on
-an $n \times n$ chessboard so that
-no two queens attack each other.
-For example, when $n=4$,
-there are two possible solutions:
+به عنوان مثال، مسئله محاسبه تعداد روش‌های قرار دادن $n$ وزیر در یک صفحه شطرنج $n \times n$ را در نظر بگیرید، به طوری که هیچ دو وزیری یکدیگر را تهدید نکنند.
+برای نمونه، زمانی که $n=4$ است، دو جواب ممکن وجود دارد:
 
 \begin{center}
 \begin{tikzpicture}[scale=.65]
@@ -273,17 +241,11 @@ there are two possible solutions:
 \end{tikzpicture}
 \end{center}
 
-The problem can be solved using backtracking
-by placing queens to the board row by row.
-More precisely, exactly one queen will
-be placed on each row so that no queen attacks
-any of the queens placed before.
-A solution has been found when all
-$n$ queens have been placed on the board.
+این مسئله را می‌توان با عقب‌گرد و قرار دادن سطر به سطر وزیرها در صفحه حل کرد.
+به طور دقیق‌تر، دقیقاً یک وزیر در هر سطر قرار می‌گیرد، به طوری که هیچ وزیری به وزیرهای قرار داده شده قبلی حمله نکند.
+هنگامی که همه $n$ وزیر در صفحه قرار گرفتند، یک جواب پیدا شده است.
 
-For example, when $n=4$,
-some partial solutions generated by
-the backtracking algorithm are as follows:
+برای نمونه، وقتی $n=4$ است، برخی از جواب‌های جزئی تولید شده توسط الگوریتم عقب‌گرد به صورت زیر هستند:
 
 \begin{center}
 \begin{tikzpicture}[scale=.55]
@@ -324,24 +286,24 @@ the backtracking algorithm are as follows:
     \draw (-1,-6) -- (1,-8);
     \draw (-1,-6) -- (6,-8);
 
-    \node at (-9,-13) {illegal};
-    \node at (-4,-13) {illegal};
-    \node at (1,-13) {illegal};
-    \node at (6,-13) {valid};
+    \node at (-9,-13) {غیرمجاز};
+    \node at (-4,-13) {غیرمجاز};
+    \node at (1,-13) {غیرمجاز};
+    \node at (6,-13) {معتبر};
 
   \end{scope}
 \end{tikzpicture}
 \end{center}
 
-At the bottom level, the three first configurations
-are illegal, because the queens attack each other.
-However, the fourth configuration is valid
-and it can be extended to a complete solution by
-placing two more queens to the board.
-There is only one way to place the two remaining queens.
+در پایین‌ترین سطح، سه پیکربندی اول
+غیرمجاز هستند، زیرا وزیرها به یکدیگر حمله می‌کنند.
+با این حال، پیکربندی چهارم معتبر است
+و می‌توان آن را با قرار دادن دو وزیر دیگر در صفحه
+به یک پاسخ کامل گسترش داد.
+تنها یک راه برای قرار دادن دو وزیر باقی‌مانده وجود دارد.
 
 \begin{samepage}
-The algorithm can be implemented as follows:
+الگوریتم را می‌توان به صورت زیر پیاده‌سازی کرد:
 \begin{lstlisting}
 void search(int y) {
     if (y == n) {
@@ -357,28 +319,25 @@ void search(int y) {
 }
 \end{lstlisting}
 \end{samepage}
-The search begins by calling \texttt{search(0)}.
-The size of the board is $n \times n$,
-and the code calculates the number of solutions
-to \texttt{count}.
+جستجو با فراخوانی \texttt{search(0)} آغاز می‌شود.
+اندازه صفحه $n \times n$ است
+و کد تعداد پاسخ‌ها را در متغیر \texttt{count} محاسبه می‌کند.
 
-The code assumes that the rows and columns
-of the board are numbered from 0 to $n-1$.
-When the function \texttt{search} is
-called with parameter $y$,
-it places a queen on row $y$
-and then calls itself with parameter $y+1$.
-Then, if $y=n$, a solution has been found
-and the variable \texttt{count} is increased by one.
+کد فرض می‌کند که سطرها و ستون‌های
+صفحه از 0 تا $n-1$ شماره‌گذاری شده‌اند.
+هنگامی که تابع \texttt{search} با آرگومان $y$ فراخوانی می‌شود،
+وزیری را در سطر $y$ قرار می‌دهد
+و سپس خود را با آرگومان $y+1$ فراخوانی می‌کند.
+سپس، اگر $y=n$ باشد، یک پاسخ یافت شده است
+و متغیر \texttt{count} یک واحد افزایش می‌یابد.
 
-The array \texttt{column} keeps track of columns
-that contain a queen,
-and the arrays \texttt{diag1} and \texttt{diag2}
-keep track of diagonals.
-It is not allowed to add another queen to a
-column or diagonal that already contains a queen. 
-For example, the columns and diagonals of
-the $4 \times 4$ board are numbered as follows:
+آرایه \texttt{column} ستون‌هایی را که شامل وزیر هستند پیگیری می‌کند،
+و آرایه‌های \texttt{diag1} و \texttt{diag2}
+قطرها را دنبال می‌کنند.
+اضافه کردن وزیری دیگر به ستون یا قطری که از قبل شامل وزیر است،
+مجاز نیست.
+برای مثال، ستون‌ها و قطرهای
+صفحه $4 \times 4$ به صورت زیر شماره‌گذاری می‌شوند:
 
 \begin{center}
 \begin{tikzpicture}[scale=.65]
@@ -445,38 +404,37 @@ the $4 \times 4$ board are numbered as follows:
 \end{tikzpicture}
 \end{center}
 
-Let $q(n)$ denote the number of ways
-to place $n$ queens on an $n \times n$ chessboard.
-The above backtracking
-algorithm tells us that, for example, $q(8)=92$.
-When $n$ increases, the search quickly becomes slow,
-because the number of solutions increases
-exponentially.
-For example, calculating $q(16)=14772512$
-using the above algorithm already takes about a minute
-on a modern computer\footnote{There is no known way to efficiently
-calculate larger values of $q(n)$. The current record is
-$q(27)=234907967154122528$, calculated in 2016 \cite{q27}.}.
+فرض کنید $q(n)$ نشان‌دهنده تعداد روش‌های
+قرار دادن $n$ وزیر در یک صفحه شطرنج $n \times n$ باشد.
+الگوریتم عقب‌گرد بالا
+نشان می‌دهد که به عنوان مثال، $q(8)=92$ است.
+با افزایش $n$، جستجو به سرعت کند می‌شود،
+زیرا تعداد جواب‌ها
+به صورت نمایی رشد می‌کند.
+برای نمونه، محاسبه $q(16)=14772512$
+با الگوریتم بالا روی یک رایانه امروزی
+حدود یک دقیقه زمان می‌برد\footnote{روش کارآمد شناخته‌شده‌ای برای
+محاسبه مقادیر بزرگتر $q(n)$ وجود ندارد. رکورد فعلی
+$q(27)=234907967154122528$ است که در سال ۲۰۱۶ محاسبه شد \cite{q27}.}.
 
-\section{Pruning the search}
+\section{هرس کردن جستجو}
 
-We can often optimize backtracking
-by pruning the search tree.
-The idea is to add ''intelligence'' to the algorithm
-so that it will notice as soon as possible
-if a partial solution cannot be extended
-to a complete solution.
-Such optimizations can have a tremendous
-effect on the efficiency of the search.
+اغلب می‌توان عقب‌گرد را
+با هرس کردن درخت جستجو بهینه‌سازی کرد.
+ایده اصلی، افزودن «هوشمندی» به الگوریتم است
+تا در سریع‌ترین زمان ممکن تشخیص دهد
+که آیا یک جواب جزئی قابلیت تبدیل
+به یک جواب کامل را ندارد یا خیر.
+چنین بهینه‌سازی‌هایی می‌توانند تأثیر
+چشمگیری بر کارایی جستجو داشته باشند.
 
-Let us consider the problem
-of calculating the number of paths
-in an $n \times n$ grid from the upper-left corner
-to the lower-right corner such that the
-path visits each square exactly once.
-For example, in a $7 \times 7$ grid,
-there are 111712 such paths.
-One of the paths is as follows:
+مسئله شمارش تعداد مسیرها
+در یک شبکه $n \times n$ از گوشه بالا-چپ
+به گوشه پایین-راست را در نظر بگیرید، به طوری که
+مسیر دقیقاً یک بار از هر خانه عبور کند.
+به عنوان مثال، در یک شبکه $7 \times 7$،
+تعداد ۱۱۱۷۱۲ مسیر از این نوع وجود دارد.
+یکی از این مسیرها به صورت زیر است:
 
 \begin{center}
 \begin{tikzpicture}[scale=.55]
@@ -494,39 +452,22 @@ One of the paths is as follows:
 \end{tikzpicture}
 \end{center}
 
-We focus on the $7 \times 7$ case,
-because its level of difficulty is appropriate to our needs.
-We begin with a straightforward backtracking algorithm,
-and then optimize it step by step using observations
-of how the search can be pruned.
-After each optimization, we measure the running time
-of the algorithm and the number of recursive calls,
-so that we clearly see the effect of each
-optimization on the efficiency of the search.
+تمرکز ما روی حالت $7 \times 7$ است، زیرا سطح دشواری آن متناسب با نیاز ماست. کار را با الگوریتم عقب‌گرد ساده آغاز می‌کنیم و سپس با مشاهداتی درباره نحوه هرس جستجو، آن را گام به گام بهینه‌سازی می‌کنیم. پس از هر بهینه‌سازی، زمان اجرای الگوریتم و تعداد فراخوانی‌های بازگشتی را اندازه می‌گیریم تا تأثیر هر بهینه‌سازی بر کارایی جستجو مشخص شود.
 
-\subsubsection{Basic algorithm}
+\subsubsection{الگوریتم پایه}
 
-The first version of the algorithm does not contain
-any optimizations. We simply use backtracking to generate
-all possible paths from the upper-left corner to
-the lower-right corner and count the number of such paths.
+نسخه نخست الگوریتم فاقد هرگونه بهینه‌سازی است. صرفاً با عقب‌گرد، تمام مسیرهای ممکن از گوشه بالا-چپ به گوشه پایین-راست تولید و شمارش می‌شوند.
 
 \begin{itemize}
 \item
-running time: 483 seconds
+زمان اجرا: ۴۸۳ ثانیه
 \item
-number of recursive calls: 76 billion
+تعداد فراخوانی‌های بازگشتی: ۷۶ میلیارد
 \end{itemize}
 
-\subsubsection{Optimization 1}
+\subsubsection{بهینه‌سازی ۱}
 
-In any solution, we first move one step
-down or right.
-There are always two paths that 
-are symmetric
-about the diagonal of the grid
-after the first step.
-For example, the following paths are symmetric:
+در هر پاسخ، گام نخست حرکت به پایین یا راست است. همواره دو مسیر وجود دارند که نسبت به قطر شبکه پس از گام اول متقارن هستند. برای نمونه، مسیرهای زیر متقارنند:
 
 \begin{center}
 \begin{tabular}{ccc}
@@ -561,24 +502,18 @@ For example, the following paths are symmetric:
 \end{tabular}
 \end{center}
 
-Hence, we can decide that we always first
-move one step down (or right),
-and finally multiply the number of solutions by two.
+بنابراین، می‌توان شرط کرد که گام اول همیشه به سمت پایین (یا راست) باشد و در پایان، تعداد پاسخ‌ها دو برابر شود.
 
 \begin{itemize}
 \item
-running time: 244 seconds
+زمان اجرا: ۲۴۴ ثانیه
 \item
-number of recursive calls: 38 billion
+تعداد فراخوانی‌های بازگشتی: ۳۸ میلیارد
 \end{itemize}
 
-\subsubsection{Optimization 2}
+\subsubsection{بهینه‌سازی ۲}
 
-If the path reaches the lower-right square
-before it has visited all other squares of the grid,
-it is clear that
-it will not be possible to complete the solution.
-An example of this is the following path:
+اگر مسیر پیش از پیمایش تمام خانه‌های دیگر شبکه به خانهٔ پایین-راست برسد، واضح است که تکمیل پاسخ ناممکن خواهد بود. نمونه‌ای از این حالت مسیر زیر است:
 
 \begin{center}
 \begin{tikzpicture}[scale=.55]
@@ -592,23 +527,17 @@ An example of this is the following path:
   \end{scope}
 \end{tikzpicture}
 \end{center}
-Using this observation, we can terminate the search
-immediately if we reach the lower-right square too early.
+با تکیه بر این نکته، در صورت رسیدن زودهنگام به خانهٔ پایین-راست، جستجو را فوراً متوقف می‌کنیم.
 \begin{itemize}
 \item
-running time: 119 seconds
+زمان اجرا: ۱۱۹ ثانیه
 \item
-number of recursive calls: 20 billion
+تعداد فراخوانی‌های بازگشتی: ۲۰ میلیارد
 \end{itemize}
 
-\subsubsection{Optimization 3}
+\subsubsection{بهینه‌سازی ۳}
 
-If the path touches a wall
-and can turn either left or right,
-the grid splits into two parts
-that contain unvisited squares.
-For example, in the following situation,
-the path can turn either left or right:
+اگر مسیر به دیوار برخورد کند و بتواند به چپ یا راست بپیچد، شبکه به دو بخش مجزا با خانه‌های دیده‌نشده تقسیم می‌شود. برای مثال، در وضعیت زیر مسیر می‌تواند به چپ یا راست برود:
 
 \begin{center}
 \begin{tikzpicture}[scale=.55]
@@ -622,26 +551,18 @@ the path can turn either left or right:
   \end{scope}
 \end{tikzpicture}
 \end{center}
-In this case, we cannot visit all squares anymore,
-so we can terminate the search.
-This optimization is very useful:
+در این حالت، پیمایش تمام خانه‌ها دیگر امکان‌پذیر نیست؛ پس جستجو متوقف می‌شود. این بهینه‌سازی بسیار کارآمد است:
 
 \begin{itemize}
 \item
-running time: 1.8 seconds
+زمان اجرا: ۱.۸ ثانیه
 \item
-number of recursive calls: 221 million
+تعداد فراخوانی‌های بازگشتی: ۲۲۱ میلیون
 \end{itemize}
 
-\subsubsection{Optimization 4}
+\subsubsection{بهینه‌سازی ۴}
 
-The idea of Optimization 3
-can be generalized:
-if the path cannot continue forward
-but can turn either left or right,
-the grid splits into two parts
-that both contain unvisited squares.
-For example, consider the following path:
+ایدهٔ بهینه‌سازی ۳ را می‌توان تعمیم داد: اگر مسیر امکان حرکت رو به جلو نداشته باشد اما بتواند به چپ یا راست گردش کند، شبکه به دو بخش شامل خانه‌های دیده‌نشده تقسیم خواهد شد. برای مثال، مسیر زیر را ببینید:
 
 \begin{center}
 \begin{tikzpicture}[scale=.55]
@@ -655,104 +576,94 @@ For example, consider the following path:
   \end{scope}
 \end{tikzpicture}
 \end{center}
-It is clear that we cannot visit all squares anymore,
-so we can terminate the search.
-After this optimization, the search is
-very efficient:
+روشن است که دیگر نمی‌توان همهٔ خانه‌ها را پیمایش کرد؛ بنابراین جستجو قطع می‌شود. پس از این بهینه‌سازی، جستجو بسیار سریع عمل می‌کند:
 
 \begin{itemize}
 \item
-running time: 0.6 seconds
+زمان اجرا: ۰.۶ ثانیه
 \item
-number of recursive calls: 69 million
+تعداد فراخوانی‌های بازگشتی: ۶۹ میلیون
 \end{itemize}
 
 ~\\
-Now is a good moment to stop optimizing
-the algorithm and see what we have achieved.
-The running time of the original algorithm
-was 483 seconds,
-and now after the optimizations,
-the running time is only 0.6 seconds.
-Thus, the algorithm became nearly 1000 times
-faster after the optimizations.
+اکنون زمان مناسبی است تا بهینه‌سازی الگوریتم متوقف و نتایج بررسی شود. زمان اجرای الگوریتم اولیه ۴۸۳ ثانیه بود؛ حال با اعمال بهینه‌سازی‌ها، زمان اجرا به ۰.۶ ثانیه رسیده است. بنابراین الگوریتم نزدیک به ۱۰۰۰ برابر سریع‌تر شد.
 
-This is a usual phenomenon in backtracking,
-because the search tree is usually large
-and even simple observations can effectively
-prune the search.
-Especially useful are optimizations that
-occur during the first steps of the algorithm,
-i.e., at the top of the search tree.
+این پدیده‌ای رایج در عقب‌گرد است،
+زیرا درخت جستجو معمولاً بزرگ است
+و حتی مشاهدات ساده نیز می‌توانند به شکلی مؤثر
+جستجو را هرس کنند.
+به‌ویژه بهینه‌سازی‌هایی که
+در گام‌های اولیه الگوریتم رخ می‌دهند،
+یعنی در بالای درخت جستجو، بسیار مفید هستند.
 
-\section{Meet in the middle}
+\section{ملاقات در میانه (Meet in the middle)}
 
-\index{meet in the middle}
+\index{ملاقات در میانه}
 
-\key{Meet in the middle} is a technique
-where the search space is divided into
-two parts of about equal size.
-A separate search is performed
-for both of the parts,
-and finally the results of the searches are combined.
+\key{ملاقات در میانه} تکنیکی است
+که در آن فضای جستجو به
+دو بخش با اندازه‌های تقریباً برابر تقسیم می‌شود.
+یک جستجوی جداگانه
+برای هر دو بخش انجام می‌گیرد،
+و در نهایت نتایج جستجوها با یکدیگر ترکیب می‌شوند.
 
-The technique can be used
-if there is an efficient way to combine the
-results of the searches.
-In such a situation, the two searches may require less
-time than one large search.
-Typically, we can turn a factor of $2^n$
-into a factor of $2^{n/2}$ using the meet in the
-middle technique.
+از این تکنیک می‌توان استفاده کرد
+اگر روشی کارآمد برای ترکیب
+نتایج جستجوها وجود داشته باشد.
+در چنین حالتی، این دو جستجو ممکن است زمان کمتری
+نسبت به یک جستجوی بزرگ نیاز داشته باشند.
+به‌طور معمول، با استفاده از تکنیک ملاقات در میانه
+می‌توان ضریب $2^n$ را
+به ضریب $2^{n/2}$ تبدیل کرد.
 
-As an example, consider a problem where
-we are given a list of $n$ numbers and
-a number $x$,
-and we want to find out if it is possible
-to choose some numbers from the list so that
-their sum is $x$.
-For example, given the list $[2,4,5,9]$ and $x=15$,
-we can choose the numbers $[2,4,9]$ to get $2+4+9=15$.
-However, if $x=10$ for the same list,
-it is not possible to form the sum.
+به‌عنوان مثال، مسئله‌ای را در نظر بگیرید که در آن
+لیستی از $n$ عدد و
+یک عدد $x$ داده شده است،
+و می‌خواهیم بررسی کنیم آیا می‌توان
+چند عدد از لیست را طوری انتخاب کرد که
+مجموع آن‌ها برابر $x$ شود.
+برای نمونه، با فرض لیست $[2,4,5,9]$ و $x=15$،
+می‌توان اعداد $[2,4,9]$ را انتخاب کرد تا $2+4+9=15$ به دست آید.
+با این حال، اگر برای همین لیست $x=10$ باشد،
+تشکیل چنین مجموعی امکان‌پذیر نیست.
 
-A simple algorithm to the problem is to
-go through all subsets of the elements and
-check if the sum of any of the subsets is $x$.
-The running time of such an algorithm is $O(2^n)$,
-because there are $2^n$ subsets.
-However, using the meet in the middle technique,
-we can achieve a more efficient $O(2^{n/2})$ time algorithm\footnote{This
-idea was introduced in 1974 by E. Horowitz and S. Sahni \cite{hor74}.}.
-Note that $O(2^n)$ and $O(2^{n/2})$ are different
-complexities because $2^{n/2}$ equals $\sqrt{2^n}$.
+یک الگوریتم ساده برای این مسئله آن است که
+تمام زیرمجموعه‌های عناصر را بررسی کنیم و
+ببینیم آیا مجموع هر یک از زیرمجموعه‌ها برابر $x$ است یا خیر.
+زمان اجرای چنین الگوریتمی $O(2^n)$ است،
+زیرا $2^n$ زیرمجموعه وجود دارد.
+اما با استفاده از تکنیک ملاقات در میانه،
+می‌توان به الگوریتم کارآمدتری با زمان $O(2^{n/2})$ دست یافت\footnote{این
+ایده در سال ۱۹۷۴ توسط E. Horowitz و S. Sahni معرفی شد \cite{hor74}.}.
+توجه داشته باشید که $O(2^n)$ و $O(2^{n/2})$ پیچیدگی‌های متفاوتی
+هستند، زیرا $2^{n/2}$ برابر با $\sqrt{2^n}$ است.
 
-The idea is to divide the list into
-two lists $A$ and $B$ such that both
-lists contain about half of the numbers.
-The first search generates all subsets
-of $A$ and stores their sums to a list $S_A$.
-Correspondingly, the second search creates
-a list $S_B$ from $B$.
-After this, it suffices to check if it is possible
-to choose one element from $S_A$ and another
-element from $S_B$ such that their sum is $x$.
-This is possible exactly when there is a way to
-form the sum $x$ using the numbers of the original list.
+ایده کار تقسیم لیست به
+دو لیست $A$ و $B$ است، به طوری که هر دو
+لیست تقریباً نیمی از اعداد را در بر داشته باشند.
+جستجوی اول تمام زیرمجموعه‌های
+$A$ را تولید کرده و مجموع آن‌ها را در لیستی به نام $S_A$ ذخیره می‌کند.
+به همین ترتیب، جستجوی دوم
+لیست $S_B$ را از $B$ ایجاد می‌کند.
+پس از این، کافی است بررسی شود که آیا می‌توان
+یک عنصر از $S_A$ و عنصر دیگری
+از $S_B$ انتخاب کرد به طوری که مجموع آن‌ها برابر $x$ شود.
+این حالت دقیقاً زمانی ممکن است که راهی برای
+تشکیل مجموع $x$ با استفاده از اعداد لیست اصلی وجود داشته باشد.
 
-For example, suppose that the list is $[2,4,5,9]$ and $x=15$.
-First, we divide the list into $A=[2,4]$ and $B=[5,9]$.
-After this, we create lists
-$S_A=[0,2,4,6]$ and $S_B=[0,5,9,14]$.
-In this case, the sum $x=15$ is possible to form,
-because $S_A$ contains the sum $6$,
-$S_B$ contains the sum $9$, and $6+9=15$.
-This corresponds to the solution $[2,4,9]$.
+برای مثال، فرض کنید لیست $[2,4,5,9]$ و $x=15$ باشد.
+ابتدا لیست را به $A=[2,4]$ و $B=[5,9]$ تقسیم می‌کنیم.
+سپس، لیست‌های
+$S_A=[0,2,4,6]$ و $S_B=[0,5,9,14]$ را می‌سازیم.
+در این حالت، تشکیل مجموع $x=15$ امکان‌پذیر است،
+زیرا $S_A$ شامل مجموع $6$ است،
+$S_B$ شامل مجموع $9$ است، و $6+9=15$.
+این متناظر با پاسخ $[2,4,9]$ است.
 
-We can implement the algorithm so that
-its time complexity is $O(2^{n/2})$.
-First, we generate \emph{sorted} lists $S_A$ and $S_B$,
-which can be done in $O(2^{n/2})$ time using a merge-like technique.
-After this, since the lists are sorted,
-we can check in $O(2^{n/2})$ time if
-the sum $x$ can be created from $S_A$ and $S_B$.
+می‌توان الگوریتم را طوری پیاده‌سازی کرد که
+پیچیدگی زمانی آن $O(2^{n/2})$ باشد.
+ابتدا، لیست‌های \emph{مرتب‌شده} $S_A$ و $S_B$ را تولید می‌کنیم،
+که با استفاده از تکنیکی شبیه به ادغام در زمان $O(2^{n/2})$ قابل انجام است.
+پس از این، با توجه به مرتب بودن لیست‌ها،
+می‌توان در زمان $O(2^{n/2})$ بررسی کرد که آیا
+مجموع $x$ می‌تواند از $S_A$ و $S_B$ ساخته شود یا خیر.
