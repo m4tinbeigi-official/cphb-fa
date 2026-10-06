@@ -108,6 +108,11 @@ def split_into_chunks(text: str, max_chunk_size: int = 3000) -> list[str]:
 
 
 def translate_file(file_path: str):
+    backup_path = file_path + ".orig"
+    if os.path.exists(backup_path):
+        print(f"Skipping {file_path} (already translated, backup exists)")
+        return
+
     print(f"Translating {file_path}...")
     with open(file_path, "r", encoding="utf-8") as f:
         content = f.read()
