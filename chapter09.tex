@@ -1,23 +1,23 @@
-\chapter{Range queries}
+\chapter{پرسش‌های بازه‌ای}
 
-\index{range query}
-\index{sum query}
-\index{minimum query}
-\index{maximum query}
+\index{range query@پرسش بازه‌ای}
+\index{sum query@پرسش مجموع}
+\index{minimum query@پرسش کمینه}
+\index{maximum query@پرسش بیشینه}
 
-In this chapter, we discuss data structures
-that allow us to efficiently process range queries.
-In a \key{range query},
-our task is to calculate a value
-based on a subarray of an array.
-Typical range queries are:
+در این فصل داده‌ساختارهایی بررسی می‌شوند
+که پردازش کارآمد پرسش‌های بازه‌ای را ممکن می‌سازند.
+در یک \key{پرسش بازه‌ای}،
+هدف محاسبه یک مقدار
+بر اساس زیرآرایه‌ای از یک آرایه است.
+پرسش‌های بازه‌ای متداول عبارتند از:
 \begin{itemize}
-\item $\texttt{sum}_q(a,b)$: calculate the sum of values in range $[a,b]$
-\item $\texttt{min}_q(a,b)$: find the minimum value in range $[a,b]$
-\item $\texttt{max}_q(a,b)$: find the maximum value in range $[a,b]$
+\item $\texttt{sum}_q(a,b)$: محاسبه مجموع مقادیر در بازه $[a,b]$
+\item $\texttt{min}_q(a,b)$: یافتن مقدار کمینه در بازه $[a,b]$
+\item $\texttt{max}_q(a,b)$: یافتن مقدار بیشینه در بازه $[a,b]$
 \end{itemize}
 
-For example, consider the range $[3,6]$ in the following array:
+برای مثال، بازه $[3,6]$ در آرایه زیر را در نظر بگیرید:
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \fill[color=lightgray] (3,0) rectangle (7,1);
@@ -43,13 +43,13 @@ For example, consider the range $[3,6]$ in the following array:
 \node at (7.5,1.4) {$7$};
 \end{tikzpicture}
 \end{center}
-In this case, $\texttt{sum}_q(3,6)=14$,
-$\texttt{min}_q(3,6)=1$ and $\texttt{max}_q(3,6)=6$.
+در این حالت، $\texttt{sum}_q(3,6)=14$،
+$\texttt{min}_q(3,6)=1$ و $\texttt{max}_q(3,6)=6$ است.
 
-A simple way to process range queries is to use
-a loop that goes through all array values in the range.
-For example, the following function can be
-used to process sum queries on an array:
+روشی ساده برای پردازش پرسش‌های بازه‌ای استفاده از
+حلقه‌ای است که تمام مقادیر آرایه در بازه را پیمایش می‌کند.
+برای نمونه، تابع زیر می‌تواند
+برای پردازش پرسش‌های مجموع روی آرایه استفاده شود:
 
 \begin{lstlisting}
 int sum(int a, int b) {
@@ -61,36 +61,34 @@ int sum(int a, int b) {
 }
 \end{lstlisting}
 
-This function works in $O(n)$ time,
-where $n$ is the size of the array.
-Thus, we can process $q$ queries in $O(nq)$
-time using the function.
-However, if both $n$ and $q$ are large, this approach
-is slow. Fortunately, it turns out that there are
-ways to process range queries much more efficiently.
+این تابع در زمان $O(n)$ اجرا می‌شود،
+که $n$ اندازه آرایه است.
+بنابراین با این تابع می‌توان $q$ پرسش را در زمان $O(nq)$
+پردازش کرد.
+اما اگر $n$ و $q$ بزرگ باشند، این روش
+کند است. روش‌هایی وجود دارند که
+پرسش‌های بازه‌ای را بسیار کارآمدتر پردازش می‌کنند.
 
-\section{Static array queries}
+\section{پرسش‌های آرایه ایستا}
 
-We first focus on a situation where
-the array is \emph{static}, i.e.,
-the array values are never updated between the queries.
-In this case, it suffices to construct
-a static data structure that tells us
-the answer for any possible query.
+ابتدا حالتی بررسی می‌شود که
+آرایه \emph{ایستا} است؛ یعنی
+مقادیر آرایه هرگز بین پرسش‌ها به‌روزرسانی نمی‌شوند.
+در این حالت ساختن داده‌ساختاری ایستا
+که پاسخ هر پرسش ممکن را بدهد کافی است.
 
-\subsubsection{Sum queries}
+\subsubsection{پرسش‌های مجموع}
 
-\index{prefix sum array}
+\index{prefix sum array@آرایه مجموع پیشوندی}
 
-We can easily process
-sum queries on a static array
-by constructing a \key{prefix sum array}.
-Each value in the prefix sum array equals
-the sum of values in the original array up to that position,
-i.e., the value at position $k$ is $\texttt{sum}_q(0,k)$.
-The prefix sum array can be constructed in $O(n)$ time.
+پرسش‌های مجموع روی آرایه ایستا
+با ساخت یک \key{آرایه مجموع پیشوندی} به سادگی پردازش می‌شوند.
+هر مقدار در آرایه مجموع پیشوندی برابر با
+مجموع مقادیر در آرایه اصلی تا آن جایگاه است؛
+یعنی مقدار در جایگاه $k$ برابر با $\texttt{sum}_q(0,k)$ است.
+آرایه مجموع پیشوندی در زمان $O(n)$ ساخته می‌شود.
 
-For example, consider the following array:
+برای مثال، آرایه زیر را در نظر بگیرید:
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 %\fill[color=lightgray] (3,0) rectangle (7,1);
@@ -116,7 +114,7 @@ For example, consider the following array:
 \node at (7.5,1.4) {$7$};
 \end{tikzpicture}
 \end{center}
-The corresponding prefix sum array is as follows:
+آرایه مجموع پیشوندی متناظر به صورت زیر است:
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 %\fill[color=lightgray] (3,0) rectangle (7,1);
@@ -143,15 +141,15 @@ The corresponding prefix sum array is as follows:
 \node at (7.5,1.4) {$7$};
 \end{tikzpicture}
 \end{center}
-Since the prefix sum array contains all values
-of $\texttt{sum}_q(0,k)$,
-we can calculate any value of
-$\texttt{sum}_q(a,b)$ in $O(1)$ time as follows:
+از آنجا که آرایه مجموع پیشوندی شامل تمام مقادیر
+$\texttt{sum}_q(0,k)$ است،
+می‌توان هر مقدار از
+$\texttt{sum}_q(a,b)$ را در زمان $O(1)$ به صورت زیر محاسبه کرد:
 \[ \texttt{sum}_q(a,b) = \texttt{sum}_q(0,b) - \texttt{sum}_q(0,a-1)\]
-By defining $\texttt{sum}_q(0,-1)=0$,
-the above formula also holds when $a=0$.
+با تعریف $\texttt{sum}_q(0,-1)=0$،
+فرمول فوق برای حالت $a=0$ نیز برقرار است.
 
-For example, consider the range $[3,6]$:
+به عنوان مثال، بازه $[3,6]$ را در نظر بگیرید:
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \fill[color=lightgray] (3,0) rectangle (7,1);
@@ -177,9 +175,9 @@ For example, consider the range $[3,6]$:
 \node at (7.5,1.4) {$7$};
 \end{tikzpicture}
 \end{center}
-In this case $\texttt{sum}_q(3,6)=8+6+1+4=19$.
-This sum can be calculated from
-two values of the prefix sum array:
+در این حالت $\texttt{sum}_q(3,6)=8+6+1+4=19$.
+این مجموع را می‌توان از
+دو مقدار آرایه مجموع پیشوندی به دست آورد:
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \fill[color=lightgray] (2,0) rectangle (3,1);
@@ -206,19 +204,17 @@ two values of the prefix sum array:
 \node at (7.5,1.4) {$7$};
 \end{tikzpicture}
 \end{center}
-Thus, $\texttt{sum}_q(3,6)=\texttt{sum}_q(0,6)-\texttt{sum}_q(0,2)=27-8=19$.
+بنابراین، $\texttt{sum}_q(3,6)=\texttt{sum}_q(0,6)-\texttt{sum}_q(0,2)=27-8=19$.
 
-It is also possible to generalize this idea
-to higher dimensions.
-For example, we can construct a two-dimensional
-prefix sum array that can be used to calculate
-the sum of any rectangular subarray in $O(1)$ time.
-Each sum in such an array corresponds to
-a subarray
-that begins at the upper-left corner of the array.
+همچنین امکان تعمیم این ایده
+به ابعاد بالاتر وجود دارد.
+به عنوان مثال، می‌توان یک آرایه مجموع پیشوندی دو بعدی ساخت
+که برای محاسبه مجموع هر زیرآرایه مستطیلی در زمان $O(1)$ استفاده شود.
+هر مجموع در چنین آرایه‌ای متناظر با زیرآرایه‌ای است
+که از گوشه بالا سمت چپ آرایه آغاز می‌شود.
 
 \begin{samepage}
-The following picture illustrates the idea:
+تصویر زیر ایده را نشان می‌دهد:
 \begin{center}
 \begin{tikzpicture}[scale=0.54]
 \draw[fill=lightgray] (3,2) rectangle (7,5);
@@ -231,37 +227,21 @@ The following picture illustrates the idea:
 \end{center}
 \end{samepage}
 
-The sum of the gray subarray can be calculated
-using the formula
+مجموع زیرآرایه خاکستری با فرمول زیر محاسبه می‌شود:
 \[S(A) - S(B) - S(C) + S(D),\]
-where $S(X)$ denotes the sum of values
-in a rectangular
-subarray from the upper-left corner
-to the position of $X$.
+که در آن $S(X)$ بیانگر مجموع مقادیر در زیرآرایه مستطیلی از گوشه بالا سمت چپ تا موقعیت $X$ است.
 
-\subsubsection{Minimum queries}
+\subsubsection{پرس‌وجوهای کمینه}
 
 \index{sparse table}
 
-Minimum queries are more difficult to process
-than sum queries.
-Still, there is a quite simple 
-$O(n \log n)$ time preprocessing
-method after which we can answer any minimum
-query in $O(1)$ time\footnote{This technique
-was introduced in \cite{ben00} and sometimes
-called the \key{sparse table} method.
-There are also more sophisticated techniques \cite{fis06} where
-the preprocessing time is only $O(n)$, but such algorithms
-are not needed in competitive programming.}.
-Note that since minimum and maximum queries can
-be processed similarly,
-we can focus on minimum queries.
+پردازش پرس‌وجوهای کمینه دشوارتر از پرس‌وجوهای مجموع است.
+با این حال، روش پیش‌پردازش ساده‌ای با زمان $O(n \log n)$ وجود دارد که پس از آن می‌توان به هر پرس‌وجوی کمینه در زمان $O(1)$ پاسخ داد\footnote{این روش در \cite{ben00} معرفی شد و گاهی روش \key{sparse table} (جدول تنک) نامیده می‌شود.
+روش‌های پیچیده‌تری نیز وجود دارند \cite{fis06} که زمان پیش‌پردازش در آن‌ها $O(n)$ است، اما این الگوریتم‌ها در برنامه‌نویسی رقابتی نیاز نیستند.}.
+چون پرس‌وجوهای کمینه و بیشینه یکسان پردازش می‌شوند، روی پرس‌وجوهای کمینه تمرکز می‌کنیم.
 
-The idea is to precalculate all values of
-$\textrm{min}_q(a,b)$ where
-$b-a+1$ (the length of the range) is a power of two.
-For example, for the array
+ایده: پیش‌محاسبه تمام مقادیر $\textrm{min}_q(a,b)$ که در آن‌ها $b-a+1$ (طول بازه) توانی از دو است.
+برای نمونه، برای آرایه
 
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
@@ -287,7 +267,7 @@ For example, for the array
 \node at (7.5,1.4) {$7$};
 \end{tikzpicture}
 \end{center}
-the following values are calculated:
+مقادیر زیر محاسبه می‌شوند:
 
 \begin{center}
 \begin{tabular}{ccc}
@@ -338,24 +318,19 @@ $a$ & $b$ & $\texttt{min}_q(a,b)$ \\
 \end{tabular}
 \end{center}
 
-The number of precalculated values is $O(n \log n)$,
-because there are $O(\log n)$ range lengths
-that are powers of two.
-The values can be calculated efficiently
-using the recursive formula
+تعداد مقادیر پیش‌محاسبه‌شده $O(n \log n)$ است، زیرا $O(\log n)$ طول بازه توانی از دو داریم.
+این مقادیر با فرمول بازگشتی زیر بهینه محاسبه می‌شوند:
 \[\texttt{min}_q(a,b) = \min(\texttt{min}_q(a,a+w-1),\texttt{min}_q(a+w,b)),\]
-where $b-a+1$ is a power of two and $w=(b-a+1)/2$.
-Calculating all those values takes $O(n \log n)$ time.
+که در آن $b-a+1$ توانی از دو و $w=(b-a+1)/2$ است.
+محاسبه همه مقادیر زمان $O(n \log n)$ می‌برد.
 
-After this, any value of $\texttt{min}_q(a,b)$ can be calculated
-in $O(1)$ time as a minimum of two precalculated values.
-Let $k$ be the largest power of two that does not exceed $b-a+1$.
-We can calculate the value of $\texttt{min}_q(a,b)$ using the formula
+پس از این، هر مقدار $\texttt{min}_q(a,b)$ در زمان $O(1)$ به صورت کمینه دو مقدار از پیش محاسبه‌شده به دست می‌آید.
+فرض کنید $k$ بزرگ‌ترین توان دو باشد که از $b-a+1$ بیشتر نیست.
+می‌توان مقدار $\texttt{min}_q(a,b)$ را با رابطه زیر محاسبه کرد:
 \[\texttt{min}_q(a,b) = \min(\texttt{min}_q(a,a+k-1),\texttt{min}_q(b-k+1,b)).\]
-In the above formula, the range $[a,b]$ is represented
-as the union of the ranges $[a,a+k-1]$ and $[b-k+1,b]$, both of length $k$.
+در رابطه بالا، بازه $[a,b]$ به صورت اجتماع بازه‌های $[a,a+k-1]$ و $[b-k+1,b]$ نشان داده شده است که طول هر دو $k$ است.
 
-As an example, consider the range $[1,6]$:
+به عنوان مثال، بازه $[1,6]$ را در نظر بگیرید:
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \fill[color=lightgray] (1,0) rectangle (7,1);
@@ -381,11 +356,9 @@ As an example, consider the range $[1,6]$:
 \node at (7.5,1.4) {$7$};
 \end{tikzpicture}
 \end{center}
-The length of the range is 6,
-and the largest power of two that does
-not exceed 6 is 4.
-Thus the range $[1,6]$ is
-the union of the ranges $[1,4]$ and $[3,6]$:
+طول این بازه ۶ است،
+و بزرگ‌ترین توان دو که از ۶ بیشتر نیست ۴ است.
+بنابراین بازه $[1,6]$ اجتماع بازه‌های $[1,4]$ و $[3,6]$ است:
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \fill[color=lightgray] (1,0) rectangle (5,1);
@@ -437,46 +410,45 @@ the union of the ranges $[1,4]$ and $[3,6]$:
 \node at (7.5,1.4) {$7$};
 \end{tikzpicture}
 \end{center}
-Since $\texttt{min}_q(1,4)=3$ and $\texttt{min}_q(3,6)=1$,
-we conclude that $\texttt{min}_q(1,6)=1$.
+از آنجا که $\texttt{min}_q(1,4)=3$ و $\texttt{min}_q(3,6)=1$،
+نتیجه می‌گیریم $\texttt{min}_q(1,6)=1$.
 
-\section{Binary indexed tree}
+\section{درخت ایندکس دودویی}
 
 \index{binary indexed tree}
 \index{Fenwick tree}
 
-A \key{binary indexed tree} or a \key{Fenwick tree}\footnote{The
-binary indexed tree structure was presented by P. M. Fenwick in 1994 \cite{fen94}.}
-can be seen as a dynamic variant of a prefix sum array.
-It supports two $O(\log n)$ time operations on an array:
-processing a range sum query and updating a value.
+یک \key{درخت ایندکس دودویی} یا \key{درخت فنویک}\footnote{ساختار داده درخت ایندکس دودویی توسط پی. ام. فنویک در سال ۱۹۹۴ معرفی شد \cite{fen94}.}
+را می‌توان نسخه پویای آرایه مجموع پیشوندی دانست.
+این ساختار داده از دو عملیات با پیچیدگی زمانی $O(\log n)$ روی آرایه پشتیبانی می‌کند:
+پاسخ به پرسش مجموع بازه‌ای و به‌روزرسانی یک مقدار.
 
-The advantage of a binary indexed tree is
-that it allows us to efficiently update
-array values between sum queries.
-This would not be possible using a prefix sum array,
-because after each update, it would be necessary to build the
-whole prefix sum array again in $O(n)$ time.
+مزیت درخت ایندکس‌شده دودویی (فنویک)
+امکان به‌روزرسانی کارآمد مقادیر آرایه
+بین پرسش‌های مجموع است.
+این کار با آرایه مجموع پیشوندی ممکن نیست،
+زیرا پس از هر به‌روزرسانی، ساخت دوباره کل آرایه
+مجموع پیشوندی در زمان $O(n)$ نیاز است.
 
-\subsubsection{Structure}
+\subsubsection{ساختار}
 
-Even if the name of the structure is a binary indexed \emph{tree},
-it is usually represented as an array.
-In this section we assume that all arrays are one-indexed,
-because it makes the implementation easier.
+گرچه نام ساختار \emph{درخت} ایندکس‌شده دودویی است،
+معمولاً به‌صورت یک آرایه نمایش داده می‌شود.
+در این بخش فرض می‌کنیم اندیس آرایه‌ها از یک شروع می‌شود،
+زیرا پیاده‌سازی را ساده‌تر می‌کند.
 
-Let $p(k)$ denote the largest power of two that
-divides $k$.
-We store a binary indexed tree as an array \texttt{tree}
-such that
+فرض کنید $p(k)$ بزرگ‌ترین توان دو باشد که
+$k$ را عاد می‌کند.
+درخت ایندکس‌شده دودویی را در آرایه \texttt{tree} ذخیره می‌کنیم
+به‌طوری که
 \[ \texttt{tree}[k] = \texttt{sum}_q(k-p(k)+1,k),\]
-i.e., each position $k$ contains the sum of values
-in a range of the original array whose length is $p(k)$
-and that ends at position $k$.
-For example, since $p(6)=2$, $\texttt{tree}[6]$
-contains the value of $\texttt{sum}_q(5,6)$.
+یعنی هر موقعیت $k$ شامل مجموع مقادیر بازه‌ای
+از آرایه اصلی با طول $p(k)$ است
+که در موقعیت $k$ پایان می‌یابد.
+برای نمونه، چون $p(6)=2$ است، $\texttt{tree}[6]$
+شامل مقدار $\texttt{sum}_q(5,6)$ است.
 
-For example, consider the following array:
+برای نمونه، آرایه زیر را در نظر بگیرید:
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \draw (0,0) grid (8,1);
@@ -502,7 +474,7 @@ For example, consider the following array:
 \end{tikzpicture}
 \end{center}
 
-The corresponding binary indexed tree is as follows:
+درخت ایندکس‌شده دودویی متناظر به این صورت است:
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \draw (0,0) grid (8,1);
@@ -528,9 +500,9 @@ The corresponding binary indexed tree is as follows:
 \end{tikzpicture}
 \end{center}
 
-The following picture shows more clearly
-how each value in the binary indexed tree
-corresponds to a range in the original array:
+تصویر زیر واضح‌تر نشان می‌دهد که
+هر مقدار در درخت ایندکس‌شده دودویی
+چگونه با بازه‌ای در آرایه اصلی متناظر است:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
@@ -575,14 +547,14 @@ corresponds to a range in the original array:
 \end{tikzpicture}
 \end{center}
 
-Using a binary indexed tree,
-any value of $\texttt{sum}_q(1,k)$
-can be calculated in $O(\log n)$ time,
-because a range $[1,k]$ can always be divided into
-$O(\log n)$ ranges whose sums are stored in the tree.
+با درخت بندانگشتی دودویی،
+هر مقدار $\texttt{sum}_q(1,k)$
+در زمان $O(\log n)$ محاسبه می‌شود،
+زیرا بازه $[1,k]$ همیشه به
+$O(\log n)$ بازه با مجموع ذخیره‌شده در درخت تقسیم‌پذیر است.
 
-For example, the range $[1,7]$ consists of
-the following ranges:
+برای نمونه، بازه $[1,7]$ شامل
+این بازه‌هاست:
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \draw (0,0) grid (8,1);
@@ -625,21 +597,21 @@ the following ranges:
 \draw (0,-4) -- (8,-4) -- (8,-4.5) -- (0,-4.5) -- (0,-4);
 \end{tikzpicture}
 \end{center}
-Thus, we can calculate the corresponding sum as follows:
+بنابراین مجموع متناظر چنین محاسبه می‌شود:
 \[\texttt{sum}_q(1,7)=\texttt{sum}_q(1,4)+\texttt{sum}_q(5,6)+\texttt{sum}_q(7,7)=16+7+4=27\]
 
-To calculate the value of $\texttt{sum}_q(a,b)$ where $a>1$,
-we can use the same trick that we used with prefix sum arrays:
+برای محاسبه $\texttt{sum}_q(a,b)$ با شرط $a>1$،
+همان شگرد آرایه‌های مجموع پیشوندی کار می‌کند:
 \[ \texttt{sum}_q(a,b) = \texttt{sum}_q(1,b) - \texttt{sum}_q(1,a-1).\]
-Since we can calculate both $\texttt{sum}_q(1,b)$
-and $\texttt{sum}_q(1,a-1)$ in $O(\log n)$ time,
-the total time complexity is $O(\log n)$.
+محاسبه هر دو عبارت $\texttt{sum}_q(1,b)$
+و $\texttt{sum}_q(1,a-1)$ در زمان $O(\log n)$ انجام می‌شود؛
+پیچیدگی زمانی کل $O(\log n)$ است.
 
-Then, after updating a value in the original array,
-several values in the binary indexed tree
-should be updated.
-For example, if the value at position 3 changes,
-the sums of the following ranges change:
+سپس، پس از به‌روزرسانی مقداری در آرایه اصلی،
+چندین مقدار در درخت ایندکس‌شده باینری
+باید به‌روزرسانی شوند.
+برای مثال، اگر مقدار در جایگاه 3 تغییر کند،
+مجموع بازه‌های زیر تغییر می‌کند:
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \draw (0,0) grid (8,1);
@@ -683,19 +655,19 @@ the sums of the following ranges change:
 \end{tikzpicture}
 \end{center}
 
-Since each array element belongs to $O(\log n)$
-ranges in the binary indexed tree,
-it suffices to update $O(\log n)$ values in the tree.
+از آنجا که هر عنصر آرایه به $O(\log n)$
+بازه در درخت ایندکس‌شده باینری تعلق دارد،
+به‌روزرسانی $O(\log n)$ مقدار در درخت کافی است.
 
-\subsubsection{Implementation}
+\subsubsection{پیاده‌سازی}
 
-The operations of a binary indexed tree can be
-efficiently implemented using bit operations.
-The key fact needed is that we can
-calculate any value of $p(k)$ using the formula
+عملیات درخت ایندکس‌شده باینری را می‌توان
+با استفاده از عملیات بیتی به‌صورت کارا پیاده‌سازی کرد.
+نکته کلیدی این است که می‌توانیم
+هر مقدار $p(k)$ را با استفاده از فرمول زیر محاسبه کنیم:
 \[p(k) = k \& -k.\]
 
-The following function calculates the value of $\texttt{sum}_q(1,k)$:
+تابع زیر مقدار $\texttt{sum}_q(1,k)$ را محاسبه می‌کند:
 \begin{lstlisting}
 int sum(int k) {
     int s = 0;
@@ -707,9 +679,8 @@ int sum(int k) {
 }
 \end{lstlisting}
 
-The following function increases the
-array value at position $k$ by $x$
-($x$ can be positive or negative):
+تابع زیر مقدار آرایه در جایگاه $k$ را به اندازه $x$ افزایش می‌دهد
+($x$ می‌تواند مثبت یا منفی باشد):
 \begin{lstlisting}
 void add(int k, int x) {
     while (k <= n) {
@@ -719,53 +690,26 @@ void add(int k, int x) {
 }
 \end{lstlisting}
 
-The time complexity of both the functions is
-$O(\log n)$, because the functions access $O(\log n)$
-values in the binary indexed tree, and each move
-to the next position takes $O(1)$ time.
+پیچیدگی زمانی هر دو تابع
+$O(\log n)$ است، زیرا توابع به $O(\log n)$
+مقدار در درخت ایندکس‌شده باینری دسترسی دارند، و هر انتقال
+به جایگاه بعدی به زمان $O(1)$ نیاز دارد.
 
-\section{Segment tree}
+\section{درخت بازه‌ای}
 
 \index{segment tree}
 
-A \key{segment tree}\footnote{The bottom-up-implementation in this chapter corresponds to
-that in \cite{sta06}. Similar structures were used
-in late 1970's to solve geometric problems \cite{ben80}.} is a data structure
-that supports two operations:
-processing a range query and
-updating an array value.
-Segment trees can support
-sum queries, minimum and maximum queries and many other
-queries so that both operations work in $O(\log n)$ time.
+یک \key{درخت بازه‌ای}\footnote{پیاده‌سازی پایین‌به‌بالا در این فصل منطبق بر \cite{sta06} است. ساختارهای مشابه در اواخر دهه ۱۹۷۰ برای حل مسائل هندسی استفاده شدند \cite{ben80}.} داده‌ساختاری است که از دو عملیات پشتیبانی می‌کند: پردازش پرس‌وجوی بازه‌ای و به‌روزرسانی مقدار آرایه. درخت‌های بازه‌ای می‌توانند پرس‌وجوهای مجموع، کمینه، بیشینه و بسیاری پرس‌وجوهای دیگر را پشتیبانی کنند به طوری که هر دو عملیات در زمان $O(\log n)$ اجرا شوند.
 
-Compared to a binary indexed tree,
-the advantage of a segment tree is that it is
-a more general data structure.
-While binary indexed trees only support
-sum queries\footnote{In fact, using \emph{two} binary
-indexed trees it is possible to support minimum queries \cite{dim15},
-but this is more complicated than to use a segment tree.},
-segment trees also support other queries.
-On the other hand, a segment tree requires more
-memory and is a bit more difficult to implement.
+در مقایسه با درخت اندیس‌گذاری‌شده دودویی، مزیت درخت بازه‌ای عمومی‌تر بودن آن است. در حالی که درخت‌های اندیس‌گذاری‌شده دودویی فقط از پرس‌وجوی مجموع پشتیبانی می‌کنند\footnote{در واقع، با استفاده از \emph{دو} درخت اندیس‌گذاری‌شده دودویی امکان پشتیبانی از پرس‌وجوی کمینه وجود دارد \cite{dim15}، ولی این روش پیچیده‌تر از استفاده از یک درخت بازه‌ای است.}، درخت‌های بازه‌ای پرس‌وجوهای دیگر را نیز پوشش می‌دهند. از سوی دیگر، درخت بازه‌ای حافظه بیشتری مصرف می‌کند و پیاده‌سازی آن کمی دشوارتر است.
 
-\subsubsection{Structure}
+\subsubsection{ساختار}
 
-A segment tree is a binary tree
-such that the nodes on the bottom level of the tree
-correspond to the array elements,
-and the other nodes
-contain information needed for processing range queries.
+درخت بازه‌ای یک درخت دودویی است که گره‌های سطح پایینی آن متناظر با عناصر آرایه هستند، و گره‌های دیگر حاوی اطلاعات لازم برای پردازش پرس‌وجوهای بازه‌ای می‌باشند.
 
-In this section, we assume that the size
-of the array is a power of two and zero-based
-indexing is used, because it is convenient to build
-a segment tree for such an array.
-If the size of the array is not a power of two,
-we can always append extra elements to it.
+در این بخش، فرض می‌کنیم اندازه آرایه توانی از دو است و از اندیس‌گذاری بر پایه صفر استفاده می‌شود، زیرا ساخت درخت بازه‌ای برای چنین آرایه‌ای ساده‌تر است. اگر اندازه آرایه توانی از دو نباشد، همیشه می‌توان عناصر اضافی به آن افزود.
 
-We will first discuss segment trees that support sum queries.
-As an example, consider the following array:
+ابتدا به بررسی درخت‌های بازه‌ای با پشتیبانی از پرس‌وجوی مجموع می‌پردازیم. به عنوان مثال، آرایه زیر را در نظر بگیرید:
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \draw (0,0) grid (8,1);
@@ -790,7 +734,7 @@ As an example, consider the following array:
 \node at (7.5,1.4) {$7$};
 \end{tikzpicture}
 \end{center}
-The corresponding segment tree is as follows:
+درخت بازه‌ای متناظر به صورت زیر است:
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \draw (0,0) grid (8,1);
@@ -830,18 +774,18 @@ The corresponding segment tree is as follows:
 \end{tikzpicture}
 \end{center}
 
-Each internal tree node
-corresponds to an array range
-whose size is a power of two.
-In the above tree, the value of each internal
-node is the sum of the corresponding array values,
-and it can be calculated as the sum of
-the values of its left and right child node.
+هر گره داخلی درخت
+متناظر با بازه‌ای از آرایه است
+که اندازه‌اش توانی از دو است.
+در درخت بالا، مقدار هر گره داخلی
+برابر با مجموع مقادیر آرایه مربوطه است
+و می‌توان آن را به صورت مجموع مقادیر
+گره‌های فرزند چپ و راست محاسبه کرد.
 
-It turns out that any range $[a,b]$
-can be divided into $O(\log n)$ ranges
-whose values are stored in tree nodes.
-For example, consider the range [2,7]:
+مشخص می‌شود که هر بازه $[a,b]$
+را می‌توان به $O(\log n)$ بازه تقسیم کرد
+که مقادیر آن‌ها در گره‌های درخت ذخیره شده‌اند.
+برای مثال، بازه [2,7] را در نظر بگیرید:
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \fill[color=gray!50] (2,0) rectangle (8,1);
@@ -867,9 +811,9 @@ For example, consider the range [2,7]:
 \node at (7.5,1.4) {$7$};
 \end{tikzpicture}
 \end{center}
-Here $\texttt{sum}_q(2,7)=6+3+2+7+2+6=26$.
-In this case, the following two tree nodes
-correspond to the range:
+در اینجا $\texttt{sum}_q(2,7)=6+3+2+7+2+6=26$.
+در این حالت، دو گره زیر در درخت
+متناظر با این بازه هستند:
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \draw (0,0) grid (8,1);
@@ -908,24 +852,13 @@ correspond to the range:
 \path[draw,thick,-] (m) -- (j);
 \end{tikzpicture}
 \end{center}
-Thus, another way to calculate the sum is $9+17=26$.
+بنابراین، روش دیگر برای محاسبه مجموع $9+17=26$ است.
 
-When the sum is calculated using nodes
-located as high as possible in the tree,
-at most two nodes on each level
-of the tree are needed.
-Hence, the total number of nodes
-is $O(\log n)$.
+وقتی مجموع با استفاده از گره‌های تا حد امکان بالا در درخت محاسبه شود، در هر سطح حداکثر دو گره نیاز است. بنابراین، تعداد کل گره‌ها $O(\log n)$ است.
 
-After an array update,
-we should update all nodes
-whose value depends on the updated value.
-This can be done by traversing the path
-from the updated array element to the top node
-and updating the nodes along the path.
+پس از به‌روزرسانی آرایه، باید تمام گره‌هایی که مقدارشان به مقدار به‌روزشده وابسته است را به‌روزرسانی کنیم. این کار با پیمایش مسیر از عنصر به‌روزشده آرایه به گره بالا و به‌روزرسانی گره‌های طول مسیر انجام می‌شود.
 
-The following picture shows which tree nodes
-change if the array value 7 changes:
+تصویر زیر نشان می‌دهد در صورت تغییر مقدار آرایه 7، کدام گره‌های درخت تغییر می‌کنند:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
@@ -967,25 +900,13 @@ change if the array value 7 changes:
 \end{tikzpicture}
 \end{center}
 
-The path from bottom to top
-always consists of $O(\log n)$ nodes,
-so each update changes $O(\log n)$ nodes in the tree.
+مسیر از پایین به بالا همیشه شامل $O(\log n)$ گره است، بنابراین هر به‌روزرسانی $O(\log n)$ گره در درخت را تغییر می‌دهد.
 
-\subsubsection{Implementation}
+\subsubsection{پیاده‌سازی}
 
-We store a segment tree as an array
-of $2n$ elements where $n$ is the size of
-the original array and a power of two.
-The tree nodes are stored from top to bottom:
-$\texttt{tree}[1]$ is the top node,
-$\texttt{tree}[2]$ and $\texttt{tree}[3]$
-are its children, and so on.
-Finally, the values from $\texttt{tree}[n]$
-to $\texttt{tree}[2n-1]$ correspond to
-the values of the original array
-on the bottom level of the tree.
+درخت بازه‌ای را به عنوان یک آرایه با $2n$ عنصر ذخیره می‌کنیم که $n$ اندازه آرایه اصلی و توانی از دو است. گره‌های درخت از بالا به پایین ذخیره می‌شوند: $\texttt{tree}[1]$ گره ریشه است، $\texttt{tree}[2]$ و $\texttt{tree}[3]$ فرزندان آن هستند و به همین ترتیب. در نهایت، مقادیر از $\texttt{tree}[n]$ تا $\texttt{tree}[2n-1]$ متناظر با مقادیر آرایه اصلی در پایین‌ترین سطح درخت هستند.
 
-For example, the segment tree
+برای نمونه، درخت بازه‌ای
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \draw (0,0) grid (8,1);
@@ -1024,7 +945,7 @@ For example, the segment tree
 \path[draw,thick,-] (m) -- (j);
 \end{tikzpicture}
 \end{center}
-is stored as follows:
+به صورت زیر ذخیره می‌شود:
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \draw (0,0) grid (15,1);
@@ -1063,16 +984,15 @@ is stored as follows:
 \node at (14.5,1.4) {$15$};
 \end{tikzpicture}
 \end{center}
-Using this representation,
-the parent of $\texttt{tree}[k]$
-is $\texttt{tree}[\lfloor k/2 \rfloor]$,
-and its children are $\texttt{tree}[2k]$
-and $\texttt{tree}[2k+1]$.
-Note that this implies that the position of a node
-is even if it is a left child and odd if it is a right child.
+با این نمایش،
+والد $\texttt{tree}[k]$
+برابر $\texttt{tree}[\lfloor k/2 \rfloor]$
+و فرزندان آن $\texttt{tree}[2k]$
+و $\texttt{tree}[2k+1]$ هستند.
+موقعیت گره فرزند چپ زوج و فرزند راست فرد است.
 
-The following function
-calculates the value of $\texttt{sum}_q(a,b)$:
+تابع زیر
+مقدار $\texttt{sum}_q(a,b)$ را محاسبه می‌کند:
 \begin{lstlisting}
 int sum(int a, int b) {
     a += n; b += n;
@@ -1085,15 +1005,13 @@ int sum(int a, int b) {
     return s;
 }
 \end{lstlisting}
-The function maintains a range
-that is initially $[a+n,b+n]$.
-Then, at each step, the range is moved
-one level higher in the tree,
-and before that, the values of the nodes that do not
-belong to the higher range are added to the sum.
+تابع بازه‌ای را نگه می‌دارد
+که در ابتدا $[a+n,b+n]$ است.
+سپس در هر مرحله، بازه یک سطح در درخت بالا می‌رود
+و قبل از آن، مقادیر گره‌هایی که به بازه بالاتر
+تعلق ندارند به مجموع اضافه می‌شوند.
 
-The following function increases the array value
-at position $k$ by $x$:
+تابع زیر مقدار آرایه را در موقعیت $k$ به اندازه $x$ افزایش می‌دهد:
 \begin{lstlisting}
 void add(int k, int x) {
     k += n;
@@ -1103,30 +1021,17 @@ void add(int k, int x) {
     }
 }
 \end{lstlisting}
-First the function updates the value
-at the bottom level of the tree.
-After this, the function updates the values of all
-internal tree nodes, until it reaches
-the top node of the tree.
+ابتدا تابع مقدار را در پایین‌ترین سطح درخت به‌روزرسانی می‌کند.
+سپس، مقادیر تمام گره‌های داخلی درخت را تا رسیدن به بالاترین گره درخت به‌روز می‌کند.
 
-Both the above functions work
-in $O(\log n)$ time, because a segment tree
-of $n$ elements consists of $O(\log n)$ levels,
-and the functions move one level higher
-in the tree at each step.
+هر دو تابع بالا در زمان $O(\log n)$ کار می‌کنند، زیرا یک درخت بازه‌ای با $n$ عنصر از $O(\log n)$ سطح تشکیل شده است، و توابع در هر مرحله یک سطح در درخت بالا می‌روند.
 
-\subsubsection{Other queries}
+\subsubsection{سایر پرس‌وجوها}
 
-Segment trees can support all range queries
-where it is possible to divide a range into two parts,
-calculate the answer separately for both parts
-and then efficiently combine the answers.
-Examples of such queries are
-minimum and maximum, greatest common divisor,
-and bit operations and, or and xor.
+درخت‌های بازه‌ای می‌توانند از تمام پرس‌وجوهای بازه‌ای پشتیبانی کنند که در آن‌ها تقسیم بازه به دو بخش، محاسبه پاسخ به‌طور جداگانه برای هر دو بخش، و سپس ترکیب کارآمد پاسخ‌ها امکان‌پذیر باشد.
+نمونه‌هایی از این پرس‌وجوها عبارتند از کمینه و بیشینه، بزرگ‌ترین مقسوم‌علیه مشترک، و عملگرهای بیتی and، or و xor.
 
-For example, the following segment tree
-supports minimum queries:
+به عنوان مثال، درخت بازه‌ای زیر از پرس‌وجوهای کمینه پشتیبانی می‌کند:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
@@ -1167,23 +1072,14 @@ supports minimum queries:
 \end{tikzpicture}
 \end{center}
 
-In this case, every tree node contains
-the smallest value in the corresponding
-array range.
-The top node of the tree contains the smallest
-value in the whole array.
-The operations can be implemented like previously,
-but instead of sums, minima are calculated.
+در این حالت، هر گره درخت شامل کوچک‌ترین مقدار در بازه متناظر از آرایه است.
+بالاترین گره درخت شامل کوچک‌ترین مقدار کل آرایه است.
+عملیات را می‌توان مشابه قبل پیاده‌سازی کرد، اما به جای مجموع، کمینه‌ها محاسبه می‌شوند.
 
-The structure of a segment tree also allows us
-to use binary search for locating array elements.
-For example, if the tree supports minimum queries,
-we can find the position of an element
-with the smallest value in $O(\log n)$ time.
+ساختار درخت بازه‌ای همچنین امکان استفاده از جستجوی دودویی برای یافتن موقعیت عناصر آرایه را فراهم می‌کند.
+به عنوان مثال، اگر درخت از پرس‌وجوهای کمینه پشتیبانی کند، می‌توان موقعیت عنصری با کمترین مقدار را در زمان $O(\log n)$ پیدا کرد.
 
-For example, in the above tree, an
-element with the smallest value 1 can be found
-by traversing a path downwards from the top node:
+به عنوان نمونه، در درخت بالا، عنصری با کمترین مقدار ۱ را می‌توان با پیمایش مسیری رو به پایین از بالاترین گره پیدا کرد:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
@@ -1228,39 +1124,28 @@ by traversing a path downwards from the top node:
 \end{tikzpicture}
 \end{center}
 
-\section{Additional techniques}
+\section{تکنیک‌های تکمیلی}
 
-\subsubsection{Index compression}
+\subsubsection{فشرده‌سازی اندیس‌ها}
 
-A limitation in data structures that
-are built upon an array is that
-the elements are indexed using
-consecutive integers.
-Difficulties arise when large indices
-are needed.
-For example, if we wish to use the index $10^9$,
-the array should contain $10^9$
-elements which would require too much memory.
+محدودیت ساختارهای داده مبتنی بر آرایه:
+اندیس‌ها اعداد صحیح متوالی هستند.
+اندیس‌های بزرگ مشکل می‌سازند.
+مثال: برای اندیس $10^9$،
+آرایه باید $10^9$ عنصر داشته باشد؛
+حافظه زیادی هدر می‌رود.
 
 \index{index compression}
 
-However, we can often bypass this limitation
-by using \key{index compression},
-where the original indices are replaced
-with indices $1,2,3,$ etc.
-This can be done if we know all the indices
-needed during the algorithm beforehand.
+راه‌حل: استفاده از \key{فشرده‌سازی اندیس‌ها}.
+جایگزینی اندیس‌های اصلی با اندیس‌های $1,2,3,$ و غیره.
+شرط اجرا: آگاهی قبلی از تمام اندیس‌های موردنیاز الگوریتم.
 
-The idea is to replace each original index $x$
-with $c(x)$ where $c$ is a function that
-compresses the indices.
-We require that the order of the indices
-does not change, so if $a<b$, then $c(a)<c(b)$.
-This allows us to conveniently perform queries
-even if the indices are compressed.
+ایده: تبدیل هر اندیس اصلی $x$ به $c(x)$ با تابع فشرده‌ساز $c$.
+شرط حفظ ترتیب: اگر $a<b$ باشد، باید $c(a)<c(b)$ بماند.
+پرس‌وجوها روی اندیس‌های فشرده‌شده نیز کار می‌کنند.
 
-For example, if the original indices are
-$555$, $10^9$ and $8$, the new indices are:
+مثال: برای اندیس‌های اصلی $555$، $10^9$ و $8$، اندیس‌های جدید:
 
 \[
 \begin{array}{lcl}
@@ -1270,29 +1155,15 @@ c(10^9) & = & 3 \\
 \end{array}
 \]
 
-\subsubsection{Range updates}
+\subsubsection{به‌روزرسانی‌های بازه‌ای}
 
-So far, we have implemented data structures
-that support range queries and updates
-of single values.
-Let us now consider an opposite situation,
-where we should update ranges and
-retrieve single values.
-We focus on an operation that increases all
-elements in a range $[a,b]$ by $x$.
+تا اینجا: ساختارهای داده با پرس‌وجوی بازه‌ای و به‌روزرسانی تک‌عنصری.
+حالت معکوس: به‌روزرسانی بازه‌ها و دریافت مقدار تک‌عنصرها.
+عملیات هدف: افزایش تمام عناصر بازه $[a,b]$ به مقدار $x$.
 
 \index{difference array}
 
-Surprisingly, we can use the data structures
-presented in this chapter also in this situation.
-To do this, we build a \key{difference array}
-whose values indicate
-the differences between consecutive values
-in the original array.
-Thus, the original array is the
-prefix sum array of the
-difference array.
-For example, consider the following array:
+در کمال شگفتی، داده‌ساختارهای ارائه‌شده در این فصل در این وضعیت نیز قابل استفاده هستند. برای این کار، یک \key{آرایه تفاضلی} (difference array) می‌سازیم که مقادیر آن نشان‌دهنده تفاضل بین مقادیر متوالی در آرایه اصلی است. بنابراین، آرایه اصلی همان آرایه مجموع پیشوندی آرایه تفاضلی است. برای مثال، آرایه زیر را در نظر بگیرید:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
@@ -1320,7 +1191,7 @@ For example, consider the following array:
 \end{tikzpicture}
 \end{center}
 
-The difference array for the above array is as follows:
+آرایه تفاضلی برای آرایه بالا به صورت زیر است:
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \draw (0,0) grid (8,1);
@@ -1347,20 +1218,9 @@ The difference array for the above array is as follows:
 \end{tikzpicture}
 \end{center}
 
-For example, the value 2 at position 6 in the original array
-corresponds to the sum $3-2+4-3=2$ in the difference array.
+برای نمونه، مقدار ۲ در موقعیت ۶ آرایه اصلی متناظر با مجموع $3-2+4-3=2$ در آرایه تفاضلی است.
 
-The advantage of the difference array is
-that we can update a range
-in the original array by changing just
-two elements in the difference array.
-For example, if we want to 
-increase the original array 
-values between positions 1 and 4 by 5,
-it suffices to increase the
-difference array value at position 1 by 5
-and decrease the value at position 5 by 5.
-The result is as follows:
+مزیت آرایه تفاضلی این است که می‌توان یک بازه در آرایه اصلی را صرفاً با تغییر دو عنصر در آرایه تفاضلی به‌روزرسانی کرد. به عنوان مثال، اگر بخواهیم مقادیر آرایه اصلی بین موقعیت‌های ۱ تا ۴ را به اندازه ۵ واحد افزایش دهیم، کافی است مقدار آرایه تفاضلی در موقعیت ۱ را ۵ واحد افزایش داده و مقدار در موقعیت ۵ را ۵ واحد کاهش دهیم. نتیجه به صورت زیر خواهد بود:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
@@ -1387,17 +1247,6 @@ The result is as follows:
 \end{tikzpicture}
 \end{center}
 
-More generally, to increase the values
-in range $[a,b]$ by $x$,
-we increase the value at position $a$ by $x$
-and decrease the value at position $b+1$ by $x$.
-Thus, it is only needed to update single values
-and process sum queries,
-so we can use a binary indexed tree or a segment tree.
+به طور کلی‌تر، برای افزایش مقادیر در بازه $[a,b]$ به اندازه $x$، مقدار در موقعیت $a$ را $x$ واحد افزایش داده و مقدار در موقعیت $b+1$ را $x$ واحد کاهش می‌دهیم. بدین ترتیب تنها نیاز به به‌روزرسانی مقادیر تکی و پردازش پرس‌وجوهای مجموع است، بنابراین می‌توان از درخت اندیس‌گذاری‌شده دودویی یا درخت بازه‌ای استفاده کرد.
 
-A more difficult problem is to support both
-range queries and range updates.
-In Chapter 28 we will see that even this is possible.
-
-
-
+مسئله دشوارتر، پشتیبانی هم‌زمان از پرس‌وجوهای بازه‌ای و به‌روزرسانی‌های بازه‌ای است. در فصل ۲۸ خواهیم دید که حتی این کار نیز امکان‌پذیر است.
