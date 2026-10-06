@@ -1,132 +1,108 @@
-\chapter{String algorithms}
+\chapter{الگوریتم‌های رشته}
 
-This chapter deals with efficient algorithms
-for string processing.
-Many string problems can be easily solved
-in $O(n^2)$ time, but the challenge is to
-find algorithms that work in $O(n)$ or $O(n \log n)$
-time.
+این فصل به الگوریتم‌های کارآمد برای پردازش رشته می‌پردازد.
+بسیاری از مسائل رشته به سادگی در زمان $O(n^2)$ حل می‌شوند، اما چالش اصلی یافتن الگوریتم‌هایی با زمان اجرای $O(n)$ یا $O(n \log n)$ است.
 
-\index{pattern matching}
+\index{pattern matching@تطابق الگو}
 
-For example, a fundamental string processing
-problem is the \key{pattern matching} problem:
-given a string of length $n$ and a pattern of length $m$,
-our task is to find the occurrences of the pattern
-in the string.
-For example, the pattern \texttt{ABC} occurs two
-times in the string \texttt{ABABCBABC}.
+برای نمونه، یک مسئله بنیادین پردازش رشته مسئله \key{تطابق الگو} است:
+به ازای یک رشته به طول $n$ و یک الگو به طول $m$، هدف یافتن تمام رخدادهای الگو در رشته است.
+مثلاً، الگوی \texttt{ABC} دو بار در رشته \texttt{ABABCBABC} ظاهر می‌شود.
 
-The pattern matching problem can be easily solved
-in $O(nm)$ time by a brute force algorithm that
-tests all positions where the pattern may
-occur in the string.
-However, in this chapter, we will see that there
-are more efficient algorithms that require only
-$O(n+m)$ time.
+مسئله تطابق الگو به سادگی با یک الگوریتم جستجوی کامل (brute force) در زمان $O(nm)$ حل می‌شود؛ الگوریتمی که تمام جایگاه‌های ممکن رخداد الگو را بررسی می‌کند.
+با این حال، در این فصل خواهیم دید الگوریتم‌های کارآمدتری وجود دارند که تنها به زمان $O(n+m)$ نیاز دارند.
 
-\index{string}
+\index{string@رشته}
 
-\section{String terminology}
+\section{اصطلاحات رشته}
 
-\index{alphabet}
+\index{alphabet@الفبا}
 
-Throughout the chapter, we assume that
-zero-based indexing is used in strings.
-Thus, a string \texttt{s} of length $n$
-consists of characters
-$\texttt{s}[0],\texttt{s}[1],\ldots,\texttt{s}[n-1]$.
-The set of characters that may appear
-in strings is called an \key{alphabet}.
-For example, the alphabet
+در سراسر این فصل، فرض می‌شود اندیس‌گذاری رشته‌ها از صفر آغاز می‌شود.
+بنابراین، رشته \texttt{s} به طول $n$ شامل نویسه‌های
+$\texttt{s}[0],\texttt{s}[1],\ldots,\texttt{s}[n-1]$
+است.
+مجموعه نویسه‌های مجاز در رشته‌ها \key{الفبا} نامیده می‌شود.
+برای نمونه، الفبای
 $\{\texttt{A},\texttt{B},\ldots,\texttt{Z}\}$
-consists of the capital letters of English.
+شامل حروف بزرگ انگلیسی است.
 
-\index{substring}
+\index{substring@زیررشته}
 
-A \key{substring} is a sequence of consecutive
-characters in a string.
-We use the notation $\texttt{s}[a \ldots b]$
-to refer to a substring of \texttt{s}
-that begins at position $a$ and ends at position $b$.
-A string of length $n$ has $n(n+1)/2$ substrings.
-For example, the substrings of
-\texttt{ABCD} are
-\texttt{A}, \texttt{B}, \texttt{C}, \texttt{D},
-\texttt{AB}, \texttt{BC}, \texttt{CD},
-\texttt{ABC}, \texttt{BCD} and \texttt{ABCD}.
+یک \key{زیررشته} دنباله‌ای از نویسه‌های متوالی در یک رشته است.
+از نماد $\texttt{s}[a \ldots b]$ برای اشاره به زیررشته‌ای از \texttt{s} استفاده می‌کنیم که در جایگاه $a$ آغاز شده و در جایگاه $b$ پایان می‌یابد.
+رشته‌ای به طول $n$ دارای $n(n+1)/2$ زیررشته است.
+برای نمونه، زیررشته‌های
+\texttt{ABCD} عبارتند از:
+\texttt{A}، \texttt{B}، \texttt{C}، \texttt{D}،
+\texttt{AB}، \texttt{BC}، \texttt{CD}،
+\texttt{ABC}، \texttt{BCD} و \texttt{ABCD}.
 
-\index{subsequence}
+\index{subsequence@زیردنباله}
 
-A \key{subsequence} is a sequence of
-(not necessarily consecutive) characters
-in a string in their original order.
-A string of length $n$ has $2^n-1$ subsequences.
-For example, the subsequences of
-\texttt{ABCD} are
-\texttt{A}, \texttt{B}, \texttt{C}, \texttt{D},
-\texttt{AB}, \texttt{AC}, \texttt{AD},
-\texttt{BC}, \texttt{BD}, \texttt{CD},
-\texttt{ABC}, \texttt{ABD}, \texttt{ACD},
-\texttt{BCD} and \texttt{ABCD}.
+یک \key{زیردنباله} دنباله‌ای از نویسه‌های رشته با حفظ ترتیب اولیه است (نیازی به متوالی بودن نویسه‌ها نیست).
+رشته‌ای به طول $n$ دارای $2^n-1$ زیردنباله است.
+برای نمونه، زیردنباله‌های
+\texttt{ABCD} عبارتند از:
+\texttt{A}، \texttt{B}، \texttt{C}، \texttt{D}،
+\texttt{AB}، \texttt{AC}، \texttt{AD}،
+\texttt{BC}، \texttt{BD}، \texttt{CD}،
+\texttt{ABC}، \texttt{ABD}، \texttt{ACD}،
+\texttt{BCD} و \texttt{ABCD}.
 
-\index{prefix}
-\index{suffix}
+\index{prefix@پیشوند}
+\index{suffix@پسوند}
 
-A \key{prefix} is a substring that starts at the beginning
-of a string,
-and a \key{suffix} is a substring that ends at the end
-of a string.
-For example,
-the prefixes of \texttt{ABCD} are
-\texttt{A}, \texttt{AB}, \texttt{ABC} and \texttt{ABCD},
-and the suffixes of \texttt{ABCD} are
-\texttt{D}, \texttt{CD}, \texttt{BCD} and \texttt{ABCD}.
+یک \key{پیشوند} زیررشته‌ای است که از ابتدای رشته آغاز می‌شود،
+و یک \key{پسوند} زیررشته‌ای است که در انتهای رشته پایان می‌پذیرد.
+برای نمونه،
+پیشوندهای \texttt{ABCD} عبارتند از:
+\texttt{A}، \texttt{AB}، \texttt{ABC} و \texttt{ABCD}،
+و پسوندهای \texttt{ABCD} عبارتند از:
+\texttt{D}، \texttt{CD}، \texttt{BCD} و \texttt{ABCD}.
 
-\index{rotation}
+\index{rotation@دوران}
 
-A \key{rotation} can be generated by moving
-the characters of a string one by one from the beginning
-to the end (or vice versa).
-For example, the rotations of \texttt{ABCD} are
-\texttt{ABCD}, \texttt{BCDA}, \texttt{CDAB} and \texttt{DABC}.
+یک \key{دوران} را می‌توان با انتقال تک‌تک نویسه‌های رشته از ابتدا به انتها (یا برعکس) ایجاد کرد.
+برای نمونه، دوران‌های \texttt{ABCD} عبارتند از:
+\texttt{ABCD}، \texttt{BCDA}، \texttt{CDAB} و \texttt{DABC}.
 
-\index{period}
+\index{period@دوره تناوب}
 
-A \key{period} is a prefix of a string such that
-the string can be constructed by repeating the period.
-The last repetition may be partial and contain
-only a prefix of the period.
-For example, the shortest period of
-\texttt{ABCABCA} is \texttt{ABC}.
+یک \key{دوره} (تناوب) پیشوندی از رشته است به طوری که
+رشته با تکرار آن دوره ساخته شود.
+آخرین تکرار می‌تواند ناقص باشد و فقط
+پیشوندی از دوره را شامل شود.
+برای نمونه، کوتاه‌ترین دوره رشته
+\texttt{ABCABCA} برابر \texttt{ABC} است.
 
-\index{border}
+\index{مرز}
 
-A \key{border} is a string that is both
-a prefix and a suffix of a string.
-For example, the borders of \texttt{ABACABA}
-are \texttt{A}, \texttt{ABA} and \texttt{ABACABA}.
+یک \key{مرز} رشته‌ای است که هم
+پیشوند و هم پسوند یک رشته باشد.
+برای نمونه، مرزهای رشته \texttt{ABACABA}
+عبارتند از \texttt{A}، \texttt{ABA} و \texttt{ABACABA}.
 
-\index{lexicographical order}
+\index{ترتیب الفبایی}
 
-Strings are compared using the \key{lexicographical order}
-(which corresponds to the alphabetical order).
-It means that $x<y$ if either $x \neq y$ and $x$ is a prefix of $y$,
-or there is a position $k$ such that
-$x[i]=y[i]$ when $i<k$ and $x[k]<y[k]$.
+رشته‌ها با استفاده از \key{ترتیب الفبایی}
+(معادل ترتیب فرهنگ لغت) مقایسه می‌شوند.
+بدین معنا که $x<y$ برقرار است اگر $x \neq y$ بوده و $x$ پیشوندی از $y$ باشد،
+یا موقعیتی مانند $k$ وجود داشته باشد که
+به ازای $i<k$ داشته باشیم $x[i]=y[i]$ و همچنین $x[k]<y[k]$.
 
-\section{Trie structure}
+\section{ساختار ترای}
 
-\index{trie}
+\index{ترای}
 
-A \key{trie} is a rooted tree that
-maintains a set of strings.
-Each string in the set is stored as
-a chain of characters that starts at the root.
-If two strings have a common prefix,
-they also have a common chain in the tree.
+یک \key{ترای} درختی ریشه‌دار است که
+مجموعه‌ای از رشته‌ها را نگهداری می‌کند.
+هر رشته در این مجموعه به صورت
+زنجیره‌ای از نویسه‌ها ذخیره می‌شود که از ریشه آغاز می‌گردد.
+اگر دو رشته دارای پیشوند مشترک باشند،
+زنجیره مشترکی نیز در درخت دارند.
 
-For example, consider the following trie:
+برای نمونه، ترای زیر را در نظر بگیرید:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
@@ -159,80 +135,79 @@ For example, consider the following trie:
 \end{tikzpicture}
 \end{center}
 
-This trie corresponds to the set
-$\{\texttt{CANAL},\texttt{CANDY},\texttt{THE},\texttt{THERE}\}$.
-The character * in a node means that
-a string in the set ends at the node.
-Such a character is needed, because a string
-may be a prefix of another string.
-For example, in the above trie, \texttt{THE}
-is a prefix of \texttt{THERE}.
+این درخت ترای متناظر با مجموعه
+$\{\texttt{CANAL},\texttt{CANDY},\texttt{THE},\texttt{THERE}\}$
+است.
+نویسه * در یک گره نشان می‌دهد که
+یک رشته از مجموعه در آن گره پایان یافته است.
+چنین نویسه‌ای لازم است، زیرا یک رشته
+ممکن است پیشوندی از رشته دیگر باشد.
+برای نمونه، در درخت ترای بالا، \texttt{THE}
+پیشوندی از \texttt{THERE} است.
 
-We can check in $O(n)$ time whether a trie
-contains a string of length $n$,
-because we can follow the chain that starts at the root node.
-We can also add a string of length $n$ to the trie
-in $O(n)$ time by first following the chain
-and then adding new nodes to the trie if necessary.
+می‌توان در زمان $O(n)$ بررسی کرد که آیا ترای
+شامل رشته‌ای به طول $n$ است یا خیر،
+زیرا می‌توان زنجیره‌ای را که از گره ریشه آغاز می‌شود پیمایش کرد.
+همچنین می‌توان رشته‌ای به طول $n$ را در زمان $O(n)$ به ترای اضافه کرد؛
+نخست با پیمایش زنجیره
+و سپس در صورت لزوم، افزودن گره‌های جدید به ترای.
 
-Using a trie, we can find
-the longest prefix of a given string
-such that the prefix belongs to the set.
-Moreover, by storing additional information
-in each node,
-we can calculate the number of
-strings that belong to the set and have a
-given string as a prefix.
+با استفاده از ترای، می‌توان طولانی‌ترین پیشوند
+از یک رشته داده‌شده را یافت
+به‌طوری که آن پیشوند متعلق به مجموعه باشد.
+افزون بر این، با ذخیره اطلاعات اضافه
+در هر گره،
+می‌توان تعداد رشته‌هایی را که به مجموعه تعلق دارند
+و رشته داده‌شده پیشوند آن‌هاست محاسبه کرد.
 
-A trie can be stored in an array
+یک ترای را می‌توان در یک آرایه ذخیره کرد:
 \begin{lstlisting}
 int trie[N][A];
 \end{lstlisting}
-where $N$ is the maximum number of nodes
-(the maximum total length of the strings in the set)
-and $A$ is the size of the alphabet.
-The nodes of a trie are numbered
-$0,1,2,\ldots$ so that the number of the root is 0,
-and $\texttt{trie}[s][c]$ is the next node in the chain
-when we move from node $s$ using character $c$.
+که در آن $N$ حداکثر تعداد گره‌ها
+(حداکثر مجموع طول رشته‌های موجود در مجموعه)
+و $A$ اندازه الفبا است.
+گره‌های ترای از
+$0,1,2,\ldots$ شماره‌گذاری می‌شوند به طوری که شماره ریشه 0 است،
+و $\texttt{trie}[s][c]$ گره بعدی در زنجیره است
+هنگامی که از گره $s$ با استفاده از نویسه $c$ حرکت می‌کنیم.
 
-\section{String hashing}
+\section{هشینگ رشته}
 
 \index{hashing}
 \index{string hashing}
 
-\key{String hashing} is a technique that
-allows us to efficiently check whether two
-strings are equal\footnote{The technique
-was popularized by the Karp–Rabin pattern matching
-algorithm \cite{kar87}.}.
-The idea in string hashing is to compare hash values of
-strings instead of their individual characters.
+\key{هشینگ رشته} روشی است که
+امکان بررسی کارآمد برابری دو رشته را
+فراهم می‌کند\footnote{این روش
+توسط الگوریتم تطابق الگوی کارپ-رابین محبوبیت یافت \cite{kar87}.}.
+ایده در هشینگ رشته، مقایسه مقادیر هش
+رشته‌ها به جای مقایسه تک‌تک نویسه‌های آن‌ها است.
 
-\subsubsection*{Calculating hash values}
+\subsubsection*{محاسبه مقادیر هش}
 
 \index{hash value}
 \index{polynomial hashing}
 
-A \key{hash value} of a string is
-a number that is calculated from the characters
-of the string.
-If two strings are the same,
-their hash values are also the same,
-which makes it possible to compare strings
-based on their hash values.
+\key{مقدار هش} یک رشته،
+عددی است که از روی نویسه‌های
+آن رشته محاسبه می‌شود.
+اگر دو رشته یکسان باشند،
+مقادیر هش آن‌ها نیز یکسان است؛
+این ویژگی امکان مقایسه رشته‌ها
+بر پایه مقادیر هش آن‌ها را فراهم می‌کند.
 
-A usual way to implement string hashing
-is \key{polynomial hashing}, which means
-that the hash value of a string \texttt{s}
-of length $n$ is
+روش متداول برای پیاده‌سازی هشینگ رشته،
+\key{هشینگ چندجمله‌ای} است؛ یعنی
+مقدار هش رشته \texttt{s}
+به طول $n$ برابر است با:
 \[(\texttt{s}[0] A^{n-1} + \texttt{s}[1] A^{n-2} + \cdots + \texttt{s}[n-1] A^0) \bmod B  ,\]
-where $s[0],s[1],\ldots,s[n-1]$
-are interpreted as the codes of the characters of \texttt{s},
-and $A$ and $B$ are pre-chosen constants.
+که در آن $s[0],s[1],\ldots,s[n-1]$
+به عنوان کد نویسه‌های \texttt{s} در نظر گرفته می‌شوند،
+و $A$ و $B$ ثابت‌های از پیش انتخاب‌شده هستند.
 
-For example, the codes of the characters
-of \texttt{ALLEY} are:
+برای نمونه، کدهای نویسه‌های
+\texttt{ALLEY} عبارتند از:
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \draw (0,0) grid (5,2);
@@ -252,95 +227,84 @@ of \texttt{ALLEY} are:
 \end{tikzpicture}
 \end{center}
 
-Thus, if $A=3$ and $B=97$, the hash value
-of \texttt{ALLEY} is
+بنابراین، اگر $A=3$ و $B=97$ باشد، مقدار هش
+\texttt{ALLEY} برابر است با:
 \[(65 \cdot 3^4 + 76 \cdot 3^3 + 76 \cdot 3^2 + 69 \cdot 3^1 + 89 \cdot 3^0) \bmod 97 = 52.\]
 
-\subsubsection*{Preprocessing}
+\subsubsection*{پیش‌پردازش}
 
-Using polynomial hashing, we can calculate the hash value of any substring
-of a string \texttt{s} in $O(1)$ time after an $O(n)$ time preprocessing.
-The idea is to construct an array \texttt{h} such that
-$\texttt{h}[k]$ contains the hash value of the prefix $\texttt{s}[0 \ldots k]$.
-The array values can be recursively calculated as follows:
+با استفاده از هش چندجمله‌ای، می‌توان مقدار هش هر زیررشته از یک رشتهٔ \texttt{s} را پس از یک پیش‌پردازش با زمان $O(n)$، در زمان $O(1)$ محاسبه کرد.
+ایده این است که آرایهٔ \texttt{h} به گونه‌ای ساخته شود که
+$\texttt{h}[k]$ حاوی مقدار هش پیشوند $\texttt{s}[0 \ldots k]$ باشد.
+مقادیر این آرایه را می‌توان به‌صورت بازگشتی مطابق زیر محاسبه کرد:
 \[
 \begin{array}{lcl}
 \texttt{h}[0] & = & \texttt{s}[0] \\
 \texttt{h}[k] & = & (\texttt{h}[k-1] A + \texttt{s}[k]) \bmod B \\
 \end{array}
 \]
-In addition, we construct an array $\texttt{p}$
-where $\texttt{p}[k]=A^k \bmod B$:
+علاوه بر این، آرایهٔ $\texttt{p}$ را می‌سازیم
+که در آن $\texttt{p}[k]=A^k \bmod B$ است:
 \[
 \begin{array}{lcl}
 \texttt{p}[0] & = & 1 \\
 \texttt{p}[k] & = & (\texttt{p}[k-1] A) \bmod B. \\
 \end{array}
 \]
-Constructing these arrays takes $O(n)$ time.
-After this, the hash value of any substring
+ساخت این آرایه‌ها به زمان $O(n)$ نیاز دارد.
+پس از آن، مقدار هش هر زیررشتهٔ
 $\texttt{s}[a \ldots b]$
-can be calculated in $O(1)$ time using the formula
+با فرض $a>0$ می‌تواند در زمان $O(1)$ با استفاده از فرمول زیر محاسبه شود:
 \[(\texttt{h}[b]-\texttt{h}[a-1] \texttt{p}[b-a+1]) \bmod B\]
-assuming that $a>0$.
-If $a=0$, the hash value is simply $\texttt{h}[b]$.
+اگر $a=0$ باشد، مقدار هش همان $\texttt{h}[b]$ خواهد بود.
 
-\subsubsection*{Using hash values}
+\subsubsection*{استفاده از مقادیر هش}
 
-We can efficiently compare strings using hash values.
-Instead of comparing the individual characters of the strings,
-the idea is to compare their hash values.
-If the hash values are equal,
-the strings are \emph{probably} equal,
-and if the hash values are different,
-the strings are \emph{certainly} different.
+می‌توان رشته‌ها را با استفاده از مقادیر هش به شکلی کارا مقایسه کرد.
+به‌جای مقایسهٔ تک‌تک نویسه‌های رشته‌ها،
+ایده این است که مقادیر هش آن‌ها مقایسه شود.
+اگر مقادیر هش برابر باشند،
+رشته‌ها \emph{احتمالاً} برابرند،
+و اگر مقادیر هش متفاوت باشند،
+رشته‌ها \emph{قطعاً} متفاوت هستند.
 
-Using hashing, we can often make a brute force
-algorithm efficient.
-As an example, consider the pattern matching problem:
-given a string $s$ and a pattern $p$,
-find the positions where $p$ occurs in $s$.
-A brute force algorithm goes through all positions
-where $p$ may occur and compares the strings
-character by character.
-The time complexity of such an algorithm is $O(n^2)$.
+با استفاده از هشینگ، اغلب می‌توان یک الگوریتم جستجوی کامل (brute force) را کارا کرد.
+به عنوان مثال، مسئلهٔ تطابق الگو را در نظر بگیرید:
+به ازای یک رشتهٔ $s$ و یک الگو $p$،
+موقعیت‌هایی را بیابید که $p$ در $s$ رخ می‌دهد.
+یک الگوریتم جستجوی کامل تمام موقعیت‌هایی را که $p$ ممکن است در آن‌ها رخ دهد پیمایش کرده و رشته‌ها را نویسه‌به‌نویسه مقایسه می‌کند.
+پیچیدگی زمانی چنین الگوریتمی $O(n^2)$ است.
 
-We can make the brute force algorithm more efficient
-by using hashing, because the algorithm compares
-substrings of strings.
-Using hashing, each comparison only takes $O(1)$ time,
-because only hash values of substrings are compared.
-This results in an algorithm with time complexity $O(n)$,
-which is the best possible time complexity for this problem.
+می‌توان با استفاده از هشینگ، الگوریتم جستجوی کامل را کاراتر کرد، زیرا این الگوریتم زیررشته‌هایی از رشته‌ها را مقایسه می‌کند.
+با استفاده از هشینگ، هر مقایسه تنها $O(1)$ زمان می‌برد،
+زیرا فقط مقادیر هش زیررشته‌ها مقایسه می‌شوند.
+این کار منجر به الگوریتمی با پیچیدگی زمانی $O(n)$ می‌شود
+که بهترین پیچیدگی زمانی ممکن برای این مسئله است.
 
-By combining hashing and \emph{binary search},
-it is also possible to find out the lexicographic order of
-two strings in logarithmic time.
-This can be done by calculating the length
-of the common prefix of the strings using binary search.
-Once we know the length of the common prefix,
-we can just check the next character after the prefix,
-because this determines the order of the strings.
+با ترکیب هشینگ و \emph{جستجوی دودویی}،
+یافتن ترتیب لغت‌نگاشتی (lexicographic) دو رشته در زمان لگاریتمی نیز امکان‌پذیر است.
+این کار با محاسبهٔ طول طولانی‌ترین پیشوند مشترک دو رشته با استفاده از جستجوی دودویی انجام می‌شود.
+پس از یافتن طول پیشوند مشترک،
+کافی است نویسهٔ بعدی پس از پیشوند را بررسی کنیم،
+زیرا این نویسه ترتیب رشته‌ها را مشخص می‌کند.
 
-\subsubsection*{Collisions and parameters}
+\subsubsection*{تصادم‌ها و پارامترها}
 
-\index{collision}
+\index{تصادم}
 
-An evident risk when comparing hash values is
-a \key{collision}, which means that two strings have
-different contents but equal hash values.
-In this case, an algorithm that relies on
-the hash values concludes that the strings are equal,
-but in reality they are not,
-and the algorithm may give incorrect results.
+یک خطر آشکار هنگام مقایسهٔ مقادیر هش،
+وقوع یک \key{تصادم} (collision) است؛ بدین معنی که دو رشته محتوای متفاوتی دارند اما مقدار هش آن‌ها یکسان است.
+در این حالت، الگوریتمی که به مقادیر هش اتکا دارد نتیجه می‌گیرد که رشته‌ها برابر هستند،
+اما در واقعیت این‌گونه نیست
+و الگوریتم ممکن است نتایج نادرستی ارائه دهد.
 
-Collisions are always possible,
-because the number of different strings is larger
-than the number of different hash values.
-However, the probability of a collision is small
-if the constants $A$ and $B$ are carefully chosen.
-A usual way is to choose random constants
-near $10^9$, for example as follows:
+برخوردها همواره ممکن هستند،
+زیرا تعداد رشته‌های متمایز بیشتر از
+تعداد مقادیر هش متمایز است.
+با این حال، در صورت انتخاب دقیق ثوابت $A$ و $B$،
+احتمال برخورد کم است.
+رویکرد متداول، انتخاب ثوابت تصادفی
+نزدیک به $10^9$ است، به عنوان نمونه:
 \[
 \begin{array}{lcl}
 A & = & 911382323 \\
@@ -348,36 +312,35 @@ B & = & 972663749 \\
 \end{array}
 \]
 
-Using such constants,
-the \texttt{long long} type can be used
-when calculating hash values,
-because the products $AB$ and $BB$ will fit in \texttt{long long}.
-But is it enough to have about $10^9$ different hash values?
+با چنین ثوابتی،
+هنگام محاسبه مقادیر هش می‌توان از نوع داده \texttt{long long} استفاده کرد،
+زیرا حاصل‌ضرب‌های $AB$ و $BB$ در \texttt{long long} جا می‌گیرند.
+اما آیا وجود حدود $10^9$ مقدار هش متمایز کافی است؟
 
-Let us consider three scenarios where hashing can be used:
+سه سناریو کاربرد هش را در نظر بگیرید:
 
-\textit{Scenario 1:} Strings $x$ and $y$ are compared with
-each other.
-The probability of a collision is $1/B$ assuming that
-all hash values are equally probable.
+\textit{سناریو ۱:} رشته‌های $x$ و $y$ با یکدیگر
+مقایسه می‌شوند.
+با فرض هم‌احتمال بودن همه مقادیر هش،
+احتمال وقوع برخورد $1/B$ است.
 
-\textit{Scenario 2:} A string $x$ is compared with strings
-$y_1,y_2,\ldots,y_n$.
-The probability of one or more collisions is
+\textit{سناریو ۲:} رشته $x$ با رشته‌های
+$y_1,y_2,\ldots,y_n$ مقایسه می‌شود.
+احتمال وقوع یک یا چند برخورد برابر است با:
 
 \[1-(1-\frac{1}{B})^n.\]
 
-\textit{Scenario 3:} All pairs of strings $x_1,x_2,\ldots,x_n$
-are compared with each other.
-The probability of one or more collisions is
+\textit{سناریو ۳:} همه جفت‌های رشته‌های $x_1,x_2,\ldots,x_n$
+با یکدیگر مقایسه می‌شوند.
+احتمال وقوع یک یا چند برخورد برابر است با:
 \[ 1 - \frac{B \cdot (B-1) \cdot (B-2) \cdots (B-n+1)}{B^n}.\]
 
-The following table shows the collision probabilities
-when $n=10^6$ and the value of $B$ varies:
+جدول زیر احتمال برخورد را به ازای
+$n=10^6$ و مقادیر مختلف $B$ نشان می‌دهد:
 
 \begin{center}
 \begin{tabular}{rrrr}
-constant $B$ & scenario 1 & scenario 2 & scenario 3 \\
+ثابت $B$ & سناریو ۱ & سناریو ۲ & سناریو ۳ \\
 \hline
 $10^3$ & $0.001000$ & $1.000000$ & $1.000000$ \\
 $10^6$ & $0.000001$ & $0.632121$ & $1.000000$ \\
@@ -388,58 +351,50 @@ $10^{18}$ & $0.000000$ & $0.000000$ & $0.000001$ \\
 \end{tabular}
 \end{center}
 
-The table shows that in scenario 1,
-the probability of a collision is negligible
-when $B \approx 10^9$.
-In scenario 2, a collision is possible but the
-probability is still quite small.
-However, in scenario 3 the situation is very different:
-a collision will almost always happen when
-$B \approx 10^9$.
+جدول نشان می‌دهد در سناریو ۱،
+هنگام $B \approx 10^9$، احتمال برخورد ناچیز است.
+در سناریو ۲، برخورد ممکن است ولی
+احتمال آن همچنان بسیار کم است.
+با این حال در سناریو ۳ وضعیت کاملا متفاوت است:
+هنگام $B \approx 10^9$ برخورد تقریبا همواره رخ می‌دهد.
 
 \index{birthday paradox}
 
-The phenomenon in scenario 3 is known as the
-\key{birthday paradox}: if there are $n$ people
-in a room, the probability that \emph{some} two people
-have the same birthday is large even if $n$ is quite small.
-In hashing, correspondingly, when all hash values are compared
-with each other, the probability that some two
-hash values are equal is large.
+پدیده موجود در سناریو ۳ تحت عنوان
+\key{پارادوکس روز تولد} شناخته می‌شود: اگر $n$ نفر
+در یک اتاق باشند، احتمال اینکه \emph{حداقل دو نفر}
+روز تولد یکسانی داشته باشند بالاست، حتی اگر $n$ بسیار کوچک باشد.
+در هشینگ نیز به همین ترتیب، با مقایسه همه مقادیر هش با یکدیگر،
+احتمال برابر شدن حداقل دو مقدار هش بالاست.
 
-We can make the probability of a collision
-smaller by calculating \emph{multiple} hash values
-using different parameters.
-It is unlikely that a collision would occur
-in all hash values at the same time.
-For example, two hash values with parameter
-$B \approx 10^9$ correspond to one hash
-value with parameter $B \approx 10^{18}$,
-which makes the probability of a collision very small.
+می‌توان با محاسبه \emph{چندین} مقدار هش با پارامترهای مختلف،
+احتمال برخورد را کاهش داد.
+وقوع برخورد همزمان در همه مقادیر هش بعید است.
+برای نمونه، دو مقدار هش با پارامتر
+$B \approx 10^9$ معادل یک مقدار هش با پارامتر
+$B \approx 10^{18}$ عمل می‌کند،
+که احتمال برخورد را بسیار ناچیز می‌سازد.
 
-Some people use constants $B=2^{32}$ and $B=2^{64}$,
-which is convenient, because operations with 32 and 64
-bit integers are calculated modulo $2^{32}$ and $2^{64}$.
-However, this is \emph{not} a good choice, because it is possible
-to construct inputs that always generate collisions when
-constants of the form $2^x$ are used \cite{pac13}.
+برخی افراد از ثوابت $B=2^{32}$ و $B=2^{64}$ استفاده می‌کنند
+که کار را راحت می‌کند، زیرا محاسبات با اعداد صحیح ۳۲ و ۶۴ بیتی
+به پیمانه $2^{32}$ و $2^{64}$ انجام می‌شود.
+با این حال، این انتخاب \emph{خوبی} نیست، زیرا می‌توان
+ورودی‌هایی ساخت که با ثوابت به فرم $2^x$ همیشه برخورد هش ایجاد کنند \cite{pac13}.
 
-\section{Z-algorithm}
+\section{الگوریتم Z}
 
-\index{Z-algorithm}
-\index{Z-array}
+\index{الگوریتم Z}
+\index{آرایه Z}
 
-The \key{Z-array} \texttt{z} of a string \texttt{s}
-of length $n$ contains for each $k=0,1,\ldots,n-1$
-the length of the longest substring of \texttt{s}
-that begins at position $k$ and is a prefix of \texttt{s}.
-Thus, $\texttt{z}[k]=p$ tells us that
-$\texttt{s}[0 \ldots p-1]$ equals $\texttt{s}[k \ldots k+p-1]$.
-Many string processing problems can be efficiently solved
-using the Z-array.
+\key{آرایه Z} با نام \texttt{z} برای یک رشته \texttt{s} به طول $n$،
+به ازای هر $k=0,1,\ldots,n-1$ شامل طول طولانی‌ترین زیررشته‌ای از \texttt{s} است
+که از مکان $k$ شروع می‌شود و پیشوندی از \texttt{s} است.
+بنابراین، $\texttt{z}[k]=p$ نشان می‌دهد که
+$\texttt{s}[0 \ldots p-1]$ برابر با $\texttt{s}[k \ldots k+p-1]$ است.
+مسائل متعددی در پردازش رشته‌ها را می‌توان با استفاده از آرایه Z به طور کارآمد حل کرد.
 
-For example, the Z-array of
-\texttt{ACBACDACBACBACDA} is as follows:
+به عنوان مثال، آرایه Z رشته
+\texttt{ACBACDACBACBACDA} به صورت زیر است:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
@@ -500,47 +455,26 @@ For example, the Z-array of
 \end{tikzpicture}
 \end{center}
 
-In this case, for example, $\texttt{z}[6]=5$,
-because the substring \texttt{ACBAC} of length 5
-is a prefix of \texttt{s},
-but the substring \texttt{ACBACB} of length 6
-is not a prefix of \texttt{s}.
+در این مورد، برای مثال $\texttt{z}[6]=5$ است،
+زیرا زیررشته \texttt{ACBAC} با طول ۵
+پیشوندی از \texttt{s} است،
+اما زیررشته \texttt{ACBACB} با طول ۶
+پیشوندی از \texttt{s} نیست.
 
-\subsubsection*{Algorithm description}
+\subsubsection*{شرح الگوریتم}
 
-Next we describe an algorithm,
-called the \key{Z-algorithm}\footnote{The Z-algorithm
-was presented in \cite{gus97} as the simplest known
-method for linear-time pattern matching, and the original idea
-was attributed to \cite{mai84}.},
-that efficiently constructs the Z-array in $O(n)$ time.
-The algorithm calculates the Z-array values
-from left to right by both using information
-already stored in the Z-array and comparing substrings
-character by character.
+در ادامه الگوریتمی موسوم به \key{الگوریتم زد}\footnote{الگوریتم Z در \cite{gus97} به عنوان ساده‌ترین روش شناخته‌شده برای تطابق الگو در زمان خطی معرفی شد و ایده اصلی آن به \cite{mai84} نسبت داده شده است.} را شرح می‌دهیم که آرایه زد را به شکل کارآمد در زمان $O(n)$ می‌سازد.
+این الگوریتم مقادیر آرایه زد را از چپ به راست محاسبه می‌کند؛ هم با استفاده از اطلاعاتی که از قبل در آرایه زد ذخیره شده‌اند و هم از طریق مقایسه کاراکتر به کاراکتر زیررشته‌ها.
 
-To efficiently calculate the Z-array values,
-the algorithm maintains a range $[x,y]$ such that
-$\texttt{s}[x \ldots y]$ is a prefix of \texttt{s}
-and $y$ is as large as possible.
-Since we know that $\texttt{s}[0 \ldots y-x]$
-and $\texttt{s}[x \ldots y]$ are equal,
-we can use this information when calculating
-Z-values for positions $x+1,x+2,\ldots,y$.
+برای محاسبه بهینه مقادیر آرایه زد، الگوریتم بازه‌ای مانند $[x,y]$ را نگهداری می‌کند به طوری که $\texttt{s}[x \ldots y]$ پیشوندی از \texttt{s} باشد و $y$ تا حد امکان بزرگ باشد.
+از آنجا که می‌دانیم $\texttt{s}[0 \ldots y-x]$ و $\texttt{s}[x \ldots y]$ برابر هستند، می‌توانیم هنگام محاسبه مقادیر زد برای موقعیت‌های $x+1,x+2,\ldots,y$ از این اطلاعات بهره ببریم.
 
-At each position $k$, we first
-check the value of $\texttt{z}[k-x]$.
-If $k+\texttt{z}[k-x]<y$, we know that $\texttt{z}[k]=\texttt{z}[k-x]$.
-However, if $k+\texttt{z}[k-x] \ge y$,
-$\texttt{s}[0 \ldots y-k]$ equals
-$\texttt{s}[k \ldots y]$, and to determine the
-value of $\texttt{z}[k]$ we need to compare
-the substrings character by character.
-Still, the algorithm works in $O(n)$ time,
-because we start comparing at positions
-$y-k+1$ and $y+1$.
+در هر موقعیت $k$، ابتدا مقدار $\texttt{z}[k-x]$ را بررسی می‌کنیم.
+اگر $k+\texttt{z}[k-x]<y$ باشد، می‌دانیم که $\texttt{z}[k]=\texttt{z}[k-x]$ است.
+اما اگر $k+\texttt{z}[k-x] \ge y$ باشد، $\texttt{s}[0 \ldots y-k]$ برابر با $\texttt{s}[k \ldots y]$ است، و برای تعیین مقدار $\texttt{z}[k]$ باید زیررشته‌ها را کاراکتر به کاراکتر مقایسه کنیم.
+با این وجود، الگوریتم همچنان در زمان $O(n)$ اجرا می‌شود، زیرا مقایسه را از موقعیت‌های $y-k+1$ و $y+1$ آغاز می‌کنیم.
 
-For example, let us construct the following Z-array:
+به عنوان مثال، فرض کنید می‌خواهیم آرایه زد زیر را بسازیم:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
@@ -601,8 +535,7 @@ For example, let us construct the following Z-array:
 \end{tikzpicture}
 \end{center}
 
-After calculating the value $\texttt{z}[6]=5$,
-the current $[x,y]$ range is $[6,10]$:
+پس از محاسبه مقدار $\texttt{z}[6]=5$، بازه فعلی $[x,y]$ برابر با $[6,10]$ خواهد بود:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
@@ -670,15 +603,7 @@ the current $[x,y]$ range is $[6,10]$:
 \end{tikzpicture}
 \end{center}
 
-Now we can calculate
-subsequent Z-array values
-efficiently,
-because we know that
-$\texttt{s}[0 \ldots 4]$ and
-$\texttt{s}[6 \ldots 10]$ are equal.
-First, since $\texttt{z}[1] = \texttt{z}[2] = 0$,
-we immediately know that also
-$\texttt{z}[7] = \texttt{z}[8] = 0$:
+اکنون می‌توان مقادیر بعدی آرایه $Z$ را به شکل کارآمد محاسبه کرد، زیرا می‌دانیم $\texttt{s}[0 \ldots 4]$ و $\texttt{s}[6 \ldots 10]$ برابرند. نخست، چون $\texttt{z}[1] = \texttt{z}[2] = 0$ است، بلافاصله نتیجه می‌شود $\texttt{z}[7] = \texttt{z}[8] = 0$:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
@@ -725,7 +650,6 @@ $\texttt{z}[7] = \texttt{z}[8] = 0$:
 \node at (6.5,3.50) {$x$};
 \node at (10.5,3.50) {$y$};
 
-
 \footnotesize
 \node at (0.5, 2.5) {0};
 \node at (1.5, 2.5) {1};
@@ -750,7 +674,7 @@ $\texttt{z}[7] = \texttt{z}[8] = 0$:
 \end{tikzpicture}
 \end{center}
 
-Then, since $\texttt{z}[3]=2$, we know that $\texttt{z}[9] \ge 2$:
+سپس، چون $\texttt{z}[3]=2$ است، می‌دانیم $\texttt{z}[9] \ge 2$:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
@@ -819,9 +743,7 @@ Then, since $\texttt{z}[3]=2$, we know that $\texttt{z}[9] \ge 2$:
 \end{tikzpicture}
 \end{center}
 
-However, we have no information about the string
-after position 10, so we need to compare the substrings
-character by character:
+با این حال، اطلاعی از رشته بعد از موقعیت 10 نداریم؛ باید زیررشته‌ها نویسه‌به‌نویسه مقایسه شوند:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
@@ -894,8 +816,8 @@ character by character:
 \end{tikzpicture}
 \end{center}
 
-It turns out that $\texttt{z}[9]=7$,
-so the new $[x,y]$ range is $[9,15]$:
+مشخص می‌شود که $\texttt{z}[9]=7$ است،
+بنابراین بازه جدید $[x,y]$ برابر $[9,15]$ می‌شود:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
@@ -941,7 +863,6 @@ so the new $[x,y]$ range is $[9,15]$:
 \node at (9.5,3.50) {$x$};
 \node at (15.5,3.50) {$y$};
 
-
 \footnotesize
 \node at (0.5, 2.5) {0};
 \node at (1.5, 2.5) {1};
@@ -964,9 +885,7 @@ so the new $[x,y]$ range is $[9,15]$:
 \end{tikzpicture}
 \end{center}
 
-After this, all the remaining Z-array values
-can be determined by using the information
-already stored in the Z-array:
+پس از این، تمام مقادیر باقی‌مانده آرایه Z را می‌توان با استفاده از اطلاعاتی که تاکنون درون آرایه Z ذخیره شده است، تعیین کرد:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
@@ -1033,38 +952,18 @@ already stored in the Z-array:
 \end{tikzpicture}
 \end{center}
 
-\subsubsection{Using the Z-array}
+\subsubsection{استفاده از آرایه Z}
 
-It is often a matter of taste whether to use
-string hashing or the Z-algorithm.
-Unlike hashing, the Z-algorithm always works
-and there is no risk for collisions.
-On the other hand, the Z-algorithm is more difficult
-to implement and some problems can only be solved
-using hashing.
+انتخاب بین درهم‌سازی رشته یا الگوریتم Z اغلب سلیقه‌ای است.
+برخلاف درهم‌سازی، الگوریتم Z همواره کار می‌کند و خطر تصادم ندارد.
+از طرف دیگر، پیاده‌سازی الگوریتم Z دشوارتر است و برخی مسائل فقط با درهم‌سازی حل می‌شوند.
 
-As an example, consider again
-the pattern matching problem,
-where our task is to find the occurrences
-of a pattern $p$ in a string $s$.
-We already solved this problem efficiently
-using string hashing, but the Z-algorithm
-provides another way to solve the problem.
+به عنوان مثال، مسئله تطابق الگو را دوباره در نظر بگیرید که هدف در آن، یافتن رخدادهای الگوی $p$ در رشته $s$ است.
+این مسئله پیش‌تر با درهم‌سازی رشته به‌طور کارا حل شد، ولی الگوریتم Z روش دیگری برای حل آن ارائه می‌دهد.
 
-A usual idea in string processing is to
-construct a string that consists of
-multiple strings separated by special characters.
-In this problem, we can construct a string
-$p$\texttt{\#}$s$,
-where $p$ and $s$ are separated by a special
-character \texttt{\#} that does not occur
-in the strings.
-The Z-array of $p$\texttt{\#}$s$ tells us the positions
-where $p$ occurs in $s$,
-because such positions contain the length of $p$.
+یک ایده معمول در پردازش رشته ساخت رشته‌ای متشکل از چند رشته با جداکننده نویسه خاص است. در این مسئله می‌توان رشته $p$\texttt{\#}$s$ را ساخت، جایی که $p$ و $s$ با نویسه خاص \texttt{\#} جدا می‌شوند که درون رشته‌ها نیست. آرایه Z رشته $p$\texttt{\#}$s$ موقعیت‌های وقوع $p$ در $s$ را مشخص می‌کند، زیرا این موقعیت‌ها حاوی طول $p$ هستند.
 
-For example, if $s=$\texttt{HATTIVATTI} and $p=$\texttt{ATT},
-the Z-array is as follows:
+برای مثال، اگر $s=$\texttt{HATTIVATTI} و $p=$\texttt{ATT} باشد، آرایه Z بدین صورت است:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
@@ -1118,19 +1017,13 @@ the Z-array is as follows:
 \end{tikzpicture}
 \end{center}
 
-The positions 5 and 10 contain the value 3,
-which means that the pattern \texttt{ATT}
-occurs in the corresponding positions
-of \texttt{HATTIVATTI}.
+موقعیت‌های 5 و 10 مقدار 3 دارند، یعنی الگوی \texttt{ATT} در موقعیت‌های متناظر \texttt{HATTIVATTI} رخ می‌دهد.
 
-The time complexity of the resulting algorithm
-is linear, because it suffices to construct
-the Z-array and go through its values.
+پیچیدگی زمانی الگوریتم حاصل خطی است، ساخت آرایه Z و پیمایش مقادیر آن کفایت می‌کند.
 
-\subsubsection{Implementation}
+\subsubsection{پیاده‌سازی}
 
-Here is a short implementation of the Z-algorithm
-that returns a vector that corresponds to the Z-array.
+این پیاده‌سازی کوتاه الگوریتم Z است که بردار متناظر با آرایه Z را برمی‌گرداند.
 
 \begin{lstlisting}
 vector<int> z(string s) {
