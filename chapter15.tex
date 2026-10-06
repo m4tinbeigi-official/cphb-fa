@@ -1,16 +1,12 @@
-\chapter{Spanning trees}
+\chapter{درخت‌های فراگیر}
 
-\index{spanning tree}
+\index{درخت فراگیر}
 
-A \key{spanning tree} of a graph consists of
-all nodes of the graph and some of the
-edges of the graph so that there is a path
-between any two nodes.
-Like trees in general, spanning trees are
-connected and acyclic.
-Usually there are several ways to construct a spanning tree.
+یک \key{درخت فراگیر} از یک گراف شامل تمام رأس‌های گراف و تعدادی از یال‌های آن است، به طوری که بین هر دو رأس یک مسیر وجود داشته باشد.
+مانند درخت‌ها به طور کلی، درخت‌های فراگیر همبند و بدون دور هستند.
+معمولاً چندین روش برای ساخت یک درخت فراگیر وجود دارد.
 
-For example, consider the following graph:
+برای مثال، گراف زیر را در نظر بگیرید:
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
 \node[draw, circle] (1) at (1.5,2) {$1$};
@@ -29,7 +25,7 @@ For example, consider the following graph:
 \path[draw,thick,-] (3) -- node[font=\small,label=left:3] {} (6);
 \end{tikzpicture}
 \end{center}
-One spanning tree for the graph is as follows:
+یک درخت فراگیر برای این گراف به صورت زیر است:
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
 \node[draw, circle] (1) at (1.5,2) {$1$};
@@ -46,16 +42,13 @@ One spanning tree for the graph is as follows:
 \end{tikzpicture}
 \end{center}
 
-The weight of a spanning tree is the sum of its edge weights.
-For example, the weight of the above spanning tree is
-$3+5+9+3+2=22$.
+وزن یک درخت فراگیر برابر مجموع وزن یال‌های آن است.
+برای مثال، وزن درخت فراگیر بالا $3+5+9+3+2=22$ است.
 
-\index{minimum spanning tree}
+\index{درخت فراگیر کمینه}
 
-A \key{minimum spanning tree}
-is a spanning tree whose weight is as small as possible.
-The weight of a minimum spanning tree for the example graph
-is 20, and such a tree can be constructed as follows:
+یک \key{درخت فراگیر کمینه} درخت فراگیری است که وزن آن تا حد امکان کمینه باشد.
+وزن درخت فراگیر کمینه برای گراف مثال برابر ۲۰ است، و چنین درختی می‌تواند به صورت زیر ساخته شود:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
@@ -74,12 +67,10 @@ is 20, and such a tree can be constructed as follows:
 \end{tikzpicture}
 \end{center}
 
-\index{maximum spanning tree}
+\index{درخت فراگیر بیشینه}
 
-In a similar way, a \key{maximum spanning tree}
-is a spanning tree whose weight is as large as possible.
-The weight of a maximum spanning tree for the
-example graph is 32:
+به روشی مشابه، یک \key{درخت فراگیر بیشینه} درختی فراگیر است که وزن آن تا حد امکان بیشینه باشد.
+وزن یک درخت فراگیر بیشینه برای گراف نمونه برابر ۳۲ است:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
@@ -97,46 +88,28 @@ example graph is 32:
 \end{tikzpicture}
 \end{center}
 
-Note that a graph may have several
-minimum and maximum spanning trees,
-so the trees are not unique.
+توجه داشته باشید یک گراف ممکن است چندین درخت فراگیر کمینه و بیشینه داشته باشد؛ بنابراین درخت‌ها یکتا نیستند.
 
-It turns out that several greedy methods
-can be used to construct minimum and maximum
-spanning trees.
-In this chapter, we discuss two algorithms
-that process
-the edges of the graph ordered by their weights.
-We focus on finding minimum spanning trees,
-but the same algorithms can find
-maximum spanning trees by processing the edges in reverse order.
+مشخص شده روش‌های حریصانه متعددی برای ساخت درخت‌های فراگیر کمینه و بیشینه وجود دارد.
+در این فصل، دو الگوریتم را بررسی می‌کنیم که یال‌های گراف را بر اساس وزن پردازش می‌کنند.
+تمرکز ما روی یافتن درخت‌های فراگیر کمینه است، اما همین الگوریتم‌ها با پردازش معکوس یال‌ها قادر به یافتن درخت‌های فراگیر بیشینه هستند.
 
-\section{Kruskal's algorithm}
+\section{الگوریتم کروسکال}
 
-\index{Kruskal's algorithm}
+\index{الگوریتم کروسکال}
 
-In \key{Kruskal's algorithm}\footnote{The algorithm was published in 1956
-by J. B. Kruskal \cite{kru56}.}, the initial spanning tree
-only contains the nodes of the graph
-and does not contain any edges.
-Then the algorithm goes through the edges
-ordered by their weights, and always adds an edge
-to the tree if it does not create a cycle.
+در \key{الگوریتم کروسکال}\footnote{این الگوریتم در سال ۱۹۵۶ توسط جی. بی. کروسکال منتشر شد \cite{kru56}.}، درخت فراگیر اولیه فقط شامل رأس‌های گراف است و هیچ یالی ندارد.
+سپس الگوریتم یال‌ها را بر اساس وزن بررسی می‌کند و هر بار یالی را که دوری نسازد به درخت اضافه می‌کند.
 
-The algorithm maintains the components
-of the tree.
-Initially, each node of the graph
-belongs to a separate component.
-Always when an edge is added to the tree,
-two components are joined.
-Finally, all nodes belong to the same component,
-and a minimum spanning tree has been found.
+الگوریتم مؤلفه‌های درخت را نگهداری می‌کند.
+در ابتدا، هر رأس گراف متعلق به یک مؤلفه جداگانه است.
+هرگاه یالی به درخت اضافه شود، دو مؤلفه ترکیب می‌شوند.
+در نهایت، همه رأس‌ها عضو یک مؤلفه یکسان می‌شوند و درخت فراگیر کمینه پیدا می‌شود.
 
-\subsubsection{Example}
+\subsubsection{مثال}
 
 \begin{samepage}
-Let us consider how Kruskal's algorithm processes the
-following graph:
+نحوه پردازش گراف زیر توسط الگوریتم کروسکال را بررسی می‌کنیم:
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
 \node[draw, circle] (1) at (1.5,2) {$1$};
@@ -158,13 +131,12 @@ following graph:
 \end{samepage}
 
 \begin{samepage}
-The first step of the algorithm is to sort the
-edges in increasing order of their weights.
-The result is the following list:
+گام نخست الگوریتم، مرتب‌سازی یال‌ها به ترتیب صعودی وزن آن‌ها است.
+نتیجه، فهرست زیر است:
 
 \begin{tabular}{ll}
 \\
-edge & weight \\
+یال & وزن \\
 \hline
 5--6 & 2 \\
 1--2 & 3 \\
@@ -178,11 +150,9 @@ edge & weight \\
 \end{tabular}
 \end{samepage}
 
-After this, the algorithm goes through the list
-and adds each edge to the tree if it joins
-two separate components.
+سپس الگوریتم فهرست را پیمایش کرده و هر یال را در صورتی که دو مؤلفه مجزا را به هم متصل کند، به درخت اضافه می‌کند.
 
-Initially, each node is in its own component:
+در ابتدا، هر رأس در مؤلفه اختصاصی خود قرار دارد:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
@@ -202,9 +172,7 @@ Initially, each node is in its own component:
 %\path[draw,thick,-] (3) -- node[font=\small,label=left:3] {} (6);
 \end{tikzpicture}
 \end{center}
-The first edge to be added to the tree is
-the edge 5--6 that creates a component $\{5,6\}$
-by joining the components $\{5\}$ and $\{6\}$:
+نخستین یالی که به درخت افزوده می‌شود یال 5--6 است که با ادغام دو مؤلفه $\{5\}$ و $\{6\}$، مؤلفه $\{5,6\}$ را می‌سازد:
 
 \begin{center}
 \begin{tikzpicture}
@@ -225,7 +193,7 @@ by joining the components $\{5\}$ and $\{6\}$:
 %\path[draw,thick,-] (3) -- node[font=\small,label=left:3] {} (6);
 \end{tikzpicture}
 \end{center}
-After this, the edges 1--2, 3--6 and 1--5 are added in a similar way:
+پس از آن، یال‌های 1--2، 3--6 و 1--5 به شکل مشابه اضافه می‌شوند:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
@@ -247,17 +215,17 @@ After this, the edges 1--2, 3--6 and 1--5 are added in a similar way:
 \end{tikzpicture}
 \end{center}
 
-After those steps, most components have been joined
-and there are two components in the tree:
-$\{1,2,3,5,6\}$ and $\{4\}$.
+پس از این مراحل، بیشتر مولفه‌ها ادغام شده‌اند
+و دو مولفه در درخت وجود دارد:
+$\{1,2,3,5,6\}$ و $\{4\}$.
 
-The next edge in the list is the edge 2--3,
-but it will not be included in the tree, because
-nodes 2 and 3 are already in the same component.
-For the same reason, the edge 2--5 will not be included in the tree.
+یال بعدی فهرست یال 2--3 است،
+اما به درخت اضافه نمی‌شود، چون
+راس‌های ۲ و ۳ از قبل در یک مولفه‌اند.
+به همین دلیل، یال 2--5 نیز به درخت اضافه نخواهد شد.
 
 \begin{samepage}
-Finally, the edge 4--6 will be included in the tree:
+در نهایت، یال 4--6 به درخت اضافه می‌شود:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
@@ -280,26 +248,24 @@ Finally, the edge 4--6 will be included in the tree:
 \end{center}
 \end{samepage}
 
-After this, the algorithm will not add any
-new edges, because the graph is connected
-and there is a path between any two nodes.
-The resulting graph is a minimum spanning tree
-with weight $2+3+3+5+7=20$.
+پس از این، الگوریتم یال جدیدی اضافه نخواهد کرد، زیرا گراف همبند است
+و بین هر دو راس یک مسیر وجود دارد.
+گراف حاصل یک درخت فراگیر کمینه
+با وزن $2+3+3+5+7=20$ است.
 
-\subsubsection{Why does this work?}
+\subsubsection{چرا این روش کار می‌کند؟}
 
-It is a good question why Kruskal's algorithm works.
-Why does the greedy strategy guarantee that we
-will find a minimum spanning tree?
+این پرسش خوبی است که چرا الگوریتم کروسکال به درستی کار می‌کند.
+چرا راهبرد حریصانه تضمین می‌کند که
+یک درخت فراگیر کمینه پیدا خواهیم کرد؟
 
-Let us see what happens if the minimum weight edge of
-the graph is \emph{not} included in the spanning tree.
-For example, suppose that a spanning tree
-for the previous graph would not contain the
-minimum weight edge 5--6.
-We do not know the exact structure of such a spanning tree,
-but in any case it has to contain some edges.
-Assume that the tree would be as follows:
+بیایید بررسی کنیم چه اتفاقی می‌افتد اگر یال با کمترین وزن گراف،
+در درخت فراگیر \emph{قرار نگیرد}.
+برای نمونه، فرض کنید یک درخت فراگیر
+برای گراف پیشین شامل یال با کمترین وزن یعنی 5--6 نباشد.
+ساختار دقیق چنین درخت فراگیری را نمی‌دانیم،
+اما در هر صورت باید یال‌هایی داشته باشد.
+فرض کنید درخت به شکل زیر باشد:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
@@ -318,12 +284,7 @@ Assume that the tree would be as follows:
 \end{tikzpicture}
 \end{center}
 
-However, it is not possible that the above tree
-would be a minimum spanning tree for the graph.
-The reason for this is that we can remove an edge
-from the tree and replace it with the minimum weight edge 5--6.
-This produces a spanning tree whose weight is
-\emph{smaller}:
+اما درخت فوق نمی‌تواند درخت فراگیر کمینه برای گراف باشد. دلیل این است که می‌توانیم یالی را از درخت حذف کرده و یال با کمینه وزن یعنی 5--6 را جایگزین آن کنیم. این کار درختی فراگیر با وزن \emph{کمتر} تولید می‌کند:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
@@ -342,24 +303,11 @@ This produces a spanning tree whose weight is
 \end{tikzpicture}
 \end{center}
 
-For this reason, it is always optimal
-to include the minimum weight edge
-in the tree to produce a minimum spanning tree.
-Using a similar argument, we can show that it
-is also optimal to add the next edge in weight order
-to the tree, and so on.
-Hence, Kruskal's algorithm works correctly and
-always produces a minimum spanning tree.
+به همین دلیل، همواره بهینه است که یال با کمترین وزن برای ساخت درخت فراگیر کمینه به درخت اضافه شود. با استدلالی مشابه می‌توان نشان داد اضافه کردن یال بعدی بر اساس ترتیب وزن به درخت نیز بهینه است، و به همین ترتیب تا انتها ادامه می‌یابد. بنابراین الگوریتم کروسکال به درستی کار می‌کند و همواره یک درخت فراگیر کمینه می‌سازد.
 
-\subsubsection{Implementation}
+\subsubsection{پیاده‌سازی}
 
-When implementing Kruskal's algorithm,
-it is convenient to use
-the edge list representation of the graph.
-The first phase of the algorithm sorts the
-edges in the list in $O(m \log m)$ time.
-After this, the second phase of the algorithm
-builds the minimum spanning tree as follows:
+در پیاده‌سازی الگوریتم کروسکال، استفاده از نمایش فهرست یال‌ها برای گراف مناسب است. گام اول الگوریتم، یال‌های فهرست را در زمان $O(m \log m)$ مرتب می‌کند. سپس گام دوم الگوریتم، درخت فراگیر کمینه را به شکل زیر می‌سازد:
 
 \begin{lstlisting}
 for (...) {
@@ -367,55 +315,35 @@ for (...) {
 }
 \end{lstlisting}
 
-The loop goes through the edges in the list
-and always processes an edge $a$--$b$
-where $a$ and $b$ are two nodes.
-Two functions are needed:
-the function \texttt{same} determines
-if $a$ and $b$ are in the same component,
-and the function \texttt{unite}
-joins the components that contain $a$ and $b$.
+حلقه روی یال‌های فهرست پیمایش کرده و هر بار یال $a$--$b$ را پردازش می‌کند که در آن $a$ و $b$ دو رأس هستند. دو تابع مورد نیاز است: تابع \texttt{same} بررسی می‌کند آیا $a$ و $b$ در یک مولفه هستند، و تابع \texttt{unite} مولفه‌های شامل $a$ و $b$ را ادغام می‌کند.
 
-The problem is how to efficiently implement
-the functions \texttt{same} and \texttt{unite}.
-One possibility is to implement the function
-\texttt{same} as a graph traversal and check if
-we can get from node $a$ to node $b$.
-However, the time complexity of such a function
-would be $O(n+m)$
-and the resulting algorithm would be slow,
-because the function \texttt{same} will be called for each edge in the graph.
+مسئله، پیاده‌سازی کارآمد توابع \texttt{same} و \texttt{unite} است. یک روش، پیاده‌سازی \texttt{same} با پیمایش گراف و بررسی وجود مسیر بین $a$ و $b$ است. ولی پیچیدگی زمانی چنین تابعی $O(n+m)$ خواهد بود و الگوریتم کند می‌شود، زیرا \texttt{same} به ازای هر یال در گراف فراخوانی خواهد شد.
 
-We will solve the problem using a union-find structure
-that implements both functions in $O(\log n)$ time.
-Thus, the time complexity of Kruskal's algorithm
-will be $O(m \log n)$ after sorting the edge list.
+این مسئله را با ساختار مجموعه‌های مجزا (union-find) حل می‌کنیم که هر دو تابع را در زمان $O(\log n)$ اجرا می‌کند. بدین ترتیب پیچیدگی زمانی الگوریتم کروسکال پس از مرتب‌سازی فهرست یال‌ها، $O(m \log n)$ خواهد بود.
 
-\section{Union-find structure}
+\section{ساختار مجموعه‌های مجزا}
 
-\index{union-find structure}
+\index{ساختار مجموعه‌های مجزا}
 
-A \key{union-find structure} maintains
-a collection of sets.
-The sets are disjoint, so no element
-belongs to more than one set.
-Two $O(\log n)$ time operations are supported:
-the \texttt{unite} operation joins two sets,
-and the \texttt{find} operation finds the representative
-of the set that contains a given element\footnote{The structure presented here
-was introduced in 1971 by J. D. Hopcroft and J. D. Ullman \cite{hop71}.
-Later, in 1975, R. E. Tarjan studied a more sophisticated variant
-of the structure \cite{tar75} that is discussed in many algorithm
-textbooks nowadays.}.
+یک \key{ساختمان داده مجموعه‌های مجزا} (union-find)
+مجموعه‌ای از دسته‌ها را نگهداری می‌کند.
+مجموعه‌ها مجزا هستند، بنابراین هیچ عنصری
+در بیش از یک مجموعه وجود ندارد.
+دو عملیات با زمان $O(\log n)$ پشتیبانی می‌شوند:
+عملیات \texttt{unite} دو مجموعه را ادغام می‌کند،
+و عملیات \texttt{find} نماینده‌ی مجموعه‌ای
+شامل عنصر داده‌شده را می‌یابد\footnote{ساختار ارائه‌شده در اینجا
+در سال ۱۹۷۱ توسط جی. دی. هاپ‌کرافت و جی. دی. اولمن معرفی شد \cite{hop71}.
+سپس، در ۱۹۷۵، آر. ای. تارجان نسخه‌ای پیشرفته‌تر
+از این ساختار را بررسی کرد \cite{tar75} که امروزه در کتاب‌های مرجع الگوریتم بررسی می‌شود.}.
 
-\subsubsection{Structure}
+\subsubsection{ساختار}
 
-In a union-find structure, one element in each set
-is the representative of the set,
-and there is a chain from any other element of the
-set to the representative.
-For example, assume that the sets are
-$\{1,4,7\}$, $\{5\}$ and $\{2,3,6,8\}$:
+در ساختار مجموعه‌های مجزا، یک عضو در هر مجموعه
+نماینده‌ی مجموعه است،
+و زنجیره‌ای از هر عضو دیگر مجموعه به سمت نماینده وجود دارد.
+برای مثال فرض کنید مجموعه‌ها
+$\{1,4,7\}$، $\{5\}$ و $\{2,3,6,8\}$ باشند:
 \begin{center}
 \begin{tikzpicture}
 \node[draw, circle] (1) at (0,-1) {$1$};
@@ -436,22 +364,21 @@ $\{1,4,7\}$, $\{5\}$ and $\{2,3,6,8\}$:
 
 \end{tikzpicture}
 \end{center}
-In this case the representatives
-of the sets are 4, 5 and 2.
-We can find the representative of any element
-by following the chain that begins at the element.
-For example, the element 2 is the representative
-for the element 6, because
-we follow the chain $6 \rightarrow 3 \rightarrow 2$.
-Two elements belong to the same set exactly when
-their representatives are the same.
+در این حالت، نمایندگان مجموعه‌ها
+۴، ۵ و ۲ هستند.
+می‌توان نماینده‌ی هر عضو را
+با پیمایش زنجیره‌ی شروع‌شده از آن عضو پیدا کرد.
+برای نمونه، عنصر ۲ نماینده‌ی عنصر ۶ است، زیرا
+زنجیره‌ی $6 \rightarrow 3 \rightarrow 2$ را دنبال می‌کنیم.
+دو عنصر متعلق به یک مجموعه‌اند دقیقاً اگر
+نمایندگان یکسانی داشته باشند.
 
-Two sets can be joined by connecting the
-representative of one set to the
-representative of the other set.
-For example, the sets
-$\{1,4,7\}$ and $\{2,3,6,8\}$
-can be joined as follows:
+دو مجموعه را می‌توان با متصل کردن
+نماینده‌ی یک مجموعه به نماینده‌ی مجموعه‌ی دیگر
+ادغام کرد.
+برای مثال، مجموعه‌های
+$\{1,4,7\}$ و $\{2,3,6,8\}$
+به این شکل ادغام می‌شوند:
 \begin{center}
 \begin{tikzpicture}
 \node[draw, circle] (1) at (2,-1) {$1$};
@@ -473,46 +400,42 @@ can be joined as follows:
 \end{tikzpicture}
 \end{center}
 
-The resulting set contains the elements
-$\{1,2,3,4,6,7,8\}$.
-From this on, the element 2 is the representative
-for the entire set and the old representative 4
-points to the element 2.
+مجموعه حاصل شامل اعضای
+$\{1,2,3,4,6,7,8\}$ است.
+از این پس، عنصر ۲ نماینده‌ی کل مجموعه است
+و نماینده‌ی پیشین ۴ به عنصر ۲ اشاره دارد.
 
-The efficiency of the union-find structure depends on
-how the sets are joined.
-It turns out that we can follow a simple strategy:
-always connect the representative of the
-\emph{smaller} set to the representative of the \emph{larger} set
-(or if the sets are of equal size,
-we can make an arbitrary choice).
-Using this strategy, the length of any chain
-will be $O(\log n)$, so we can
-find the representative of any element
-efficiently by following the corresponding chain.
+کارایی ساختار مجموعه‌های مجزا (union-find) به نحوه
+ادغام مجموعه‌ها بستگی دارد.
+می‌توان از یک استراتژی ساده پیروی کرد:
+همیشه نماینده مجموعه \emph{کوچک‌تر} را به نماینده مجموعه \emph{بزرگ‌تر}
+متصل کنید (یا اگر مجموعه‌ها هم‌اندازه باشند،
+می‌توان انتخابی دلخواه داشت).
+با این روش، طول هر زنجیره $O(\log n)$ خواهد بود،
+بنابراین می‌توان نماینده هر عنصر را با دنبال کردن
+زنجیره مربوطه به طور کارآمد پیدا کرد.
 
-\subsubsection{Implementation}
+\subsubsection{پیاده‌سازی}
 
-The union-find structure can be implemented
-using arrays.
-In the following implementation,
-the array \texttt{link} contains for each element
-the next element
-in the chain or the element itself if it is
-a representative,
-and the array \texttt{size} indicates for each representative
-the size of the corresponding set.
+ساختار مجموعه‌های مجزا را می‌توان
+با آرایه‌ها پیاده‌سازی کرد.
+در پیاده‌سازی زیر،
+آرایه \texttt{link} برای هر عنصر،
+عنصر بعدی در زنجیره یا در صورت نماینده بودن،
+خود آن عنصر را نگه‌داری می‌کند،
+و آرایه \texttt{size} برای هر نماینده،
+اندازه مجموعه متناظر را نشان می‌دهد.
 
-Initially, each element belongs to a separate set:
+در ابتدا، هر عنصر به یک مجموعه مجزا تعلق دارد:
 \begin{lstlisting}
 for (int i = 1; i <= n; i++) link[i] = i;
 for (int i = 1; i <= n; i++) size[i] = 1;
 \end{lstlisting}
 
-The function \texttt{find} returns
-the representative for an element $x$.
-The representative can be found by following
-the chain that begins at $x$.
+تابع \texttt{find} نماینده
+عنصر $x$ را برمی‌گرداند.
+نماینده را می‌توان با دنبال کردن
+زنجیره‌ای که از $x$ شروع می‌شود پیدا کرد.
 
 \begin{lstlisting}
 int find(int x) {
@@ -521,10 +444,10 @@ int find(int x) {
 }
 \end{lstlisting}
 
-The function \texttt{same} checks
-whether elements $a$ and $b$ belong to the same set.
-This can easily be done by using the
-function \texttt{find}:
+تابع \texttt{same} بررسی می‌کند
+که آیا عناصر $a$ و $b$ به یک مجموعه تعلق دارند یا خیر.
+این کار را می‌توان به سادگی با استفاده از
+تابع \texttt{find} انجام داد:
 
 \begin{lstlisting}
 bool same(int a, int b) {
@@ -533,12 +456,11 @@ bool same(int a, int b) {
 \end{lstlisting}
 
 \begin{samepage}
-The function \texttt{unite} joins the sets
-that contain elements $a$ and $b$
-(the elements have to be in different sets).
-The function first finds the representatives
-of the sets and then connects the smaller
-set to the larger set.
+تابع \texttt{unite} مجموعه‌های شامل
+عناصر $a$ و $b$ را ادغام می‌کند
+(عناصر باید در مجموعه‌های متفاوتی باشند).
+تابع ابتدا نمایندگان مجموعه‌ها را پیدا می‌کند
+و سپس مجموعه کوچک‌تر را به مجموعه بزرگ‌تر متصل می‌کند.
 
 \begin{lstlisting}
 void unite(int a, int b) {
@@ -551,42 +473,36 @@ void unite(int a, int b) {
 \end{lstlisting}
 \end{samepage}
 
-The time complexity of the function \texttt{find}
-is $O(\log n)$ assuming that the length of each
-chain is $O(\log n)$.
-In this case, the functions \texttt{same} and \texttt{unite}
-also work in $O(\log n)$ time.
-The function \texttt{unite} makes sure that the
-length of each chain is $O(\log n)$ by connecting
-the smaller set to the larger set.
+پیچیدگی زمانی تابع \texttt{find}
+با فرض اینکه طول هر زنجیره $O(\log n)$ است،
+برابر $O(\log n)$ خواهد بود.
+در این حالت، توابع \texttt{same} و \texttt{unite} نیز
+در زمان $O(\log n)$ اجرا می‌شوند.
+تابع \texttt{unite} تضمین می‌کند که با اتصال
+مجموعه کوچک‌تر به مجموعه بزرگ‌تر،
+طول هر زنجیره $O(\log n)$ باقی بماند.
 
-\section{Prim's algorithm}
+\section{الگوریتم پریم}
 
-\index{Prim's algorithm}
+\index{الگوریتم پریم}
 
-\key{Prim's algorithm}\footnote{The algorithm is
-named after R. C. Prim who published it in 1957 \cite{pri57}.
-However, the same algorithm was discovered already in 1930
-by V. Jarník.} is an alternative method
-for finding a minimum spanning tree.
-The algorithm first adds an arbitrary node
-to the tree.
-After this, the algorithm always chooses
-a minimum-weight edge that
-adds a new node to the tree.
-Finally, all nodes have been added to the tree
-and a minimum spanning tree has been found.
+\key{الگوریتم پریم}\footnote{این الگوریتم به نام
+آر. سی. پریم (R. C. Prim) که آن را در سال ۱۹۵۷ منتشر کرد \cite{pri57}
+نام‌گذاری شده است. با این حال، همین الگوریتم پیش‌تر در سال ۱۹۳۰
+توسط وی. یارنیک (V. Jarník) کشف شده بود.} روشی جایگزین
+برای یافتن درخت پوشای کمینه است.
+الگوریتم ابتدا یک رأس دلخواه را
+به درخت اضافه می‌کند.
+پس از آن، الگوریتم همواره یالی با کمترین وزن را
+انتخاب می‌کند که یک رأس جدید را به درخت اضافه کند.
+در نهایت، همه رئوس به درخت اضافه می‌شوند
+و یک درخت پوشای کمینه حاصل می‌شود.
 
-Prim's algorithm resembles Dijkstra's algorithm.
-The difference is that Dijkstra's algorithm always
-selects an edge whose distance from the starting
-node is minimum, but Prim's algorithm simply selects
-the minimum weight edge that adds a new node to the tree.
+الگوریتم پریم شبیه الگوریتم دایکسترا است. تفاوت این است که الگوریتم دایکسترا همیشه یالی را برمی‌گزیند که فاصله‌اش از گره آغازین کمینه باشد، ولی الگوریتم پریم کم‌وزن‌ترین یالی را برمی‌گزیند که گرهی تازه به درخت می‌افزاید.
 
-\subsubsection{Example}
+\subsubsection{مثال}
 
-Let us consider how Prim's algorithm works
-in the following graph:
+چگونگی کارکرد الگوریتم پریم در گراف زیر را بررسی می‌کنیم:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
@@ -608,7 +524,7 @@ in the following graph:
 %\path[draw=red,thick,-,line width=2pt] (5) -- (6);
 \end{tikzpicture}
 \end{center}
-Initially, there are no edges between the nodes:
+در ابتدا، هیچ یالی بین رأس‌ها وجود ندارد:
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
 \node[draw, circle] (1) at (1.5,2) {$1$};
@@ -627,10 +543,10 @@ Initially, there are no edges between the nodes:
 %\path[draw,thick,-] (3) -- node[font=\small,label=left:3] {} (6);
 \end{tikzpicture}
 \end{center}
-An arbitrary node can be the starting node,
-so let us choose node 1.
-First, we add node 2 that is connected by
-an edge of weight 3:
+یک رأس دلخواه می‌تواند رأس آغازین باشد،
+پس رأس 1 را انتخاب می‌کنیم.
+ابتدا، رأس 2 را که با یالی به وزن 3 متصل است
+اضافه می‌کنیم:
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
 \node[draw, circle] (1) at (1.5,2) {$1$};
@@ -650,9 +566,9 @@ an edge of weight 3:
 \end{tikzpicture}
 \end{center}
 
-After this, there are two edges with weight 5,
-so we can add either node 3 or node 5 to the tree.
-Let us add node 3 first:
+پس از این، دو یال با وزن 5 وجود دارد،
+بنابراین می‌توانیم رأس 3 یا رأس 5 را به درخت اضافه کنیم.
+ابتدا رأس 3 را اضافه می‌کنیم:
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
 \node[draw, circle] (1) at (1.5,2) {$1$};
@@ -673,7 +589,7 @@ Let us add node 3 first:
 \end{center}
 
 \begin{samepage}
-The process continues until all nodes have been included in the tree:
+فرایند تا زمانی که تمام رأس‌ها به درخت اضافه شوند ادامه می‌یابد:
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
 \node[draw, circle] (1) at (1.5,2) {$1$};
@@ -694,19 +610,11 @@ The process continues until all nodes have been included in the tree:
 \end{center}
 \end{samepage}
 
-\subsubsection{Implementation}
+\subsubsection{پیاده‌سازی}
 
-Like Dijkstra's algorithm, Prim's algorithm can be
-efficiently implemented using a priority queue.
-The priority queue should contain all nodes
-that can be connected to the current component using
-a single edge, in increasing order of the weights
-of the corresponding edges.
+مشابه الگوریتم دایکسترا، الگوریتم پریم را می‌توان با استفاده از یک صف اولویت‌دار بهینه‌سازی و پیاده‌سازی کرد.
+صف اولویت‌دار باید شامل تمام رأس‌هایی باشد که می‌توان آن‌ها را با یک یال به مؤلفه فعلی متصل کرد، مرتب‌شده به صورت صعودی بر اساس وزن یال‌های متناظر.
 
-The time complexity of Prim's algorithm is
-$O(n + m \log m)$ that equals the time complexity
-of Dijkstra's algorithm.
-In practice, Prim's and Kruskal's algorithms
-are both efficient, and the choice of the algorithm
-is a matter of taste.
-Still, most competitive programmers use Kruskal's algorithm.
+پیچیدگی زمانی الگوریتم پریم $O(n + m \log m)$ است که با پیچیدگی زمانی الگوریتم دایکسترا برابر است.
+در عمل، هر دو الگوریتم پریم و کروسکال کارآمد هستند و انتخاب الگوریتم سلیقه‌ای است.
+با این حال، اکثر برنامه‌نویسان رقابتی از الگوریتم کروسکال استفاده می‌کنند.
