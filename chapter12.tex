@@ -1,38 +1,34 @@
-\chapter{Graph traversal}
+\chapter{پیمایش گراف}
 
-This chapter discusses two fundamental
-graph algorithms:
-depth-first search and breadth-first search.
-Both algorithms are given a starting
-node in the graph,
-and they visit all nodes that can be reached
-from the starting node.
-The difference in the algorithms is the order
-in which they visit the nodes.
+این فصل به بررسی دو الگوریتم پایه‌ای گراف می‌پردازد:
+جستجوی اول‌سطح و جستجوی اول‌عمق.
+هر دو الگوریتم یک گره آغازین در گراف دریافت می‌کنند
+و تمام گره‌هایی را که از گره آغازین قابل دسترسی باشند،
+ملاقات می‌کنند.
+تفاوت این الگوریتم‌ها در ترتیبی است
+که گره‌ها را با آن ملاقات می‌کنند.
 
-\section{Depth-first search}
+\section{جستجوی اول‌عمق}
 
 \index{depth-first search}
 
-\key{Depth-first search} (DFS)
-is a straightforward graph traversal technique.
-The algorithm begins at a starting node,
-and proceeds to all other nodes that are
-reachable from the starting node using
-the edges of the graph.
+\key{جستجوی اول‌عمق} (DFS)
+یک روش سرراست برای پیمایش گراف است.
+الگوریتم از یک گره آغازین شروع می‌شود،
+و با استفاده از یال‌های گراف
+به تمام گره‌های دیگری که از گره آغازین قابل دسترسی هستند، پیش می‌رود.
 
-Depth-first search always follows a single
-path in the graph as long as it finds
-new nodes.
-After this, it returns to previous
-nodes and begins to explore other parts of the graph.
-The algorithm keeps track of visited nodes,
-so that it processes each node only once.
+جستجوی اول‌عمق همواره یک مسیر منفرد را در گراف
+تا زمانی که گره‌های جدید بیابد، دنبال می‌کند.
+پس از آن، به گره‌های قبلی بازمی‌گردد
+و شروع به کاوش در بخش‌های دیگر گراف می‌کند.
+الگوریتم گره‌های ملاقات‌شده را ثبت می‌کند،
+به‌طوری که هر گره را تنها یک بار پردازش کند.
 
-\subsubsection*{Example}
+\subsubsection*{مثال}
 
-Let us consider how depth-first search processes
-the following graph:
+بررسی می‌کنیم که چگونه جستجوی اول‌عمق
+گراف زیر را پردازش می‌کند:
 \begin{center}
 \begin{tikzpicture}
 \node[draw, circle] (1) at (1,5) {$1$};
@@ -48,10 +44,10 @@ the following graph:
 \path[draw,thick,-] (2) -- (5);
 \end{tikzpicture}
 \end{center}
-We may begin the search at any node of the graph;
-now we will begin the search at node 1.
+می‌توان جستجو را از هر گره‌ای در گراف آغاز کرد؛
+اکنون جستجو را از گره ۱ آغاز می‌کنیم.
 
-The search first proceeds to node 2:
+جستجو ابتدا به گره ۲ پیش می‌رود:
 \begin{center}
 \begin{tikzpicture}
 \node[draw, circle,fill=lightgray] (1) at (1,5) {$1$};
@@ -69,7 +65,7 @@ The search first proceeds to node 2:
 \path[draw=red,thick,->,line width=2pt] (1) -- (2);
 \end{tikzpicture}
 \end{center}
-After this, nodes 3 and 5 will be visited:
+پس از آن، گره‌های ۳ و ۵ ملاقات خواهند شد:
 \begin{center}
 \begin{tikzpicture}
 \node[draw, circle,fill=lightgray] (1) at (1,5) {$1$};
@@ -89,12 +85,12 @@ After this, nodes 3 and 5 will be visited:
 \path[draw=red,thick,->,line width=2pt] (3) -- (5);
 \end{tikzpicture}
 \end{center}
-The neighbors of node 5 are 2 and 3,
-but the search has already visited both of them,
-so it is time to return to the previous nodes.
-Also the neighbors of nodes 3 and 2
-have been visited, so we next move
-from node 1 to node 4:
+همسایه‌های رأس ۵ گره‌های ۲ و ۳ هستند،
+ولی جستجو هر دو را قبلاً پیمایش کرده است.
+زمان بازگشت به گره‌های قبلی فرارسیده است.
+همسایه‌های گره‌های ۳ و ۲ نیز
+پیمایش شده‌اند، پس مسیر بعدی
+از گره ۱ به گره ۴ است:
 \begin{center}
 \begin{tikzpicture}
 \node[draw, circle,fill=lightgray] (1) at (1,5) {$1$};
@@ -112,34 +108,34 @@ from node 1 to node 4:
 \path[draw=red,thick,->,line width=2pt] (1) -- (4);
 \end{tikzpicture}
 \end{center}
-After this, the search terminates because it has visited
-all nodes.
+سپس جستجو پایان می‌پذیرد؛ همه گره‌ها
+دیده شده‌اند.
 
-The time complexity of depth-first search is $O(n+m)$
-where $n$ is the number of nodes and $m$ is the
-number of edges,
-because the algorithm processes each node and edge once.
+پیچیدگی زمانی جستجوی اول‌عمق $O(n+m)$ است
+که $n$ شمار گره‌ها و $m$ شمار
+یال‌هاست،
+زیرا الگوریتم هر گره و یال را یک بار بررسی می‌کند.
 
-\subsubsection*{Implementation}
+\subsubsection*{پیاده‌سازی}
 
-Depth-first search can be conveniently
-implemented using recursion.
-The following function \texttt{dfs} begins
-a depth-first search at a given node.
-The function assumes that the graph is
-stored as adjacency lists in an array
+جستجوی اول‌عمق به سادگی
+با بازگشت پیاده‌سازی می‌شود.
+تابع \texttt{dfs} زیر جستجوی اول‌عمق
+را از گره داده‌شده آغاز می‌کند.
+فرض تابع: گراف
+به فرم لیست مجاورت در آرایه نگهداری شده است:
 \begin{lstlisting}
 vector<int> adj[N];
 \end{lstlisting}
-and also maintains an array
+و آرایه‌ای دارد:
 \begin{lstlisting}
 bool visited[N];
 \end{lstlisting}
-that keeps track of the visited nodes.
-Initially, each array value is \texttt{false},
-and when the search arrives at node $s$,
-the value of \texttt{visited}[$s$] becomes \texttt{true}.
-The function can be implemented as follows:
+که گره‌های پیمایش‌شده را ذخیره می‌کند.
+ابتدا همه مقادیر آرایه \texttt{false} هستند؛
+با رسیدن جستجو به گره $s$،
+مقدار \texttt{visited}[$s$] برابر \texttt{true} می‌شود.
+پیاده‌سازی تابع:
 \begin{lstlisting}
 void dfs(int s) {
     if (visited[s]) return;
@@ -151,31 +147,31 @@ void dfs(int s) {
 }
 \end{lstlisting}
 
-\section{Breadth-first search}
+\section{جستجوی اول‌سطح}
 
 \index{breadth-first search}
 
-\key{Breadth-first search} (BFS) visits the nodes
-in increasing order of their distance
-from the starting node.
-Thus, we can calculate the distance
-from the starting node to all other
-nodes using breadth-first search.
-However, breadth-first search is more difficult
-to implement than depth-first search.
+\key{جستجوی اول‌سطح} (BFS) گره‌ها را
+به ترتیب افزایش فاصله از گره آغازین
+بررسی می‌کند.
+از این رو، فاصله از گره آغازین
+به سایر گره‌ها با جستجوی اول‌سطح
+به دست می‌آید.
+البته پیاده‌سازی جستجوی اول‌سطح
+سخت‌تر از جستجوی اول‌عمق است.
 
-Breadth-first search goes through the nodes
-one level after another.
-First the search explores the nodes whose
-distance from the starting node is 1,
-then the nodes whose distance is 2, and so on.
-This process continues until all nodes
-have been visited.
+جستجوی اول‌سطح گره‌ها را
+سطح به سطح پیمایش می‌کند.
+نخست گره‌های با فاصله ۱
+از گره مبدأ،
+سپس گره‌های با فاصله ۲ و همین ترتیب ادامه می‌یابد.
+روند تا مشاهده تمام گره‌ها
+ادامه دارد.
 
-\subsubsection*{Example}
+\subsubsection*{مثال}
 
-Let us consider how breadth-first search processes
-the following graph:
+بررسی عملکرد جستجوی اول‌سطح
+روی گراف زیر:
 
 \begin{center}
 \begin{tikzpicture}
@@ -194,9 +190,8 @@ the following graph:
 \path[draw,thick,-] (5) -- (6);
 \end{tikzpicture}
 \end{center}
-Suppose that the search begins at node 1.
-First, we process all nodes that can be reached
-from node 1 using a single edge:
+فرض کنید جستجو از گره ۱ آغاز می‌شود.
+ابتدا همه گره‌هایی را که می‌توان با یک یال از گره ۱ به آن‌ها رسید، پردازش می‌کنیم:
 \begin{center}
 \begin{tikzpicture}
 \node[draw, circle,fill=lightgray] (1) at (1,5) {$1$};
@@ -222,7 +217,7 @@ from node 1 using a single edge:
 \path[draw=red,thick,->,line width=2pt] (1) -- (4);
 \end{tikzpicture}
 \end{center}
-After this, we proceed to nodes 3 and 5:
+پس از آن، به گره‌های ۳ و ۵ می‌رویم:
 \begin{center}
 \begin{tikzpicture}
 \node[draw, circle,fill=lightgray] (1) at (1,5) {$1$};
@@ -248,7 +243,7 @@ After this, we proceed to nodes 3 and 5:
 \path[draw=red,thick,->,line width=2pt] (2) -- (5);
 \end{tikzpicture}
 \end{center}
-Finally, we visit node 6:
+در نهایت، گره ۶ را پیمایش می‌کنیم:
 \begin{center}
 \begin{tikzpicture}
 \node[draw, circle,fill=lightgray] (1) at (1,5) {$1$};
@@ -274,13 +269,12 @@ Finally, we visit node 6:
 \path[draw=red,thick,->,line width=2pt] (5) -- (6);
 \end{tikzpicture}
 \end{center}
-Now we have calculated the distances
-from the starting node to all nodes of the graph.
-The distances are as follows:
+اکنون فاصله‌ها را از گره آغازین تا همه گره‌های گراف محاسبه کرده‌ایم.
+فاصله‌ها به شرح زیر است:
 
 \begin{tabular}{ll}
 \\
-node & distance \\
+گره & فاصله \\
 \hline
 1 & 0 \\
 2 & 1 \\
@@ -291,44 +285,32 @@ node & distance \\
 \\
 \end{tabular}
 
-Like in depth-first search,
-the time complexity of breadth-first search
-is $O(n+m)$, where $n$ is the number of nodes
-and $m$ is the number of edges.
+مانند جستجوی اول‌سطح، پیچیدگی زمانی جستجوی اول‌سطح
+برابر با $O(n+m)$ است، که در آن $n$ شمار گره‌ها
+و $m$ شمار یال‌ها است.
 
-\subsubsection*{Implementation}
+\subsubsection*{پیاده‌سازی}
 
-Breadth-first search is more difficult
-to implement than depth-first search,
-because the algorithm visits nodes
-in different parts of the graph.
-A typical implementation is based on
-a queue that contains nodes.
-At each step, the next node in the queue
-will be processed.
+پیاده‌سازی جستجوی اول‌سطح از جستجوی اول‌عمق دشوارتر است،
+زیرا الگوریتم، گره‌ها را در بخش‌های گوناگون گراف پیمایش می‌کند.
+یک پیاده‌سازی متداول بر پایه یک صف شامل گره‌ها انجام می‌شود.
+در هر گام، گره بعدی در صف پردازش می‌شود.
 
-The following code assumes that the graph is stored
-as adjacency lists and maintains the following
-data structures:
+کد زیر فرض می‌کند گراف به صورت لیست‌های مجاورت ذخیره شده است
+و داده‌ساختارهای زیر را نگهداری می‌کند:
 \begin{lstlisting}
 queue<int> q;
 bool visited[N];
 int distance[N];
 \end{lstlisting}
 
-The queue \texttt{q}
-contains nodes to be processed
-in increasing order of their distance.
-New nodes are always added to the end
-of the queue, and the node at the beginning
-of the queue is the next node to be processed.
-The array \texttt{visited} indicates
-which nodes the search has already visited,
-and the array \texttt{distance} will contain the
-distances from the starting node to all nodes of the graph.
+صف \texttt{q} شامل گره‌هایی است که باید به ترتیب صعودی فاصله‌شان
+پردازش شوند. گره‌های تازه همواره به انتهای صف افزوده می‌شوند
+و گره ابتدای صف، گره بعدی برای پردازش است.
+آرایه \texttt{visited} نشان می‌دهد کدام گره‌ها پیش‌تر توسط جستجو دیده شده‌اند،
+و آرایه \texttt{distance} شامل فاصله‌ها از گره آغازین به تمام گره‌های گراف خواهد بود.
 
-The search can be implemented as follows,
-starting at node $x$:
+جستجو را می‌توان با شروع از گره $x$ به صورت زیر پیاده‌سازی کرد:
 \begin{lstlisting}
 visited[x] = true;
 distance[x] = 0;
@@ -345,29 +327,24 @@ while (!q.empty()) {
 }
 \end{lstlisting}
 
-\section{Applications}
+\section{کاربردها}
 
-Using the graph traversal algorithms,
-we can check many properties of graphs.
-Usually, both depth-first search and
-breadth-first search may be used,
-but in practice, depth-first search
-is a better choice, because it is
-easier to implement.
-In the following applications we will
-assume that the graph is undirected.
+با استفاده از الگوریتم‌های پیمایش گراف،
+می‌توان ویژگی‌های متعددی از گراف‌ها را بررسی کرد.
+معمولاً هر دو الگوریتم جستجوی اول‌عمق و جستجوی اول‌سطح
+قابل استفاده هستند، اما در عمل، جستجوی اول‌عمق
+گزینه بهتری است زیرا پیاده‌سازی آن ساده‌تر است.
+در کاربردهای زیر فرض می‌کنیم گراف بدون جهت است.
 
-\subsubsection{Connectivity check}
+\subsubsection{بررسی همبندی}
 
-\index{connected graph}
+\index{گراف همبند}
 
-A graph is connected if there is a path
-between any two nodes of the graph.
-Thus, we can check if a graph is connected
-by starting at an arbitrary node and
-finding out if we can reach all other nodes.
+یک گراف همبند است اگر مسیری میان هر دو گره از گراف وجود داشته باشد.
+بنابراین، می‌توان همبند بودن گراف را با شروع از یک گره دلخواه
+و بررسی دسترسی‌پذیری به همه گره‌های دیگر ارزیابی کرد.
 
-For example, in the graph
+برای نمونه، در گراف
 \begin{center}
 \begin{tikzpicture}
 \node[draw, circle] (2) at (7,5) {$2$};
@@ -382,8 +359,8 @@ For example, in the graph
 \path[draw,thick,-] (2) -- (5);
 \end{tikzpicture}
 \end{center}
-a depth-first search from node $1$ visits
-the following nodes:
+یک جستجوی اول‌سطح‌عمق از گره $1$ گره‌های
+زیر را پیمایش می‌کند:
 \begin{center}
 \begin{tikzpicture}
 \node[draw, circle] (2) at (7,5) {$2$};
@@ -403,22 +380,22 @@ the following nodes:
 \end{tikzpicture}
 \end{center}
 
-Since the search did not visit all the nodes,
-we can conclude that the graph is not connected.
-In a similar way, we can also find all connected components
-of a graph by iterating through the nodes and always
-starting a new depth-first search if the current node
-does not belong to any component yet.
+از آنجا که جستجو همه گره‌ها را پیمایش نکرد،
+می‌توان نتیجه گرفت که گراف همبند نیست.
+به روش مشابه، می‌توان تمام مؤلفه‌های همبندی
+یک گراف را نیز با پیمایش روی گره‌ها پیدا کرد؛ به این صورت که
+اگر گره فعلی هنوز به هیچ مؤلفه‌ای تعلق ندارد،
+همواره یک جستجوی اول‌سطح‌عمق جدید آغاز شود.
 
-\subsubsection{Finding cycles}
+\subsubsection{یافتن دورها}
 
-\index{cycle}
+\index{دور}
 
-A graph contains a cycle if during a graph traversal,
-we find a node whose neighbor (other than the
-previous node in the current path) has already been
-visited.
-For example, the graph
+یک گراف شامل دور است اگر هنگام پیمایش گراف،
+گره‌ای پیدا کنیم که همسایه آن (غیر از
+گره قبلی در مسیر فعلی) قبلاً پیمایش
+شده باشد.
+برای مثال، گراف
 \begin{center}
 \begin{tikzpicture}
 \node[draw, circle] (2) at (7,5) {$2$};
@@ -435,8 +412,8 @@ For example, the graph
 \path[draw,thick,-] (3) -- (5);
 \end{tikzpicture}
 \end{center}
-contains two cycles and we can find one
-of them as follows:
+دارای دو دور است و می‌توان یکی
+از آنها را به صورت زیر پیدا کرد:
 \begin{center}
 \begin{tikzpicture}
 \node[draw, circle,fill=lightgray] (2) at (7,5) {$2$};
@@ -458,39 +435,38 @@ of them as follows:
 
 \end{tikzpicture}
 \end{center}
-After moving from node 2 to node 5 we notice that
-the neighbor 3 of node 5 has already been visited.
-Thus, the graph contains a cycle that goes through node 3,
-for example, $3 \rightarrow 2 \rightarrow 5 \rightarrow 3$.
+پس از حرکت از گره 2 به گره 5 متوجه می‌شویم که
+همسایه 3 از گره 5 قبلاً پیمایش شده است.
+بنابراین، گراف شامل دوری است که از گره 3 می‌گذرد،
+برای مثال، $3 \rightarrow 2 \rightarrow 5 \rightarrow 3$.
 
-Another way to find out whether a graph contains a cycle
-is to simply calculate the number of nodes and edges
-in every component.
-If a component contains $c$ nodes and no cycle,
-it must contain exactly $c-1$ edges
-(so it has to be a tree).
-If there are $c$ or more edges, the component
-surely contains a cycle.
+روش دیگر برای تشخیص وجود دور در گراف،
+محاسبه ساده تعداد رأس‌ها و یال‌ها در هر مؤلفه است.
+اگر مؤلفه‌ای شامل $c$ رأس و فاقد دور باشد،
+دقیقاً شامل $c-1$ یال است
+(بنابراین باید یک درخت باشد).
+اگر $c$ یا تعداد بیشتری یال وجود داشته باشد،
+آن مؤلفه قطعاً شامل دور است.
 
-\subsubsection{Bipartiteness check}
+\subsubsection{بررسی دوبخشی بودن}
 
-\index{bipartite graph}
+\index{گراف دوبخشی}
 
-A graph is bipartite if its nodes can be colored
-using two colors so that there are no adjacent
-nodes with the same color.
-It is surprisingly easy to check if a graph
-is bipartite using graph traversal algorithms.
+یک گراف دوبخشی است اگر بتوان رأس‌های آن را با دو رنگ
+به‌گونه‌ای رنگ‌آمیزی کرد که هیچ دو رأس مجاوری
+هم‌رنگ نباشند.
+بررسی دوبخشی بودن یک گراف با الگوریتم‌های پیمایش گراف
+بسیار آسان است.
 
-The idea is to color the starting node blue,
-all its neighbors red, all their neighbors blue, and so on.
-If at some point of the search we notice that
-two adjacent nodes have the same color,
-this means that the graph is not bipartite.
-Otherwise the graph is bipartite and one coloring
-has been found.
+ایده کار رنگ کردن رأس شروع با رنگ آبی،
+تمام همسایه‌های آن با رنگ قرمز، همسایه‌های آن‌ها با رنگ آبی، و به همین ترتیب است.
+اگر در نقطه‌ای از جستجو مشخص شود که
+دو رأس مجاور هم‌رنگ هستند،
+گراف دوبخشی نیست.
+در غیر این صورت، گراف دوبخشی است و یک رنگ‌آمیزی
+یافت شده است.
 
-For example, the graph
+برای مثال، گراف
 \begin{center}
 \begin{tikzpicture}
 \node[draw, circle] (2) at (5,5) {$2$};
@@ -507,8 +483,8 @@ For example, the graph
 \path[draw,thick,-] (5) -- (3);
 \end{tikzpicture}
 \end{center}
-is not bipartite, because a search from node 1
-proceeds as follows:
+دوبخشی نیست، زیرا جستجو از رأس ۱
+به این صورت پیش می‌رود:
 \begin{center}
 \begin{tikzpicture}
 \node[draw, circle,fill=red!40] (2) at (5,5) {$2$};
@@ -530,20 +506,18 @@ proceeds as follows:
 \path[draw=red,thick,->,line width=2pt] (5) -- (2);
 \end{tikzpicture}
 \end{center}
-We notice that the color of both nodes 2 and 5
-is red, while they are adjacent nodes in the graph.
-Thus, the graph is not bipartite.
+مشاهده می‌شود که رنگ هر دو رأس ۲ و ۵
+قرمز است، در حالی که این دو در گراف مجاور یکدیگرند.
+بنابراین، گراف دوبخشی نیست.
 
-This algorithm always works, because when there
-are only two colors available,
-the color of the starting node in a component
-determines the colors of all other nodes in the component.
-It does not make any difference whether the
-starting node is red or blue.
+این الگوریتم همواره کار می‌کند؛ زیرا با داشتن تنها دو رنگ،
+رنگ رأس شروع در یک مؤلفه،
+رنگ تمام رأس‌های دیگر آن مؤلفه را تعیین می‌کند.
+قرمز یا آبی بودن رأس شروع
+هیچ تفاوتی ایجاد نمی‌کند.
 
-Note that in the general case,
-it is difficult to find out if the nodes
-in a graph can be colored using $k$ colors
-so that no adjacent nodes have the same color.
-Even when $k=3$, no efficient algorithm is known
-but the problem is NP-hard.
+در حالت کلی،
+تشخیص امکان رنگ‌آمیزی رأس‌های گراف با $k$ رنگ
+به‌طوری که هیچ دو رأس مجاوری هم‌رنگ نباشند، دشوار است.
+حتی برای $k=3$ نیز الگوریتم کارآمدی شناخته نشده
+و مسئله NP-hard است.
