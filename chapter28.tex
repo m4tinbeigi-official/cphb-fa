@@ -1,19 +1,19 @@
-\chapter{Segment trees revisited}
+\chapter{بازبینی درخت‌های بازه‌ای}
 
-\index{segment tree}
+\index{درخت بازه‌ای}
 
-A segment tree is a versatile data structure
-that can be used to solve a large number of algorithm problems.
-However, there are many topics related to segment trees
-that we have not touched yet.
-Now is time to discuss some more advanced variants
-of segment trees.
+درخت بازه‌ای داده‌ساختاری چندکاره است
+که برای حل مسائل الگوریتمی فراوان به کار می‌رود.
+با این حال، مباحث مرتبط بسیاری پیرامون درخت‌های بازه‌ای وجود دارد
+که هنوز بررسی نشده‌اند.
+اکنون زمان بحث درباره انواع پیشرفته‌تر
+درخت بازه‌ای است.
 
-So far, we have implemented the operations
-of a segment tree by walking \emph{from bottom to top}
-in the tree.
-For example, we have calculated
-range sums as follows (Chapter 9.3):
+تاکنون، عملیات درخت بازه‌ای
+با حرکت \emph{از پایین به بالا}
+در درخت پیاده‌سازی می‌شد.
+مثلاً، مجموع بازه‌ای
+به شکل زیر محاسبه شد (فصل ۹.۳):
 
 \begin{lstlisting}
 int sum(int a, int b) {
@@ -28,10 +28,10 @@ int sum(int a, int b) {
 }
 \end{lstlisting}
 
-However, in more advanced segment trees,
-it is often necessary to implement the operations
-in another way, \emph{from top to bottom}.
-Using this approach, the function becomes as follows:
+اما در درخت‌های بازه‌ای پیشرفته‌تر،
+اغلب اجرای عملیات به روشی دیگر،
+یعنی \emph{از بالا به پایین} الزامی است.
+با این روش، تابع چنین می‌شود:
 \begin{lstlisting}
 int sum(int a, int b, int k, int x, int y) {
     if (b < x || a > y) return 0;
@@ -41,34 +41,34 @@ int sum(int a, int b, int k, int x, int y) {
 }
 \end{lstlisting}
 
-Now we can calculate any value of $\texttt{sum}_q(a,b)$
-(the sum of array values in range $[a,b]$) as follows:
+اکنون هر مقدار $\texttt{sum}_q(a,b)$
+(مجموع مقادیر آرایه در بازه $[a,b]$) بدین صورت قابل محاسبه است:
 \begin{lstlisting}
 int s = sum(a, b, 1, 0, n-1);
 \end{lstlisting}
 
-The parameter $k$ indicates the current position
-in \texttt{tree}.
-Initially $k$ equals 1, because we begin
-at the root of the tree.
-The range $[x,y]$ corresponds to $k$
-and is initially $[0,n-1]$.
-When calculating the sum,
-if $[x,y]$ is outside $[a,b]$,
-the sum is 0,
-and if $[x,y]$ is completely inside $[a,b]$,
-the sum can be found in \texttt{tree}.
-If $[x,y]$ is partially inside $[a,b]$,
-the search continues recursively to the
-left and right half of $[x,y]$.
-The left half is $[x,d]$
-and the right half is $[d+1,y]$
-where $d=\lfloor \frac{x+y}{2} \rfloor$.
+پارامتر $k$ جایگاه فعلی
+در \texttt{tree} را نشان می‌دهد.
+مقدار اولیه $k$ برابر با ۱ است، زیرا پیمایش
+از ریشه درخت آغاز می‌شود.
+بازه $[x,y]$ متناظر با $k$ است
+و در ابتدا $[0,n-1]$ می‌باشد.
+هنگام محاسبه مجموع،
+اگر $[x,y]$ بیرون $[a,b]$ باشد،
+حاصل ۰ است،
+و اگر $[x,y]$ کاملاً درون $[a,b]$ باشد،
+مقدار مجموع درون \texttt{tree} قرار دارد.
+اگر $[x,y]$ تا حدی درون $[a,b]$ باشد،
+جستجو به صورت بازگشتی در نیمه چپ
+و راست $[x,y]$ ادامه می‌یابد.
+نیمه چپ $[x,d]$
+و نیمه راست $[d+1,y]$ است
+که در آن $d=\lfloor \frac{x+y}{2} \rfloor$.
 
-The following picture shows how the search proceeds
-when calculating the value of $\texttt{sum}_q(a,b)$.
-The gray nodes indicate nodes where the recursion
-stops and the sum can be found in \texttt{tree}.
+تصویر زیر روند پیشروی جستجو
+هنگام محاسبه مقدار $\texttt{sum}_q(a,b)$ را نشان می‌دهد.
+گره‌های خاکستری گره‌هایی هستند که بازگشت
+در آن‌ها متوقف شده و مجموع در \texttt{tree} یافته می‌شود.
 
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
@@ -163,56 +163,43 @@ stops and the sum can be found in \texttt{tree}.
 \end{tikzpicture}
 \end{center}
 
-Also in this implementation,
-operations take $O(\log n)$ time,
-because the total number of visited nodes is $O(\log n)$.
+همچنین در این پیاده‌سازی،
+عملیات‌ها به زمان $O(\log n)$ نیاز دارند،
+زیرا تعداد کل رأس‌های دیده‌شده $O(\log n)$ است.
 
-\section{Lazy propagation}
+\section{انتشار تنبل}
 
-\index{lazy propagation}
-\index{lazy segment tree}
+\index{انتشار تنبل}
+\index{درخت پاره‌خطی تنبل}
 
-Using \key{lazy propagation}, we can build
-a segment tree that supports \emph{both} range updates
-and range queries in $O(\log n)$ time.
-The idea is to perform updates and queries
-from top to bottom and perform updates
-\emph{lazily} so that they are propagated
-down the tree only when it is necessary.
+با استفاده از \key{انتشار تنبل} (lazy propagation)، می‌توان
+درخت پاره‌خطی ساخت که \emph{هم} به‌روزرسانی‌های بازه‌ای
+و \emph{هم} پرس‌وجوهای بازه‌ای را در زمان $O(\log n)$ پشتیبانی کند.
+ایده کار، انجام به‌روزرسانی‌ها و پرس‌وجوها
+از بالا به پایین و اجرای به‌روزرسانی‌ها به‌صورت
+\emph{تنبل} است، به طوری که تنها در صورت نیاز
+به سمت پایین درخت منتشر شوند.
 
-In a lazy segment tree, nodes contain two types of
-information.
-Like in an ordinary segment tree,
-each node contains the sum or some other value
-related to the corresponding subarray.
-In addition, the node may contain information
-related to lazy updates, which has not been
-propagated to its children.
+در یک درخت بازه‌ای با انتشار تنبل (lazy segment tree)، گره‌ها حاوی دو نوع اطلاعات هستند.
+مانند درخت بازه‌ای معمولی، هر گره شامل مجموع یا مقدار دیگری مرتبط با زیرآرایه متناظر است.
+علاوه بر این، گره می‌تواند حاوی اطلاعات مربوط به به‌روزرسانی‌های تنبل باشد که هنوز به فرزندان آن منتقل نشده است.
 
-There are two types of range updates:
-each array value in the range is either
-\emph{increased} by some value
-or \emph{assigned} some value.
-Both operations can be implemented using
-similar ideas, and it is even possible to construct
-a tree that supports both operations at the same time.
+دو نوع به‌روزرسانی بازه‌ای وجود دارد:
+هر مقدار آرایه در بازه یا با مقداری \emph{افزایش} می‌یابد
+یا مقداری به آن \emph{انتساب} داده می‌شود.
+هر دو عملیات را می‌توان با ایده‌های مشابه پیاده‌سازی کرد و حتی ساخت درختی که هم‌زمان از هر دو عملیات پشتیبانی کند نیز ممکن است.
 
-\subsubsection{Lazy segment trees}
+\subsubsection{درخت‌های بازه‌ای تنبل}
 
-Let us consider an example where our goal is to
-construct a segment tree that supports
-two operations: increasing each value in
-$[a,b]$ by a constant and calculating the sum of
-values in $[a,b]$.
+مثالی را در نظر بگیرید که در آن هدف ما ساخت یک درخت بازه‌ای است که از دو عملیات پشتیبانی کند:
+افزایش هر مقدار در $[a,b]$ با یک مقدار ثابت و محاسبه مجموع مقادیر در $[a,b]$.
 
-We will construct a tree where each node
-has two values $s/z$:
-$s$ denotes the sum of values in the range,
-and $z$ denotes the value of a lazy update,
-which means that all values in the range
-should be increased by $z$.
-In the following tree, $z=0$ in all nodes,
-so there are no ongoing lazy updates.
+درختی می‌سازیم که هر گره آن دو مقدار $s/z$ دارد:
+$s$ نشان‌دهنده مجموع مقادیر در بازه است
+و $z$ مقدار به‌روزرسانی تنبل را نشان می‌دهد،
+به این معنی که تمام مقادیر در بازه باید به اندازه $z$ افزایش یابند.
+در درخت زیر، در تمام گره‌ها $z=0$ است،
+بنابراین هیچ به‌روزرسانی تنبل در جریانی وجود ندارد.
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \draw (0,0) grid (16,1);
@@ -285,19 +272,19 @@ so there are no ongoing lazy updates.
 \end{tikzpicture}
 \end{center}
 
-When the elements in $[a,b]$ are increased by $u$,
-we walk from the root towards the leaves
-and modify the nodes of the tree as follows:
-If the range $[x,y]$ of a node is
-completely inside $[a,b]$,
-we increase the $z$ value of the node by $u$ and stop.
-If $[x,y]$ only partially belongs to $[a,b]$,
-we increase the $s$ value of the node by $hu$,
-where $h$ is the size of the intersection of $[a,b]$
-and $[x,y]$, and continue our walk recursively in the tree.
+وقتی مقادیر بازه $[a,b]$ به اندازه $u$ افزایش می‌یابند،
+از ریشه به سمت برگ‌ها حرکت می‌کنیم
+و گره‌های درخت را به این شکل تغییر می‌دهیم:
+اگر بازه $[x,y]$ مربوط به یک گره
+کاملاً درون $[a,b]$ قرار گیرد،
+مقدار $z$ گره را $u$ واحد افزایش می‌دهیم و متوقف می‌شویم.
+اگر $[x,y]$ تنها بخشی از $[a,b]$ را پوشش دهد،
+مقدار $s$ گره را به اندازه $hu$ افزایش می‌دهیم؛
+طوری که $h$ اندازه اشتراک $[a,b]$
+و $[x,y]$ است، سپس پیمایش بازگشتی در درخت را ادامه می‌دهیم.
 
-For example, the following picture shows the tree after
-increasing the elements in $[a,b]$ by 2:
+برای نمونه، تصویر زیر درخت را پس از
+افزایش عناصر بازه $[a,b]$ به اندازه ۲ نشان می‌دهد:
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \fill[color=gray!50] (5,0) rectangle (6,1);
@@ -332,7 +319,7 @@ increasing the elements in $[a,b]$ by 2:
 \node[draw, circle,fill=gray!50,minimum size=32pt] (d) at (7,2.5) {8/2};
 \path[draw,thick,-] (d) -- (6.5,1);
 \path[draw,thick,-] (d) -- (7.5,1);
-\node[draw, circle,minimum size=32pt] (e) at (9,2.5) {8/0};
+\node[draw, circle,size=32pt] (e) at (9,2.5) {8/0};
 \path[draw,thick,-] (e) -- (8.5,1);
 \path[draw,thick,-] (e) -- (9.5,1);
 \node[draw, circle] (f) at (11,2.5) {12/0};
@@ -389,25 +376,19 @@ increasing the elements in $[a,b]$ by 2:
 \end{tikzpicture}
 \end{center}
 
-We also calculate the sum of elements in a range $[a,b]$
-by walking in the tree from top to bottom.
-If the range $[x,y]$ of a node completely belongs
-to $[a,b]$, we add the $s$ value of the node to the sum.
-Otherwise, we continue the search recursively
-downwards in the tree.
+همچنین مجموع عناصر در بازه $[a,b]$ را با پیمایش درخت از بالا به پایین محاسبه می‌کنیم.
+اگر بازه $[x,y]$ مربوط به یک گره به‌طور کامل درون $[a,b]$ قرار گیرد، مقدار $s$ آن گره را به مجموع اضافه می‌کنیم.
+در غیر این صورت، جستجو را به‌صورت بازگشتی به سمت پایین درخت ادامه می‌دهیم.
 
-Both in updates and queries,
-the value of a lazy update is always propagated
-to the children of the node
-before processing the node.
-The idea is that updates will be propagated
-downwards only when it is necessary,
-which guarantees that the operations are always efficient.
+هم در به‌روزرسانی‌ها و هم در پرس‌وجوها،
+مقدار به‌روزرسانی تنبل همیشه قبل از پردازش گره
+به فرزندان آن منتقل می‌شود.
+ایده این است که به‌روزرسانی‌ها فقط در صورت نیاز
+به سمت پایین منتشر شوند،
+که کارآمد بودن همیشگی عملیات‌ها را تضمین می‌کند.
 
-The following picture shows how the tree changes
-when we calculate the value of $\texttt{sum}_a(a,b)$.
-The rectangle shows the nodes whose values change,
-because a lazy update is propagated downwards.
+تصویر زیر تغییرات درخت را هنگام محاسبه مقدار $\texttt{sum}_a(a,b)$ نشان می‌دهد.
+مستطیل گره‌هایی را نشان می‌دهد که مقادیر آن‌ها به دلیل انتشار به‌روزرسانی تنبل به سمت پایین تغییر می‌کند.
 
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
@@ -496,67 +477,41 @@ because a lazy update is propagated downwards.
 \end{tikzpicture}
 \end{center}
 
-Note that sometimes it is needed to combine lazy updates.
-This happens when a node that already has a lazy update
-is assigned another lazy update.
-When calculating sums, it is easy to combine lazy updates,
-because the combination of updates $z_1$ and $z_2$
-corresponds to an update $z_1+z_2$.
+توجه کنید گاهی ترکیب به‌روزرسانی‌های تنبل نیاز است.
+این حالت وقتی رخ می‌دهد که به گره دارای به‌روزرسانی تنبل، به‌روزرسانی تنبل دیگری تخصیص یابد.
+هنگام محاسبه مجموع‌ها، ترکیب به‌روزرسانی‌های تنبل آسان است، زیرا ترکیب به‌روزرسانی‌های $z_1$ و $z_2$ معادل به‌روزرسانی $z_1+z_2$ است.
 
-\subsubsection{Polynomial updates}
+\subsubsection{به‌روزرسانی‌های چندجمله‌ای}
 
-Lazy updates can be generalized so that it is
-possible to update ranges using polynomials of the form
+به‌روزرسانی‌های تنبل را می‌توان تعمیم داد تا امکان به‌روزرسانی بازه‌ها با چندجمله‌ای‌هایی به شکل زیر فراهم شود:
 \[p(u) = t_k u^k + t_{k-1} u^{k-1} + \cdots + t_0.\]
 
-In this case, the update for a value
-at position $i$ in $[a,b]$ is $p(i-a)$.
-For example, adding the polynomial $p(u)=u+1$
-to $[a,b]$ means that the value at position $a$
-increases by 1, the value at position $a+1$
-increases by 2, and so on.
+در این حالت، مقدار به‌روزرسانی برای خانه در موقعیت $i$ در بازه $[a,b]$ برابر با $p(i-a)$ است.
+برای نمونه، افزودن چندجمله‌ای $p(u)=u+1$ به $[a,b]$ یعنی مقدار موقعیت $a$ به اندازه ۱، مقدار موقعیت $a+1$ به اندازه ۲ و به همین ترتیب افزایش می‌یابد.
 
-To support polynomial updates,
-each node is assigned $k+2$ values,
-where $k$ equals the degree of the polynomial.
-The value $s$ is the sum of the elements in the range,
-and the values $z_0,z_1,\ldots,z_k$ are the coefficients
-of a polynomial that corresponds to a lazy update.
+برای پشتیبانی از به‌روزرسانی‌های چندجمله‌ای، به هر گره $k+2$ مقدار تخصیص می‌یابد که در آن $k$ برابر درجه چندجمله‌ای است.
+مقدار $s$ مجموع عناصر بازه است، و مقادیر $z_0,z_1,\ldots,z_k$ ضرایب چندجمله‌ای متناظر با به‌روزرسانی تنبل هستند.
 
-Now, the sum of values in a range $[x,y]$ equals
+اکنون مجموع مقادیر در بازه $[x,y]$ برابر است با:
 \[s+\sum_{u=0}^{y-x} z_k u^k + z_{k-1} u^{k-1} + \cdots + z_0.\]
 
-The value of such a sum
-can be efficiently calculated using sum formulas.
-For example, the term $z_0$ corresponds to the sum
-$(y-x+1)z_0$, and the term $z_1 u$ corresponds to the sum
+مقدار این مجموع را می‌توان با فرمول‌های مجموع با کارایی بالا محاسبه کرد.
+برای نمونه، جمله $z_0$ متناظر با مجموع $(y-x+1)z_0$ است، و جمله $z_1 u$ متناظر است با مجموع:
 \[z_1(0+1+\cdots+y-x) = z_1 \frac{(y-x)(y-x+1)}{2} .\]
 
-When propagating an update in the tree,
-the indices of $p(u)$ change,
-because in each range $[x,y]$,
-the values are
-calculated for $u=0,1,\ldots,y-x$.
-However, this is not a problem, because
-$p'(u)=p(u+h)$ is a polynomial
-of equal degree as $p(u)$.
-For example, if $p(u)=t_2 u^2+t_1 u-t_0$, then
+هنگام انتشار به‌روزرسانی در درخت، اندیس‌های $p(u)$ تغییر می‌کنند، زیرا در هر بازه $[x,y]$ مقادیر برای $u=0,1,\ldots,y-x$ محاسبه می‌شوند.
+با این حال مشکلی نیست، زیرا $p'(u)=p(u+h)$ چندجمله‌ای با درجه برابر با $p(u)$ است.
+برای نمونه اگر $p(u)=t_2 u^2+t_1 u-t_0$ باشد، آنگاه:
 \[p'(u)=t_2(u+h)^2+t_1(u+h)-t_0=t_2 u^2 + (2ht_2+t_1)u+t_2h^2+t_1h-t_0.\]
 
-\section{Dynamic trees}
+\section{درخت‌های پویا}
 
-\index{dynamic segment tree}
+\index{درخت پاره‌خطی پویا}
 
-An ordinary segment tree is static,
-which means that each node has a fixed position
-in the array and the tree requires
-a fixed amount of memory.
-In a \key{dynamic segment tree},
-memory is allocated only for nodes that
-are actually accessed during the algorithm,
-which can save a large amount of memory.
+درخت پاره‌خطی معمولی ایستا است؛ یعنی هر گره جایگاه ثابتی در آرایه دارد و درخت به مقدار ثابتی حافظه نیاز دارد.
+در \key{درخت پاره‌خطی پویا}، حافظه تنها به گره‌هایی تخصیص می‌یابد که در طول اجرای الگوریتم واقعاً پیمایش می‌شوند؛ این کار صرفه‌جویی بالایی در حافظه ایجاد می‌کند.
 
-The nodes of a dynamic tree can be represented as structs:
+گره‌های یک درخت پویا می‌توانند به صورت ساختار (struct) پیاده‌سازی شوند:
 \begin{lstlisting}
 struct node {
     int value;
@@ -565,12 +520,12 @@ struct node {
     node(int v, int x, int y) : value(v), x(x), y(y) {}
 };
 \end{lstlisting}
-Here \texttt{value} is the value of the node,
-$[\texttt{x},\texttt{y}]$ is the corresponding range,
-and \texttt{left} and \texttt{right} point to the left
-and right subtree.
+در اینجا \texttt{value} مقدار گره است،
+$[\texttt{x},\texttt{y}]$ بازه متناظر است،
+و \texttt{left} و \texttt{right} به زیردرخت چپ
+و راست اشاره می‌کنند.
 
-After this, nodes can be created as follows:
+پس از این، گره‌ها می‌توانند به صورت زیر ایجاد شوند:
 \begin{lstlisting}
 // create new node
 node *x = new node(0, 0, 15);
@@ -578,27 +533,26 @@ node *x = new node(0, 0, 15);
 x->value = 5;
 \end{lstlisting}
 
-\subsubsection{Sparse segment trees}
+\subsubsection{درخت‌های بخش‌بندی تنک}
 
 \index{sparse segment tree}
 
-A dynamic segment tree is useful when
-the underlying array is \emph{sparse},
-i.e., the range $[0,n-1]$
-of allowed indices is large,
-but most array values are zeros.
-While an ordinary segment tree uses $O(n)$ memory,
-a dynamic segment tree only uses $O(k \log n)$ memory,
-where $k$ is the number of operations performed.
+یک درخت بخش‌بندی پویا زمانی مفید است که
+آرایه زیرین \emph{تنک} (sparse) باشد؛
+به این معنی که بازه $[0,n-1]$ از اندیس‌های مجاز بزرگ است،
+اما بیشتر مقادیر آرایه صفر هستند.
+در حالی که یک درخت بخش‌بندی معمولی از $O(n)$ حافظه استفاده می‌کند،
+یک درخت بخش‌بندی پویا تنها از $O(k \log n)$ حافظه مصرف می‌نماید،
+که در آن $k$ تعداد عملیات‌های انجام‌شده است.
 
-A \key{sparse segment tree} initially has
-only one node $[0,n-1]$ whose value is zero,
-which means that every array value is zero.
-After updates, new nodes are dynamically added
-to the tree.
-For example, if $n=16$ and the elements
-in positions 3 and 10 have been modified,
-the tree contains the following nodes:
+یک \key{درخت بخش‌بندی تنک} در ابتدا تنها
+یک گره $[0,n-1]$ دارد که مقدار آن صفر است؛
+بدین معنا که هر مقدار آرایه برابر صفر است.
+پس از به‌روزرسانی‌ها، گره‌های جدید به صورت پویا
+به درخت اضافه می‌شوند.
+برای مثال، اگر $n=16$ باشد و عناصر
+موقعیت‌های 3 و 10 تغییر یافته باشند،
+درخت شامل گره‌های زیر خواهد بود:
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
 \scriptsize
@@ -624,44 +578,39 @@ the tree contains the following nodes:
 \end{tikzpicture}
 \end{center}
 
-Any path from the root node to a leaf contains
-$O(\log n)$ nodes,
-so each operation adds at most $O(\log n)$
-new nodes to the tree.
-Thus, after $k$ operations, the tree contains
-at most $O(k \log n)$ nodes.
+هر مسیر از گره ریشه تا یک برگ شامل
+$O(\log n)$ گره است،
+بنابراین هر عملیات حداکثر $O(\log n)$
+گره جدید به درخت اضافه می‌کند.
+از این رو، پس از $k$ عملیات، درخت شامل
+حداکثر $O(k \log n)$ گره خواهد بود.
 
-Note that if we know all elements to be updated
-at the beginning of the algorithm,
-a dynamic segment tree is not necessary,
-because we can use an ordinary segment tree with
-index compression (Chapter 9.4).
-However, this is not possible when the indices
-are generated during the algorithm.
+توجه داشته باشید اگر تمام عناصری را که باید به‌روزرسانی شوند
+در آغاز الگوریتم بدانیم،
+نیازی به درخت بخش‌بندی پویا نیست،
+زیرا می‌توانیم از یک درخت بخش‌بندی معمولی همراه با
+فشرده‌سازی مختصات (فصل 9.4) استفاده کنیم.
+با این حال، زمانی که اندیس‌ها در طول اجرای الگوریتم تولید می‌شوند،
+این کار امکان‌پذیر نیست.
 
-\subsubsection{Persistent segment trees}
+\subsubsection{درخت‌های بخش‌بندی پایدار}
 
 \index{persistent segment tree}
 
-Using a dynamic implementation,
-it is also possible to create a
-\key{persistent segment tree} that stores
-the \emph{modification history} of the tree.
-In such an implementation, we can
-efficiently access
-all versions of the tree that have
-existed during the algorithm.
+با استفاده از پیاده‌سازی پویا،
+ساخت \key{درخت بازه‌ای پایا} (persistent segment tree)
+نیز ممکن است که \emph{تاریخچه تغییرات} درخت را ذخیره می‌کند.
+در این پیاده‌سازی، دسترسی کارآمد به تمام نسخه‌های موجود درخت
+در طول الگوریتم امکان‌پذیر است.
 
-When the modification history is available,
-we can perform queries in any previous tree
-like in an ordinary segment tree, because the
-full structure of each tree is stored.
-We can also create new trees based on previous
-trees and modify them independently.
+هنگام در دسترس بودن تاریخچه تغییرات،
+اجرای پرس‌وجوها روی هر نسخه پیشین مانند درخت بازه‌ای معمولی انجام می‌شود،
+زیرا ساختار کامل هر درخت ذخیره شده است.
+همچنین ساخت درخت‌های جدید بر پایه درخت‌های پیشین و تغییر مستقل آن‌ها ممکن است.
 
-Consider the following sequence of updates,
-where red nodes change
-and other nodes remain the same:
+توالی به‌روزرسانی‌های زیر را در نظر بگیرید
+که در آن گره‌های قرمز تغییر می‌کنند
+و سایر گره‌ها ثابت می‌مانند:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.8]
@@ -706,19 +655,21 @@ and other nodes remain the same:
 \path[draw,thick,->] (2c) -- (5c);
 \path[draw,thick,->] (3c) -- (6c);
 \path[draw,thick,->] (3c) -- (7c);
-
-\node at (3,-3) {step 1};
-\node at (3+5,-3) {step 2};
-\node at (3+10,-3) {step 3};
 \end{tikzpicture}
 \end{center}
-After each update, most nodes of the tree
-remain the same,
-so an efficient way to store the modification history
-is to represent each tree in the history as a combination
-of new nodes and subtrees of previous trees.
-In this example, the modification history can be
-stored as follows:
+
+\node at (3,-3) {گام ۱};
+\node at (3+5,-3) {گام ۲};
+\node at (3+10,-3) {گام ۳};
+\end{tikzpicture}
+\end{center}
+پس از هر به‌روزرسانی، بیشتر گره‌های درخت
+دست‌نخورده باقی می‌مانند،
+بنابراین روشی کارآمد برای ذخیرهٔ تاریخچهٔ تغییرات،
+نمایش هر درخت در تاریخچه به‌صورت ترکیبی
+از گره‌های جدید و زیردرخت‌های درختان قبلی است.
+در این مثال، تاریخچهٔ تغییرات را می‌توان
+به صورت زیر ذخیره کرد:
 \begin{center}
 \begin{tikzpicture}[scale=0.8]
 \path[use as bounding box] (0, 1) rectangle (16, -3.5);
@@ -759,34 +710,34 @@ stored as follows:
 
 \path[draw,thick,->] (3c) -- (7c);
 
-\node at (3,-3) {step 1};
-\node at (3+5,-3) {step 2};
-\node at (3+10,-3) {step 3};
+\node at (3,-3) {گام ۱};
+\node at (3+5,-3) {گام ۲};
+\node at (3+10,-3) {گام ۳};
 \end{tikzpicture}
 \end{center}
 
-The structure of each previous tree can be
-reconstructed by following the pointers
-starting at the corresponding root node.
-Since each operation
-adds only $O(\log n)$ new nodes to the tree,
-it is possible to store the full modification history of the tree.
+ساختار هر درخت قبلی را می‌توان
+با دنبال کردن اشاره‌گرها از گره ریشهٔ مربوطه
+بازسازی کرد.
+از آنجا که هر عملیات
+تنها $O(\log n)$ گره جدید به درخت اضافه می‌کند،
+ذخیرهٔ کل تاریخچهٔ تغییرات درخت ممکن است.
 
-\section{Data structures}
+\section{ساختمان داده‌ها}
 
-Instead of single values, nodes in a segment tree
-can also contain \emph{data structures} that maintain information
-about the corresponding ranges.
-In such a tree, the operations take
-$O(f(n) \log n)$ time, where $f(n)$ is
-the time needed for processing a single node during an operation.
+به جای مقادیر تکی، گره‌ها در درخت بازه‌ای
+می‌توانند شامل \emph{ساختمان داده‌هایی} باشند که اطلاعات
+مربوط به بازه‌ها را نگهداری می‌کنند.
+در چنین درختی، عملیات‌ها به زمان
+$O(f(n) \log n)$ نیاز دارند، که در آن $f(n)$
+زمان مورد نیاز برای پردازش یک گره در حین عملیات است.
 
-As an example, consider a segment tree that
-supports queries of the form
-''how many times does an element $x$ appear
-in the range $[a,b]$?''
-For example, the element 1 appears three times
-in the following range:
+به عنوان مثال، درخت بازه‌ای را در نظر بگیرید که
+پرسش‌هایی از این نوع را پشتیبانی می‌کند:
+«عنصر $x$ چند بار
+در بازهٔ $[a,b]$ تکرار شده است؟»
+برای نمونه، عنصر ۱ سه بار
+در بازهٔ زیر آمده است:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
@@ -804,17 +755,17 @@ in the following range:
 \end{tikzpicture}
 \end{center}
 
-To support such queries, we build a segment tree
-where each node is assigned a data structure
-that can be asked how many times any element $x$
-appears in the corresponding range.
-Using this tree,
-the answer to a query can be calculated
-by combining the results from the nodes
-that belong to the range.
+برای پشتیبانی از چنین پرس‌وجوهایی، یک درخت بازه‌ای می‌سازیم
+که به هر گره آن، ساختار داده‌ای اختصاص داده می‌شود
+که می‌تواند تعداد دفعات تکرار هر عنصر دلخواه $x$
+در بازه متناظر را پاسخ دهد.
+با استفاده از این درخت،
+پاسخ یک پرس‌وجو را می‌توان
+از ترکیب نتایج گره‌های متعلق به بازه
+محاسبه کرد.
 
-For example, the following segment tree
-corresponds to the above array:
+برای مثال، درخت بازه‌ای زیر
+متناظر با آرایه بالاست:
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 
@@ -958,29 +909,15 @@ corresponds to the above array:
 \end{tikzpicture}
 \end{center}
 
-We can build the tree so
-that each node contains a \texttt{map} structure.
-In this case, the time needed for processing each
-node is $O(\log n)$, so the total time complexity
-of a query is $O(\log^2 n)$.
-The tree uses $O(n \log n)$ memory,
-because there are $O(\log n)$ levels
-and each level contains
-$O(n)$ elements.
+می‌توان درخت را طوری ساخت که هر رأس حاوی ساختار \texttt{map} باشد. در این حالت، زمان پردازش هر رأس $O(\log n)$ است؛ بنابراین پیچیدگی زمانی کل یک پرس‌وجو $O(\log^2 n)$ می‌شود. این درخت $O(n \log n)$ حافظه مصرف می‌کند، زیرا دارای $O(\log n)$ سطح است و هر سطح $O(n)$ عنصر دارد.
 
-\section{Two-dimensionality}
+\section{حالت دوبعدی}
 
 \index{two-dimensional segment tree}
 
-A \key{two-dimensional segment tree} supports
-queries related to rectangular subarrays
-of a two-dimensional array.
-Such a tree can be implemented as
-nested segment trees: a big tree corresponds to the
-rows of the array, and each node contains a small tree
-that corresponds to a column.
+یک \key{درخت پاره‌خطی دوبعدی} از پرس‌وجوهای مربوط به زیرآرایه‌های مستطیلی یک آرایه دوبعدی پشتیبانی می‌کند. چنین درختی می‌تواند به صورت درخت‌های پاره‌خطی تو در تو پیاده‌سازی شود: یک درخت بزرگ مربوط به سطرهای آرایه است، و هر رأس شامل یک درخت کوچک متناظر با ستون‌ها است.
 
-For example, in the array
+برای مثال، در آرایه
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \draw (0,0) grid (4,4);
@@ -1006,9 +943,7 @@ For example, in the array
 \node[anchor=center] at (3.5, 3.5) {6};
 \end{tikzpicture}
 \end{center}
-the sum of any subarray
-can be calculated
-from the following segment tree:
+مجموع هر زیرآرایه می‌تواند از درخت پاره‌خطی زیر محاسبه شود:
 \begin{center}
 \begin{tikzpicture}[scale=0.4]
 \footnotesize
@@ -1154,8 +1089,5 @@ from the following segment tree:
 \end{tikzpicture}
 \end{center}
 
-The operations of a two-dimensional segment tree
-take $O(\log^2 n)$ time, because the big tree
-and each small tree consist of $O(\log n)$ levels.
-The tree requires $O(n^2)$ memory, because each
-small tree contains $O(n)$ values.
+عملیات‌های درخت بازه‌ای دوبعدی به زمان $O(\log^2 n)$ نیاز دارند، زیرا درخت بزرگ و هر درخت کوچک از $O(\log n)$ سطح تشکیل شده‌اند.
+این درخت به $O(n^2)$ حافظه نیاز دارد، زیرا هر درخت کوچک شامل $O(n)$ مقدار است.
