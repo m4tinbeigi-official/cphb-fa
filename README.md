@@ -1,22 +1,33 @@
-# Competitive Programmer's Handbook
+# کتاب راهنمای برنامه‌نویس رقابتی (Competitive Programmer's Handbook)
 
-Competitive Programmer's Handbook is a modern introduction to competitive programming.
-The book discusses programming tricks and algorithm design techniques relevant in competitive programming.
+کتاب **راهنمای برنامه‌نویس رقابتی** اثر **آنتی لاکسونن (Antti Laaksonen)**، یک معرفی مدرن و جامع بر برنامه‌نویسی رقابتی، طراحی الگوریتم‌ها و ساختارهای داده است. این کتاب تکنیک‌های برنامه‌نویسی و الگوریتم‌های کاربردی در مسابقات المپیاد کامپیوتر (IOI) و مسابقات دانشگاهی (ICPC) را پوشش می‌دهد.
 
-## CSES Problem Set
+این مخزن نسخه ترجمه‌شده فارسی این کتاب است.
 
-The CSES Problem Set contains a collection of competitive programming problems.
-You can practice the techniques presented in the book by solving the problems.
+## مجموعه مسائل CSES
+
+مجموعه مسائل CSES شامل مسائل استاندارد برنامه‌نویسی رقابتی برای تمرین تکنیک‌های ارائه شده در این کتاب است:
 
 https://cses.fi/problemset/
 
-## License
+## ساختار کتاب
 
-The license of the book is Creative Commons BY-NC-SA 4.0.
+- **بخش اول: تکنیک‌های پایه (فصل ۱ تا ۱۰)**: مقدمه، پیچیدگی زمانی، مرتب‌سازی، داده‌ساختارها، الگوریتم‌های کامل، الگوریتم‌های حریصانه، برنامه‌نویسی پویا، بازیابی بیت و کار با بازه‌ها.
+- **بخش دوم: الگوریتم‌های گراف (فصل ۱۱ تا ۲۰)**: مبانی گراف، پیمایش گراف، کوتاه‌ترین مسیر، درخت‌ها، گراف‌های جهت‌دار، گراف‌های دوبخشی، شار بیشینه و تطابق.
+- **بخش سوم: مباحث پیشرفته (فصل ۲۱ تا ۳۰)**: نظریه اعداد، ترکیبیات، ماتریس‌ها، محاسبات احتمال، نظریه بازی‌ها، هندسه، پردازش رشته‌ها و تکنیک‌های پیشرفته.
 
-## Other books
+## نحوه کامپایل
 
-Guide to Competitive Programming is a printed book, published by Springer, based on Competitive Programmer's Handbook.
-There is also a Russian edition Олимпиадное программирование (Olympiad Programming) and a Korean edition 알고리즘 트레이닝: 프로그래밍 대회 입문 가이드.
+برای کامپایل نسخه فارسی با موتور XeLaTeX:
 
-https://cses.fi/book/
+```bash
+xelatex book.tex
+makeindex book.idx
+xelatex book.tex
+```
+
+پیش‌نیاز: بسته `xepersian` و فونت وزیرمتن (Vazirmatn).
+
+## مجوز
+
+مجوز کتاب Creative Commons BY-NC-SA 4.0 است.

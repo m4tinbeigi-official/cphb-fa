@@ -1,54 +1,40 @@
-\chapter{Time complexity}
+\chapter{پیچیدگی زمانی}
 
-\index{time complexity}
+\index{پیچیدگی زمانی}
 
-The efficiency of algorithms is important in competitive programming.
-Usually, it is easy to design an algorithm
-that solves the problem slowly,
-but the real challenge is to invent a
-fast algorithm.
-If the algorithm is too slow, it will get only
-partial points or no points at all.
+کارایی الگوریتم‌ها در برنامه‌نویسی رقابتی بسیار مهم است.
+معمولاً طراحی الگوریتمی که مسئله را کند حل کند آسان است،
+اما چالش واقعی، ابداع الگوریتمی سریع است.
+اگر الگوریتم بیش از حد کند باشد، تنها بخشی از امتیاز یا هیچ امتیازی دریافت نخواهد کرد.
 
-The \key{time complexity} of an algorithm
-estimates how much time the algorithm will use
-for some input.
-The idea is to represent the efficiency
-as a function whose parameter is the size of the input.
-By calculating the time complexity,
-we can find out whether the algorithm is fast enough
-without implementing it.
+\key{پیچیدگی زمانی} یک الگوریتم تخمین می‌زند که الگوریتم برای یک ورودی مشخص، چه مقدار زمان مصرف خواهد کرد.
+ایده اصلی این است که کارایی به عنوان تابعی نشان داده شود که پارامتر آن، اندازه ورودی است.
+با محاسبه پیچیدگی زمانی، می‌توان بدون پیاده‌سازی متوجه شد آیا الگوریتم به اندازه کافی سریع است یا خیر.
 
-\section{Calculation rules}
+\section{قواعد محاسبه}
 
-The time complexity of an algorithm
-is denoted $O(\cdots)$
-where the three dots represent some
-function.
-Usually, the variable $n$ denotes
-the input size.
-For example, if the input is an array of numbers,
-$n$ will be the size of the array,
-and if the input is a string,
-$n$ will be the length of the string.
+پیچیدگی زمانی یک الگوریتم با نماد $O(\cdots)$ نشان داده می‌شود
+که در آن سه نقطه نشان‌دهنده یک تابع است.
+معمولاً متغیر $n$ بیانگر اندازه ورودی است.
+برای مثال، اگر ورودی یک آرایه از اعداد باشد،
+$n$ اندازه آرایه خواهد بود،
+و اگر ورودی یک رشته باشد،
+$n$ طول رشته خواهد بود.
 
-\subsubsection*{Loops}
+\subsubsection*{حلقه‌ها}
 
-A common reason why an algorithm is slow is
-that it contains many loops that go through the input.
-The more nested loops the algorithm contains,
-the slower it is.
-If there are $k$ nested loops,
-the time complexity is $O(n^k)$.
+دلیل رایج برای کند بودن یک الگوریتم این است که شامل حلقه‌های متعددی است که ورودی را پیمایش می‌کنند.
+هرچه الگوریتم شامل حلقه‌های تودرتوی بیشتری باشد، کندتر است.
+اگر $k$ حلقه تودرتو وجود داشته باشد، پیچیدگی زمانی $O(n^k)$ است.
 
-For example, the time complexity of the following code is $O(n)$:
+برای مثال، پیچیدگی زمانی کد زیر $O(n)$ است:
 \begin{lstlisting}
 for (int i = 1; i <= n; i++) {
     // code
 }
 \end{lstlisting}
 
-And the time complexity of the following code is $O(n^2)$:
+و پیچیدگی زمانی کد زیر $O(n^2)$ است:
 \begin{lstlisting}
 for (int i = 1; i <= n; i++) {
     for (int j = 1; j <= n; j++) {
@@ -57,14 +43,12 @@ for (int i = 1; i <= n; i++) {
 }
 \end{lstlisting}
 
-\subsubsection*{Order of magnitude}
+\subsubsection*{مرتبه بزرگی}
 
-A time complexity does not tell us the exact number
-of times the code inside a loop is executed,
-but it only shows the order of magnitude.
-In the following examples, the code inside the loop
-is executed $3n$, $n+5$ and $\lceil n/2 \rceil$ times,
-but the time complexity of each code is $O(n)$.
+پیچیدگی زمانی تعداد دقیق دفعات اجرای کد درون حلقه را بیان نمی‌کند،
+بلکه تنها مرتبه بزرگی را نشان می‌دهد.
+در مثال‌های زیر، کد درون حلقه به ترتیب $3n$، $n+5$ و $\lceil n/2 \rceil$ بار اجرا می‌شود،
+اما پیچیدگی زمانی هر کد $O(n)$ است.
 
 \begin{lstlisting}
 for (int i = 1; i <= 3*n; i++) {
@@ -84,8 +68,8 @@ for (int i = 1; i <= n; i += 2) {
 }
 \end{lstlisting}
 
-As another example,
-the time complexity of the following code is $O(n^2)$:
+به عنوان مثالی دیگر،
+پیچیدگی زمانی کد زیر $O(n^2)$ است:
 
 \begin{lstlisting}
 for (int i = 1; i <= n; i++) {
@@ -95,18 +79,15 @@ for (int i = 1; i <= n; i++) {
 }
 \end{lstlisting}
 
-\subsubsection*{Phases}
+\subsubsection*{مراحل}
 
-If the algorithm consists of consecutive phases,
-the total time complexity is the largest
-time complexity of a single phase.
-The reason for this is that the slowest
-phase is usually the bottleneck of the code.
+اگر الگوریتم از مراحل متوالی تشکیل شده باشد،
+پیچیدگی زمانی کل برابر با بیشترین پیچیدگی زمانی در میان تک‌تک مراحل است.
+دلیل این امر این است که کندترین مرحله معمولاً گلوگاه کد محسوب می‌شود.
 
-For example, the following code consists
-of three phases with time complexities
-$O(n)$, $O(n^2)$ and $O(n)$.
-Thus, the total time complexity is $O(n^2)$.
+برای مثال، کد زیر از سه مرحله با پیچیدگی‌های زمانی
+$O(n)$، $O(n^2)$ و $O(n)$ تشکیل شده است.
+بنابراین، پیچیدگی زمانی کل $O(n^2)$ است.
 
 \begin{lstlisting}
 for (int i = 1; i <= n; i++) {
@@ -122,15 +103,12 @@ for (int i = 1; i <= n; i++) {
 }
 \end{lstlisting}
 
-\subsubsection*{Several variables}
+\subsubsection*{چند متغیر}
 
-Sometimes the time complexity depends on
-several factors.
-In this case, the time complexity formula
-contains several variables.
+گاهی پیچیدگی زمانی به چندین عامل بستگی دارد.
+در این حالت، فرمول پیچیدگی زمانی شامل چند متغیر است.
 
-For example, the time complexity of the
-following code is $O(nm)$:
+برای نمونه، پیچیدگی زمانی کد زیر $O(nm)$ است:
 
 \begin{lstlisting}
 for (int i = 1; i <= n; i++) {
@@ -140,26 +118,22 @@ for (int i = 1; i <= n; i++) {
 }
 \end{lstlisting}
 
-\subsubsection*{Recursion}
+\subsubsection*{بازگشت}
 
-The time complexity of a recursive function
-depends on the number of times the function is called
-and the time complexity of a single call.
-The total time complexity is the product of
-these values.
+پیچیدگی زمانی تابع بازگشتی به تعداد دفعات فراخوانی تابع و پیچیدگی زمانی یک فراخوانی بستگی دارد.
+پیچیدگی زمانی کل برابر حاصل‌ضرب این مقادیر است.
 
-For example, consider the following function:
+برای نمونه، تابع زیر را در نظر بگیرید:
 \begin{lstlisting}
 void f(int n) {
     if (n == 1) return;
     f(n-1);
 }
 \end{lstlisting}
-The call $\texttt{f}(n)$ causes $n$ function calls,
-and the time complexity of each call is $O(1)$.
-Thus, the total time complexity is $O(n)$.
+فراخوانی $\texttt{f}(n)$ موجب $n$ بار فراخوانی تابع می‌شود و پیچیدگی زمانی هر فراخوانی $O(1)$ است.
+بنابراین، پیچیدگی زمانی کل $O(n)$ است.
 
-As another example, consider the following function:
+به عنوان نمونه‌ای دیگر، تابع زیر را در نظر بگیرید:
 \begin{lstlisting}
 void g(int n) {
     if (n == 1) return;
@@ -167,15 +141,12 @@ void g(int n) {
     g(n-1);
 }
 \end{lstlisting}
-In this case each function call generates two other
-calls, except for $n=1$.
-Let us see what happens when $g$ is called
-with parameter $n$.
-The following table shows the function calls
-produced by this single call:
+در این حالت هر فراخوانی تابع دو فراخوانی دیگر ایجاد می‌کند، مگر برای $n=1$.
+بررسی می‌کنیم هنگام فراخوانی $g$ با پارامتر $n$ چه رخ می‌دهد.
+جدول زیر فراخوانی‌های تابع ایجاد شده توسط این تک‌فراخوانی را نشان می‌دهد:
 \begin{center}
 \begin{tabular}{rr}
-function call & number of calls \\
+فراخوانی تابع & تعداد فراخوانی‌ها \\
 \hline
 $g(n)$ & 1 \\
 $g(n-1)$ & 2 \\
@@ -184,190 +155,159 @@ $\cdots$ & $\cdots$ \\
 $g(1)$ & $2^{n-1}$ \\
 \end{tabular}
 \end{center}
-Based on this, the time complexity is
+بر این اساس، پیچیدگی زمانی برابر است با:
 \[1+2+4+\cdots+2^{n-1} = 2^n-1 = O(2^n).\]
 
-\section{Complexity classes}
+\section{رده‌های پیچیدگی}
 
 \index{complexity classes}
 
-The following list contains common time complexities
-of algorithms:
+فهرست زیر شامل پیچیدگی‌های زمانی متداول در الگوریتم‌ها است:
 
 \begin{description}
 \item[$O(1)$]
 \index{constant-time algorithm}
-The running time of a \key{constant-time} algorithm
-does not depend on the input size.
-A typical constant-time algorithm is a direct
-formula that calculates the answer.
+زمان اجرای الگوریتم \key{زمان ثابت} به اندازه ورودی بستگی ندارد.
+یک الگوریتم زمان ثابت نوعی، فرمول مستقیمی است که پاسخ را محاسبه می‌کند.
 
 \item[$O(\log n)$]
 \index{logarithmic algorithm}
-A \key{logarithmic} algorithm often halves
-the input size at each step.
-The running time of such an algorithm
-is logarithmic, because
-$\log_2 n$ equals the number of times
-$n$ must be divided by 2 to get 1.
+یک الگوریتم \key{لگاریتمی} معمولاً اندازه ورودی را در هر گام نصف می‌کند.
+زمان اجرای چنین الگوریتمی لگاریتمی است، زیرا $\log_2 n$ برابر با تعداد دفعاتی است که $n$ باید بر ۲ تقسیم شود تا به ۱ برسد.
 
 \item[$O(\sqrt n)$]
-A \key{square root algorithm} is slower than
-$O(\log n)$ but faster than $O(n)$.
-A special property of square roots is that
-$\sqrt n = n/\sqrt n$, so the square root $\sqrt n$ lies,
-in some sense, in the middle of the input.
+یک \key{الگوریتم ریشه دوم} از $O(\log n)$ کندتر ولی از $O(n)$ سریع‌تر است.
+ویژگی خاص ریشه دوم این است که $\sqrt n = n/\sqrt n$، بنابراین ریشه دوم $\sqrt n$ به نوعی در میانه ورودی قرار دارد.
 
 \item[$O(n)$]
 \index{linear algorithm}
-A \key{linear} algorithm goes through the input
-a constant number of times.
-This is often the best possible time complexity,
-because it is usually necessary to access each
-input element at least once before
-reporting the answer.
+یک الگوریتم \key{خطی} ورودی را به تعداد ثابتی پیمایش می‌کند.
+این پیچیدگی زمانی اغلب بهترین حالت ممکن است، زیرا معمولاً دسترسی به هر عنصر ورودی حداقل یک بار پیش از اعلام پاسخ ضروری است.
 
 \item[$O(n \log n)$]
-This time complexity often indicates that the
-algorithm sorts the input,
-because the time complexity of efficient
-sorting algorithms is $O(n \log n)$.
-Another possibility is that the algorithm
-uses a data structure where each operation
-takes $O(\log n)$ time.
+این پیچیدگی زمانی اغلب نشان می‌دهد که الگوریتم ورودی را مرتب‌سازی می‌کند، زیرا پیچیدگی زمانی الگوریتم‌های کارآمد مرتب‌سازی $O(n \log n)$ است.
+احتمال دیگر این است که الگوریتم از ساختمان داده‌ای استفاده می‌کند که در آن هر عملیات $O(\log n)$ زمان می‌برد.
+\end{description}
 
 \item[$O(n^2)$]
 \index{quadratic algorithm}
-A \key{quadratic} algorithm often contains
-two nested loops.
-It is possible to go through all pairs of
-the input elements in $O(n^2)$ time.
+یک الگوریتم \key{درجه‌دوم} اغلب شامل
+دو حلقه تو‌در‌تو است.
+بررسی تمام جفت‌های عناصر ورودی
+در زمان $O(n^2)$ امکان‌پذیر است.
 
 \item[$O(n^3)$]
 \index{cubic algorithm}
-A \key{cubic} algorithm often contains
-three nested loops.
-It is possible to go through all triplets of
-the input elements in $O(n^3)$ time.
+یک الگوریتم \key{درجه‌سوم} اغلب شامل
+سه حلقه تو‌در‌تو است.
+بررسی تمام سه‌تایی‌های عناصر ورودی
+در زمان $O(n^3)$ امکان‌پذیر است.
 
 \item[$O(2^n)$]
-This time complexity often indicates that
-the algorithm iterates through all
-subsets of the input elements.
-For example, the subsets of $\{1,2,3\}$ are
-$\emptyset$, $\{1\}$, $\{2\}$, $\{3\}$, $\{1,2\}$,
-$\{1,3\}$, $\{2,3\}$ and $\{1,2,3\}$.
+این پیچیدگی زمانی اغلب نشان می‌دهد که
+الگوریتم روی تمام زیرمجموعه‌های عناصر ورودی پیمایش می‌کند.
+برای نمونه، زیرمجموعه‌های $\{1,2,3\}$ عبارتند از
+$\emptyset$، $\{1\}$، $\{2\}$، $\{3\}$، $\{1,2\}$،
+$\{1,3\}$، $\{2,3\}$ و $\{1,2,3\}$.
 
 \item[$O(n!)$]
-This time complexity often indicates that
-the algorithm iterates through all
-permutations of the input elements.
-For example, the permutations of $\{1,2,3\}$ are
-$(1,2,3)$, $(1,3,2)$, $(2,1,3)$, $(2,3,1)$,
-$(3,1,2)$ and $(3,2,1)$.
+این پیچیدگی زمانی اغلب نشان می‌دهد که
+الگوریتم روی تمام جایگشت‌های عناصر ورودی پیمایش می‌کند.
+برای نمونه، جایگشت‌های $\{1,2,3\}$ عبارتند از
+$(1,2,3)$، $(1,3,2)$، $(2,1,3)$، $(2,3,1)$،
+$(3,1,2)$ و $(3,2,1)$.
 
 \end{description}
 
 \index{polynomial algorithm}
-An algorithm is \key{polynomial}
-if its time complexity is at most $O(n^k)$
-where $k$ is a constant.
-All the above time complexities except
-$O(2^n)$ and $O(n!)$ are polynomial.
-In practice, the constant $k$ is usually small,
-and therefore a polynomial time complexity
-roughly means that the algorithm is \emph{efficient}.
+یک الگوریتم \key{چندجمله‌ای} است
+اگر پیچیدگی زمانی آن حداکثر $O(n^k)$ باشد
+که در آن $k$ یک مقدار ثابت است.
+تمام پیچیدگی‌های زمانی بالا به جز
+$O(2^n)$ و $O(n!)$ چندجمله‌ای هستند.
+در عمل، ثابت $k$ معمولاً کوچک است،
+و بنابراین پیچیدگی زمانی چندجمله‌ای
+تقریباً به این معناست که الگوریتم \emph{کارآمد} است.
 
 \index{NP-hard problem}
 
-Most algorithms in this book are polynomial.
-Still, there are many important problems for which
-no polynomial algorithm is known, i.e.,
-nobody knows how to solve them efficiently.
-\key{NP-hard} problems are an important set
-of problems, for which no polynomial algorithm
-is known\footnote{A classic book on the topic is
-M. R. Garey's and D. S. Johnson's
-\emph{Computers and Intractability: A Guide to the Theory
-of NP-Completeness} \cite{gar79}.}.
+بیشتر الگوریتم‌های این کتاب چندجمله‌ای هستند.
+با این حال، مسائل مهم زیادی وجود دارند که
+هیچ الگوریتم چندجمله‌ای برای آن‌ها شناخته نشده است؛ به این معنی که
+هیچ‌کس راه حل کارآمدی برای آن‌ها نمی‌داند.
+مسائل \key{NP-سخت} دسته مهمی از مسائل هستند
+که هیچ الگوریتم چندجمله‌ای برای آن‌ها شناخته نشده است\footnote{یک کتاب کلاسیک در این زمینه، کتاب
+\emph{Computers and Intractability: A Guide to the Theory of NP-Completeness} اثر M. R. Garey و D. S. Johnson است \cite{gar79}.}.
 
-\section{Estimating efficiency}
+\section{تخمین کارایی}
 
-By calculating the time complexity of an algorithm,
-it is possible to check, before
-implementing the algorithm, that it is
-efficient enough for the problem.
-The starting point for estimations is the fact that
-a modern computer can perform some hundreds of
-millions of operations in a second.
+با محاسبه پیچیدگی زمانی یک الگوریتم،
+می‌توان پیش از پیاده‌سازی بررسی کرد
+که آیا الگوریتم برای حل مسئله به اندازه کافی کارآمد است یا خیر.
+نقطه شروع تخمین‌ها این واقعیت است که
+یک رایانه مدرن می‌تواند چند صد میلیون عملیات را در یک ثانیه انجام دهد.
 
-For example, assume that the time limit for
-a problem is one second and the input size is $n=10^5$.
-If the time complexity is $O(n^2)$,
-the algorithm will perform about $(10^5)^2=10^{10}$ operations.
-This should take at least some tens of seconds,
-so the algorithm seems to be too slow for solving the problem.
+برای نمونه، فرض کنید محدودیت زمانی یک مسئله
+یک ثانیه و اندازه ورودی $n=10^5$ است.
+اگر پیچیدگی زمانی $O(n^2)$ باشد،
+الگوریتم حدود $(10^5)^2=10^{10}$ عملیات انجام خواهد داد.
+این کار حداقل به چند ده ثانیه زمان نیاز دارد،
+بنابراین الگوریتم برای حل مسئله بیش از حد کُند به نظر می‌رسد.
 
-On the other hand, given the input size,
-we can try to \emph{guess}
-the required time complexity of the algorithm
-that solves the problem.
-The following table contains some useful estimates
-assuming a time limit of one second.
+از سوی دیگر، با توجه به اندازه ورودی،
+می‌توان پیچیدگی زمانی مورد نیاز الگوریتم حل‌کننده مسئله را
+\emph{حدس} زد.
+جدول زیر شامل چند تخمین کاربردی
+با فرض محدودیت زمانی یک ثانیه است.
 
 \begin{center}
 \begin{tabular}{ll}
-input size & required time complexity \\
+اندازه ورودی & پیچیدگی زمانی مورد نیاز \\
 \hline
 $n \le 10$ & $O(n!)$ \\
 $n \le 20$ & $O(2^n)$ \\
 $n \le 500$ & $O(n^3)$ \\
 $n \le 5000$ & $O(n^2)$ \\
-$n \le 10^6$ & $O(n \log n)$ or $O(n)$ \\
-$n$ is large & $O(1)$ or $O(\log n)$ \\
+$n \le 10^6$ & $O(n \log n)$ یا $O(n)$ \\
+$n$ بزرگ است & $O(1)$ یا $O(\log n)$ \\
 \end{tabular}
 \end{center}
 
-For example, if the input size is $n=10^5$,
-it is probably expected that the time
-complexity of the algorithm is $O(n)$ or $O(n \log n)$.
-This information makes it easier to design the algorithm,
-because it rules out approaches that would yield
-an algorithm with a worse time complexity.
+به عنوان مثال، اگر اندازه ورودی $n=10^5$ باشد،
+احتمالاً انتظار می‌رود که پیچیدگی زمانی
+الگوریتم $O(n)$ یا $O(n \log n)$ باشد.
+این اطلاعات طراحی الگوریتم را ساده‌تر می‌کند،
+زیرا روش‌هایی را که منجر به الگوریتمی
+با پیچیدگی زمانی بدتر می‌شوند کنار می‌گذارد.
 
 \index{constant factor}
 
-Still, it is important to remember that a
-time complexity is only an estimate of efficiency,
-because it hides the \emph{constant factors}.
-For example, an algorithm that runs in $O(n)$ time
-may perform $n/2$ or $5n$ operations.
-This has an important effect on the actual
-running time of the algorithm.
+با این حال، باید به یاد داشت که
+پیچیدگی زمانی تنها برآوردی از کارایی است،
+زیرا \emph{ضرایب ثابت} را پنهان می‌کند.
+برای نمونه، الگوریتمی با زمان اجرای $O(n)$
+ممکن است $n/2$ یا $5n$ عملیات انجام دهد.
+این موضوع اثر مهمی بر زمان اجرای واقعی
+الگوریتم دارد.
 
-\section{Maximum subarray sum}
+\section{بیشینه مجموع زیرآرایه}
 
 \index{maximum subarray sum}
 
-There are often several possible algorithms
-for solving a problem such that their
-time complexities are different.
-This section discusses a classic problem that
-has a straightforward $O(n^3)$ solution.
-However, by designing a better algorithm, it
-is possible to solve the problem in $O(n^2)$
-time and even in $O(n)$ time.
+اغلب چندین الگوریتم با پیچیدگی‌های زمانی
+متفاوت برای حل یک مسئله وجود دارد.
+این بخش مسئله‌ای کلاسیک را بررسی می‌کند که
+یک راه حل مستقیم با زمان اجرای $O(n^3)$ دارد.
+با این وجود، با طراحی الگوریتمی بهتر می‌توان
+مسئله را در زمان $O(n^2)$ و حتی $O(n)$ حل کرد.
 
-Given an array of $n$ numbers,
-our task is to calculate the
-\key{maximum subarray sum}, i.e.,
-the largest possible sum of 
-a sequence of consecutive values
-in the array\footnote{J. Bentley's
-book \emph{Programming Pearls} \cite{ben86} made the problem popular.}.
-The problem is interesting when there may be
-negative values in the array.
-For example, in the array
+به ازای یک آرایه شامل $n$ عدد،
+هدف محاسبه \key{بیشینه مجموع زیرآرایه} است؛ یعنی
+بزرگ‌ترین مجموع ممکن از دنباله‌ای از مقادیر متوالی
+در آرایه\footnote{کتاب \emph{Programming Pearls} نوشته J. Bentley \cite{ben86} این مسئله را معروف کرد.}.
+این مسئله زمانی جالب می‌شود که مقادیر منفی
+در آرایه وجود داشته باشند.
+به عنوان مثال، در آرایه
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \draw (0,0) grid (8,1);
@@ -383,7 +323,7 @@ For example, in the array
 \end{tikzpicture}
 \end{center}
 \begin{samepage}
-the following subarray produces the maximum sum $10$:
+زیرآرایه زیر بیشینه مجموع $10$ را تولید می‌کند:
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \fill[color=lightgray] (1,0) rectangle (6,1);
@@ -401,16 +341,16 @@ the following subarray produces the maximum sum $10$:
 \end{center}
 \end{samepage}
 
-We assume that an empty subarray is allowed,
-so the maximum subarray sum is always at least $0$.
+فرض می‌کنیم زیرآرایه خالی مجاز است،
+بنابراین بیشینه مجموع زیرآرایه همیشه حداقل $0$ است.
 
-\subsubsection{Algorithm 1}
+\subsubsection{الگوریتم ۱}
 
-A straightforward way to solve the problem
-is to go through all possible subarrays,
-calculate the sum of values in each subarray and maintain
-the maximum sum.
-The following code implements this algorithm:
+یک روش مستقیم برای حل مسئله،
+بررسی تمام زیرآرایه‌های ممکن،
+محاسبه مجموع مقادیر هر زیرآرایه و نگهداری
+بیشینه مجموع است.
+کد زیر این الگوریتم را پیاده‌سازی می‌کند:
 
 \begin{lstlisting}
 int best = 0;
@@ -426,22 +366,16 @@ for (int a = 0; a < n; a++) {
 cout << best << "\n";
 \end{lstlisting}
 
-The variables \texttt{a} and \texttt{b} fix the first and
-last index of the subarray,
-and the sum of values is calculated to the variable \texttt{sum}.
-The variable \texttt{best} contains the maximum sum found during the search.
+متغیرهای \texttt{a} و \texttt{b} اندیس‌های ابتدا و
+انتهای زیرآرایه را مشخص می‌کنند،
+و مجموع مقادیر در متغیر \texttt{sum} محاسبه می‌شود.
+متغیر \texttt{best} شامل بیشینه مجموع یافت‌شده در طول جستجو است.
 
-The time complexity of the algorithm is $O(n^3)$,
-because it consists of three nested loops 
-that go through the input.
+پیچیدگی زمانی الگوریتم $O(n^3)$ است، زیرا از سه حلقه تو‌در‌تو تشکیل شده که ورودی را پیمایش می‌کنند.
 
-\subsubsection{Algorithm 2}
+\subsubsection{الگوریتم ۲}
 
-It is easy to make Algorithm 1 more efficient
-by removing one loop from it.
-This is possible by calculating the sum at the same
-time when the right end of the subarray moves.
-The result is the following code:
+بهینه‌تر کردن الگوریتم ۱ با حذف یک حلقه آسان است. این کار با محاسبه مجموع هم‌زمان با حرکت انتهای راست زیرآرایه ممکن می‌شود. نتیجه، کد زیر است:
 
 \begin{lstlisting}
 int best = 0;
@@ -454,38 +388,21 @@ for (int a = 0; a < n; a++) {
 }
 cout << best << "\n";
 \end{lstlisting}
-After this change, the time complexity is $O(n^2)$.
+پس از این تغییر، پیچیدگی زمانی $O(n^2)$ می‌شود.
 
-\subsubsection{Algorithm 3}
+\subsubsection{الگوریتم ۳}
 
-Surprisingly, it is possible to solve the problem
-in $O(n)$ time\footnote{In \cite{ben86}, this linear-time algorithm
-is attributed to J. B. Kadane, and the algorithm is sometimes
-called \index{Kadane's algorithm} \key{Kadane's algorithm}.}, which means
-that just one loop is enough.
-The idea is to calculate, for each array position,
-the maximum sum of a subarray that ends at that position.
-After this, the answer for the problem is the
-maximum of those sums.
+به شکلی شگفت‌آور، حل این مسئله در زمان $O(n)$ ممکن است\footnote{در \cite{ben86}، این الگوریتم زمان‌خطی به جی. بی. کادین نسبت داده شده و الگوریتم گاهی \index{Kadane's algorithm} \key{الگوریتم کادین} نامیده می‌شود.}؛ یعنی فقط یک حلقه کافی است. ایده این است که برای هر جایگاه آرایه، بیشینه مجموع زیرآرایه‌ای محاسبه شود که در آن جایگاه پایان می‌یابد. پس از آن، پاسخ مسئله، بیشینه این مجموع‌ها خواهد بود.
 
-Consider the subproblem of finding the maximum-sum subarray
-that ends at position $k$.
-There are two possibilities:
+زیرمسئله یافتن زیرآرایه با بیشینه مجموع را در نظر بگیرید که در جایگاه $k$ پایان می‌یابد. دو حالت وجود دارد:
 \begin{enumerate}
-\item The subarray only contains the element at position $k$.
-\item The subarray consists of a subarray that ends
-at position $k-1$, followed by the element at position $k$.
+\item زیرآرایه تنها شامل عنصر در جایگاه $k$ است.
+\item زیرآرایه از یک زیرآرایه تشکیل شده که در جایگاه $k-1$ پایان می‌یابد و به دنبال آن عنصر در جایگاه $k$ می‌آید.
 \end{enumerate}
 
-In the latter case, since we want to
-find a subarray with maximum sum,
-the subarray that ends at position $k-1$
-should also have the maximum sum.
-Thus, we can solve the problem efficiently
-by calculating the maximum subarray sum
-for each ending position from left to right.
+در حالت دوم، از آنجا که به دنبال زیرآرایه‌ای با بیشینه مجموع هستیم، زیرآرایه‌ای که در جایگاه $k-1$ پایان می‌یابد نیز باید بیشینه مجموع را داشته باشد. بنابراین، می‌توان مسئله را با محاسبه بیشینه مجموع زیرآرایه برای هر جایگاه پایانی از چپ به راست، به صورت کارآمد حل کرد.
 
-The following code implements the algorithm:
+کد زیر الگوریتم را پیاده‌سازی می‌کند:
 \begin{lstlisting}
 int best = 0, sum = 0;
 for (int k = 0; k < n; k++) {
@@ -495,28 +412,17 @@ for (int k = 0; k < n; k++) {
 cout << best << "\n";
 \end{lstlisting}
 
-The algorithm only contains one loop
-that goes through the input,
-so the time complexity is $O(n)$.
-This is also the best possible time complexity,
-because any algorithm for the problem
-has to examine all array elements at least once.
+الگوریتم تنها شامل یک حلقه است که ورودی را پیمایش می‌کند، بنابراین پیچیدگی زمانی $O(n)$ است. این مقدار، بهترین پیچیدگی زمانی ممکن نیز هست؛ زیرا هر الگوریتمی برای این مسئله باید تمام عناصر آرایه را دست‌کم یک بار بررسی کند.
 
-\subsubsection{Efficiency comparison}
+\subsubsection{مقایسه کارایی}
 
-It is interesting to study how efficient 
-algorithms are in practice.
-The following table shows the running times
-of the above algorithms for different
-values of $n$ on a modern computer.
+بررسی میزان کارایی الگوریتم‌ها در عمل جالب است. جدول زیر زمان‌های اجرای الگوریتم‌های فوق را به ازای مقادیر مختلف $n$ روی یک رایانه امروزی نشان می‌دهد.
 
-In each test, the input was generated randomly.
-The time needed for reading the input was not
-measured.
+در هر آزمایش، ورودی به صورت تصادفی تولید شده است. زمان لازم برای خواندن ورودی اندازه‌گیری نشده است.
 
 \begin{center}
 \begin{tabular}{rrrr}
-array size $n$ & Algorithm 1 & Algorithm 2 & Algorithm 3 \\
+اندازه آرایه $n$ & الگوریتم ۱ & الگوریتم ۲ & الگوریتم ۳ \\
 \hline
 $10^2$ & $0.0$ s & $0.0$ s & $0.0$ s \\
 $10^3$ & $0.1$ s & $0.0$ s & $0.0$ s \\
@@ -527,12 +433,6 @@ $10^7$ & > $10.0$ s & > $10.0$ s & $0.0$ s \\
 \end{tabular}
 \end{center}
 
-The comparison shows that all algorithms
-are efficient when the input size is small,
-but larger inputs bring out remarkable
-differences in the running times of the algorithms.
-Algorithm 1 becomes slow
-when $n=10^4$, and Algorithm 2
-becomes slow when $n=10^5$.
-Only Algorithm 3 is able to process
-even the largest inputs instantly.
+مقایسه نشان می‌دهد همه الگوریتم‌ها در اندازه‌های کوچک ورودی کارآمد هستند، اما ورودی‌های بزرگ‌تر تفاوت‌های چشمگیری در زمان اجرای الگوریتم‌ها آشکار می‌کنند.
+الگوریتم ۱ در $n=10^4$ کند می‌شود و الگوریتم ۲ در $n=10^5$ کند می‌شود.
+تنها الگوریتم ۳ می‌تواند حتی بزرگ‌ترین ورودی‌ها را نیز به صورت آنی پردازش کند.

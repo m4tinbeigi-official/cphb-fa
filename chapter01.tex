@@ -1,92 +1,90 @@
-\chapter{Introduction}
+\chapter{مقدمه}
 
-Competitive programming combines two topics:
-(1) the design of algorithms and (2) the implementation of algorithms.
+برنامه‌نویسی رقابتی ترکیب دو مبحث است:
+(۱) طراحی الگوریتم‌ها و (۲) پیاده‌سازی الگوریتم‌ها.
 
-The \key{design of algorithms} consists of problem solving
-and mathematical thinking.
-Skills for analyzing problems and solving them
-creatively are needed.
-An algorithm for solving a problem
-has to be both correct and efficient,
-and the core of the problem is often
-about inventing an efficient algorithm.
+\key{طراحی الگوریتم‌ها} شامل حل مسئله
+و تفکر ریاضی است.
+مهارت‌های تحلیل مسائل و حل خلاقانه آن‌ها
+مورد نیاز است.
+الگوریتم حل مسئله
+باید هم درست و هم کارآمد باشد،
+و هسته مسئله اغلب
+ابداع الگوریتمی کارآمد است.
 
-Theoretical knowledge of algorithms
-is important to competitive programmers.
-Typically, a solution to a problem is
-a combination of well-known techniques and
-new insights.
-The techniques that appear in competitive programming
-also form the basis for the scientific research
-of algorithms.
+دانش نظری الگوریتم‌ها
+برای برنامه‌نویسان رقابتی مهم است.
+معمولا راه‌حل مسئله
+ترکیبی از روش‌های شناخته‌شده و
+بینش‌های جدید است.
+تکنیک‌های حاضر در برنامه‌نویسی رقابتی
+اساس تحقیقات علمی
+الگوریتم‌ها را نیز تشکیل می‌دهند.
 
-The \key{implementation of algorithms} requires good
-programming skills.
-In competitive programming, the solutions
-are graded by testing an implemented algorithm
-using a set of test cases.
-Thus, it is not enough that the idea of the
-algorithm is correct, but the implementation also
-has to be correct.
+\key{پیاده‌سازی الگوریتم‌ها} نیازمند مهارت‌های برنامه‌نویسی
+خوب است.
+در برنامه‌نویسی رقابتی، راه‌حل‌ها
+با ارزیابی الگوریتم پیاده‌سازی‌شده
+توسط مجموعه‌ای از تست‌ها داوری می‌شوند.
+بنابراین، تنها درست بودن ایده الگوریتم
+کافی نیست، بلکه پیاده‌سازی نیز
+باید درست باشد.
 
-A good coding style in contests is
-straightforward and concise.
-Programs should be written quickly,
-because there is not much time available.
-Unlike in traditional software engineering,
-the programs are short (usually at most a few
-hundred lines of code), and they do not need to 
-be maintained after the contest.
+سبک کدنویسی خوب در مسابقات
+سرراست و مختصر است.
+برنامه‌ها باید سریع نوشته شوند،
+زیرا زمان زیادی وجود ندارد.
+برخلاف مهندسی نرم‌افزار سنتی،
+برنامه‌ها کوتاه‌اند (معمولا حداکثر چند
+صد خط کد)، و پس از مسابقه نیازی به
+نگهداری آن‌ها نیست.
 
-\section{Programming languages}
+\section{زبان‌های برنامه‌نویسی}
 
-\index{programming language}
+\index{programming language@زبان برنامه‌نویسی}
 
-At the moment, the most popular programming
-languages used in contests are C++, Python and Java.
-For example, in Google Code Jam 2017,
-among the best 3,000 participants,
-79 \% used C++,
-16 \% used Python and
-8 \% used Java \cite{goo17}.
-Some participants also used several languages.
+در حال حاضر، محبوب‌ترین زبان‌های
+برنامه‌نویسی در مسابقات C++، پایتون و جاوا هستند.
+برای نمونه، در Google Code Jam 2017،
+میان ۳۰۰۰ شرکت‌کننده برتر،
+۷۹ ٪ از C++،
+۱۶ ٪ از پایتون و
+۸ ٪ از جاوا استفاده کردند \cite{goo17}.
+برخی شرکت‌کنندگان از چند زبان نیز استفاده کردند.
 
-Many people think that C++ is the best choice
-for a competitive programmer,
-and C++ is nearly always available in
-contest systems.
-The benefits of using C++ are that
-it is a very efficient language and
-its standard library contains a 
-large collection
-of data structures and algorithms.
+بسیاری بر این باورند که C++ بهترین انتخاب
+برای برنامه‌نویس رقابتی است،
+و C++ تقریبا همیشه در
+سامانه‌های مسابقه در دسترس است.
+مزایای استفاده از C++ این است که
+زبانی بسیار کارآمد است و
+کتابخانه استاندارد آن شامل مجموعه‌ای
+بزرگ از داده‌ساختارها و الگوریتم‌ها است.
 
-On the other hand, it is good to
-master several languages and understand
-their strengths.
-For example, if large integers are needed
-in the problem,
-Python can be a good choice, because it
-contains built-in operations for
-calculating with large integers.
-Still, most problems in programming contests
-are set so that
-using a specific programming language
-is not an unfair advantage.
+از سوی دیگر، تسلط بر
+چندین زبان و درک
+نقاط قوت آن‌ها مفید است.
+برای مثال، اگر اعداد صحیح بزرگ در
+مسئله نیاز باشند،
+پایتون می‌تواند انتخاب خوبی باشد، زیرا
+عملیات توکار برای
+محاسبات با اعداد صحیح بزرگ دارد.
+با این حال، بیشتر مسائل در مسابقات برنامه‌نویسی
+طوری طرح می‌شوند که
+استفاده از زبانی خاص، مزیت ناعادلانه نباشد.
 
-All example programs in this book are written in C++,
-and the standard library's
-data structures and algorithms are often used.
-The programs follow the C++11 standard,
-which can be used in most contests nowadays.
-If you cannot program in C++ yet,
-now is a good time to start learning.
+تمام برنامه‌های نمونه در این کتاب به C++ نوشته شده‌اند،
+و اغلب از داده‌ساختارها و الگوریتم‌های کتابخانه
+استاندارد استفاده می‌شود.
+برنامه‌ها از استاندارد C++11 پیروی می‌کنند،
+که امروزه در اکثر مسابقات قابل استفاده است.
+اگر هنوز نمی‌توانید با C++ برنامه‌نویسی کنید،
+اکنون زمان مناسبی برای یادگیری آن است.
 
-\subsubsection{C++ code template}
+\subsubsection{قالب کد C++}
 
-A typical C++ code template for competitive programming
-looks like this:
+قالب کد معمول C++ برای برنامه‌نویسی رقابتی
+به این شکل است:
 
 \begin{lstlisting}
 #include <bits/stdc++.h>
@@ -98,51 +96,25 @@ int main() {
 }
 \end{lstlisting}
 
-The \texttt{\#include} line at the beginning
-of the code is a feature of the \texttt{g++} compiler
-that allows us to include the entire standard library.
-Thus, it is not needed to separately include
-libraries such as \texttt{iostream},
-\texttt{vector} and \texttt{algorithm},
-but rather they are available automatically.
+خط \texttt{\#include} در ابتدای کد قابلیتی از کامپایلر \texttt{g++} است که اجازه می‌دهد کل کتابخانه استاندارد اضافه شود. بنابراین نیازی به اضافه کردن جداگانه کتابخانه‌هایی مانند \texttt{iostream}، \texttt{vector} و \texttt{algorithm} نیست، بلکه خودکار در دسترس قرار می‌گیرند.
 
-The \texttt{using} line declares
-that the classes and functions
-of the standard library can be used directly
-in the code.
-Without the \texttt{using} line we would have
-to write, for example, \texttt{std::cout},
-but now it suffices to write \texttt{cout}.
+خط \texttt{using} اعلام می‌کند که کلاس‌ها و توابع کتابخانه استاندارد می‌توانند مستقیماً در کد استفاده شوند. بدون خط \texttt{using} باید مثلاً \texttt{std::cout} نوشته می‌شد، اما اکنون نوشتن \texttt{cout} کفایت می‌کند.
 
-The code can be compiled using the following command:
+کد را می‌توان با استفاده از دستور زیر کامپایل کرد:
 
 \begin{lstlisting}
 g++ -std=c++11 -O2 -Wall test.cpp -o test
 \end{lstlisting}
 
-This command produces a binary file \texttt{test}
-from the source code \texttt{test.cpp}.
-The compiler follows the C++11 standard
-(\texttt{-std=c++11}),
-optimizes the code (\texttt{-O2})
-and shows warnings about possible errors (\texttt{-Wall}).
+این دستور فایل دودویی \texttt{test} را از کد منبع \texttt{test.cpp} تولید می‌کند. کامپایلر از استاندارد C++11 پیروی می‌کند (\texttt{-std=c++11})، کد را بهینه‌سازی می‌کند (\texttt{-O2}) و هشدارهایی درباره خطاهای احتمالی نمایش می‌دهد (\texttt{-Wall}).
 
-\section{Input and output}
+\section{ورودی و خروجی}
 
-\index{input and output}
+\index{ورودی و خروجی}
 
-In most contests, standard streams are used for
-reading input and writing output.
-In C++, the standard streams are
-\texttt{cin} for input and \texttt{cout} for output.
-In addition, the C functions
-\texttt{scanf} and \texttt{printf} can be used.
+در بیشتر مسابقات، جریان‌های استاندارد برای خواندن ورودی و نوشتن خروجی استفاده می‌شوند. در C++ جریان‌های استاندارد عبارتند از \texttt{cin} برای ورودی و \texttt{cout} برای خروجی. علاوه بر این، توابع C یعنی \texttt{scanf} و \texttt{printf} نیز می‌توانند به کار روند.
 
-The input for the program usually consists of
-numbers and strings that are separated with
-spaces and newlines.
-They can be read from the \texttt{cin} stream
-as follows:
+ورودی برنامه معمولاً شامل اعداد و رشته‌هایی است که با فاصله و خطوط جدید جدا شده‌اند. آن‌ها را می‌توان از جریان \texttt{cin} به صورت زیر خواند:
 
 \begin{lstlisting}
 int a, b;
@@ -150,11 +122,7 @@ string x;
 cin >> a >> b >> x;
 \end{lstlisting}
 
-This kind of code always works,
-assuming that there is at least one space
-or newline between each element in the input.
-For example, the above code can read
-both of the following inputs:
+این نوع کد همیشه کار می‌کند، به این فرض که حداقل یک فاصله یا خط جدید بین هر عنصر در ورودی وجود داشته باشد. برای مثال، کد بالا هر دو ورودی زیر را می‌خواند:
 \begin{lstlisting}
 123 456 monkey
 \end{lstlisting}
@@ -162,107 +130,74 @@ both of the following inputs:
 123    456
 monkey
 \end{lstlisting}
-The \texttt{cout} stream is used for output
-as follows:
+جریان \texttt{cout} برای خروجی به شکل زیر استفاده می‌شود:
 \begin{lstlisting}
 int a = 123, b = 456;
 string x = "monkey";
 cout << a << " " << b << " " << x << "\n";
 \end{lstlisting}
 
-Input and output is sometimes
-a bottleneck in the program.
-The following lines at the beginning of the code
-make input and output more efficient:
+ورودی و خروجی گاهی گلوگاه برنامه است. خطوط زیر در ابتدای کد، ورودی و خروجی را کارآمدتر می‌کنند:
 
 \begin{lstlisting}
 ios::sync_with_stdio(0);
 cin.tie(0);
 \end{lstlisting}
 
-Note that the newline \texttt{"\textbackslash n"}
-works faster than \texttt{endl},
-because \texttt{endl} always causes
-a flush operation.
+توجه کنید که کاراکتر خط جدید \texttt{"\textbackslash n"} سریع‌تر از \texttt{endl} عمل می‌کند، چون \texttt{endl} همیشه یک عملیات فلاش (تخلیه بافر) انجام می‌دهد.
 
-The C functions \texttt{scanf}
-and \texttt{printf} are an alternative
-to the C++ standard streams.
-They are usually a bit faster,
-but they are also more difficult to use.
-The following code reads two integers from the input:
+توابع C یعنی \texttt{scanf} و \texttt{printf} جایگزینی برای جریان‌های استاندارد C++ هستند. آن‌ها معمولاً کمی سریع‌ترند، ولی استفاده از آن‌ها سخت‌تر است. کد زیر دو عدد صحیح را از ورودی می‌خواند:
 \begin{lstlisting}
 int a, b;
 scanf("%d %d", &a, &b);
 \end{lstlisting}
-The following code prints two integers:
+کد زیر دو عدد صحیح را چاپ می‌کند:
 \begin{lstlisting}
 int a = 123, b = 456;
 printf("%d %d\n", a, b);
 \end{lstlisting}
 
-Sometimes the program should read a whole line
-from the input, possibly containing spaces.
-This can be accomplished by using the
-\texttt{getline} function:
+گاهی برنامه باید یک خط کامل را از ورودی بخواند که ممکن است شامل فاصله باشد. این کار با استفاده از تابع \texttt{getline} انجام می‌شود:
 
 \begin{lstlisting}
 string s;
 getline(cin, s);
 \end{lstlisting}
 
-If the amount of data is unknown, the following
-loop is useful:
+اگر مقدار داده‌ها نامشخص باشد، حلقه زیر مفید است:
 \begin{lstlisting}
 while (cin >> x) {
     // code
 }
 \end{lstlisting}
-This loop reads elements from the input
-one after another, until there is no
-more data available in the input.
+این حلقه عناصر را یکی پس از دیگری از ورودی می‌خواند، تا زمانی که داده دیگری در ورودی وجود نداشته باشد.
 
-In some contest systems, files are used for
-input and output.
-An easy solution for this is to write
-the code as usual using standard streams,
-but add the following lines to the beginning of the code:
+در برخی سامانه‌های مسابقه، از فایل‌ها برای ورودی و خروجی استفاده می‌شود.
+راه حل آسان برای این موضوع، نوشتن کد به شکل همیشگی با جریان‌های استاندارد و اضافه کردن خطوط زیر به ابتدای کد است:
 \begin{lstlisting}
 freopen("input.txt", "r", stdin);
 freopen("output.txt", "w", stdout);
 \end{lstlisting}
-After this, the program reads the input from the file
-''input.txt'' and writes the output to the file
-''output.txt''.
+پس از آن، برنامه ورودی را از فایل ''input.txt'' خوانده و خروجی را در فایل ''output.txt'' می‌نویسد.
 
-\section{Working with numbers}
+\section{کار با اعداد}
 
 \index{integer}
 
-\subsubsection{Integers}
+\subsubsection{اعداد صحیح}
 
-The most used integer type in competitive programming
-is \texttt{int}, which is a 32-bit type with
-a value range of $-2^{31} \ldots 2^{31}-1$
-or about $-2 \cdot 10^9 \ldots 2 \cdot 10^9$.
-If the type \texttt{int} is not enough,
-the 64-bit type \texttt{long long} can be used.
-It has a value range of $-2^{63} \ldots 2^{63}-1$
-or about $-9 \cdot 10^{18} \ldots 9 \cdot 10^{18}$.
+پرکاربردترین نوع عدد صحیح در برنامه‌نویسی رقابتی \texttt{int} است؛ نوعی ۳۲ بیتی با محدوده مقادیر $-2^{31} \ldots 2^{31}-1$ یا حدود $-2 \cdot 10^9 \ldots 2 \cdot 10^9$.
+اگر نوع \texttt{int} کافی نباشد، می‌توان از نوع ۶۴ بیتی \texttt{long long} استفاده کرد.
+این نوع دارای محدوده مقادیر $-2^{63} \ldots 2^{63}-1$ یا حدود $-9 \cdot 10^{18} \ldots 9 \cdot 10^{18}$ است.
 
-The following code defines a
-\texttt{long long} variable:
+کد زیر یک متغیر از نوع \texttt{long long} تعریف می‌کند:
 \begin{lstlisting}
 long long x = 123456789123456789LL;
 \end{lstlisting}
-The suffix \texttt{LL} means that the
-type of the number is \texttt{long long}.
+پسوند \texttt{LL} نشان می‌دهد که نوع عدد \texttt{long long} است.
 
-A common mistake when using the type \texttt{long long}
-is that the type \texttt{int} is still used somewhere
-in the code.
-For example, the following code contains
-a subtle error:
+یک اشتباه متداول هنگام استفاده از نوع \texttt{long long} این است که نوع \texttt{int} همچنان در بخش دیگری از کد استفاده شود.
+برای نمونه، کد زیر حاوی یک خطای ظریف است:
 
 \begin{lstlisting}
 int a = 123456789;
@@ -270,48 +205,28 @@ long long b = a*a;
 cout << b << "\n"; // -1757895751
 \end{lstlisting}
 
-Even though the variable \texttt{b} is of type \texttt{long long},
-both numbers in the expression \texttt{a*a}
-are of type \texttt{int} and the result is
-also of type \texttt{int}.
-Because of this, the variable \texttt{b} will
-contain a wrong result.
-The problem can be solved by changing the type
-of \texttt{a} to \texttt{long long} or
-by changing the expression to \texttt{(long long)a*a}.
+اگرچه متغیر \texttt{b} از نوع \texttt{long long} است، اما هر دو عدد در عبارت \texttt{a*a} از نوع \texttt{int} هستند و نتیجه نیز از نوع \texttt{int} خواهد بود.
+به همین دلیل، متغیر \texttt{b} نتیجه نادرستی ذخیره می‌کند.
+مشکل با تغییر نوع \texttt{a} به \texttt{long long} یا تغییر عبارت به \texttt{(long long)a*a} حل می‌شود.
 
-Usually contest problems are set so that the
-type \texttt{long long} is enough.
-Still, it is good to know that
-the \texttt{g++} compiler also provides
-a 128-bit type \texttt{\_\_int128\_t}
-with a value range of
-$-2^{127} \ldots 2^{127}-1$ or about $-10^{38} \ldots 10^{38}$.
-However, this type is not available in all contest systems.
+معمولاً مسائل مسابقات به گونه‌ای طراحی می‌شوند که نوع \texttt{long long} کافی باشد.
+با این حال، مفید است بدانید کامپایلر \texttt{g++} نوع ۱۲۸ بیتی \texttt{\_\_int128\_t} را نیز با محدوده مقادیر $-2^{127} \ldots 2^{127}-1$ یا حدود $-10^{38} \ldots 10^{38}$ ارائه می‌دهد.
+البته این نوع در تمام سامانه‌های مسابقه در دسترس نیست.
 
-\subsubsection{Modular arithmetic}
+\subsubsection{حساب پیمانه‌ای}
 
 \index{remainder}
 \index{modular arithmetic}
 
-We denote by $x \bmod m$ the remainder
-when $x$ is divided by $m$.
-For example, $17 \bmod 5 = 2$,
-because $17 = 3 \cdot 5 + 2$.
+باقی‌مانده تقسیم $x$ بر $m$ با $x \bmod m$ نشان داده می‌شود.
+برای مثال، $17 \bmod 5 = 2$، زیرا $17 = 3 \cdot 5 + 2$.
 
-Sometimes, the answer to a problem is a
-very large number but it is enough to
-output it ''modulo $m$'', i.e.,
-the remainder when the answer is divided by $m$
-(for example, ''modulo $10^9+7$'').
-The idea is that even if the actual answer
-is very large,
-it suffices to use the types
-\texttt{int} and \texttt{long long}.
+گاهی پاسخ مسئله عددی بسیار بزرگ است اما چاپ آن «به پیمانه $m$» کفایت می‌کند، یعنی باقی‌مانده تقسیم پاسخ بر $m$ (برای نمونه، «به پیمانه $10^9+7$»).
+ایده این است که حتی در صورت بسیار بزرگ بودن پاسخ نهایی، استفاده از نوع‌های \texttt{int} و \texttt{long long} کافی باشد.
 
-An important property of the remainder is that
-in addition, subtraction and multiplication,
-the remainder can be taken before the operation:
+یک ویژگی مهم باقی‌مانده این است که
+در جمع، تفریق و ضرب،
+می‌توان باقی‌مانده را قبل از انجام عملیات محاسبه کرد:
 
 \[
 \begin{array}{rcr}
@@ -321,11 +236,11 @@ the remainder can be taken before the operation:
 \end{array}
 \]
 
-Thus, we can take the remainder after every operation
-and the numbers will never become too large.
+بنابراین، می‌توان پس از هر عملیات باقی‌مانده را محاسبه کرد
+تا اعداد هرگز بیش از حد بزرگ نشوند.
 
-For example, the following code calculates $n!$,
-the factorial of $n$, modulo $m$:
+برای نمونه، کد زیر $n!$،
+یعنی فاکتوریل $n$، را به پیمانه $m$ محاسبه می‌کند:
 \begin{lstlisting}
 long long x = 1;
 for (int i = 2; i <= n; i++) {
@@ -334,75 +249,75 @@ for (int i = 2; i <= n; i++) {
 cout << x%m << "\n";
 \end{lstlisting}
 
-Usually we want the remainder to always
-be between $0\ldots m-1$.
-However, in C++ and other languages,
-the remainder of a negative number
-is either zero or negative.
-An easy way to make sure there
-are no negative remainders is to first calculate
-the remainder as usual and then add $m$
-if the result is negative:
+معمولاً می‌خواهیم باقی‌مانده همواره
+بین $0\ldots m-1$ باشد.
+اما در C++ و زبان‌های دیگر،
+باقی‌مانده یک عدد منفی
+یا صفر است یا منفی.
+یک روش آسان برای اطمینان از عدم وجود
+باقی‌مانده‌های منفی این است که ابتدا باقی‌مانده را
+به صورت معمول حساب کرده و در صورت منفی بودن نتیجه،
+$m$ را به آن اضافه کنیم:
 \begin{lstlisting}
 x = x%m;
 if (x < 0) x += m;
 \end{lstlisting}
-However, this is only needed when there
-are subtractions in the code and the
-remainder may become negative.
+با این حال، این کار تنها زمانی لازم است که
+در کد عملیات تفریق وجود داشته باشد و
+احتمال منفی شدن باقی‌مانده برود.
 
-\subsubsection{Floating point numbers}
+\subsubsection{اعداد ممیز شناور}
 
 \index{floating point number}
 
-The usual floating point types in
-competitive programming are
-the 64-bit \texttt{double}
-and, as an extension in the \texttt{g++} compiler,
-the 80-bit \texttt{long double}.
-In most cases, \texttt{double} is enough,
-but \texttt{long double} is more accurate.
+نوع‌های داده ممیز شناور معمول در
+برنامه‌نویسی رقابتی عبارتند از
+نوع ۶۴ بیتی \texttt{double}
+و، به عنوان یک افزونه در کامپایلر \texttt{g++}،
+نوع ۸۰ بیتی \texttt{long double}.
+در بیشتر موارد، \texttt{double} کافی است،
+اما \texttt{long double} دقت بالاتری دارد.
 
-The required precision of the answer
-is usually given in the problem statement.
-An easy way to output the answer is to use
-the \texttt{printf} function
-and give the number of decimal places
-in the formatting string.
-For example, the following code prints
-the value of $x$ with 9 decimal places:
+دقت مورد نیاز برای پاسخ معمولاً
+در صورت مسئله ذکر می‌شود.
+یک روش آسان برای چاپ پاسخ، استفاده از
+تابع \texttt{printf}
+و تعیین تعداد ارقام اعشار
+در رشته قالب‌بندی است.
+برای نمونه، کد زیر مقدار $x$ را
+با ۹ رقم اعشار چاپ می‌کند:
 
 \begin{lstlisting}
 printf("%.9f\n", x);
 \end{lstlisting}
 
-A difficulty when using floating point numbers
-is that some numbers cannot be represented
-accurately as floating point numbers,
-and there will be rounding errors.
-For example, the result of the following code
-is surprising:
+یکی از دشواری‌های کار با اعداد ممیز شناور
+این است که برخی اعداد را نمی‌توان به طور دقیق
+به صورت ممیز شناور نمایش داد،
+و خطاهای گرد کردن رخ خواهد داد.
+برای نمونه، نتیجه کد زیر
+غافلگیرکننده است:
 
 \begin{lstlisting}
 double x = 0.3*3+0.1;
 printf("%.20f\n", x); // 0.99999999999999988898
 \end{lstlisting}
 
-Due to a rounding error,
-the value of \texttt{x} is a bit smaller than 1,
-while the correct value would be 1.
+به دلیل خطای گرد کردن،
+مقدار \texttt{x} کمی کوچک‌تر از ۱ است،
+در حالی که مقدار درست باید ۱ باشد.
 
-It is risky to compare floating point numbers
-with the \texttt{==} operator,
-because it is possible that the values should be
-equal but they are not because of precision errors.
-A better way to compare floating point numbers
-is to assume that two numbers are equal
-if the difference between them is less than $\varepsilon$,
-where $\varepsilon$ is a small number.
+مقایسه اعداد ممیز شناور با عملگر \texttt{==}
+پرخطر است،
+زیرا ممکن است مقادیر باید برابر باشند
+اما به دلیل خطاهای دقت، برابر نباشند.
+روش بهتر برای مقایسه اعداد ممیز شناور
+این است که فرض کنیم دو عدد برابرند
+اگر اختلاف بین آن‌ها کمتر از $\varepsilon$ باشد،
+که در آن $\varepsilon$ یک عدد کوچک است.
 
-In practice, the numbers can be compared
-as follows ($\varepsilon=10^{-9}$):
+در عمل، اعداد را می‌توان به شکل زیر
+مقایسه کرد ($\varepsilon=10^{-9}$):
 
 \begin{lstlisting}
 if (abs(a-b) < 1e-9) {
@@ -410,305 +325,273 @@ if (abs(a-b) < 1e-9) {
 }
 \end{lstlisting}
 
-Note that while floating point numbers are inaccurate,
-integers up to a certain limit can still be
-represented accurately.
-For example, using \texttt{double},
-it is possible to accurately represent all
-integers whose absolute value is at most $2^{53}$.
+توجه کنید با این که اعداد ممیز شناور نادقیق هستند،
+اعداد صحیح تا حد مشخصی دقیق ذخیره می‌شوند.
+مثال: نوع \texttt{double} تمام اعداد صحیح
+با قدر مطلق حداکثر $2^{53}$ را دقیق نمایش می‌دهد.
 
-\section{Shortening code}
+\section{کوتاه‌نویسی کد}
 
-Short code is ideal in competitive programming,
-because programs should be written
-as fast as possible.
-Because of this, competitive programmers often define
-shorter names for datatypes and other parts of code.
+کد کوتاه در برنامه‌نویسی رقابتی ایده‌آل است،
+چون کدها باید سریع نوشته شوند.
+به همین دلیل، برنامه‌نویسان نام‌های کوتاه‌تری
+برای انواع داده و اجزای کد تعریف می‌کنند.
 
-\subsubsection{Type names}
+\subsubsection{نام‌های نوع داده}
 \index{tuppdef@\texttt{typedef}}
-Using the command \texttt{typedef}
-it is possible to give a shorter name
-to a datatype.
-For example, the name \texttt{long long} is long,
-so we can define a shorter name \texttt{ll}:
+دستور \texttt{typedef} نام کوتاه‌تر
+برای یک نوع داده می‌سازد.
+مثال: نام \texttt{long long} طولانی است؛
+نام کوتاه‌تر \texttt{ll} را تعریف می‌کنیم:
 \begin{lstlisting}
 typedef long long ll;
 \end{lstlisting}
-After this, the code
+بعد از این، کد:
 \begin{lstlisting}
 long long a = 123456789;
 long long b = 987654321;
 cout << a*b << "\n";
 \end{lstlisting}
-can be shortened as follows:
+این‌گونه کوتاه می‌شود:
 \begin{lstlisting}
 ll a = 123456789;
 ll b = 987654321;
 cout << a*b << "\n";
 \end{lstlisting}
 
-The command \texttt{typedef}
-can also be used with more complex types.
-For example, the following code gives
-the name \texttt{vi} for a vector of integers
-and the name \texttt{pi} for a pair
-that contains two integers.
+دستور \texttt{typedef} برای انواع داده پیچیده‌تر نیز کار می‌کند.
+کد زیر نام \texttt{vi} را برای بردای از اعداد صحیح
+و نام \texttt{pi} را برای زوج مرتب دو عدد صحیح تعریف می‌کند:
 \begin{lstlisting}
 typedef vector<int> vi;
 typedef pair<int,int> pi;
 \end{lstlisting}
 
-\subsubsection{Macros}
+\subsubsection{ماکروها}
 \index{macro}
-Another way to shorten code is to define
-\key{macros}.
-A macro means that certain strings in
-the code will be changed before the compilation.
-In C++, macros are defined using the
-\texttt{\#define} keyword.
+روش دیگر کوتاه‌نویسی، تعریف \key{ماکروها} است.
+ماکرو رشته‌های مشخصی از کد را
+قبل از کامپایل جایگزین می‌کند.
+در C++، ماکروها با کلمه کلیدی \texttt{\#define} تعریف می‌شوند.
 
-For example, we can define the following macros:
+مثال: تعریف ماکروهای زیر:
 \begin{lstlisting}
 #define F first
 #define S second
 #define PB push_back
 #define MP make_pair
 \end{lstlisting}
-After this, the code
+بعد از این، کد:
 \begin{lstlisting}
 v.push_back(make_pair(y1,x1));
 v.push_back(make_pair(y2,x2));
 int d = v[i].first+v[i].second;
 \end{lstlisting}
-can be shortened as follows:
+این‌گونه کوتاه می‌شود:
 \begin{lstlisting}
 v.PB(MP(y1,x1));
 v.PB(MP(y2,x2));
 int d = v[i].F+v[i].S;
 \end{lstlisting}
 
-A macro can also have parameters
-which makes it possible to shorten loops and other
-structures.
-For example, we can define the following macro:
+ماکرو پارامتر هم می‌گیرد
+که حلقه‌ها و ساختارها را کوتاه می‌کند.
+مثال: تعریف ماکروی زیر:
 \begin{lstlisting}
 #define REP(i,a,b) for (int i = a; i <= b; i++)
 \end{lstlisting}
-After this, the code
+بعد از این، کد:
 \begin{lstlisting}
 for (int i = 1; i <= n; i++) {
     search(i);
 }
 \end{lstlisting}
-can be shortened as follows:
+این‌گونه کوتاه می‌شود:
 \begin{lstlisting}
 REP(i,1,n) {
     search(i);
 }
 \end{lstlisting}
 
-Sometimes macros cause bugs that may be difficult
-to detect. For example, consider the following macro
-that calculates the square of a number:
+گاهی ماکروها خطاهایی می‌سازند که پیدا کردنشان سخت است.
+مثال: ماکروی زیر برای محاسبه مربع یک عدد:
 \begin{lstlisting}
 #define SQ(a) a*a
 \end{lstlisting}
-This macro \emph{does not} always work as expected.
-For example, the code
+این ماکرو همیشه درست کار \emph{نمی‌کند}.
+مثال: کد
 \begin{lstlisting}
 cout << SQ(3+3) << "\n";
 \end{lstlisting}
-corresponds to the code
+معادل این کد است:
 \begin{lstlisting}
 cout << 3+3*3+3 << "\n"; // 15
 \end{lstlisting}
 
-A better version of the macro is as follows:
+نسخه بهتر ماکرو به این صورت است:
 \begin{lstlisting}
 #define SQ(a) (a)*(a)
 \end{lstlisting}
-Now the code
+اکنون کد
 \begin{lstlisting}
 cout << SQ(3+3) << "\n";
 \end{lstlisting}
-corresponds to the code
+معادل این کد است:
 \begin{lstlisting}
 cout << (3+3)*(3+3) << "\n"; // 36
 \end{lstlisting}
 
 
-\section{Mathematics}
+\section{ریاضیات}
 
-Mathematics plays an important role in competitive
-programming, and it is not possible to become
-a successful competitive programmer without
-having good mathematical skills.
-This section discusses some important
-mathematical concepts and formulas that
-are needed later in the book.
+ریاضیات نقش مهمی در برنامه‌نویسی رقابتی دارد. موفقیت در برنامه‌نویسی رقابتی بدون مهارت‌های قوی ریاضی ممکن نیست. این بخش به مفاهیم و فرمول‌های مهم ریاضی می‌پردازد که در ادامه کتاب استفاده می‌شوند.
 
-\subsubsection{Sum formulas}
+\subsubsection{فرمول‌های مجموع}
 
-Each sum of the form
+هر مجموع به فرم
 \[\sum_{x=1}^n x^k = 1^k+2^k+3^k+\ldots+n^k,\]
-where $k$ is a positive integer,
-has a closed-form formula that is a
-polynomial of degree $k+1$.
-For example\footnote{\index{Faulhaber's formula}
-There is even a general formula for such sums, called \key{Faulhaber's formula},
-but it is too complex to be presented here.},
+که در آن $k$ عدد صحیح مثبت است، فرمول بسته دارد که چندجمله‌ای با درجه $k+1$ است.
+برای مثال\footnote{\index{فرمول فالهابر}\index{Faulhaber's formula}
+فرمول کلی برای این مجموع‌ها با نام \key{فرمول فالهابر} وجود دارد، ولی ارائه آن در اینجا پیچیده است.}،
 \[\sum_{x=1}^n x = 1+2+3+\ldots+n = \frac{n(n+1)}{2}\]
-and
+و
 \[\sum_{x=1}^n x^2 = 1^2+2^2+3^2+\ldots+n^2 = \frac{n(n+1)(2n+1)}{6}.\]
 
-An \key{arithmetic progression} is a \index{arithmetic progression}
-sequence of numbers
-where the difference between any two consecutive
-numbers is constant.
-For example,
+یک \key{تصاعد حسابی} \index{تصاعد حسابی}\index{arithmetic progression}
+دنباله‌ای از اعداد است
+که تفاضل هر دو عدد متوالی در آن ثابت است.
+برای مثال،
 \[3, 7, 11, 15\]
-is an arithmetic progression with constant 4.
-The sum of an arithmetic progression can be calculated
-using the formula
-\[\underbrace{a + \cdots + b}_{n \,\, \textrm{numbers}} = \frac{n(a+b)}{2}\]
-where $a$ is the first number,
-$b$ is the last number and
-$n$ is the amount of numbers.
-For example,
+یک تصاعد حسابی با قدر نسبت (مقدار ثابت) ۴ است.
+مجموع جملات تصاعد حسابی با فرمول زیر محاسبه می‌شود:
+\[\underbrace{a + \cdots + b}_{n \,\, \textrm{عدد}} = \frac{n(a+b)}{2}\]
+که $a$ عدد اول،
+$b$ عدد آخر و
+$n$ تعداد اعداد است.
+برای مثال،
 \[3+7+11+15=\frac{4 \cdot (3+15)}{2} = 36.\]
-The formula is based on the fact
-that the sum consists of $n$ numbers and
-the value of each number is $(a+b)/2$ on average.
+اساس فرمول این است: مجموع از $n$ عدد تشکیل شده و میانگین مقدار هر عدد $(a+b)/2$ است.
 
-\index{geometric progression}
-A \key{geometric progression} is a sequence
-of numbers
-where the ratio between any two consecutive
-numbers is constant.
-For example,
+\index{تصاعد هندسی}\index{geometric progression}
+یک \key{تصاعد هندسی} دنباله‌ای از اعداد است
+که نسبت هر دو عدد متوالی در آن ثابت است.
+برای مثال،
 \[3,6,12,24\]
-is a geometric progression with constant 2.
-The sum of a geometric progression can be calculated
-using the formula
+یک تصاعد هندسی با قدر نسبت ۲ است.
+مجموع جملات تصاعد هندسی با فرمول زیر محاسبه می‌شود:
 \[a + ak + ak^2 + \cdots + b = \frac{bk-a}{k-1}\]
-where $a$ is the first number,
-$b$ is the last number and the
-ratio between consecutive numbers is $k$.
-For example,
+که $a$ عدد اول،
+$b$ عدد آخر و
+نسبت اعداد متوالی $k$ است.
+برای مثال،
 \[3+6+12+24=\frac{24 \cdot 2 - 3}{2-1} = 45.\]
 
-This formula can be derived as follows. Let
+اثبات فرمول به این صورت است. فرض کنید:
 \[ S = a + ak + ak^2 + \cdots + b .\]
-By multiplying both sides by $k$, we get
+با ضرب دو طرف در $k$:
 \[ kS = ak + ak^2 + ak^3 + \cdots + bk,\]
-and solving the equation
+حل معادله
 \[ kS-S = bk-a\]
-yields the formula.
+فرمول را به دست می‌دهد.
 
-A special case of a sum of a geometric progression is the formula
+حالت خاص مجموع تصاعد هندسی فرمول زیر است:
 \[1+2+4+8+\ldots+2^{n-1}=2^n-1.\]
 
-\index{harmonic sum}
+\index{مجموع هارمونیک}\index{harmonic sum}
 
-A \key{harmonic sum} is a sum of the form
+یک \key{مجموع هارمونیک} مجموعی به فرم زیر است:
 \[ \sum_{x=1}^n \frac{1}{x} = 1+\frac{1}{2}+\frac{1}{3}+\ldots+\frac{1}{n}.\]
 
-An upper bound for a harmonic sum is $\log_2(n)+1$.
-Namely, we can
-modify each term $1/k$ so that $k$ becomes
-the nearest power of two that does not exceed $k$.
-For example, when $n=6$, we can estimate
-the sum as follows:
+یک کران بالا برای مجموع هارمونیک برابر $\log_2(n)+1$ است.
+به طور مشخص، می‌توانیم هر جمله $1/k$ را طوری تغییر دهیم که $k$ تبدیل به نزدیک‌ترین توان دو شود که از $k$ بزرگ‌تر نیست.
+برای نمونه، وقتی $n=6$ است، می‌توان مجموع را به صورت زیر تخمین زد:
 \[ 1+\frac{1}{2}+\frac{1}{3}+\frac{1}{4}+\frac{1}{5}+\frac{1}{6} \le
 1+\frac{1}{2}+\frac{1}{2}+\frac{1}{4}+\frac{1}{4}+\frac{1}{4}.\]
-This upper bound consists of $\log_2(n)+1$ parts
-($1$, $2 \cdot 1/2$, $4 \cdot 1/4$, etc.),
-and the value of each part is at most 1.
+این کران بالا از $\log_2(n)+1$ بخش تشکیل می‌شود
+($1$، $2 \cdot 1/2$، $4 \cdot 1/4$ و غیره)،
+و مقدار هر بخش حداکثر ۱ است.
 
-\subsubsection{Set theory}
+\subsubsection{نظریه مجموعه‌ها}
 
-\index{set theory}
-\index{set}
-\index{intersection}
-\index{union}
-\index{difference}
-\index{subset}
-\index{universal set}
-\index{complement}
+\index{set theory@نظریه مجموعه‌ها}
+\index{set@مجموعه}
+\index{intersection@اشتراک}
+\index{union@اجتماع}
+\index{difference@تفاضل}
+\index{subset@زیرمجموعه}
+\index{universal set@مجموعه مرجع}
+\index{complement@متمم}
 
-A \key{set} is a collection of elements.
-For example, the set
+یک \key{مجموعه} گردایه‌ای از عناصر است.
+برای نمونه، مجموعه
 \[X=\{2,4,7\}\]
-contains elements 2, 4 and 7.
-The symbol $\emptyset$ denotes an empty set,
-and $|S|$ denotes the size of a set $S$,
-i.e., the number of elements in the set.
-For example, in the above set, $|X|=3$.
+شامل عناصر ۲، ۴ و ۷ است.
+نماد $\emptyset$ نشان‌دهنده مجموعه تهی است،
+و $|S|$ اندازه یک مجموعه $S$ را نشان می‌دهد،
+یعنی تعداد عناصر موجود در مجموعه.
+برای نمونه، در مجموعه بالا، $|X|=3$.
 
-If a set $S$ contains an element $x$,
-we write $x \in S$,
-and otherwise we write $x \notin S$.
-For example, in the above set
-\[4 \in X \hspace{10px}\textrm{and}\hspace{10px} 5 \notin X.\]
+اگر یک مجموعه $S$ شامل عنصری به نام $x$ باشد،
+می‌نویسیم $x \in S$،
+و در غیر این صورت می‌نویسیم $x \notin S$.
+برای نمونه، در مجموعه بالا
+\[4 \in X \hspace{10px}\textrm{و}\hspace{10px} 5 \notin X.\]
 
 \begin{samepage}
-New sets can be constructed using set operations:
+مجموعه‌های جدید را می‌توان با استفاده از عملگرهای مجموعه‌ای ساخت:
 \begin{itemize}
-\item The \key{intersection} $A \cap B$ consists of elements
-that are in both $A$ and $B$.
-For example, if $A=\{1,2,5\}$ and $B=\{2,4\}$,
-then $A \cap B = \{2\}$.
-\item The \key{union} $A \cup B$ consists of elements
-that are in $A$ or $B$ or both.
-For example, if $A=\{3,7\}$ and $B=\{2,3,8\}$,
-then $A \cup B = \{2,3,7,8\}$.
-\item The \key{complement} $\bar A$ consists of elements
-that are not in $A$.
-The interpretation of a complement depends on
-the \key{universal set}, which contains all possible elements.
-For example, if $A=\{1,2,5,7\}$ and the universal set is
-$\{1,2,\ldots,10\}$, then $\bar A = \{3,4,6,8,9,10\}$.
-\item The \key{difference} $A \setminus B = A \cap \bar B$
-consists of elements that are in $A$ but not in $B$.
-Note that $B$ can contain elements that are not in $A$.
-For example, if $A=\{2,3,7,8\}$ and $B=\{3,5,8\}$,
-then $A \setminus B = \{2,7\}$.
+\item \key{اشتراک} $A \cap B$ شامل عناصری است
+که هم در $A$ و هم در $B$ هستند.
+برای نمونه، اگر $A=\{1,2,5\}$ و $B=\{2,4\}$،
+آنگاه $A \cap B = \{2\}$.
+\item \key{اجتماع} $A \cup B$ شامل عناصری است
+که در $A$ یا $B$ یا هر دو هستند.
+برای نمونه، اگر $A=\{3,7\}$ و $B=\{2,3,8\}$،
+آنگاه $A \cup B = \{2,3,7,8\}$.
+\item \key{متمم} $\bar A$ شامل عناصری است
+که در $A$ نیستند.
+تفسیر متمم بستگی به \key{مجموعه مرجع} دارد، که شامل تمام عناصر ممکن است.
+برای نمونه، اگر $A=\{1,2,5,7\}$ و مجموعه مرجع
+$\{1,2,\ldots,10\}$ باشد، آنگاه $\bar A = \{3,4,6,8,9,10\}$.
+\item \key{تفاضل} $A \setminus B = A \cap \bar B$
+شامل عناصری است که در $A$ هستند ولی در $B$ نیستند.
+دقت کنید که $B$ می‌تواند شامل عناصری باشد که در $A$ نیستند.
+برای نمونه، اگر $A=\{2,3,7,8\}$ و $B=\{3,5,8\}$،
+آنگاه $A \setminus B = \{2,7\}$.
 \end{itemize}
 \end{samepage}
 
-If each element of $A$ also belongs to $S$,
-we say that $A$ is a \key{subset} of $S$,
-denoted by $A \subset S$.
-A set $S$ always has $2^{|S|}$ subsets,
-including the empty set.
-For example, the subsets of the set $\{2,4,7\}$ are
+اگر هر عنصر از $A$ به $S$ نیز تعلق داشته باشد،
+می‌گوییم $A$ یک \key{زیرمجموعه} از $S$ است،
+و با $A \subset S$ نشان داده می‌شود.
+یک مجموعه $S$ همواره شامل $2^{|S|}$ زیرمجموعه است،
+شامل مجموعه تهی.
+برای نمونه، زیرمجموعه‌های مجموعه $\{2,4,7\}$ عبارتند از
 \begin{center}
-$\emptyset$,
-$\{2\}$, $\{4\}$, $\{7\}$, $\{2,4\}$, $\{2,7\}$, $\{4,7\}$ and $\{2,4,7\}$.
+$\emptyset$،
+$\{2\}$، $\{4\}$، $\{7\}$، $\{2,4\}$، $\{2,7\}$، $\{4,7\}$ و $\{2,4,7\}$.
 \end{center}
 
-Some often used sets are
-$\mathbb{N}$ (natural numbers),
-$\mathbb{Z}$ (integers),
-$\mathbb{Q}$ (rational numbers) and
-$\mathbb{R}$ (real numbers).
-The set $\mathbb{N}$
-can be defined in two ways, depending
-on the situation:
-either $\mathbb{N}=\{0,1,2,\ldots\}$
-or $\mathbb{N}=\{1,2,3,...\}$.
+برخی از مجموعه‌های پرکاربرد عبارتند از
+$\mathbb{N}$ (اعداد طبیعی)،
+$\mathbb{Z}$ (اعداد صحیح)،
+$\mathbb{Q}$ (اعداد گویا) و
+$\mathbb{R}$ (اعداد حقیقی).
+مجموعه $\mathbb{N}$
+بسته به موقعیت می‌تواند به دو صورت تعریف شود:
+یا $\mathbb{N}=\{0,1,2,\ldots\}$
+یا $\mathbb{N}=\{1,2,3,...\}$.
 
-We can also construct a set using a rule of the form
+همچنین می‌توان مجموعه‌ای را با استفاده از قاعده‌ای به شکل
 \[\{f(n) : n \in S\},\]
-where $f(n)$ is some function.
-This set contains all elements of the form $f(n)$,
-where $n$ is an element in $S$.
-For example, the set
+ساخت که در آن $f(n)$ یک تابع است.
+این مجموعه شامل تمام عناصری به شکل $f(n)$ است
+که $n$ عضوی از $S$ باشد.
+برای مثال، مجموعه
 \[X=\{2n : n \in \mathbb{Z}\}\]
-contains all even integers.
+شامل تمام اعداد صحیح زوج است.
 
-\subsubsection{Logic}
+\subsubsection{منطق}
 
 \index{logic}
 \index{negation}
@@ -717,15 +600,15 @@ contains all even integers.
 \index{implication}
 \index{equivalence}
 
-The value of a logical expression is either
-\key{true} (1) or \key{false} (0).
-The most important logical operators are
-$\lnot$ (\key{negation}),
-$\land$ (\key{conjunction}),
-$\lor$ (\key{disjunction}),
-$\Rightarrow$ (\key{implication}) and
-$\Leftrightarrow$ (\key{equivalence}).
-The following table shows the meanings of these operators:
+مقدار یک عبارت منطقی یا
+\key{درست} (1) یا \key{نادرست} (0) است.
+مهم‌ترین عملگرهای منطقی عبارت‌اند از
+$\lnot$ (\key{نقیض})،
+$\land$ (\key{عطف})،
+$\lor$ (\key{فصل})،
+$\Rightarrow$ (\key{استلزام}) و
+$\Leftrightarrow$ (\key{هم‌ارزی}).
+جدول زیر معنای این عملگرها را نشان می‌دهد:
 
 \begin{center}
 \begin{tabular}{rr|rrrrrrr}
@@ -738,69 +621,69 @@ $A$ & $B$ & $\lnot A$ & $\lnot B$ & $A \land B$ & $A \lor B$ & $A \Rightarrow B$
 \end{tabular}
 \end{center}
 
-The expression $\lnot A$ has the opposite value of $A$.
-The expression $A \land B$ is true if both $A$ and $B$
-are true,
-and the expression $A \lor B$ is true if $A$ or $B$ or both
-are true.
-The expression $A \Rightarrow B$ is true
-if whenever $A$ is true, also $B$ is true.
-The expression $A \Leftrightarrow B$ is true
-if $A$ and $B$ are both true or both false.
+عبارت $\lnot A$ مقداری مخالف با $A$ دارد.
+عبارت $A \land B$ درست است اگر هر دو $A$ و $B$
+درست باشند،
+و عبارت $A \lor B$ درست است اگر $A$ یا $B$ یا هر دو
+درست باشند.
+عبارت $A \Rightarrow B$ درست است
+هرگاه هر زمان که $A$ درست باشد، $B$ نیز درست باشد.
+عبارت $A \Leftrightarrow B$ درست است
+اگر $A$ و $B$ هر دو درست یا هر دو نادرست باشند.
 
 \index{predicate}
 
-A \key{predicate} is an expression that is true or false
-depending on its parameters.
-Predicates are usually denoted by capital letters.
-For example, we can define a predicate $P(x)$
-that is true exactly when $x$ is a prime number.
-Using this definition, $P(7)$ is true but $P(8)$ is false.
+یک \key{محمول} عبارتی است که بسته به پارامترهای خود
+درست یا نادرست است.
+محمول‌ها معمولاً با حروف بزرگ نشان داده می‌شوند.
+به عنوان مثال، می‌توان محمول $P(x)$ را تعریف کرد
+که دقیقاً زمانی درست است که $x$ یک عدد اول باشد.
+با استفاده از این تعریف، $P(7)$ درست است ولی $P(8)$ نادرست است.
 
 \index{quantifier}
 
-A \key{quantifier} connects a logical expression
-to the elements of a set.
-The most important quantifiers are
-$\forall$ (\key{for all}) and $\exists$ (\key{there is}).
-For example,
+یک \key{سور} یک عبارت منطقی را
+به عناصر یک مجموعه مرتبط می‌کند.
+مهم‌ترین سورها
+$\forall$ (\key{به ازای هر}) و $\exists$ (\key{وجود دارد}) هستند.
+برای مثال،
 \[\forall x (\exists y (y < x))\]
-means that for each element $x$ in the set,
-there is an element $y$ in the set
-such that $y$ is smaller than $x$.
-This is true in the set of integers,
-but false in the set of natural numbers.
+بدین معناست که به ازای هر عنصر $x$ در مجموعه،
+عنصری مانند $y$ در مجموعه وجود دارد
+به‌طوری‌که $y$ کوچک‌تر از $x$ است.
+این گزاره در مجموعه اعداد صحیح درست است،
+اما در مجموعه اعداد طبیعی نادرست است.
 
-Using the notation described above,
-we can express many kinds of logical propositions.
-For example,
+با استفاده از نمادگذاری شرح داده شده،
+می‌توان انواع گزاره‌های منطقی را بیان کرد.
+برای مثال،
 \[\forall x ((x>1 \land \lnot P(x)) \Rightarrow (\exists a (\exists b (a > 1 \land b > 1 \land x = ab))))\]
-means that if a number $x$ is larger than 1
-and not a prime number,
-then there are numbers $a$ and $b$
-that are larger than $1$ and whose product is $x$.
-This proposition is true in the set of integers.
+بدین معناست که اگر عدد $x$ بزرگ‌تر از 1
+و غیر اول باشد،
+آنگاه اعدادی مانند $a$ و $b$ وجود دارند
+که بزرگ‌تر از $1$ هستند و حاصل‌ضرب آن‌ها برابر $x$ است.
+این گزاره در مجموعه اعداد صحیح درست است.
 
-\subsubsection{Functions}
+\subsubsection{توابع}
 
-The function $\lfloor x \rfloor$ rounds the number $x$
-down to an integer, and the function
-$\lceil x \rceil$ rounds the number $x$
-up to an integer. For example,
-\[ \lfloor 3/2 \rfloor = 1 \hspace{10px} \textrm{and} \hspace{10px} \lceil 3/2 \rceil = 2.\]
+تابع $\lfloor x \rfloor$ عدد $x$ را
+به سمت پایین به یک عدد صحیح گرد می‌کند، و تابع
+$\lceil x \rceil$ عدد $x$ را
+به سمت بالا به یک عدد صحیح گرد می‌کند. برای مثال،
+\[ \lfloor 3/2 \rfloor = 1 \hspace{10px} \textrm{و} \hspace{10px} \lceil 3/2 \rceil = 2.\]
 
-The functions $\min(x_1,x_2,\ldots,x_n)$
-and $\max(x_1,x_2,\ldots,x_n)$
-give the smallest and largest of values
-$x_1,x_2,\ldots,x_n$.
-For example,
-\[ \min(1,2,3)=1 \hspace{10px} \textrm{and} \hspace{10px} \max(1,2,3)=3.\]
+توابع $\min(x_1,x_2,\ldots,x_n)$
+و $\max(x_1,x_2,\ldots,x_n)$
+کوچک‌ترین و بزرگ‌ترین مقادیر میان
+$x_1,x_2,\ldots,x_n$ را به دست می‌دهند.
+برای نمونه،
+\[ \min(1,2,3)=1 \hspace{10px} \textrm{و} \hspace{10px} \max(1,2,3)=3.\]
 
-\index{factorial}
+\index{فاکتوریل}
 
-The \key{factorial} $n!$ can be defined
+\key{فاکتوریل} $n!$ می‌تواند به این صورت تعریف شود:
 \[\prod_{x=1}^n x = 1 \cdot 2 \cdot 3 \cdot \ldots \cdot n\]
-or recursively
+یا به صورت بازگشتی:
 \[
 \begin{array}{lcl}
 0! & = & 1 \\
@@ -808,12 +691,12 @@ n! & = & n \cdot (n-1)! \\
 \end{array}
 \]
 
-\index{Fibonacci number}
+\index{عدد فیبوناچی}
 
-The \key{Fibonacci numbers}
-%\footnote{Fibonacci (c. 1175--1250) was an Italian mathematician.}
-arise in many situations.
-They can be defined recursively as follows:
+\key{اعداد فیبوناچی}
+%\footnote{فیبوناچی (حدود ۱۱۷۵--۱۲۵۰) یک ریاضیدان ایتالیایی بود.}
+در موقعیت‌های بسیاری پدیدار می‌شوند.
+آن‌ها می‌توانند به صورت بازگشتی بدین شکل تعریف شوند:
 \[
 \begin{array}{lcl}
 f(0) & = & 0 \\
@@ -821,148 +704,130 @@ f(1) & = & 1 \\
 f(n) & = & f(n-1)+f(n-2) \\
 \end{array}
 \]
-The first Fibonacci numbers are
+نخستین اعداد فیبوناچی عبارتند از:
 \[0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, \ldots\]
-There is also a closed-form formula
-for calculating Fibonacci numbers, which is sometimes called
-\index{Binet's formula} \key{Binet's formula}:
+همچنین یک فرمول بسته
+برای محاسبه اعداد فیبوناچی وجود دارد که گاهی به آن
+\index{فرمول بینه} \key{فرمول بینه} می‌گویند:
 \[f(n)=\frac{(1 + \sqrt{5})^n - (1-\sqrt{5})^n}{2^n \sqrt{5}}.\]
 
-\subsubsection{Logarithms}
+\subsubsection{لگاریتم‌ها}
 
-\index{logarithm}
+\index{لگاریتم}
 
-The \key{logarithm} of a number $x$
-is denoted $\log_k(x)$, where $k$ is the base
-of the logarithm.
-According to the definition,
-$\log_k(x)=a$ exactly when $k^a=x$.
+\key{لگاریتم} یک عدد $x$
+به صورت $\log_k(x)$ نشان داده می‌شود که در آن $k$ پایه
+لگاریتم است.
+طبق تعریف،
+$\log_k(x)=a$ دقیقاً زمانی برقرار است که $k^a=x$ باشد.
 
-A useful property of logarithms is
-that $\log_k(x)$ equals the number of times
-we have to divide $x$ by $k$ before we reach 
-the number 1.
-For example, $\log_2(32)=5$
-because 5 divisions by 2 are needed:
+یک ویژگی کاربردی لگاریتم‌ها این است
+که $\log_k(x)$ برابر است با تعداد دفعاتی که
+باید $x$ را بر $k$ تقسیم کنیم تا به
+عدد ۱ برسیم.
+برای نمونه، $\log_2(32)=5$
+زیرا ۵ بار تقسیم بر ۲ نیاز است:
 
 \[32 \rightarrow 16 \rightarrow 8 \rightarrow 4 \rightarrow 2 \rightarrow 1 \]
 
-Logarithms are often used in the analysis of
-algorithms, because many efficient algorithms
-halve something at each step.
-Hence, we can estimate the efficiency of such algorithms
-using logarithms.
+لگاریتم‌ها اغلب در تحلیل
+الگوریتم‌ها به کار می‌روند، زیرا بسیاری از الگوریتم‌های کارآمد
+در هر مرحله مقداری را نصف می‌کنند.
+بنابراین، می‌توانیم کارایی این الگوریتم‌ها را
+با استفاده از لگاریتم تخمین بزنیم.
 
-The logarithm of a product is
+لگاریتم حاصل‌ضرب عبارت است از:
 \[\log_k(ab) = \log_k(a)+\log_k(b),\]
-and consequently,
+و در نتیجه،
 \[\log_k(x^n) = n \cdot \log_k(x).\]
-In addition, the logarithm of a quotient is
+علاوه بر این، لگاریتم خارج‌قسمت برابر است با:
 \[\log_k\Big(\frac{a}{b}\Big) = \log_k(a)-\log_k(b).\]
-Another useful formula is
+فرمول کاربردی دیگر به این صورت است:
 \[\log_u(x) = \frac{\log_k(x)}{\log_k(u)},\]
-and using this, it is possible to calculate
-logarithms to any base if there is a way to
-calculate logarithms to some fixed base.
+و با استفاده از این، محاسبه
+لگاریتم در هر پایه‌ای امکان‌پذیر است اگر روشی برای
+محاسبه لگاریتم در یک پایه ثابت وجود داشته باشد.
 
-\index{natural logarithm}
+\index{لگاریتم طبیعی}
 
-The \key{natural logarithm} $\ln(x)$ of a number $x$
-is a logarithm whose base is $e \approx 2.71828$.
-Another property of logarithms is that
-the number of digits of an integer $x$ in base $b$ is
+\key{لگاریتم طبیعی} $\ln(x)$ یک عدد $x$
+لگاریتمی است که پایه آن $e \approx 2.71828$ می‌باشد.
+ویژگی دیگر لگاریتم‌ها این است که
+تعداد ارقام یک عدد صحیح $x$ در مبنای $b$ برابر است با
 $\lfloor \log_b(x)+1 \rfloor$.
-For example, the representation of
-$123$ in base $2$ is 1111011 and
+برای نمونه، نمایش
+$123$ در مبنای $2$ برابر با 1111011 است و
 $\lfloor \log_2(123)+1 \rfloor = 7$.
 
-\section{Contests and resources}
+\section{مسابقات و منابع}
 
 \subsubsection{IOI}
 
-The International Olympiad in Informatics (IOI)
-is an annual programming contest for
-secondary school students.
-Each country is allowed to send a team of
-four students to the contest.
-There are usually about 300 participants
-from 80 countries.
+المپیاد جهانی کامپیوتر (IOI)
+یک مسابقه سالانه برنامه‌نویسی برای
+دانش‌آموزان دوره متوسطه است.
+هر کشور مجاز به اعزام تیمی متشکل از
+چهار دانش‌آموز به مسابقه است.
+معمولاً حدود ۳۰۰ شرکت‌کننده
+از ۸۰ کشور حضور دارند.
 
-The IOI consists of two five-hour long contests.
-In both contests, the participants are asked to
-solve three algorithm tasks of various difficulty.
-The tasks are divided into subtasks,
-each of which has an assigned score.
-Even if the contestants are divided into teams,
-they compete as individuals.
+مسابقه IOI شامل دو آزمون پنج‌ساعته است.
+در هر دو آزمون، شرکت‌کنندگان باید سه مسئله الگوریتمی با دشواری‌های مختلف را حل کنند.
+مسائل به زیرمسئله تقسیم می‌شوند و هر زیرمسئله نمره مشخص دارد.
+حتی اگر شرکت‌کنندگان در قالب تیم اعزام شوند، رقابت انفرادی است.
 
-The IOI syllabus \cite{iois} regulates the topics
-that may appear in IOI tasks.
-Almost all the topics in the IOI syllabus
-are covered by this book.
+سرفصل‌های IOI \cite{iois} مباحث مجاز در آزمون را تعیین می‌کند.
+تقریباً تمام مباحث سرفصل IOI در این کتاب پوشش داده شده است.
 
-Participants for the IOI are selected through
-national contests.
-Before the IOI, many regional contests are organized,
-such as the Baltic Olympiad in Informatics (BOI),
-the Central European Olympiad in Informatics (CEOI)
-and the Asia-Pacific Informatics Olympiad (APIO).
+شرکت‌کنندگان IOI از طریق مسابقات ملی انتخاب می‌شوند.
+پیش از IOI، مسابقات منطقه‌ای متعددی برگزار می‌شود،
+مانند المپیاد انفورماتیک بالتیک (BOI)،
+المپیاد انفورماتیک اروپای مرکزی (CEOI)
+و المپیاد انفورماتیک آسیا-اقیانوسیه (APIO).
 
-Some countries organize online practice contests
-for future IOI participants,
-such as the Croatian Open Competition in Informatics \cite{coci}
-and the USA Computing Olympiad \cite{usaco}.
-In addition, a large collection of problems from Polish contests
-is available online \cite{main}.
+برخی کشورها مسابقات تمرینی برخط برای شرکت‌کنندگان آینده IOI برگزار می‌کنند،
+مانند مسابقات آزاد انفورماتیک کرواسی \cite{coci}
+و المپیاد کامپیوتر آمریکا \cite{usaco}.
+همچنین، مجموعه بزرگی از مسائل مسابقات لهستان به‌صورت برخط در دسترس است \cite{main}.
 
 \subsubsection{ICPC}
 
-The International Collegiate Programming Contest (ICPC)
-is an annual programming contest for university students.
-Each team in the contest consists of three students,
-and unlike in the IOI, the students work together;
-there is only one computer available for each team.
+مسابقه بین‌المللی برنامه‌نویسی دانشجویی (ICPC)
+یک مسابقه سالانه برنامه‌نویسی برای دانشجویان است.
+هر تیم شامل سه دانشجو است.
+برخلاف IOI، اعضا با یکدیگر همکاری می‌کنند؛
+تنها یک رایانه برای هر تیم وجود دارد.
 
-The ICPC consists of several stages, and finally the
-best teams are invited to the World Finals.
-While there are tens of thousands of participants
-in the contest, there are only a small number\footnote{The exact number of final
-slots varies from year to year; in 2017, there were 133 final slots.} of final slots available,
-so even advancing to the finals
-is a great achievement in some regions.
+مسابقه ICPC شامل چند مرحله است و در نهایت بهترین تیم‌ها به مرحله نهایی جهانی دعوت می‌شوند.
+با وجود ده‌ها هزار شرکت‌کننده، تنها تعداد اندکی سهمیه نهایی\footnote{تعداد دقیق سهمیه‌های نهایی هر سال متغیر است؛ سال ۲۰۱۷، تعداد ۱۳۳ سهمیه نهایی وجود داشت.} وجود دارد،
+بنابراین صعود به مرحله نهایی در برخی منطقه‌ها دستاوردی بزرگ محسوب می‌شود.
 
-In each ICPC contest, the teams have five hours of time to
-solve about ten algorithm problems.
-A solution to a problem is accepted only if it solves
-all test cases efficiently.
-During the contest, competitors may view the results of other teams,
-but for the last hour the scoreboard is frozen and it
-is not possible to see the results of the last submissions.
+در هر مسابقه ICPC، تیم‌ها پنج ساعت زمان دارند تا حدود ده مسئله الگوریتمی را حل کنند.
+راه‌حل مسئله تنها در صورتی پذیرفته می‌شود که همه آزمایه‌ها را به‌طور بهینه حل کند.
+در طول مسابقه، رقبا می‌توانند نتایج تیم‌های دیگر را ببینند،
+اما در ساعت پایانی جدول امتیازات منجمد می‌شود و دیدن نتایج آخرین ارسال‌ها ممکن نیست.
 
-The topics that may appear at the ICPC are not so well
-specified as those at the IOI.
-In any case, it is clear that more knowledge is needed
-at the ICPC, especially more mathematical skills.
+مباحث ممکن در ICPC به اندازه IOI مشخص نیست.
+در هر صورت، برای ICPC به دانش بیشتری نیاز است، به‌ویژه مهارت‌های ریاضیاتی قوی‌تر.
 
-\subsubsection{Online contests}
+\subsubsection{مسابقات برخط}
 
-There are also many online contests that are open for everybody.
-At the moment, the most active contest site is Codeforces,
-which organizes contests about weekly.
-In Codeforces, participants are divided into two divisions:
-beginners compete in Div2 and more experienced programmers in Div1.
-Other contest sites include AtCoder, CS Academy, HackerRank and Topcoder.
+مسابقات برخط متعددی نیز برای همگان در دسترس است.
+در حال حاضر فعال‌ترین پایگاه مسابقات Codeforces است
+که تقریباً هفتگی مسابقه برگزار می‌کند.
+در Codeforces، شرکت‌کنندگان دو بخش هستند:
+تازه‌کارها در Div2 و برنامه‌نویسان با‌تجربه‌تر در Div1 رقابت می‌کنند.
+سایر پایگاه‌های مسابقه عبارتند از: AtCoder، CS Academy، HackerRank و Topcoder.
 
-Some companies organize online contests with onsite finals.
-Examples of such contests are Facebook Hacker Cup,
-Google Code Jam and Yandex.Algorithm.
-Of course, companies also use those contests for recruiting:
-performing well in a contest is a good way to prove one's skills.
+برخی شرکت‌ها مسابقات برخط با مرحله نهایی حضوری برگزار می‌کنند.
+نمونه‌های آن Facebook Hacker Cup،
+Google Code Jam و Yandex.Algorithm است.
+البته شرکت‌ها از این مسابقات برای استخدام نیرو نیز استفاده می‌کنند؛
+عملکرد خوب در مسابقه روش مناسبی برای اثبات مهارت‌هاست.
 
-\subsubsection{Books}
+\subsubsection{کتاب‌ها}
 
-There are already some books (besides this book) that
-focus on competitive programming and algorithmic problem solving:
+پیش از این نیز کتاب‌هایی (به‌جز این کتاب) با تمرکز بر برنامه‌نویسی رقابتی و حل مسئله الگوریتمی تالیف شده‌اند:
 
 \begin{itemize}
 \item S. S. Skiena and M. A. Revilla:
@@ -973,12 +838,10 @@ focus on competitive programming and algorithmic problem solving:
 the University of Warsaw Programming Competitions} \cite{dik12}
 \end{itemize}
 
-The first two books are intended for beginners,
-whereas the last book contains advanced material.
+دو کتاب نخست برای افراد مبتدی در نظر گرفته شده‌اند، در حالی که کتاب آخر شامل مباحث پیشرفته است.
 
-Of course, general algorithm books are also suitable for
-competitive programmers.
-Some popular books are:
+البته کتاب‌های عمومی الگوریتم نیز برای برنامه‌نویسان رقابتی مناسب هستند.
+برخی از کتاب‌های محبوب عبارتند از:
 
 \begin{itemize}
 \item T. H. Cormen, C. E. Leiserson, R. L. Rivest and C. Stein:

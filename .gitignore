@@ -1,0 +1,13 @@
+*.aux
+*.idx
+*.ilg
+*.ind
+*.log
+*.toc
+*.orig
+*.bak
+*.synctex.gz
+*.bbl
+*.blg
+*.out
+__pycache__/
